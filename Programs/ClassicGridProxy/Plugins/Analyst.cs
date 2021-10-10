@@ -40,7 +40,7 @@ using System.Reflection;
 using Nwc.XmlRpc;
 using OpenMetaverse;
 using OpenMetaverse.Packets;
-using GridProxy;
+using ClassicGridProxy;
 
 
 public class Analyst : ProxyPlugin

@@ -851,6 +851,43 @@ namespace OpenMetaverse
         }
     }
 
+
+    /// <summary>
+    /// InventorySettings Class, settings for a regions environment
+    /// </summary>
+    [Serializable()]
+    public class InventorySettings : InventoryItem
+    {
+        /// <summary>
+        /// Construct an InventoryGesture object
+        /// </summary>
+        /// <param name="itemID">A <seealso cref="OpenMetaverse.UUID"/> which becomes the 
+        /// <seealso cref="OpenMetaverse.InventoryItem"/> objects AssetUUID</param>
+        public InventorySettings(UUID itemID)
+            : base(itemID)
+        {
+            InventoryType = InventoryType.Settings;
+        }
+
+        /// <summary>
+        /// Construct an InventoryGesture object from a serialization stream
+        /// </summary>
+        public InventorySettings(SerializationInfo info, StreamingContext ctxt)
+            : base(info, ctxt)
+        {
+            InventoryType = InventoryType.Settings;
+        }
+
+        /// <summary>
+        /// The <seealso cref="OpenMetaverse.SettingType"/>, Skin, Shape, Skirt, Etc
+        /// </summary>
+        public SettingType Type
+        {
+            get { return (SettingType)Flags; }
+            set { Flags = (uint)value; }
+        }
+    }
+
     /// <summary>
     /// A folder contains <seealso cref="T:OpenMetaverse.InventoryItem"/>s and has certain attributes specific 
     /// to itself

@@ -36,7 +36,7 @@ using OpenMetaverse.Packets;
 using OpenMetaverse.Messages;
 using OpenMetaverse.StructuredData;
 using OpenMetaverse.Interfaces;
-using GridProxy;
+using ClassicGridProxy;
 using Nwc.XmlRpc;
 
 namespace WinGridProxy

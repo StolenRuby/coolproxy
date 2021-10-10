@@ -37,7 +37,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Threading;
-using GridProxy;
+using ClassicGridProxy;
 using OpenMetaverse;
 using OpenMetaverse.Packets;
 using OpenMetaverse.StructuredData;

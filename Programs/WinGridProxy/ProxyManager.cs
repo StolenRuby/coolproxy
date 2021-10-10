@@ -30,7 +30,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Reflection;
-using GridProxy;
+using ClassicGridProxy;
 using Nwc.XmlRpc;
 using OpenMetaverse.Packets;
 using OpenMetaverse.StructuredData;

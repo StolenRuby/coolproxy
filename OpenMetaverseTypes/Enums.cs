@@ -295,4 +295,11 @@ namespace OpenMetaverse
         /// <summary>Invalid wearable asset</summary>
         Invalid = 255
     };
+
+    public enum SettingType : byte
+    {
+        Sky = 0,
+        Water = 1,
+        DayCycle = 2
+    };
 }

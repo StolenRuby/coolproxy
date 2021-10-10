@@ -2012,6 +2012,12 @@ namespace OpenMetaverse
             return fval;
         }
 
+        public static float UInt16ToFloat(byte[] bytes, int pos, float lower, float upper)
+        {
+            ushort val = BytesToUInt16(bytes, pos);
+            return UInt16ToFloat(val, lower, upper);
+        }
+
         public static ushort FloatToUInt16(float value, float lower, float upper)
         {
             value -= lower;

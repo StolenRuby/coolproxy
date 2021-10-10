@@ -9,11 +9,11 @@ using System.Reflection;
 using Nwc.XmlRpc;
 using OpenMetaverse;
 using OpenMetaverse.Packets;
-using GridProxy;
+using ClassicGridProxy;
 using Logger = OpenMetaverse.Logger;
 
 
-namespace GridProxy
+namespace ClassicGridProxy
 {
     public class ProxyFrame
     {
@@ -75,7 +75,7 @@ namespace GridProxy
 
             if (proxyConfig == null)
             {
-                proxyConfig = new ProxyConfig("GridProxy", "Austin Jennings / Andrew Ortman", args, true);
+                proxyConfig = new ProxyConfig("ClassicGridProxy", "Austin Jennings / Andrew Ortman", args, true);
             }
             proxy = new Proxy(proxyConfig);
 
@@ -216,7 +216,7 @@ namespace GridProxy
         /// <param name="message">A string containing the message to send</param>
         public void SayToUser(string message)
         {
-            SayToUser("GridProxy", message);
+            SayToUser("ClassicGridProxy", message);
         }
 
 

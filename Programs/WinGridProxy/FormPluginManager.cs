@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using GridProxy;
+using ClassicGridProxy;
 using System.Reflection;
 using System.IO;
 

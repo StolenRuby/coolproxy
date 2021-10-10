@@ -1,6 +1,6 @@
 using System;
 using System.Reflection;
-using GridProxy;
+using ClassicGridProxy;
 
 class ProxyMain
 {

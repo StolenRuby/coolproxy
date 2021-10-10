@@ -1,5 +1,5 @@
 /*
- * GridProxy.cs: implementation of OpenMetaverse proxy library
+ * ClassicGridProxy.cs: implementation of OpenMetaverse proxy library
  *
  * Copyright (c) 2006 Austin Jennings
  * Pregen modifications made by Andrew Ortman on Dec 10, 2006 -> Dec 20, 2006
@@ -48,7 +48,7 @@ using log4net;
 using Nwc.XmlRpc;
 using Logger = Nwc.XmlRpc.Logger;
 
-namespace GridProxy
+namespace ClassicGridProxy
 {
     /// <summary>
     /// Proxy Configuration Class

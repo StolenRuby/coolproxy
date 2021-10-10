@@ -44,7 +44,7 @@ namespace OpenMetaverse.Assets
         public UUID AssetID
         {
             get { return _AssetID; }
-            internal set { _AssetID = value; }
+            set { _AssetID = value; }
         }
 
         /// <summary>

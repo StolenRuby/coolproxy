@@ -50,7 +50,7 @@ namespace CoolProxy.Plugins.Useful
             GUI.AddSingleMenuItem("Copy Key", copyAvatarKey);
             GUI.AddMultipleMenuItem("Copy Keys", copyAvatarKeys);
 
-
+            GUI.AddToolButton("UUID", "Avatar Picker to Clipboard", avatarPickerToClipboard);
             GUI.AddToolButton("UUID", "KeyTool from Clipboard", handleKeyToolButton);
 
             GUI.AddToggleFormQuick("Assets", "Upload Asset", new UploaderForm());
@@ -74,6 +74,17 @@ namespace CoolProxy.Plugins.Useful
         private void copyAvatarKeys(List<UUID> targets)
         {
             Clipboard.SetText(string.Join(", ", targets));
+        }
+
+        private void avatarPickerToClipboard(object sender, EventArgs e)
+        {
+            AvatarPickerSearchForm avatarPickerSearchForm = new AvatarPickerSearchForm();
+            avatarPickerSearchForm.StartPosition = FormStartPosition.CenterScreen;
+
+            if (avatarPickerSearchForm.ShowDialog() == DialogResult.OK)
+            {
+                Clipboard.SetText(avatarPickerSearchForm.SelectedID.ToString());
+            }
         }
 
         private void handleKeyToolButton(object sender, EventArgs e)

@@ -482,6 +482,7 @@ public class ClientAO : ProxyPlugin
             case InventoryType.Wearable: return new InventoryWearable(id);
             case InventoryType.Animation: return new InventoryAnimation(id);
             case InventoryType.Gesture: return new InventoryGesture(id);
+            case InventoryType.Settings: return new InventorySettings(id);
             default: return new InventoryItem(type, id);
         }
     }

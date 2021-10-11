@@ -230,7 +230,7 @@ namespace CoolProxy
         private void Objects_TerseObjectUpdate(object sender, GridProxy.TerseObjectUpdateEventArgs e)
         {
             var entry = avatarsInTracker.FirstOrDefault(x => x.UUID == e.Prim.ID);
-            if (entry != default)
+            if (entry != default(AvatarInTracker))
             {
                 Avatar av;
                 if (e.Region.ObjectsAvatars.TryGetValue(e.Prim.LocalID, out av))

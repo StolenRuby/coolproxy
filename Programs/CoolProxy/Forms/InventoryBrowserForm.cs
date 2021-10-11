@@ -25,7 +25,7 @@ namespace CoolProxy
 
         internal void InitOptions()
         {
-            CoolProxy.GUI.AddInventoryFolderOption("Save As...", handleSaveFolderAs);
+            //CoolProxy.GUI.AddInventoryFolderOption("Save As...", handleSaveFolderAs);
         }
 
         private void InventoryBrowserForm_FormClosing(object sender, FormClosingEventArgs e)

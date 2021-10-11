@@ -154,7 +154,7 @@ namespace CoolProxy
                         success = true;
                         break;
                     }
-                    catch (WebException err)
+                    catch
                     {
 
                     }

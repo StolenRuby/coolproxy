@@ -27,7 +27,7 @@ namespace CoolProxy
                     return ScanXmlResponse(xr);
                 }
             }
-            catch (Exception e)
+            catch// (Exception e)
             {
                 //m_log.DebugFormat("[serverUtils.ParseXmlResponse]: failed error: {0}\n --string:\n{1}\n", e.Message, data);
             }

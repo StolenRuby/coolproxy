@@ -8,9 +8,9 @@ namespace CoolProxy.Plugins.ServiceTools
 {
     public class ServiceToolsPlugin : CoolProxyPlugin
     {
-        private SettingsManager Settings;
-        private GUIManager GUI;
-        private CoolProxyFrame Proxy;
+        //private SettingsManager Settings;
+        //private GUIManager GUI;
+        //private CoolProxyFrame Proxy;
 
         public ServiceToolsPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
         {

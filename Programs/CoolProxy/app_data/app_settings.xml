@@ -1,0 +1,445 @@
+<llsd>
+	<map>
+		<key>CoolExample</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
+		<key>EnableGridInfo</key>
+		<map>
+			<key>comment</key>
+			<string>Enable OpenSim style grid info for proxy login uri</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
+		<key>AutomaticallyOpenKeyTool</key>
+		<map>
+			<key>comment</key>
+			<string>Automatically open the result of the KeyTool</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
+		<key>AutomaticallyCloseKeyTool</key>
+		<map>
+			<key>comment</key>
+			<string>Automatically close the KeyTool when finished</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
+		<key>EnableChatCommands</key>
+		<map>
+			<key>comment</key>
+			<string>Allow commands to be triggered by outgoing local chat</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
+		<key>ShowConsole</key>
+		<map>
+			<key>comment</key>
+			<string>Show the console for Cool Proxy</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>AllowMultipleInstances</key>
+		<map>
+			<key>comment</key>
+			<string>Allow multiple instances of Cool Proxy</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>UploadAssetViaCapsIfPossible</key>
+		<map>
+			<key>comment</key>
+			<string>Upload assets via caps instead of udp</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
+		<key>DownloadAssetViaCapsIfPossible</key>
+		<map>
+			<key>comment</key>
+			<string>Download assets via caps instead of udp</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
+		<key>KeepCoolProxyOnTop</key>
+		<map>
+			<key>comment</key>
+			<string>Keep Cool Proxy&apos;s GUI above other windows</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
+		<key>MinimizeCoolProxyToTray</key>
+		<map>
+			<key>comment</key>
+			<string>Hide CoolProxy to the tray</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
+		<key>LastGridUsed</key>
+		<map>
+			<key>comment</key>
+			<string>This is the grid you last logged in to</string>
+			<key>type</key>
+			<string>string</string>
+			<key>value</key>
+			<string>Mobius Grid</string>
+		</map>
+		<key>LastAccountUsed</key>
+		<map>
+			<key>comment</key>
+			<string>This is the account you last logged in to</string>
+			<key>type</key>
+			<string>string</string>
+			<key>value</key>
+			<string>Ruby</string>
+		</map>
+		<key>MaxSimultaneousDownloads</key>
+		<map>
+			<key>comment</key>
+			<string>How many downloads to do at once</string>
+			<key>type</key>
+			<string>integer</string>
+			<key>value</key>
+			<integer>15</integer>
+		</map>
+		<key>MaxSimultaneousUploads</key>
+		<map>
+			<key>comment</key>
+			<string>How many uploads to do at once</string>
+			<key>type</key>
+			<string>integer</string>
+			<key>value</key>
+			<integer>5</integer>
+		</map>
+		<key>GridProxyListenPort</key>
+		<map>
+			<key>comment</key>
+			<string>What port should GridProxy listen on</string>
+			<key>type</key>
+			<string>integer</string>
+			<key>value</key>
+			<integer>8080</integer>
+		</map>
+		<key>GridProxyListenAddress</key>
+		<map>
+			<key>comment</key>
+			<string>What address GridProxy should listen on</string>
+			<key>type</key>
+			<string>string</string>
+			<key>value</key>
+			<string>localhost</string>
+		</map>
+		<key>SecretMessage</key>
+		<map>
+			<key>comment</key>
+			<string>Stop reading this!</string>
+			<key>type</key>
+			<string>string</string>
+			<key>value</key>
+			<string>Stop!</string>
+		</map>
+		<key>EditorsChangeCreator</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
+		<key>EditorsChangeCreationDate</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
+		<key>EditorsChangePermissions</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
+		<key>TabLoginPopped</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>TabLoginOpen</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>TabAvatarTrackerPopped</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>TabAvatarTrackerOpen</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>TabRegionsPopped</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>TabRegionsOpen</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>TabToolBoxPopped</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>TabToolBoxOpen</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>TabAssetLoggingPopped</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>TabAssetLoggingOpen</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>TabAssetTransfersPopped</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>TabAssetTransfersOpen</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>TabSettingsPopped</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>TabSettingsOpen</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>SpoofMac</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>SpecifiedMacAddress</key>
+		<map>
+			<key>comment</key>
+			<string>What address GridProxy should listen on</string>
+			<key>type</key>
+			<string>string</string>
+			<key>value</key>
+			<string>071ceb4d882ac286a39e981c31039c5c</string>
+		</map>
+		<key>SpoofId0</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>SpecifiedId0Address</key>
+		<map>
+			<key>comment</key>
+			<string>What address GridProxy should listen on</string>
+			<key>type</key>
+			<string>string</string>
+			<key>value</key>
+			<string>4ca1a2e4b127846b957001871974b98d</string>
+		</map>
+		<key>SpoofVersion</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>SpecifiedVersionChannel</key>
+		<map>
+			<key>comment</key>
+			<string>What address GridProxy should listen on</string>
+			<key>type</key>
+			<string>string</string>
+			<key>value</key>
+			<string>Firestorm-Nightly-CI</string>
+		</map>
+		<key>SpecifiedVersionMajor</key>
+		<map>
+			<key>comment</key>
+			<string>What address GridProxy should listen on</string>
+			<key>type</key>
+			<string>integer</string>
+			<key>value</key>
+			<integer>6</integer>
+		</map>
+		<key>SpecifiedVersionMinor</key>
+		<map>
+			<key>comment</key>
+			<string>What address GridProxy should listen on</string>
+			<key>type</key>
+			<string>integer</string>
+			<key>value</key>
+			<integer>4</integer>
+		</map>
+		<key>SpecifiedVersionPatch</key>
+		<map>
+			<key>comment</key>
+			<string>What address GridProxy should listen on</string>
+			<key>type</key>
+			<string>integer</string>
+			<key>value</key>
+			<integer>5</integer>
+		</map>
+		<key>SpecifiedVersionBuild</key>
+		<map>
+			<key>comment</key>
+			<string>What address GridProxy should listen on</string>
+			<key>type</key>
+			<string>integer</string>
+			<key>value</key>
+			<integer>60737</integer>
+		</map>
+		<key>StartProxyAtLaunch</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
+		<key>HideProxyAtLaunch</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>BridgeList</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>osd</string>
+			<key>value</key>
+			<map/>
+		</map>
+		<key>PluginList</key>
+		<map>
+			<key>comment</key>
+			<string>What a cool example!</string>
+			<key>type</key>
+			<string>osd</string>
+			<key>value</key>
+			<array/>
+		</map>
+	</map>
+</llsd>

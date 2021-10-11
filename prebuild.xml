@@ -656,6 +656,78 @@
         <Match pattern="*.ico" recurse="true"/>
       </Files>
     </Project>
+	
+    <Project name="CoolProxy" path="Programs/CoolProxy" type="WinExe" frameworkVersion="v4_6">
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../bin/</OutputPath>
+        </Options>
+      </Configuration>
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../bin/</OutputPath>
+        </Options>
+      </Configuration>
+
+      <ReferencePath>../../bin/</ReferencePath>
+      <Reference name="System"/>
+      <Reference name="System.Core"/>
+      <Reference name="System.Xml"/>
+      <Reference name="System.Web"/>
+	  <Reference name="System.Xml.Linq"/>
+      <Reference name="System.Data"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      <Reference name="OpenMetaverse"/>
+      <Reference name="OpenMetaverseTypes"/>
+      <Reference name="OpenMetaverse.StructuredData"/>
+      <Reference name="GridProxy"/>
+      <Reference name="XMLRPC"/>
+      <Reference name="Be.Windows.Forms.HexBox"/>
+      <Reference name="log4net"/>
+      <Files>
+        <Match pattern="*.cs" recurse="true">
+          <Exclude name="obj" pattern="obj"/>
+        </Match>
+        <Match pattern="*.resx" recurse="true"/>
+      </Files>
+    </Project>
+	
+	
+    <Project name="CoolProxy.Plugins.Useful" path="Plugins/CoolProxy.Plugins.Useful" type="Library" frameworkVersion="v4_6">
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../bin/</OutputPath>
+        </Options>
+      </Configuration>
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../bin/</OutputPath>
+        </Options>
+      </Configuration>
+
+      <ReferencePath>../../bin/</ReferencePath>
+      <Reference name="System"/>
+      <Reference name="System.Core"/>
+      <Reference name="System.Xml"/>
+      <Reference name="System.Web"/>
+	  <Reference name="System.Xml.Linq"/>
+      <Reference name="System.Data"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      <Reference name="OpenMetaverse"/>
+      <Reference name="OpenMetaverseTypes"/>
+      <Reference name="OpenMetaverse.StructuredData"/>
+      <Reference name="GridProxy"/>
+      <Reference name="CoolProxy"/>
+      <Reference name="XMLRPC"/>
+      <Reference name="log4net"/>
+      <Files>
+        <Match pattern="*.cs" recurse="true">
+          <Exclude name="obj" pattern="obj"/>
+        </Match>
+      </Files>
+    </Project>
 
 <!--
     <Project name="GridProxyGUI" path="Programs/GridProxyGUI" icon="libomv.ico" type="WinExe" frameworkVersion="v4_6">

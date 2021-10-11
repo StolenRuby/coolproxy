@@ -183,6 +183,33 @@ namespace OpenMetaverse
                     ^ State.GetHashCode()
                     ^ PCode.GetHashCode();
             }
+
+            public static ConstructionData DefaultPrim()
+            {
+                var data = new Primitive.ConstructionData();
+                data.PCode = PCode.Prim;
+                data.Material = Material.Wood;
+                data.PathCurve = PathCurve.Line;
+                data.profileCurve = 1;
+                data.PathBegin = 0.0f;
+                data.PathEnd = 1.0f;
+                data.PathScaleX = 1.0f;
+                data.PathScaleY = 1.0f;
+                data.PathShearX = 0.0f;
+                data.PathShearY = 0.0f;
+                data.PathTwist = 0.0f;
+                data.PathTwistBegin = 0.0f;
+                data.PathRadiusOffset = 0.0f;
+                data.PathRevolutions = 1.0f;
+                data.PathSkew = 0.0f;
+                data.PathTaperX = 0.0f;
+                data.PathTaperY = 0.0f;
+                data.ProfileBegin = 0.0f;
+                data.ProfileEnd = 1.0f;
+                data.ProfileHollow = 0.0f;
+                data.State = 0x00;
+                return data;
+            }
         }
 
         /// <summary>

@@ -657,7 +657,7 @@
       </Files>
     </Project>
 	
-    <Project name="CoolProxy" path="Programs/CoolProxy" type="WinExe" frameworkVersion="v4_6">
+    <Project name="CoolProxy" path="Programs/CoolProxy" type="WinExe" icon="ice_cube.ico" frameworkVersion="v4_6">
       <Configuration name="Debug">
         <Options>
           <OutputPath>../../bin/</OutputPath>

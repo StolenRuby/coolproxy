@@ -121,7 +121,7 @@ namespace CoolProxy.Plugins.ServiceTools
 
         private void button3_Click(object sender, EventArgs e)
         {
-            AvatarPickerSearchForm avatarPickerSearch = new AvatarPickerSearchForm(Proxy);
+            AvatarPickerSearchForm avatarPickerSearch = new AvatarPickerSearchForm();
             avatarPickerSearch.StartPosition = FormStartPosition.Manual;
             avatarPickerSearch.Location = new Point(this.Location.X + this.Width, this.Location.Y);
 

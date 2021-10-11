@@ -23,9 +23,9 @@ namespace CoolProxy
         public UUID SelectedID { get; set; }
         public string SelectedName { get; set; }
 
-        public AvatarPickerSearchForm(CoolProxyFrame frame)
+        public AvatarPickerSearchForm()
         {
-            this.Proxy = frame;
+            this.Proxy = CoolProxy.Frame;
             InitializeComponent();
 
             var avatars = Proxy.Network.CurrentSim.ObjectsAvatars.Values;

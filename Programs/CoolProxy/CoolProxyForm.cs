@@ -34,8 +34,6 @@ namespace CoolProxy
     {
         private bool firstTimeMinimized = true;
 
-        KeyboardHook keyboardHook = new KeyboardHook();
-
         private GridListManager gridManager;
 
         private GUIManager guiManager;

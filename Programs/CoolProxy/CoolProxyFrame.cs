@@ -88,17 +88,19 @@ namespace CoolProxy
         {
             OpenMetaverse.Logger.Log(string.Format( "[FRAME]: Registering interface {0}", typeof(M)), OpenMetaverse.Helpers.LogLevel.Info);
 
-            List<Object> l = null;
+            List<object> l = null;
             if (!ModuleInterfaces.TryGetValue(typeof(M), out l))
             {
-                l = new List<Object>();
+                l = new List<object>();
                 ModuleInterfaces.Add(typeof(M), l);
             }
+
+            l.Add(mod);
         }
 
         public void UnregisterModuleInterface<M>(M mod)
         {
-            List<Object> l;
+            List<object> l;
             if (ModuleInterfaces.TryGetValue(typeof(M), out l))
             {
                 if (l.Remove(mod))

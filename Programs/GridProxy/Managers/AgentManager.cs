@@ -252,6 +252,156 @@ namespace GridProxy
         }
 
 
+        #region Touch and grab
+
+        /// <summary>
+        /// Grabs an object
+        /// </summary>
+        /// <param name="objectLocalID">an unsigned integer of the objects ID within the simulator</param>
+        /// <seealso cref="Simulator.ObjectsPrimitives"/>
+        public void Grab(uint objectLocalID)
+        {
+            Grab(objectLocalID, Vector3.Zero, Vector3.Zero, Vector3.Zero, 0, Vector3.Zero, Vector3.Zero, Vector3.Zero);
+        }
+
+        /// <summary>
+        /// Overload: Grab a simulated object
+        /// </summary>
+        /// <param name="objectLocalID">an unsigned integer of the objects ID within the simulator</param>
+        /// <param name="grabOffset"></param>
+        /// <param name="uvCoord">The texture coordinates to grab</param>
+        /// <param name="stCoord">The surface coordinates to grab</param>
+        /// <param name="faceIndex">The face of the position to grab</param>
+        /// <param name="position">The region coordinates of the position to grab</param>
+        /// <param name="normal">The surface normal of the position to grab (A normal is a vector perpindicular to the surface)</param>
+        /// <param name="binormal">The surface binormal of the position to grab (A binormal is a vector tangen to the surface
+        /// pointing along the U direction of the tangent space</param>
+        public void Grab(uint objectLocalID, Vector3 grabOffset, Vector3 uvCoord, Vector3 stCoord, int faceIndex, Vector3 position,
+            Vector3 normal, Vector3 binormal)
+        {
+            ObjectGrabPacket grab = new ObjectGrabPacket();
+
+            grab.AgentData.AgentID = Frame.Agent.AgentID;
+            grab.AgentData.SessionID = Frame.Agent.SessionID;
+
+            grab.ObjectData.LocalID = objectLocalID;
+            grab.ObjectData.GrabOffset = grabOffset;
+
+            grab.SurfaceInfo = new ObjectGrabPacket.SurfaceInfoBlock[1];
+            grab.SurfaceInfo[0] = new ObjectGrabPacket.SurfaceInfoBlock();
+            grab.SurfaceInfo[0].UVCoord = uvCoord;
+            grab.SurfaceInfo[0].STCoord = stCoord;
+            grab.SurfaceInfo[0].FaceIndex = faceIndex;
+            grab.SurfaceInfo[0].Position = position;
+            grab.SurfaceInfo[0].Normal = normal;
+            grab.SurfaceInfo[0].Binormal = binormal;
+
+            Frame.Network.InjectPacket(grab, Direction.Outgoing);
+        }
+
+        /// <summary>
+        /// Drag an object
+        /// </summary>
+        /// <param name="objectID"><seealso cref="UUID"/> of the object to drag</param>
+        /// <param name="grabPosition">Drag target in region coordinates</param>
+        public void GrabUpdate(UUID objectID, Vector3 grabPosition)
+        {
+            GrabUpdate(objectID, grabPosition, Vector3.Zero, Vector3.Zero, Vector3.Zero, 0, Vector3.Zero, Vector3.Zero, Vector3.Zero);
+        }
+
+        /// <summary>
+        /// Overload: Drag an object
+        /// </summary>
+        /// <param name="objectID"><seealso cref="UUID"/> of the object to drag</param>
+        /// <param name="grabPosition">Drag target in region coordinates</param>
+        /// <param name="grabOffset"></param>
+        /// <param name="uvCoord">The texture coordinates to grab</param>
+        /// <param name="stCoord">The surface coordinates to grab</param>
+        /// <param name="faceIndex">The face of the position to grab</param>
+        /// <param name="position">The region coordinates of the position to grab</param>
+        /// <param name="normal">The surface normal of the position to grab (A normal is a vector perpindicular to the surface)</param>
+        /// <param name="binormal">The surface binormal of the position to grab (A binormal is a vector tangen to the surface
+        /// pointing along the U direction of the tangent space</param>
+        public void GrabUpdate(UUID objectID, Vector3 grabPosition, Vector3 grabOffset, Vector3 uvCoord, Vector3 stCoord, int faceIndex, Vector3 position,
+            Vector3 normal, Vector3 binormal)
+        {
+            ObjectGrabUpdatePacket grab = new ObjectGrabUpdatePacket();
+            grab.AgentData.AgentID = Frame.Agent.AgentID;
+            grab.AgentData.SessionID = Frame.Agent.SessionID;
+
+            grab.ObjectData.ObjectID = objectID;
+            grab.ObjectData.GrabOffsetInitial = grabOffset;
+            grab.ObjectData.GrabPosition = grabPosition;
+            grab.ObjectData.TimeSinceLast = 0;
+
+            grab.SurfaceInfo = new ObjectGrabUpdatePacket.SurfaceInfoBlock[1];
+            grab.SurfaceInfo[0] = new ObjectGrabUpdatePacket.SurfaceInfoBlock();
+            grab.SurfaceInfo[0].UVCoord = uvCoord;
+            grab.SurfaceInfo[0].STCoord = stCoord;
+            grab.SurfaceInfo[0].FaceIndex = faceIndex;
+            grab.SurfaceInfo[0].Position = position;
+            grab.SurfaceInfo[0].Normal = normal;
+            grab.SurfaceInfo[0].Binormal = binormal;
+
+            Frame.Network.InjectPacket(grab, Direction.Outgoing);
+        }
+
+        /// <summary>
+        /// Release a grabbed object
+        /// </summary>
+        /// <param name="objectLocalID">The Objects Simulator Local ID</param>
+        /// <seealso cref="Simulator.ObjectsPrimitives"/>
+        /// <seealso cref="Grab"/>
+        /// <seealso cref="GrabUpdate"/>
+        public void DeGrab(uint objectLocalID)
+        {
+            DeGrab(objectLocalID, Vector3.Zero, Vector3.Zero, 0, Vector3.Zero, Vector3.Zero, Vector3.Zero);
+        }
+
+        /// <summary>
+        /// Release a grabbed object
+        /// </summary>
+        /// <param name="objectLocalID">The Objects Simulator Local ID</param>
+        /// <param name="uvCoord">The texture coordinates to grab</param>
+        /// <param name="stCoord">The surface coordinates to grab</param>
+        /// <param name="faceIndex">The face of the position to grab</param>
+        /// <param name="position">The region coordinates of the position to grab</param>
+        /// <param name="normal">The surface normal of the position to grab (A normal is a vector perpindicular to the surface)</param>
+        /// <param name="binormal">The surface binormal of the position to grab (A binormal is a vector tangen to the surface
+        /// pointing along the U direction of the tangent space</param>
+        public void DeGrab(uint objectLocalID, Vector3 uvCoord, Vector3 stCoord, int faceIndex, Vector3 position,
+            Vector3 normal, Vector3 binormal)
+        {
+            ObjectDeGrabPacket degrab = new ObjectDeGrabPacket();
+            degrab.AgentData.AgentID = Frame.Agent.AgentID;
+            degrab.AgentData.SessionID = Frame.Agent.SessionID;
+
+            degrab.ObjectData.LocalID = objectLocalID;
+
+            degrab.SurfaceInfo = new ObjectDeGrabPacket.SurfaceInfoBlock[1];
+            degrab.SurfaceInfo[0] = new ObjectDeGrabPacket.SurfaceInfoBlock();
+            degrab.SurfaceInfo[0].UVCoord = uvCoord;
+            degrab.SurfaceInfo[0].STCoord = stCoord;
+            degrab.SurfaceInfo[0].FaceIndex = faceIndex;
+            degrab.SurfaceInfo[0].Position = position;
+            degrab.SurfaceInfo[0].Normal = normal;
+            degrab.SurfaceInfo[0].Binormal = binormal;
+
+            Frame.Network.InjectPacket(degrab, Direction.Outgoing);
+        }
+
+        /// <summary>
+        /// Touches an object
+        /// </summary>
+        /// <param name="objectLocalID">an unsigned integer of the objects ID within the simulator</param>
+        /// <seealso cref="Simulator.ObjectsPrimitives"/>
+        public void Touch(uint objectLocalID)
+        {
+            Frame.Agent.Grab(objectLocalID);
+            Frame.Agent.DeGrab(objectLocalID);
+        }
+
+        #endregion Touch and grab
 
         #region Teleporting
 

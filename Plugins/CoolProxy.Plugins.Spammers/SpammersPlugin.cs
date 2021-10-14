@@ -20,6 +20,7 @@ namespace CoolProxy.Plugins.Spammers
 
 
             GUI.AddToggleFormQuick("Avatar", "Instant Message Spammer", new IMSpamForm(Proxy));
+            GUI.AddToggleFormQuick("Objects", "Touch Spammer", new TouchSpammerForm(Proxy));
         }
     }
 }

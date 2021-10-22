@@ -64,7 +64,7 @@ namespace CoolProxy.Plugins.ServiceTools
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(268, 49);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Add Item";
+            this.button1.Text = "Update Item";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -111,6 +111,7 @@ namespace CoolProxy.Plugins.ServiceTools
             // 
             // itemIDTextbox
             // 
+            this.itemIDTextbox.Enabled = false;
             this.itemIDTextbox.Location = new System.Drawing.Point(12, 103);
             this.itemIDTextbox.Name = "itemIDTextbox";
             this.itemIDTextbox.Size = new System.Drawing.Size(225, 20);
@@ -152,16 +153,17 @@ namespace CoolProxy.Plugins.ServiceTools
             // assetTypeCombo
             // 
             this.assetTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.assetTypeCombo.Enabled = false;
             this.assetTypeCombo.FormattingEnabled = true;
             this.assetTypeCombo.Location = new System.Drawing.Point(12, 300);
             this.assetTypeCombo.Name = "assetTypeCombo";
             this.assetTypeCombo.Size = new System.Drawing.Size(121, 21);
             this.assetTypeCombo.TabIndex = 13;
-            this.assetTypeCombo.SelectedIndexChanged += new System.EventHandler(this.assetTypeCombo_SelectedIndexChanged);
             // 
             // invTypeCombo
             // 
             this.invTypeCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.invTypeCombo.Enabled = false;
             this.invTypeCombo.FormattingEnabled = true;
             this.invTypeCombo.Location = new System.Drawing.Point(159, 300);
             this.invTypeCombo.Name = "invTypeCombo";
@@ -220,6 +222,7 @@ namespace CoolProxy.Plugins.ServiceTools
             // 
             // button2
             // 
+            this.button2.Enabled = false;
             this.button2.Location = new System.Drawing.Point(243, 101);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(37, 23);
@@ -232,7 +235,7 @@ namespace CoolProxy.Plugins.ServiceTools
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(159, 334);
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            255,
+            2147483647,
             0,
             0,
             0});
@@ -325,7 +328,7 @@ namespace CoolProxy.Plugins.ServiceTools
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "XInventoryServiceForm";
-            this.Text = "New Inventory Item...";
+            this.Text = "Edit Item...";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.XInventoryServiceForm_HelpButtonClicked);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.XInventoryServiceForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();

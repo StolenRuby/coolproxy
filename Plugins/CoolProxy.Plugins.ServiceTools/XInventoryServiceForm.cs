@@ -16,11 +16,47 @@ namespace CoolProxy.Plugins.ServiceTools
 
         private CoolProxyFrame Proxy;
 
-        public XInventoryServiceForm(CoolProxyFrame frame)
+        private InventoryItem currentItem;
+        private bool IsUpdating = false;
+
+        public XInventoryServiceForm(CoolProxyFrame frame, InventoryFolder folder) : this(frame)
         {
+            folderIDTextBox.Text = folder.UUID.ToString();
+        }
+
+        public XInventoryServiceForm(CoolProxyFrame frame) : this(frame, default(InventoryItem))
+        {
+            this.Text = "New Inventory Item...";
+            button1.Text = "Add Item";
+            button2.Enabled = true;
+            itemIDTextbox.Enabled = true;
+            invTypeCombo.Enabled = true;
+            assetTypeCombo.Enabled = true;
+        }
+
+        public XInventoryServiceForm(CoolProxyFrame frame, InventoryItem item)
+        {
+            if (item is default(InventoryItem))
+            {
+                currentItem = new InventoryItem(UUID.Zero);
+                currentItem.OwnerID = frame.Agent.AgentID;
+                currentItem.Permissions = new Permissions((uint)PermissionMask.All, 0, 0, 0, (uint)PermissionMask.All);
+                currentItem.CreationDate = DateTime.UtcNow;
+            }
+            else
+            {
+                // gross, but it needs to be a clone
+                currentItem = InventoryItem.FromOSD(item.GetOSD());
+                currentItem.UUID = item.UUID;
+                IsUpdating = true;
+
+                // another gross hack
+                if (currentItem.OwnerID == UUID.Zero)
+                    currentItem.OwnerID = frame.Agent.AgentID;
+            }
+
             Proxy = frame;
             InitializeComponent();
-
 
             assetTypeCombo.DataSource = Enum.GetNames(typeof(AssetType));
             assetTypeCombo.SelectedIndex = 0;
@@ -28,89 +64,58 @@ namespace CoolProxy.Plugins.ServiceTools
             invTypeCombo.DataSource = Enum.GetNames(typeof(InventoryType));
             invTypeCombo.SelectedIndex = 0;
 
-            this.Shown += XInventoryServiceForm_Shown;
-        }
-
-        private void XInventoryServiceForm_Shown(object sender, EventArgs e)
-        {
-            //string url = CoolProxy.Frame.OpenSim.InvetoryServerURI;
-            //if (url == string.Empty)
-            //    url = CoolProxy.Frame.OpenSim.CurrentGridURI;
-
-            //uriTextBox.Text = url + "xinventory";
+            nameTextbox.Text = currentItem?.Name ?? string.Empty;
+            descTextBox.Text = currentItem?.Description ?? string.Empty;
+            assetIDTextBox.Text = currentItem.AssetUUID.ToString();
+            itemIDTextbox.Text = currentItem.UUID.ToString();
+            assetTypeCombo.SelectedIndex = assetTypeCombo.Items.IndexOf(currentItem.AssetType.ToString());
+            invTypeCombo.SelectedIndex = invTypeCombo.Items.IndexOf(currentItem.InventoryType.ToString());
+            folderIDTextBox.Text = currentItem.ParentUUID.ToString();
+            numericUpDown1.Value = currentItem.Flags;
+            creatorIDTextBox.Text = currentItem.CreatorID.ToString();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string target_uri = Proxy.Network.CurrentSim.InvetoryServerURI;
-            if (target_uri == string.Empty)
-                target_uri = Proxy.Network.CurrentSim.GridURI;
+            currentItem.Name = nameTextbox.Text;
+            currentItem.Description = descTextBox.Text;
+            currentItem.CreatorData = creatorDataTextBox.Text;
 
-            target_uri += "xinventory";
+            if (UUID.TryParse(creatorIDTextBox.Text, out UUID creator_id))
+                currentItem.CreatorID = creator_id;
 
-            UUID assetID = UUID.Parse(assetIDTextBox.Text);
-            UUID ownerID = Proxy.Agent.AgentID;
+            if (UUID.TryParse(itemIDTextbox.Text, out UUID item_id))
+                currentItem.UUID = item_id;
 
-            UUID itemID = UUID.Parse(itemIDTextbox.Text);
-            UUID folderID = UUID.Parse(folderIDTextBox.Text);
+            if (UUID.TryParse(assetIDTextBox.Text, out UUID asset_id))
+                currentItem.AssetUUID = asset_id;
 
-            bool group_owned = false;
-            UUID groupID = UUID.Zero;
+            if (UUID.TryParse(folderIDTextBox.Text, out UUID folder_id))
+                currentItem.ParentUUID = folder_id;
 
+            currentItem.Flags = (uint)numericUpDown1.Value;
 
-            AssetType assetType = (AssetType)Enum.Parse(typeof(AssetType), assetTypeCombo.SelectedValue.ToString());
-            InventoryType invType = (InventoryType)Enum.Parse(typeof(InventoryType), invTypeCombo.SelectedValue.ToString());
+            currentItem.AssetType = (AssetType)Enum.Parse(typeof(AssetType), assetTypeCombo.SelectedValue.ToString());
+            currentItem.InventoryType = (InventoryType)Enum.Parse(typeof(InventoryType), invTypeCombo.SelectedValue.ToString());
 
-            string item_name = nameTextbox.Text;
-            string item_desc = descTextBox.Text;
-
-            string creatorData = creatorDataTextBox.Text;
-            string creatorID = creatorIDTextBox.Text;
-
-            uint nextPermissions = 532480;
-            uint currentPermissions = 581635;
-            uint basePermissions = 581635;
-            uint everyonePermissions = 0;
-            uint groupPermissions = 0;
-
-            uint sale_price = 0;
-
-            SaleType saleType = SaleType.Not;
-
-            uint flags = (uint)numericUpDown1.Value;
-
-            int creationDate = 0;
-
-            Proxy.OpenSim.XInventory.AddItem(
-                folderID, itemID, assetID, ownerID, 
-                assetType, invType, flags, item_name, item_desc, creationDate,
-                nextPermissions, currentPermissions, basePermissions, everyonePermissions, groupPermissions,
-                groupID, group_owned, sale_price, saleType,
-                creatorID, creatorData, success =>
+            GenericSuccessResult handle = (success) =>
+            {
+                if (success)
                 {
-                    if (success)
-                    {
-                        Proxy.Inventory.RequestFetchInventory(itemID, ownerID, false);
-                    }
-                    else Proxy.AlertMessage("Error adding item to suitcase!", false);
-                });
+                    Proxy.Inventory.InjectFetchInventoryReply(currentItem);
+                }
+                else Proxy.AlertMessage("Failed to store inventory item!", false);
+            };
+
+            if(IsUpdating)
+                Proxy.OpenSim.XInventory.UpdateItem(currentItem, handle);
+            else
+                Proxy.OpenSim.XInventory.AddItem(currentItem, handle);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             itemIDTextbox.Text = UUID.Random().ToString();
-        }
-
-        private void assetTypeCombo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            AssetType assetType = (AssetType)Enum.Parse(typeof(AssetType), assetTypeCombo.SelectedValue.ToString());
-
-
-            UUID folder_id = Proxy.Inventory.SuitcaseID != UUID.Zero ?
-                Proxy.Inventory.FindSuitcaseFolderForType((FolderType)assetType) :
-                Proxy.Inventory.FindFolderForType((FolderType)assetType);
-
-            folderIDTextBox.Text = folder_id.ToString();
         }
 
         private void XInventoryServiceForm_FormClosing(object sender, FormClosingEventArgs e)

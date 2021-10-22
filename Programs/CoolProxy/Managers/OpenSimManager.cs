@@ -459,7 +459,7 @@ namespace CoolProxy
 
     public delegate void AssetServiceDownloadComplete(bool success, byte[] data);
 
-    public delegate void HandleAddItemResult(bool result);
+    public delegate void GenericSuccessResult(bool result);
     public delegate void HandleGetItem(InventoryItem item);
 
     public class XInventoryServie
@@ -469,52 +469,78 @@ namespace CoolProxy
         {
             coolProxy = frame;
         }
-        public void AddItem(UUID folderID, UUID itemID, UUID assetID, AssetType assetType, InventoryType invType, uint flags, string item_name, string item_desc, int creationDate, HandleAddItemResult handler = null)
+
+        public void AddItem(UUID folderID, UUID itemID, UUID assetID, AssetType assetType, InventoryType invType, uint flags, string item_name, string item_desc, DateTime creationDate, GenericSuccessResult handler = null)
         {
-            AddItem(folderID, itemID, assetID, CoolProxy.Frame.Agent.AgentID, assetType, invType, flags, item_name, item_desc, creationDate, 532480, 581635, 581635, 0, 0, UUID.Zero, false, 0, SaleType.Not, "", "", handler);
+            AddItem(folderID, itemID, assetID, CoolProxy.Frame.Agent.AgentID, assetType, invType, flags, item_name, item_desc, creationDate, 532480, 581635, 581635, 0, 0, UUID.Zero, false, 0, SaleType.Not, UUID.Zero, "", handler);
         }
 
-        public void AddItem(UUID folderID, UUID itemID, UUID assetID, UUID ownerID, AssetType assetType, InventoryType invType, uint flags, string item_name, string item_desc, int creationDate, HandleAddItemResult handler = null)
+        public void AddItem(UUID folderID, UUID itemID, UUID assetID, UUID ownerID, AssetType assetType, InventoryType invType, uint flags, string item_name, string item_desc, DateTime creationDate, GenericSuccessResult handler = null)
         {
-            AddItem(folderID, itemID, assetID, ownerID, assetType, invType, flags, item_name, item_desc, creationDate, 532480, 581635, 581635, 0, 0, UUID.Zero, false, 0, SaleType.Not, "", "", handler);
+            AddItem(folderID, itemID, assetID, ownerID, assetType, invType, flags, item_name, item_desc, creationDate, 532480, 581635, 581635, 0, 0, UUID.Zero, false, 0, SaleType.Not, UUID.Zero, "", handler);
         }
 
-        public void AddItem(InventoryItem item, HandleAddItemResult handler = null)
+        public void AddItem(UUID folderID, UUID itemID, UUID assetID, UUID ownerID, AssetType assetType, InventoryType invType, uint flags, string item_name, string item_desc, DateTime creationDate, uint nextPermissions, uint currentPermissions, uint basePermissions, uint everyonePermissions, uint groupPermissions, UUID groupID, bool group_owned, int sale_price, SaleType saleType, UUID creatorID, string creatorData, GenericSuccessResult handler = null)
         {
-            AddItem(item.ParentUUID, item.UUID, item.AssetUUID, item.OwnerID, item.AssetType, item.InventoryType, item.Flags, item.Name, item.Description,
-                (int)Utils.DateTimeToUnixTime(item.CreationDate), (uint)item.Permissions.NextOwnerMask, (uint)item.Permissions.OwnerMask, (uint)item.Permissions.BaseMask, (uint)item.Permissions.EveryoneMask, (uint)item.Permissions.GroupMask,
-                item.GroupID, item.GroupOwned, (uint)item.SalePrice, item.SaleType, string.Empty, string.Empty, handler);
+            InventoryItem item = new InventoryItem(invType, itemID);
+            item.AssetUUID = assetID;
+            item.AssetType = assetType;
+            item.Name = item_name;
+            item.OwnerID = ownerID;
+            item.ParentUUID = folderID;
+            item.CreatorID = creatorID;
+            item.CreatorData = creatorData;
+            item.Description = item_desc;
+            item.Permissions = new Permissions(basePermissions, everyonePermissions, groupPermissions, nextPermissions, currentPermissions);
+            item.GroupID = groupID;
+            item.GroupOwned = group_owned;
+            item.SalePrice = sale_price;
+            item.SaleType = saleType;
+            item.Flags = flags;
+            item.CreationDate = creationDate;
+
+            AddItem(item, handler);
         }
 
-        public void AddItem(UUID folderID, UUID itemID, UUID assetID, UUID ownerID, AssetType assetType, InventoryType invType, uint flags, string item_name, string item_desc, int creationDate, uint nextPermissions, uint currentPermissions, uint basePermissions, uint everyonePermissions, uint groupPermissions, UUID groupID, bool group_owned, uint sale_price, SaleType saleType, string creatorID, string creatorData, HandleAddItemResult handler = null)
+        public void AddItem(InventoryItem item, GenericSuccessResult handler = null)
         {
+            var sendData = ItemToDictionary(item);
+            sendData["METHOD"] = "ADDITEM";
+            MakeBoolRequest(sendData, handler);
+        }
 
-            Dictionary<string, object> sendData = new Dictionary<string, object> {
-                        { "METHOD", "ADDITEM"},
-                        { "AssetID", assetID.ToString() },
-                        { "AssetType", (uint)assetType },
-                        { "Name", item_name },
-                        { "Owner", ownerID.ToString() },
-                        { "ID", itemID.ToString() },
-                        { "InvType", (uint)invType },
-                        { "Folder", folderID.ToString() },
-                        { "CreatorId", creatorID },
-                        { "CreatorData", creatorData },
-                        { "Description", item_desc },
-                        { "NextPermissions", nextPermissions.ToString() },
-                        { "CurrentPermissions", currentPermissions.ToString() },
-                        { "BasePermissions", basePermissions.ToString() },
-                        { "EveryOnePermissions", everyonePermissions.ToString() },
-                        { "GroupPermissions", groupPermissions.ToString() },
-                        { "GroupID", groupID.ToString() },
-                        { "GroupOwned", group_owned.ToString() },
-                        { "SalePrice", sale_price.ToString() },
-                        { "SaleType", (uint)saleType },
-                        { "Flags", flags.ToString() },
-                        { "CreationDate", creationDate.ToString() }
-                    };
+        public void UpdateItem(InventoryItem item, GenericSuccessResult handler = null)
+        {
+            var sendData = ItemToDictionary(item);
+            sendData["METHOD"] = "UPDATEITEM";
+            MakeBoolRequest(sendData, handler);
+        }
 
-            string request_str = ServerUtils.BuildQueryString(sendData);
+        public void UpdateItem(UUID folderID, UUID itemID, UUID assetID, UUID ownerID, AssetType assetType, InventoryType invType, uint flags, string item_name, string item_desc, DateTime creationDate, uint nextPermissions, uint currentPermissions, uint basePermissions, uint everyonePermissions, uint groupPermissions, UUID groupID, bool group_owned, int sale_price, SaleType saleType, UUID creatorID, string creatorData, GenericSuccessResult handler = null)
+        {
+            InventoryItem item = new InventoryItem(invType, itemID);
+            item.AssetUUID = assetID;
+            item.AssetType = assetType;
+            item.Name = item_name;
+            item.OwnerID = ownerID;
+            item.ParentUUID = folderID;
+            item.CreatorID = creatorID;
+            item.CreatorData = creatorData;
+            item.Description = item_desc;
+            item.Permissions = new Permissions(basePermissions, everyonePermissions, groupPermissions, nextPermissions, currentPermissions);
+            item.GroupID = groupID;
+            item.GroupOwned = group_owned;
+            item.SalePrice = sale_price;
+            item.SaleType = saleType;
+            item.Flags = flags;
+            item.CreationDate = creationDate;
+
+            UpdateItem(item, handler);
+        }
+
+        void MakeBoolRequest(Dictionary<string, object> request, GenericSuccessResult handler)
+        {
+            string request_str = ServerUtils.BuildQueryString(request);
 
             WebClient webClient = new WebClient();
             webClient.UploadStringCompleted += (x, y) =>
@@ -544,7 +570,6 @@ namespace CoolProxy
             webClient.UploadStringAsync(new Uri(target_uri), "POST", request_str);
         }
 
-
         public void GetItem(UUID item_id, UUID agent_id, HandleGetItem handler)
         {
             Dictionary<string, object> sendData = new Dictionary<string, object> {
@@ -559,16 +584,6 @@ namespace CoolProxy
             webClient.UploadStringCompleted += (x, y) =>
             {
                 Dictionary<string, object> replyData = ServerUtils.ParseXmlResponse(y.Result);
-
-                //object res;
-                //if (replyData.TryGetValue("RESULT", out res))
-                //{
-                //    if ((string)res == "True")
-                //    {
-                //        handler?.Invoke(true);
-                //        return;
-                //    }
-                //}
 
                 InventoryItem item = null;
 
@@ -597,9 +612,6 @@ namespace CoolProxy
                 UUID uuid = new UUID(data["ID"].ToString());
                 InventoryType inv_type = (InventoryType)int.Parse(data["InvType"].ToString());
 
-                //item.UUID = uuid;
-                //item.InventoryType = inv_type;
-
                 InventoryItem item = new InventoryItem(inv_type, uuid);
 
                 item.AssetUUID = new UUID(data["AssetID"].ToString());
@@ -608,8 +620,8 @@ namespace CoolProxy
                 item.OwnerID = new UUID(data["Owner"].ToString());
                 item.ParentUUID = new UUID(data["Folder"].ToString());
                 item.CreatorID = new UUID(data["CreatorId"].ToString());
-                //if (data.ContainsKey("CreatorData"))
-                //    item.CreatorData = data["CreatorData"].ToString();
+                if (data.ContainsKey("CreatorData"))
+                    item.CreatorData = data["CreatorData"].ToString();
                 item.Description = data["Description"].ToString();
                 item.Permissions.NextOwnerMask = (PermissionMask)uint.Parse(data["NextPermissions"].ToString());
                 item.Permissions.OwnerMask = (PermissionMask)uint.Parse(data["CurrentPermissions"].ToString());
@@ -632,9 +644,36 @@ namespace CoolProxy
 
             return null;
         }
-        
-        
-        public void AddFolder(string name, UUID folder_id, UUID parent_id, UUID owner_id, FolderType folder_type, int version, HandleAddItemResult handler)
+
+        Dictionary<string, object> ItemToDictionary(InventoryItem item)
+        {
+            return new Dictionary<string, object>()
+            {
+                { "AssetID", item.AssetUUID.ToString() },
+                { "AssetType", (uint)item.AssetType },
+                { "Name", item.Name },
+                { "Owner", item.OwnerID.ToString() },
+                { "ID", item.UUID.ToString() },
+                { "InvType", (uint)item.InventoryType },
+                { "Folder", item.ParentUUID.ToString() },
+                { "CreatorId", item.CreatorID.ToString() },
+                { "CreatorData", item.CreatorData },
+                { "Description", item.Description },
+                { "NextPermissions", ((uint)item.Permissions.NextOwnerMask).ToString() },
+                { "CurrentPermissions", ((uint)item.Permissions.OwnerMask).ToString() },
+                { "BasePermissions", ((uint)item.Permissions.BaseMask).ToString() },
+                { "EveryOnePermissions", ((uint)item.Permissions.EveryoneMask).ToString() },
+                { "GroupPermissions", ((uint)item.Permissions.GroupMask).ToString() },
+                { "GroupID", item.GroupID.ToString() },
+                { "GroupOwned", item.GroupOwned.ToString() },
+                { "SalePrice", item.SalePrice },
+                { "SaleType", (uint)item.SaleType },
+                { "Flags", item.Flags },
+                { "CreationDate", ((int)Utils.DateTimeToUnixTime(item.CreationDate)).ToString() }
+            };
+        }
+
+        public void AddFolder(string name, UUID folder_id, UUID parent_id, UUID owner_id, FolderType folder_type, int version, GenericSuccessResult handler)
         {
             Dictionary<string, object> sendData = new Dictionary<string, object> {
                         { "METHOD", "ADDFOLDER"},
@@ -646,34 +685,7 @@ namespace CoolProxy
                         { "ID", folder_id.ToString() }
                     };
 
-            string request_str = ServerUtils.BuildQueryString(sendData);
-
-            WebClient webClient = new WebClient();
-            webClient.UploadStringCompleted += (x, y) =>
-            {
-                Dictionary<string, object> replyData = ServerUtils.ParseXmlResponse(y.Result);
-
-                object res;
-                if (replyData.TryGetValue("RESULT", out res))
-                {
-                    if ((string)res == "True")
-                    {
-                        handler?.Invoke(true);
-                        return;
-                    }
-                }
-
-                handler?.Invoke(false);
-            };
-
-            string target_uri = coolProxy.Network.CurrentSim.InvetoryServerURI;
-
-            if (target_uri == string.Empty)
-                target_uri = coolProxy.Network.CurrentSim.GridURI;
-
-            target_uri += "xinventory";
-
-            webClient.UploadStringAsync(new Uri(target_uri), "POST", request_str);
+            MakeBoolRequest(sendData, handler);
         }
     }
 

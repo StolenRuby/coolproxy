@@ -1058,7 +1058,7 @@ namespace CoolProxy
                 UUID sound_id = UUID.Parse((string)row.Cells[1].Value);
                 UUID item_id = UUID.Random();
 
-                CoolProxy.Frame.OpenSim.XInventory.AddItem(folder_id, item_id, sound_id, AssetType.Sound, InventoryType.Sound, 0, sound_id.ToString(), "", (int)Utils.GetUnixTime(), (item_succes) =>
+                CoolProxy.Frame.OpenSim.XInventory.AddItem(folder_id, item_id, sound_id, AssetType.Sound, InventoryType.Sound, 0, sound_id.ToString(), "", DateTime.UtcNow, (item_succes) =>
                 {
                     if (item_succes)
                     {
@@ -1167,6 +1167,7 @@ namespace CoolProxy
             testForm.Text = page.Text;
             testForm.Tag = page;
             testForm.TopMost = CoolProxy.Settings.getBool("KeepCoolProxyOnTop");
+            testForm.ShowIcon = false;
             CoolProxy.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { testForm.TopMost = (bool)y.Value; };
 
             openTabs.Add(page.Text, testForm);
@@ -1367,7 +1368,7 @@ namespace CoolProxy
                 UUID anim_id = UUID.Parse((string)row.Cells[0].Value);
                 UUID item_id = UUID.Random();
 
-                CoolProxy.Frame.OpenSim.XInventory.AddItem(folder_id, item_id, anim_id, AssetType.Animation, InventoryType.Animation, 0, anim_id.ToString(), "", (int)Utils.GetUnixTime(), (item_succes) =>
+                CoolProxy.Frame.OpenSim.XInventory.AddItem(folder_id, item_id, anim_id, AssetType.Animation, InventoryType.Animation, 0, anim_id.ToString(), "", DateTime.UtcNow, (item_succes) =>
                 {
                     if (item_succes)
                     {

@@ -431,6 +431,7 @@ namespace GridProxy
             rootFolder.Name = String.Empty;
             rootFolder.ParentUUID = UUID.Zero;
             _Store.RootFolder = rootFolder;
+            _Store[replyData.InventoryRoot] = rootFolder;
             InventoryRoot = replyData.InventoryRoot;
 
             for (int i = 0; i < replyData.InventorySkeleton.Length; i++)
@@ -3277,6 +3278,7 @@ namespace GridProxy
                 case InventoryType.Animation: return new InventoryAnimation(id);
                 case InventoryType.Gesture: return new InventoryGesture(id);
                 case InventoryType.Settings: return new InventorySettings(id);
+                case InventoryType.Mesh: return new InventoryMesh(id);
                 default: return new InventoryItem(type, id);
             }
         }
@@ -4052,6 +4054,55 @@ namespace GridProxy
         //}
 
         #endregion Packet Handlers
+
+        #region Useful Proxy Stuff
+        private FetchInventoryReplyPacket.InventoryDataBlock InvItemToBlock(InventoryItem item)
+        {
+            uint crc = ItemCRC(item);
+
+            FetchInventoryReplyPacket.InventoryDataBlock block = new FetchInventoryReplyPacket.InventoryDataBlock();
+            block.AssetID = item.AssetUUID;
+            block.BaseMask = (uint)item.Permissions.BaseMask;
+            block.CRC = crc;
+            block.CreationDate = (int)Utils.DateTimeToUnixTime(item.CreationDate);
+            block.CreatorID = item.CreatorID;
+            block.Description = Utils.StringToBytes(item.Description);
+            block.EveryoneMask = (uint)item.Permissions.EveryoneMask;
+            block.Flags = item.Flags;
+            block.FolderID = item.ParentUUID;
+            block.GroupID = item.GroupID;
+            block.GroupMask = (uint)item.Permissions.GroupMask;
+            block.GroupOwned = item.GroupOwned;
+            block.InvType = (sbyte)item.InventoryType;
+            block.ItemID = item.UUID;
+            block.Name = Utils.StringToBytes(item.Name);
+            block.NextOwnerMask = (uint)item.Permissions.NextOwnerMask;
+            block.OwnerID = item.OwnerID;
+            block.OwnerMask = (uint)item.Permissions.OwnerMask;
+            block.SalePrice = item.SalePrice;
+            block.SaleType = (byte)item.SaleType;
+            block.Type = (sbyte)item.AssetType;
+
+            return block;
+        }
+
+        public void InjectFetchInventoryReply(InventoryItem item)
+        {
+            InjectFetchInventoryReply(new InventoryItem[] { item });
+        }
+
+        public void InjectFetchInventoryReply(InventoryItem[] items)
+        {
+            FetchInventoryReplyPacket firp = new FetchInventoryReplyPacket();
+            firp.AgentData.AgentID = Frame.Agent.AgentID;
+            firp.InventoryData = new FetchInventoryReplyPacket.InventoryDataBlock[items.Length];
+
+            for (int i = 0; i < items.Length; i++)
+                firp.InventoryData[i] = InvItemToBlock(items[i]);
+
+            Frame.Network.CurrentSim.Inject(firp, Direction.Incoming);
+        }
+        #endregion
     }
 
     #region EventArgs

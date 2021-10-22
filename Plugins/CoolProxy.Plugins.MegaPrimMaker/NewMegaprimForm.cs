@@ -102,7 +102,7 @@ namespace CoolProxy.Plugins.MegaPrimMaker
 
                     UUID item_id = UUID.Random();
 
-                    Proxy.OpenSim.XInventory.AddItem(folder_id, item_id, new_id, AssetType.Object, InventoryType.Object, 0, name, "", (int)Utils.DateTimeToUnixTime(DateTime.UtcNow), (created) =>
+                    Proxy.OpenSim.XInventory.AddItem(folder_id, item_id, new_id, AssetType.Object, InventoryType.Object, 0, name, "", DateTime.UtcNow, (created) =>
                     {
                         if (created)
                         {

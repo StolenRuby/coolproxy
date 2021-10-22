@@ -106,7 +106,7 @@ namespace CoolProxy.Plugins.Textures
                     Proxy.Inventory.FindSuitcaseFolderForType(FolderType.Texture) :
                     Proxy.Inventory.FindFolderForType(FolderType.Texture);
 
-                Proxy.OpenSim.XInventory.AddItem(folder_id, item_id, asset_id, AssetType.Texture, InventoryType.Texture, 0, asset_id.ToString(), "", (int)Utils.GetUnixTime(), (success) =>
+                Proxy.OpenSim.XInventory.AddItem(folder_id, item_id, asset_id, AssetType.Texture, InventoryType.Texture, 0, asset_id.ToString(), "", DateTime.UtcNow, (success) =>
                 {
                     Proxy.Inventory.RequestFetchInventory(item_id, Proxy.Agent.AgentID, false);
                 });

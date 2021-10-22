@@ -50,7 +50,6 @@ namespace CoolGUI.Controls
 
         private ContextMenuStrip _ContextMenu;
         private UUID _SelectedItemID;
-        private UUID inventoryRoot;
 
         /// <summary>
         /// Gets or sets the context menu associated with this control
@@ -83,9 +82,6 @@ namespace CoolGUI.Controls
 
             this.AfterExpand += InventoryTree_AfterExpand;
             this.AfterCollapse += InventoryTree_AfterCollapse;
-
-            this.TreeViewNodeSorter = new NodeSorter();
-            this.Sort();
         }
 
         private int GetFolderIcon(InventoryFolder folder, bool open)
@@ -177,34 +173,6 @@ namespace CoolGUI.Controls
             else if (!node.IsExpanded) node.Expand();
         }
 
-        public class NodeSorter : System.Collections.IComparer
-        {
-            public NodeSorter() { }
-
-            public int Compare(object x, object y)
-            {
-                TreeNode tx = x as TreeNode;
-                TreeNode ty = y as TreeNode;
-
-                if (tx.Tag is InventoryFolder && ty.Tag is InventoryFolder)
-                {
-                    InventoryFolder fa = (InventoryFolder)tx.Tag;
-                    InventoryFolder fb = (InventoryFolder)ty.Tag;
-
-                    if (fa.PreferredType != FolderType.None && fb.PreferredType == FolderType.None)
-                        return 1;
-                    else if (fa.PreferredType == FolderType.None && fb.PreferredType != FolderType.None)
-                        return -1;
-                    else return string.Compare(fa.Name, fb.Name);
-                }
-                else if (tx.Tag is InventoryItem && ty.Tag is InventoryItem)
-                {
-                    return DateTime.Compare(((InventoryItem)tx.Tag).CreationDate, ((InventoryItem)ty.Tag).CreationDate);
-                }
-                else return string.Compare(tx.Name, ty.Name);
-            }
-        }
-
         /// <summary>
         /// Thread-safe method for updating the contents of the specified folder UUID
         /// </summary>
@@ -217,21 +185,17 @@ namespace CoolGUI.Controls
                 TreeNode node = null;
                 TreeNodeCollection children;
 
-                if (folderID != Frame.Inventory.Store.RootFolder.UUID)
+                TreeNode[] found = Nodes.Find(folderID.ToString(), true);
+                if (found.Length > 0)
                 {
-                    TreeNode[] found = Nodes.Find(folderID.ToString(), true);
-                    if (found.Length > 0)
-                    {
-                        node = found[0];
-                        children = node.Nodes;
-                    }
-                    else
-                    {
-                        OpenMetaverse.Logger.Log("Received update for unknown TreeView node " + folderID, Helpers.LogLevel.Warning);
-                        return;
-                    }
+                    node = found[0];
+                    children = node.Nodes;
                 }
-                else children = this.Nodes;
+                else
+                {
+                    OpenMetaverse.Logger.Log("Received update for unknown TreeView node " + folderID, Helpers.LogLevel.Warning);
+                    return;
+                }
 
                 this.SuspendLayout();
                 this.BeginUpdate();
@@ -241,13 +205,14 @@ namespace CoolGUI.Controls
                 List<InventoryBase> contents = Frame.Inventory.Store.GetContents(folderID);
                 if (contents.Count == 0)
                 {
-                    //TreeNode add = children.Add(null, "(empty)");
-                    //add.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
-                    //add.ImageIndex = add.SelectedImageIndex = 52;
-                    node.Collapse();
+                    TreeNode add = children.Add(null, "(empty)");
+                    add.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
+                    add.ImageIndex = add.SelectedImageIndex = 52;
                 }
                 else
                 {
+                    List<TreeNode> nodes = new List<TreeNode>();
+
                     foreach (InventoryBase inv in contents)
                     {
                         string key = inv.UUID.ToString();
@@ -256,14 +221,16 @@ namespace CoolGUI.Controls
 
                         if (inv is InventoryFolder)
                         {
-                            _node = children.Add(key, inv.Name);
+                            _node = new TreeNode();
                             _node.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
+                            _node.Name = key;
+                            _node.Text = inv.Name;
 
                             InventoryFolder folder = inv as InventoryFolder;
                             _node.ImageIndex = _node.SelectedImageIndex = GetFolderIcon(folder, false);
                             _node.Tag = folder;
 
-                            TreeNode load = children[key].Nodes.Add(null, "(loading...)");
+                            TreeNode load = _node.Nodes.Add(null, "(loading...)");
                             load.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
                             load.ImageIndex = load.SelectedImageIndex = 52;
                         }
@@ -280,7 +247,9 @@ namespace CoolGUI.Controls
                             if ((mask & PermissionMask.Transfer) == 0)
                                 perm_str += " (no transfer)";
 
-                            _node = children.Add(key, inv.Name + perm_str);
+                            _node = new TreeNode();
+                            _node.Name = key;
+                            _node.Text = inv.Name + perm_str;
                             _node.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
                             _node.Tag = item;
 
@@ -296,6 +265,8 @@ namespace CoolGUI.Controls
                                 _node.ImageIndex = _node.SelectedImageIndex = 3;
                             else if (inv is InventoryLSL)
                                 _node.ImageIndex = _node.SelectedImageIndex = 29;
+                            else if(inv is InventoryMesh)
+                                _node.ImageIndex = _node.SelectedImageIndex = 23;
                             else if (inv is InventoryObject)
                             {
                                 InventoryObject obj = inv as InventoryObject;
@@ -390,7 +361,12 @@ namespace CoolGUI.Controls
                             else
                                 _node.ImageIndex = _node.SelectedImageIndex = 52;
                         }
+
+                        nodes.Add(_node);
                     }
+
+                    nodes.Sort(SortNodes);
+                    children.AddRange(nodes.ToArray());
                 }
 
                 this.EndUpdate();
@@ -398,12 +374,35 @@ namespace CoolGUI.Controls
             }
         }
 
+        private int SortNodes(TreeNode tx, TreeNode ty)
+        {
+            if (tx.Tag is InventoryFolder && ty.Tag is InventoryFolder)
+            {
+                InventoryFolder fa = (InventoryFolder)tx.Tag;
+                InventoryFolder fb = (InventoryFolder)ty.Tag;
+
+                if (fa.PreferredType != FolderType.None && fb.PreferredType == FolderType.None)
+                    return 1;
+                else if (fa.PreferredType == FolderType.None && fb.PreferredType != FolderType.None)
+                    return -1;
+                else return string.Compare(fa.Name, fb.Name);
+            }
+            else if (tx.Tag is InventoryItem && ty.Tag is InventoryItem)
+            {
+                return -DateTime.Compare(((InventoryItem)tx.Tag).CreationDate, ((InventoryItem)ty.Tag).CreationDate);
+            }
+            else if (tx.Tag is InventoryFolder && ty.Tag is InventoryItem)
+                return -1;
+            else if (ty.Tag is InventoryFolder && tx.Tag is InventoryItem)
+                return 1;
+            else return string.Compare(tx.Name, ty.Name);
+        }
+
         private void InitializeClient(ProxyFrame frame)
         {
             _Frame = frame;
 
             _Frame.Inventory.FolderUpdated += Inventory_OnFolderUpdated;
-            //_Plugin.Network.LoginProgress += Network_OnLogin;
             _Frame.Login.AddLoginResponseDelegate(new XmlRpcResponseDelegate(OnLoginResponse));
         }
 
@@ -415,7 +414,15 @@ namespace CoolGUI.Controls
 
             if (values.Contains("inventory-root"))
             {
-                inventoryRoot = new UUID((string)((System.Collections.Hashtable)(((System.Collections.ArrayList)values["inventory-root"])[0]))["folder_id"]);
+                var inventoryRoot = new UUID((string)((System.Collections.Hashtable)(((System.Collections.ArrayList)values["inventory-root"])[0]))["folder_id"]);
+                var _node = this.Nodes.Add(inventoryRoot.ToString(), "Inventory");
+
+                _node.ForeColor = Color.FromKnownColor(KnownColor.ScrollBar);
+
+                InventoryFolder folder = _Frame.Inventory.Store.RootFolder;
+                _node.ImageIndex = _node.SelectedImageIndex = GetFolderIcon(folder, false);
+                _node.Tag = folder;
+
                 UpdateFolder(inventoryRoot);
             }
         }

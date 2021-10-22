@@ -18,7 +18,9 @@ namespace CoolProxy.Plugins.ServiceTools
 
             gui.AddToggleFormQuick("Assets", "Asset Service Upload", new AssetServiceTool(frame));
             gui.AddToggleFormQuick("Avatar", "Grid Instant Message Tool", new GridIMTool(frame));
-            gui.AddToggleFormQuick("Inventory", "New Inventory Item", new XInventoryServiceForm(frame));
+
+            gui.AddInventoryItemOption("Edit Item...", (x) => new XInventoryServiceForm(frame, x).Show());
+            gui.AddInventoryFolderOption("Add Item...", (x) => new XInventoryServiceForm(frame, x).Show());
         }
     }
 }

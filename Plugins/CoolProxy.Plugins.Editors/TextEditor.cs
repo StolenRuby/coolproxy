@@ -53,7 +53,7 @@ namespace CoolProxy.Plugins.Editors
 
                     UUID item_id = UUID.Random();
 
-                    Proxy.OpenSim.XInventory.AddItem(folder_id, item_id, new_id, mItem.AssetType, mItem.InventoryType, mItem.Flags, mItem.Name, mItem.Description, (int)Utils.DateTimeToUnixTime(DateTime.UtcNow), (created) =>
+                    Proxy.OpenSim.XInventory.AddItem(folder_id, item_id, new_id, mItem.AssetType, mItem.InventoryType, mItem.Flags, mItem.Name, mItem.Description, DateTime.UtcNow, (created) =>
                     {
                         if(created)
                         {

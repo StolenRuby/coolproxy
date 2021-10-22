@@ -630,7 +630,7 @@ namespace CoolProxy
 
                 CoolProxy.Frame.OpenSim.XInventory.AddItem(
                     folder_id, item_id, asset_id, CoolProxy.Frame.Agent.AgentID,
-                    asset_type, (InventoryType)asset_type, 0, asset_id.ToString(), "", (int)Utils.GetUnixTime(), success =>
+                    asset_type, (InventoryType)asset_type, 0, asset_id.ToString(), "", DateTime.UtcNow, success =>
                     {
                         if (success)
                         {

@@ -62,7 +62,7 @@ namespace CoolProxy.Plugins.Editors
 
                     UUID item_id = UUID.Random();
 
-                    int creation_date = (int)Utils.DateTimeToUnixTime(checkBox2.Checked ? DateTime.UtcNow : mItem.CreationDate);
+                    DateTime creation_date = checkBox2.Checked ? DateTime.UtcNow : mItem.CreationDate;
 
                     bool full_perm = checkBox3.Checked;
 
@@ -73,7 +73,7 @@ namespace CoolProxy.Plugins.Editors
                     uint base_mask = full_perm ? (uint)PermissionMask.All : (uint)mItem.Permissions.BaseMask;
 
                     Proxy.OpenSim.XInventory.AddItem(folder_id, item_id, new_id, Proxy.Agent.AgentID, mItem.AssetType, mItem.InventoryType, mItem.Flags, mItem.Name, mItem.Description, creation_date,
-                            next_owner_mask, owner_mask, base_mask, everyone_mask, group_mas, mItem.GroupID, mItem.GroupOwned, (uint)mItem.SalePrice, mItem.SaleType, string.Empty, string.Empty, (created) =>
+                            next_owner_mask, owner_mask, base_mask, everyone_mask, group_mas, mItem.GroupID, mItem.GroupOwned, mItem.SalePrice, mItem.SaleType, UUID.Zero, string.Empty, (created) =>
                             {
                                 if (created)
                                 {

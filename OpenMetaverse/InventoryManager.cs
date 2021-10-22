@@ -232,6 +232,8 @@ namespace OpenMetaverse
         public InventoryType InventoryType;
         /// <summary>The <seealso cref="OpenMetaverse.UUID"/> of the creator of this item</summary>
         public UUID CreatorID;
+        /// <summary>The creator data for this item (Comes from XInventory)</summary>
+        public string CreatorData;
         /// <summary>A Description of this item</summary>
         public string Description;
         /// <summary>The <seealso cref="OpenMetaverse.Group"/>s <seealso cref="OpenMetaverse.UUID"/> this item is set to or owned by</summary>
@@ -885,6 +887,33 @@ namespace OpenMetaverse
         {
             get { return (SettingType)Flags; }
             set { Flags = (uint)value; }
+        }
+    }
+
+    /// <summary>
+    /// InventoryMesh Class
+    /// </summary>
+    [Serializable()]
+    public class InventoryMesh : InventoryItem
+    {
+        /// <summary>
+        /// Construct an InventoryGesture object
+        /// </summary>
+        /// <param name="itemID">A <seealso cref="OpenMetaverse.UUID"/> which becomes the 
+        /// <seealso cref="OpenMetaverse.InventoryItem"/> objects AssetUUID</param>
+        public InventoryMesh(UUID itemID)
+            : base(itemID)
+        {
+            InventoryType = InventoryType.Mesh;
+        }
+
+        /// <summary>
+        /// Construct an InventoryGesture object from a serialization stream
+        /// </summary>
+        public InventoryMesh(SerializationInfo info, StreamingContext ctxt)
+            : base(info, ctxt)
+        {
+            InventoryType = InventoryType.Mesh;
         }
     }
 
@@ -3689,6 +3718,7 @@ namespace OpenMetaverse
                 case InventoryType.Animation: return new InventoryAnimation(id);
                 case InventoryType.Gesture: return new InventoryGesture(id);
                 case InventoryType.Settings: return new InventorySettings(id);
+                case InventoryType.Mesh: return new InventoryMesh(id);
                 default: return new InventoryItem(type, id);
             }
         }

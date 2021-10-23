@@ -53,6 +53,7 @@ namespace CoolProxy.Plugins.Useful
             GUI.AddToolButton("UUID", "Avatar Picker to Clipboard", avatarPickerToClipboard);
             GUI.AddToolButton("UUID", "KeyTool from Clipboard", handleKeyToolButton);
 
+            if(Util.IsDebugMode)
             GUI.AddToggleFormQuick("Assets", "Upload Asset", new UploaderForm());
 
             GUI.AddInventoryItemOption("Copy Item ID", x => Clipboard.SetText(x.UUID.ToString()));

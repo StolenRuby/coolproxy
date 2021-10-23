@@ -17,18 +17,6 @@ namespace CoolProxy
 
         static public CoolProxyFrame Frame = null;
 
-        public static bool IsDebugMode
-        {
-            get
-            {
-                #if DEBUG
-                return true;
-                #else
-                return false;
-                #endif
-            }
-        }
-
         private static CoolProxyForm coolProxyForm;
 
         internal static GUIManager GUI { get { return coolProxyForm.GUI; } }

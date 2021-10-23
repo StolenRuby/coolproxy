@@ -138,6 +138,18 @@ namespace CoolProxy
                 return type.ToString().ToLower();
             }
         }
+        
+        public static bool IsDebugMode
+        {
+            get
+            {
+                #if DEBUG
+                return true;
+                #else
+                return false;
+                #endif
+            }
+        }
     }
 
     public static class UriExtensions

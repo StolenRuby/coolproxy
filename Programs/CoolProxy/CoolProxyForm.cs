@@ -108,7 +108,7 @@ namespace CoolProxy
             CoolProxy.Frame.Network.AddDelegate(PacketType.AttachedSound, Direction.Incoming, onAttachedSound);
             CoolProxy.Frame.Network.AddDelegate(PacketType.PreloadSound, Direction.Incoming, onPreloadSound);
 
-            CoolProxy.Frame.Network.AddDelegate(PacketType.AvatarAnimation, Direction.Incoming, onAvatarAnimation);
+            CoolProxy.Frame.Avatars.AvatarAnimation += Avatars_AvatarAnimation;
 
             CoolProxy.Frame.Objects.ObjectUpdate += Objects_ObjectUpdate;
 
@@ -221,21 +221,38 @@ namespace CoolProxy
             }
         }
 
-        private Packet onAvatarAnimation(Packet packet, RegionManager.RegionProxy sim)
+        private void Avatars_AvatarAnimation(object sender, AvatarAnimationEventArgs e)
         {
-            AvatarAnimationPacket avatarAnimationPacket = (AvatarAnimationPacket)packet;
-
-            foreach(var block in avatarAnimationPacket.AnimationList)
+            foreach(var anim in e.Animations)
             {
-                LogAnimation(block.AnimID, avatarAnimationPacket.Sender.ID);
+                LogAnimation(anim.AnimationID, e.AvatarID);
             }
-
-            return packet;
         }
 
         List<UUID> default_animations = Animations.ToDictionary().Keys.ToList();
 
         List<UUID> loggedAnimations = new List<UUID>();
+
+        Dictionary<UUID, string> Key2Fullnames = new Dictionary<UUID, string>();
+
+        string quick_format_name(AgentDisplayName name)
+        {
+            if(name.IsDefaultDisplayName)
+            {
+                if(name.LegacyLastName.ToLower() == "resident")
+                {
+                    return name.LegacyFirstName;
+                }
+                else
+                {
+                    return name.LegacyFirstName + " " + name.LegacyLastName;
+                }
+            }
+            else
+            {
+                return name.DisplayName + " (" + name.UserName + ")";
+            }
+        }
 
         void LogAnimation(UUID anim, UUID avatar)
         {
@@ -246,8 +263,46 @@ namespace CoolProxy
                 {
                     if(!loggedAnimations.Contains(anim) && !default_animations.Contains(anim))
                     {
-                        animsDataGridView.Rows.Add(anim.ToString(), avatar.ToString());
+                        string name_val;
+
+                        if (!Key2Fullnames.TryGetValue(avatar, out string str_name))
+                        {
+                            name_val = avatar.ToString();
+                            Key2Fullnames.Add(avatar, avatar.ToString());
+                            CoolProxy.Frame.Avatars.GetDisplayNames(new List<UUID>() { avatar }, (success, names, z) =>
+                            {
+                                if (success)
+                                {
+                                    foreach (var name in names)
+                                    {
+                                        UpdateLogName(name);
+                                    }
+                                }
+                            });
+                        }
+                        else name_val = str_name;
+
+                        animsDataGridView.Rows.Add(anim.ToString(), name_val);
                         loggedAnimations.Add(anim);
+                    }
+                }
+            }
+        }
+
+        private void UpdateLogName(AgentDisplayName name)
+        {
+            if (animsDataGridView.InvokeRequired) animsDataGridView.BeginInvoke(new Action(() => UpdateLogName(name)));
+            else
+            {
+                string n = quick_format_name(name);
+                Key2Fullnames[name.ID] = n;
+
+                string str_key = name.ID.ToString();
+                foreach(DataGridViewRow row in animsDataGridView.Rows)
+                {
+                    if((string)row.Cells[1].Value == str_key)
+                    {
+                        row.Cells[1].Value = n;
                     }
                 }
             }

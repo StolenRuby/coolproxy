@@ -18,6 +18,7 @@ namespace GridProxy
         public LoginProxy Login { get; private set; }
         public RegionManager Network { get; private set; }
         public AgentManager Agent { get; private set; }
+        public AvatarManager Avatars { get; private set; }
         public ObjectManager Objects { get; private set; }
         public InventoryManager Inventory { get; private set; }
         public GridManager Grid { get; private set; }
@@ -56,6 +57,7 @@ namespace GridProxy
             Login = new LoginProxy(this);
             Network = new RegionManager(this);
             Agent = new AgentManager(this);
+            Avatars = new AvatarManager(this);
             Objects = new ObjectManager(this);
             Inventory = new InventoryManager(this);
             Grid = new GridManager(this);

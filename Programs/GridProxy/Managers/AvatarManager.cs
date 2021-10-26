@@ -766,7 +766,7 @@ namespace GridProxy
         /// <param name="e">The EventArgs object containing the packet data</param>
         protected Packet AvatarAppearanceHandler(Packet packet, RegionProxy simulator)
         {
-            if (m_AvatarAppearance != null)// || Proxy.Config.AVATAR_TRACKING)
+            //if (m_AvatarAppearance != null)// || Proxy.Config.AVATAR_TRACKING)
             {
                 AvatarAppearancePacket appearance = (AvatarAppearancePacket)packet;
 
@@ -794,7 +794,7 @@ namespace GridProxy
                 }
 
                 Avatar av = simulator.ObjectsAvatars.Values.FirstOrDefault((Avatar a) => { return a.ID == appearance.Sender.ID; });
-                if (av != null)
+                if (av != default(Avatar))
                 {
                     av.Textures = textureEntry;
                     av.VisualParameters = visualParams.ToArray();

@@ -1,5 +1,6 @@
 ﻿using GridProxy;
 using OpenMetaverse;
+using OpenMetaverse.Assets;
 using OpenMetaverse.Packets;
 using OpenMetaverse.StructuredData;
 using System;
@@ -191,6 +192,12 @@ namespace CoolProxy.Plugins.CopyBot
 
             importProgressForm = new ImportProgressForm();
             importProgressForm.Show();
+
+            var wearables = GenerateWearable(options.Wearables);
+            foreach (var item in wearables)
+            {
+                UploadWearble(item.Name, item.AssetData, item.WearableType, AssetType.Bodypart);
+            }
 
             importWorker = new BackgroundWorker();
             importWorker.DoWork += Worker_DoWork;
@@ -445,6 +452,49 @@ namespace CoolProxy.Plugins.CopyBot
                 default:
                     return null;
             }
+        }
+
+        public List<AssetWearable> GenerateWearable(List<ImportableWearable> importable)
+        {
+            List<AssetWearable> assetWearables = new List<AssetWearable>();
+
+            foreach (var item in importable)
+            {
+                AssetWearable wearable = new AssetBodypart();
+
+                wearable.Name = item.Name;
+                wearable.Description = string.Empty;
+                wearable.Creator = UUID.Zero;
+                wearable.ForSale = SaleType.Not;
+                wearable.Group = UUID.Zero;
+                wearable.GroupOwned = false;
+                wearable.LastOwner = UUID.Zero;
+                wearable.WearableType = item.Type;
+
+                var perms = new Permissions();
+                perms.BaseMask = PermissionMask.All;
+                perms.EveryoneMask = PermissionMask.None;
+                perms.GroupMask = PermissionMask.None;
+                perms.NextOwnerMask = PermissionMask.All;
+                perms.OwnerMask = PermissionMask.All;
+
+                wearable.Permissions = perms;
+
+                wearable.Params = new Dictionary<int, float>();
+
+                foreach (var pair in item.VisualParams)
+                {
+                    wearable.Params.Add(pair.Key, pair.Value);
+                }
+
+                // todo: textures...
+
+                wearable.Encode();
+
+                assetWearables.Add(wearable);
+            }
+
+            return assetWearables;
         }
     }
 

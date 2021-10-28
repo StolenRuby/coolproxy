@@ -31,15 +31,13 @@ namespace CoolProxy.Plugins.Textures
         {
             var selection = Proxy.Agent.Selection.ToList();
 
-            var objects = Proxy.Network.CurrentSim.ObjectsPrimitives.Where(x => selection.Contains(x.Key));
+            var objects = Proxy.Network.CurrentSim.ObjectsPrimitives.FindAll(x => selection.Contains(x.LocalID));
 
             List<UUID> textures_ids = new List<UUID>();
             List<UUID> material_ids = new List<UUID>();
 
-            foreach (var pair in objects)
+            foreach (var prim in objects)
             {
-                Primitive prim = pair.Value;
-                
                 if(prim.Textures != null)
                 {
                     LogFace(textures_ids, material_ids, prim.Textures.DefaultTexture);

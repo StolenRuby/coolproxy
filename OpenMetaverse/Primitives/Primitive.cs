@@ -1094,7 +1094,7 @@ namespace OpenMetaverse
 
             prim["id"] = OSD.FromUUID(ID);
             prim["localid"] = OSD.FromUInteger(LocalID);
-            prim["parentid"] = OSD.FromUInteger(ParentID);
+            prim["parentid"] = IsAttachment ? new OSDInteger(0) : OSD.FromUInteger(ParentID);
 
             prim["volume"] = volume;
 

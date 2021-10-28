@@ -1134,7 +1134,7 @@ namespace GridProxy
         {
             public Dictionary<uint, Avatar> ObjectsAvatars = new Dictionary<uint, Avatar>();
 
-            public Dictionary<uint, Primitive> ObjectsPrimitives = new Dictionary<uint, Primitive>();
+            public InternalDictionary<uint, Primitive> ObjectsPrimitives = new InternalDictionary<uint, Primitive>();
 
             internal InternalDictionary<UUID, Vector3> avatarPositions = new InternalDictionary<UUID, Vector3>();
 

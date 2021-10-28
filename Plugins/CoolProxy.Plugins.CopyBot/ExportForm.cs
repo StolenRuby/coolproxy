@@ -19,9 +19,6 @@ namespace CoolProxy.Plugins.CopyBot
     {
         CoolProxyFrame Frame = null;
 
-        Dictionary<int, uint> indexToLocalID= new Dictionary<int, uint>();
-        Dictionary<UUID, int> uuidToIndex = new Dictionary<UUID, int>();
-
         List<Primitive> primsToExport = new List<Primitive>();
         List<UUID> primsWaiting = new List<UUID>();
 
@@ -52,23 +49,34 @@ namespace CoolProxy.Plugins.CopyBot
             this.FormClosing += (x, y) => Frame.Objects.ObjectProperties -= Objects_ObjectProperties;
         }
 
-        private void Objects_ObjectProperties(object sender, ObjectPropertiesEventArgs e)
+        private void Objects_ObjectProperties(object sender, GridProxy.ObjectPropertiesEventArgs e)
         {
             lock(primsWaiting)
             {
                 if (primsWaiting.Contains(e.Properties.ObjectID))
                 {
                     primsWaiting.Remove(e.Properties.ObjectID);
-                    updateCount();
 
-                    if(uuidToIndex.ContainsKey(e.Properties.ObjectID))
+                    dataGridView.BeginInvoke(new Action(() =>
                     {
-                        int index = uuidToIndex[e.Properties.ObjectID];
-                        dataGridView.Invoke(new Action(() =>
+                        foreach(DataGridViewRow row in dataGridView.Rows)
                         {
-                            dataGridView.Rows[index].Cells[2].Value = e.Properties.Name;
-                        }));
-                    }
+                            if((UUID)row.Cells[5].Value == e.Properties.ObjectID)
+                            {
+                                string name = e.Properties.Name;
+
+                                if(e.Prim?.IsAttachment ?? false)
+                                {
+                                    name += " (worn on " + Utils.EnumToText(e.Prim.PrimData.AttachmentPoint) + ")";
+                                }
+
+                                row.Cells[2].Value = name;
+                                break;
+                            }
+                        }
+                    }));
+
+                    updateCount();
                 }
             }
         }
@@ -102,16 +110,19 @@ namespace CoolProxy.Plugins.CopyBot
             {
                 if(TargetAvatar.VisualParameters != null)
                 {
-                    dataGridView.Rows.Add(true, CopyBot.Properties.Resources.BodyShape, "Shape", 0, (int)WearableType.Shape);
-                    //dataGridView.Rows.Add(true, CopyBot.Properties.Resources.Skin, "Baked Skin", 0, (int)WearableType.Skin);
+                    dataGridView.Rows.Add(true, CopyBot.Properties.Resources.Skin, TargetAvatar.Name + "'s Skin", 0, (int)WearableType.Skin, UUID.Zero);
+                    dataGridView.Rows.Add(true, CopyBot.Properties.Resources.BodyShape, TargetAvatar.Name + "'s Shape", 0, (int)WearableType.Shape, UUID.Zero);
+                    dataGridView.Rows.Add(true, CopyBot.Properties.Resources.Hair, TargetAvatar.Name + "'s Hair", 0, (int)WearableType.Hair, UUID.Zero);
+                    dataGridView.Rows.Add(true, CopyBot.Properties.Resources.Inv_Eye, TargetAvatar.Name + "'s Eyes", 0, (int)WearableType.Eyes, UUID.Zero);
+
+                    // todo: programatically determine what other wearables the avatar is wearing...
                 }
 
-                selectedRoots = Frame.Network.CurrentSim.ObjectsPrimitives.Values.Where((x) => { return x.ParentID == TargetAvatar.LocalID; }).ToList();
+                selectedRoots = Frame.Network.CurrentSim.ObjectsPrimitives.FindAll((x) => { return x.ParentID == TargetAvatar.LocalID; }).ToList();
             }
             else
             {
-                selectedRoots = Frame.Network.CurrentSim.ObjectsPrimitives.Values.Where((x) =>
-                    { return selection.Contains(x.LocalID) && x.ParentID == 0; }).ToList();
+                selectedRoots = Frame.Network.CurrentSim.ObjectsPrimitives.FindAll(x => { return selection.Contains(x.LocalID) && x.ParentID == 0; }).ToList();
             }
             
             foreach (Primitive root in selectedRoots)
@@ -120,26 +131,26 @@ namespace CoolProxy.Plugins.CopyBot
                 if ((root.Properties?.Name ?? string.Empty) != string.Empty)
                     text = root.Properties.Name;
 
-                int index = dataGridView.Rows.Add(true, CopyBot.Properties.Resources.Object, text, 1, root.LocalID);
-
-                uuidToIndex.Add(root.ID, index);
-                indexToLocalID.Add(index, root.LocalID);
+                if(root.IsAttachment)
+                {
+                    text += " (worn on " + Utils.EnumToText(root.PrimData.AttachmentPoint) + ")";
+                }
+                
+                dataGridView.Rows.Add(true, CopyBot.Properties.Resources.Object, text, 1, root.LocalID, root.ID);
             }
             
             List<uint> rootLocalIDs = selectedRoots.Select(x => x.LocalID).ToList();
 
-            primsToExport = Frame.Network.CurrentSim.ObjectsPrimitives.Values.Where(x => rootLocalIDs.Contains(x.LocalID) || rootLocalIDs.Contains(x.ParentID)).ToList();
+            primsToExport = Frame.Network.CurrentSim.ObjectsPrimitives.FindAll(x => rootLocalIDs.Contains(x.LocalID) || rootLocalIDs.Contains(x.ParentID)).ToList();
             primsWaiting = primsToExport.Select(x => x.ID).ToList();
 
-            if (primsToExport.Count > 0)
+            if (primsToExport.Count > 0) // todo: seperate into packets of 250 blocks (or less)
                 Frame.Objects.SelectObjects(Frame.Network.CurrentSim, primsToExport.Select(x => x.LocalID).ToArray());
             else
                 countLabel.Text = "Names loaded!";
 
             this.Focus();
         }
-
-        static int[] SHAPE_PARAM_LIST = new int[] { 1, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 33, 34, 35, 36, 37, 38, 80, 105, 155, 157, 185, 193, 196, 505, 506, 507, 515, 517, 518, 629, 637, 646, 647, 649, 650, 652, 653, 656, 659, 662, 663, 664, 665, 675, 676, 678, 682, 683, 684, 685, 690, 692, 693, 753, 756, 758, 759, 760, 764, 765, 769, 773, 795, 796, 799, 841, 842, 879, 880 };
 
         private void saveButton_Click(object sender, EventArgs e)
         {
@@ -170,11 +181,44 @@ namespace CoolProxy.Plugins.CopyBot
 
             var final_selection = primsToExport.Where(x => selected.Contains(x.LocalID) || selected.Contains(x.ParentID)).ToList();
 
+            OSDMap export = (OSDMap)Helpers.PrimListToOSD(final_selection);
+
+            if (TargetAvatar?.VisualParameters != null)
+            {
+                var visual_params = TargetAvatar.VisualParameters;
+                foreach (var type in wearables)
+                {
+                    string str_type = type.ToString().ToLower();
+                    Dictionary<int, int> paramvalues = new Dictionary<int, int>();
+                    int pcount = 0;
+                    OSDMap visuals_osd = new OSDMap();
+                    foreach (KeyValuePair<int, VisualParam> kvp in VisualParams.Params)
+                    {
+                        if (kvp.Value.Group == 0 && kvp.Value.Wearable == str_type)
+                        {
+                            paramvalues.Add(kvp.Value.ParamID, visual_params[pcount]);
+                            visuals_osd[kvp.Value.ParamID.ToString()] = visual_params[pcount];
+                            pcount++;
+                        }
+                    }
+
+                    // todo: textures...
+
+                    OSDMap wearable = new OSDMap();
+                    wearable["type"] = "wearable";
+                    wearable["params"] = visuals_osd;
+                    wearable["name"] = TargetAvatar.Name + "'s " + type.ToString();
+                    wearable["flag"] = (int)type;
+
+                    export[UUID.Random().ToString()] = wearable;
+                }
+            }
+
             if (Mode == OutputMode.Save)
             {
                 using (SaveFileDialog dialog = new SaveFileDialog())
                 {
-                    if(TargetAvatar != null)
+                    if (TargetAvatar != null)
                     {
                         dialog.FileName = TargetAvatar.Name;
                     }
@@ -194,13 +238,11 @@ namespace CoolProxy.Plugins.CopyBot
                     dialog.Filter = "Object XML|*.xml";
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
-                        OSDMap map = (OSDMap)Helpers.PrimListToOSD(final_selection);
-
-                        string output = OSDParser.SerializeLLSDXmlString(map);
+                        string output = OSDParser.SerializeLLSDXmlString(export);
                         try { File.WriteAllText(dialog.FileName, output); }
                         catch (Exception ex) { Frame.SayToUser(ex.Message); }
 
-                        Frame.SayToUser("Exported " + final_selection.Count + " prims to " + dialog.FileName);
+                        Frame.AlertMessage("Saved to " + dialog.FileName, false);
 
                         this.Close();
                     }
@@ -208,118 +250,13 @@ namespace CoolProxy.Plugins.CopyBot
             }
             else
             {
-                List<Primitive> updated_prim_list = new List<Primitive>();
-                foreach(var p in final_selection)
-                {
-                    var n = new Primitive(p);
-                    if(p.IsAttachment)
-                    {
-                        n.PrimData.State = (byte)p.PrimData.AttachmentPoint;
-                        n.ParentID = 0;
-                    }
+                ImportOptions importOptions = new ImportOptions(export);
 
-                    n.OwnerID = Frame.Agent.AgentID;
+                if (Mode == OutputMode.Import)
+                    CopyBotPlugin.Instance.ImportLinkset(importOptions);
+                else
+                    CopyBotPlugin.Instance.ForgeLinkset(importOptions);
 
-                    if (n.Properties != null)
-                    {
-                        n.Properties.OwnerID = Frame.Agent.AgentID;
-
-                        if(n.Properties.Permissions != null)
-                        {
-                            n.Properties.Permissions.EveryoneMask = PermissionMask.None;
-                            n.Properties.Permissions.GroupMask = PermissionMask.None;
-                        }
-                    }
-
-                    updated_prim_list.Add(n);
-                }
-
-                var visual_params = TargetAvatar.VisualParameters;
-
-                //if (JustATestPlugin.Instance.Appearances.TryGetValue(TargetAvatar, out appearancePacket))
-                {
-                    // load visual parameters onto dictionary
-                    Dictionary<int, int> paramvalues = new Dictionary<int, int>();
-                    int pcount = 0;
-                    foreach (KeyValuePair<int, VisualParam> kvp in VisualParams.Params)
-                    {
-                        if (kvp.Value.Group == 0)
-                        {
-                            paramvalues.Add(kvp.Value.ParamID, visual_params[pcount]);
-                            pcount++;
-                        }
-                    }
-
-                    foreach (WearableType type in wearables)
-                    {
-                        AssetBodypart shape = new AssetBodypart();
-                        shape.Name = "Shape";
-                        shape.Description = string.Empty;
-                        shape.Creator = UUID.Zero;
-                        shape.ForSale = SaleType.Not;
-                        shape.Group = UUID.Zero;
-                        shape.GroupOwned = false;
-                        shape.LastOwner = UUID.Zero;
-                        shape.WearableType = type;
-
-                        var perms = new Permissions();
-                        perms.BaseMask = PermissionMask.All;
-                        perms.EveryoneMask = PermissionMask.None;
-                        perms.GroupMask = PermissionMask.None;
-                        perms.NextOwnerMask = PermissionMask.All;
-                        perms.OwnerMask = PermissionMask.All;
-
-                        shape.Permissions = perms;
-
-                        shape.Params = new Dictionary<int, float>();
-
-                        if(type == WearableType.Shape)
-                        {
-                            foreach (int param in SHAPE_PARAM_LIST)
-                            {
-                                shape.Params.Add(param, Utils.ByteToFloat((byte)paramvalues[param], VisualParams.Params[param].MinValue, VisualParams.Params[param].MaxValue));
-                            }
-                        }
-                        // todo: the rest...
-
-                        shape.Encode();
-
-                        CopyBotPlugin.Instance.UploadWearble(TargetAvatar.Name + "'s " + type.ToString(), shape.AssetData, type, AssetType.Bodypart);
-
-                        //Frame.OpenSim.Assets.UploadAsset(UUID.Random(), AssetType.Bodypart, "Shape", "", UUID.Zero, shape.AssetData, (success, new_asset_id) =>
-                        //{
-                        //    if(success)
-                        //    {
-
-                        //        UUID folder_id = Frame.Inventory.SuitcaseID != UUID.Zero ?
-                        //            Frame.Inventory.FindSuitcaseFolderForType(FolderType.BodyPart) :
-                        //            Frame.Inventory.FindFolderForType(FolderType.BodyPart);
-
-                        //        UUID item_id = UUID.Random();
-
-                        //        Frame.OpenSim.XInventory.AddItem(folder_id, item_id, new_asset_id, AssetType.Bodypart, InventoryType.Wearable, (uint)type, "Shape", "", DateTime.UtcNow, (item_succes) =>
-                        //        {
-                        //            if (item_succes)
-                        //            {
-                        //                Frame.SayToUser("Success!");
-                        //                Frame.Inventory.RequestFetchInventory(item_id, Frame.Agent.AgentID, false);
-                        //            }
-                        //            else Frame.SayToUser("Failed!");
-                        //        });
-                        //    }
-                        //});
-                    }
-                }
-
-                List<Linkset> linksets = CopyBotPlugin.PrimListToLinksetList(updated_prim_list);
-                if (Mode == OutputMode.Forge)
-                {
-                    CopyBotPlugin.Instance.ForgeLinkset(linksets);
-                }
-                else if(Mode == OutputMode.Import)
-                {
-                    CopyBotPlugin.Instance.ImportLinkset(linksets);
-                }
                 this.Close();
             }
         }

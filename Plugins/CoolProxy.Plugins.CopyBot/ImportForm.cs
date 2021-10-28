@@ -16,7 +16,7 @@ namespace CoolProxy.Plugins.CopyBot
 {
     public partial class ImportForm : Form
     {
-        CoolProxyFrame Frame = null;
+        private readonly CoolProxyFrame Proxy;
 
         Dictionary<int, Linkset> indexToLinkset = new Dictionary<int, Linkset>();
 
@@ -24,52 +24,35 @@ namespace CoolProxy.Plugins.CopyBot
 
         bool ViaCopybot = false;
 
-        public ImportForm(CoolProxyFrame frame, string filename, CopyBotPlugin plugin)
+        ImportOptions Options;
+
+        public ImportForm(CoolProxyFrame frame, ImportOptions options, CopyBotPlugin plugin)
         {
-            this.Frame = frame;
+            Options = options;
+
+            Proxy = frame;
             InitializeComponent();
 
-            if(!decodeXML(filename, out string error))
-            {
-                this.Load += (x, y) => Close();
-                Frame.AlertMessage(error, false);
-                return;
-            }
-
             ThePlugin = plugin;
-
             Focus();
         }
 
-        bool decodeXML(string filename, out string error)
+        Dictionary<UUID, object> importMap = new Dictionary<UUID, object>();
+
+        private void PostBuild(object sender, EventArgs e)
         {
-            string xml;
-            List<Primitive> prims;
-
-            try { xml = File.ReadAllText(filename); }
-            catch (Exception e)
+            foreach(var wearable in Options.Wearables)
             {
-                error = e.Message;
-                return false;
+                UUID id = UUID.Random();
+                dataGridView.Rows.Add(true, CopyBotPlugin.WearableTypeToIcon(wearable.Type), wearable.Name, 0, wearable.Type, id);
+                importMap[id] = wearable;
             }
 
-            try { prims = Helpers.OSDToPrimList(OSDParser.DeserializeLLSDXml(xml)); }
-            catch (Exception e)
+            foreach(var linkset in Options.Linksets)
             {
-                error = "Failed to deserialize " + filename + ": " + e.Message;
-                return false;
+                dataGridView.Rows.Add(true, Properties.Resources.Object, linkset.RootPrim.Properties?.Name ?? "Object", 1, linkset.RootPrim.LocalID, linkset.RootPrim.ID);
+                importMap[linkset.RootPrim.ID] = linkset;
             }
-
-            List<Linkset> linksets = CopyBotPlugin.PrimListToLinksetList(prims);
-
-            foreach(var linkset in linksets)
-            {
-                int index = checkedListBox1.Items.Add(linkset.RootPrim.Properties?.Name ?? "Object", true);
-                indexToLinkset.Add(index, linkset);
-            }
-
-            error = string.Empty;
-            return true;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -91,12 +74,70 @@ namespace CoolProxy.Plugins.CopyBot
 
         private void splitButton1_Click(object sender, EventArgs e)
         {
+            ImportOptions importOptions = new ImportOptions();
+
+            importOptions.KeepPositions = checkBox1.Checked;
+
+            foreach(DataGridViewRow row in dataGridView.Rows)
+            {
+                if((bool)row.Cells[0].Value)
+                {
+                    int type = (int)row.Cells[3].Value;
+                    UUID id = (UUID)row.Cells[5].Value;
+                    object obj = importMap[id];
+                    if(type == 0)
+                    {
+                        ImportableWearable wearable = (ImportableWearable)obj;
+                        importOptions.Wearables.Add(wearable);
+                    }
+                    else
+                    {
+                        Linkset linkset = (Linkset)obj;
+                        importOptions.Linksets.Add(linkset);
+                    }
+                }
+            }
+
             if (ViaCopybot)
-                ThePlugin.ImportLinkset(indexToLinkset.Values.ToList());
+                ThePlugin.ImportLinkset(importOptions);
             else
-                ThePlugin.ForgeLinkset(indexToLinkset.Values.ToList());
+                ThePlugin.ForgeLinkset(importOptions);
 
             this.Close();
+        }
+
+
+
+        private void selectAllButton_Click(object sender, EventArgs e)
+        {
+            updateSelection(true, true);
+        }
+
+        private void selectObjectsButton_Click(object sender, EventArgs e)
+        {
+            updateSelection(true, false);
+        }
+
+        private void selectWearablesButton_Click(object sender, EventArgs e)
+        {
+            updateSelection(false, true);
+        }
+
+        void updateSelection(bool objects, bool wearables)
+        {
+            for (int i = 0; i < dataGridView.Rows.Count; i++)
+            {
+                int type = (int)dataGridView.Rows[i].Cells[3].Value;
+
+                if (type == 0)
+                {
+                    dataGridView.Rows[i].Cells[0].Value = wearables;
+                }
+                else
+                {
+                    dataGridView.Rows[i].Cells[0].Value = objects;
+                }
+            }
         }
     }
 }

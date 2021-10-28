@@ -5,6 +5,7 @@ using OpenMetaverse.StructuredData;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -36,6 +37,8 @@ namespace CoolProxy.Plugins.CopyBot
         BackgroundWorker importWorker;
         List<Linkset> Linksets;
 
+        private bool CancellingImport = false;
+
 
         public CopyBotPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
         {
@@ -63,7 +66,7 @@ namespace CoolProxy.Plugins.CopyBot
                     dialog.Filter = "Object File|*.xml";
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
-                        new ImportForm(Proxy, dialog.FileName, this).ShowDialog();
+                        new ImportForm(Proxy, new ImportOptions(dialog.FileName), this).ShowDialog();
                     }
                 }
             }
@@ -124,10 +127,10 @@ namespace CoolProxy.Plugins.CopyBot
             Proxy.Network.InjectPacket(item, Direction.Outgoing);
         }
 
-        internal void ForgeLinkset(List<Linkset> linksets)
+        internal void ForgeLinkset(ImportOptions options)
         {
             List<OSAssetPrim> assetPrims = new List<OSAssetPrim>();
-            foreach(var linkset in linksets)
+            foreach(var linkset in options.Linksets)
             {
                 OSAssetPrim asset = new OSAssetPrim(UUID.Random(), new byte[0]);
                 asset.Children = new List<OSPrimObject>();
@@ -176,14 +179,18 @@ namespace CoolProxy.Plugins.CopyBot
             }
         }
 
-        internal void ImportLinkset(List<Linkset> linksets)
+        internal void ImportLinkset(ImportOptions options)
         {
             if (ImporterBusy) return;
 
-            Proxy.SayToUser(string.Format("Importing {0} linksets", linksets.Count));
+            Proxy.SayToUser(string.Format("Importing {0} linksets", options.Linksets.Count));
 
-            Linksets = linksets;
+            Linksets = options.Linksets;
             ImporterBusy = true;
+            CancellingImport = false;
+
+            importProgressForm = new ImportProgressForm();
+            importProgressForm.Show();
 
             importWorker = new BackgroundWorker();
             importWorker.DoWork += Worker_DoWork;
@@ -191,10 +198,26 @@ namespace CoolProxy.Plugins.CopyBot
             importWorker.RunWorkerAsync();
         }
 
+        public void CancelImport()
+        {
+            CancellingImport = true;
+        }
+
         private void ImportWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             ImporterBusy = false;
-            Proxy.AlertMessage("Import complete.", false);
+            Proxy.AlertMessage(CancellingImport ? "Import cancelled." : "Import complete.", false);
+        }
+
+
+        ImportProgressForm importProgressForm;
+
+        int CountPrims(List<Linkset> linksets)
+        {
+            int count = linksets.Count;
+            foreach (var set in linksets)
+                count += set.Children.Count;
+            return count;
         }
 
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
@@ -204,8 +227,14 @@ namespace CoolProxy.Plugins.CopyBot
 
             //Proxy.SayToUser("Importing " + Linksets.Count + " structures.");
 
+            int linkset_count = CountPrims(Linksets);
+            int count = 0;
+
+            importProgressForm?.ReportProgress(count, linkset_count);
+
             foreach (Linkset linkset in Linksets)
             {
+                if (CancellingImport) return;
                 if (linkset.RootPrim.LocalID != 0)
                 {
                     state = ImporterState.RezzingParent;
@@ -231,11 +260,15 @@ namespace CoolProxy.Plugins.CopyBot
 
                     Proxy.Objects.SetPosition(Proxy.Network.CurrentSim, primsCreated[primsCreated.Count - 1].LocalID, linkset.RootPrim.Position);
 
+                    importProgressForm?.ReportProgress(++count, linkset_count);
+
                     state = ImporterState.RezzingChildren;
 
                     // Rez the child prims
                     foreach (Primitive prim in linkset.Children)
                     {
+                        if (CancellingImport) return;
+
                         currentPrim = prim;
                         currentPosition = prim.Position + linkset.RootPrim.Position;
 
@@ -248,6 +281,7 @@ namespace CoolProxy.Plugins.CopyBot
                         }
 
                         Proxy.Objects.SetPosition(Proxy.Network.CurrentSim, primsCreated[primsCreated.Count - 1].LocalID, currentPosition);
+                        importProgressForm?.ReportProgress(++count, linkset_count);
                     }
 
                     // Create a list of the local IDs of the newly created prims
@@ -296,6 +330,8 @@ namespace CoolProxy.Plugins.CopyBot
                 // Reset everything for the next linkset
                 primsCreated.Clear();
             }
+
+            importProgressForm?.ReportProgress(count, linkset_count, true);
         }
 
         private void Objects_ObjectUpdate(object sender, GridProxy.PrimEventArgs e)
@@ -393,6 +429,23 @@ namespace CoolProxy.Plugins.CopyBot
 
             return linksets.Values.ToList();
         }
+
+        public static Bitmap WearableTypeToIcon(WearableType type)
+        {
+            switch (type)
+            {
+                case WearableType.Skin:
+                    return Properties.Resources.Skin;
+                case WearableType.Shape:
+                    return Properties.Resources.BodyShape;
+                case WearableType.Eyes:
+                    return Properties.Resources.Inv_Eye;
+                case WearableType.Hair:
+                    return Properties.Resources.Hair;
+                default:
+                    return null;
+            }
+        }
     }
 
     public enum ImporterState
@@ -416,6 +469,115 @@ namespace CoolProxy.Plugins.CopyBot
         public Linkset(Primitive rootPrim)
         {
             RootPrim = rootPrim;
+        }
+    }
+
+    public class ImportableWearable
+    {
+        public string Name;
+        public WearableType Type;
+        public Dictionary<int, int> VisualParams;
+        public List<UUID> Textures;
+
+        public ImportableWearable(string name, WearableType type, Dictionary<int, int> param, List<UUID> textures)
+        {
+            Name = name;
+            Type = type;
+            VisualParams = param;
+            Textures = textures;
+        }
+    }
+
+    public class ImportOptions
+    {
+        public List<ImportableWearable> Wearables { get; private set; } = new List<ImportableWearable>();
+
+        public List<Linkset> Linksets { get; private set; } = new List<Linkset>();
+
+        public bool KeepPositions { get; set; } = false;
+
+        public ImportOptions(string filename)
+        {
+            try
+            {
+                string xml = File.ReadAllText(filename);
+                OSD osd = OSDParser.DeserializeLLSDXml(xml);
+                AddFromOSD(osd);
+            }
+            catch
+            {
+            }
+        }
+
+        public ImportOptions(OSDMap osd)
+        {
+            AddFromOSD(osd);
+        }
+
+        public ImportOptions()
+        {
+        }
+
+        private void AddFromOSD(OSD osd)
+        {
+            List<Primitive> prims = new List<Primitive>();
+
+            OSDMap map = (OSDMap)osd;
+            foreach (KeyValuePair<string, OSD> kvp in map)
+            {
+                OSDMap entry = (OSDMap)kvp.Value;
+
+                if (entry.ContainsKey("type") && entry["type"] == "wearable")
+                {
+                    WearableType type = (WearableType)entry["flag"].AsInteger();
+                    string name = entry["name"].ToString();
+
+                    Dictionary<int, int> paramvalues = new Dictionary<int, int>();
+
+                    OSDMap visual_params = (OSDMap)entry["params"];
+                    foreach (KeyValuePair<string, OSD> pair in visual_params)
+                    {
+                        int param_id = Convert.ToInt32(pair.Key);
+                        int value = pair.Value.AsInteger();
+                        paramvalues[param_id] = value;
+                    }
+
+                    // todo... textures
+                    List<UUID> textures = new List<UUID>();
+
+                    Wearables.Add(new ImportableWearable(name, type, paramvalues, textures));
+                }
+                else
+                {
+                    Primitive prim = Primitive.FromOSD(kvp.Value);
+                    prim.LocalID = UInt32.Parse(kvp.Key);
+                    prims.Add(prim);
+                }
+            }
+
+            // Build an organized structure from the imported prims
+            Dictionary<uint, Linkset> linksets = new Dictionary<uint, Linkset>();
+            for (int i = 0; i < prims.Count; i++)
+            {
+                Primitive prim = prims[i];
+
+                if (prim.ParentID == 0)
+                {
+                    if (linksets.ContainsKey(prim.LocalID))
+                        linksets[prim.LocalID].RootPrim = prim;
+                    else
+                        linksets[prim.LocalID] = new Linkset(prim);
+                }
+                else
+                {
+                    if (!linksets.ContainsKey(prim.ParentID))
+                        linksets[prim.ParentID] = new Linkset();
+
+                    linksets[prim.ParentID].Children.Add(prim);
+                }
+            }
+
+            Linksets = linksets.Values.ToList();
         }
     }
 }

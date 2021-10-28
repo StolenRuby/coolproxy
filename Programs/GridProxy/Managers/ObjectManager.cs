@@ -2256,14 +2256,14 @@ namespace GridProxy
                         if (region.ObjectsPrimitives.ContainsKey(localID))
                             removePrims.Add(localID);
 
-                        foreach (KeyValuePair<uint, Primitive> prim in region.ObjectsPrimitives)
+                        region.ObjectsPrimitives.ForEach(prim =>
                         {
                             if (prim.Value.ParentID == localID)
                             {
                                 OnKillObject(new KillObjectEventArgs(null, prim.Key));
                                 removePrims.Add(prim.Key);
                             }
-                        }
+                        });
                     }
                 }
 
@@ -2281,7 +2281,7 @@ namespace GridProxy
 
                             List<uint> rootPrims = new List<uint>();
 
-                            foreach (KeyValuePair<uint, Primitive> prim in region.ObjectsPrimitives)
+                            region.ObjectsPrimitives.ForEach(prim =>
                             {
                                 if (prim.Value.ParentID == localID)
                                 {
@@ -2289,16 +2289,16 @@ namespace GridProxy
                                     removePrims.Add(prim.Key);
                                     rootPrims.Add(prim.Key);
                                 }
-                            }
+                            });
 
-                            foreach (KeyValuePair<uint, Primitive> prim in region.ObjectsPrimitives)
+                            region.ObjectsPrimitives.ForEach(prim =>
                             {
                                 if (rootPrims.Contains(prim.Value.ParentID))
                                 {
                                     OnKillObject(new KillObjectEventArgs(null, prim.Key));
                                     removePrims.Add(prim.Key);
                                 }
-                            }
+                            });
                         }
 
                         //Do the actual removing outside of the loops but still inside the lock.
@@ -2361,12 +2361,12 @@ namespace GridProxy
                     props.TextureIDs[j] = new UUID(objectData.TextureID, j * 16);
 
                 //if (Client.Settings.OBJECT_TRACKING)
-                {
+                //{
                     //Primitive findPrim = this.ObjectsPrimitives.Find(
                     //    delegate (Primitive prim) { return prim.ID == props.ObjectID; });
-                    Primitive findPrim = region.ObjectsPrimitives.Values.FirstOrDefault(x => { return x.ID == props.ObjectID; });
+                    Primitive findPrim = region.ObjectsPrimitives.Find(x => { return x.ID == props.ObjectID; });
 
-                    if (findPrim != default(Primitive))
+                    if (findPrim != null)
                     {
                         OnObjectPropertiesUpdated(new ObjectPropertiesUpdatedEventArgs(null, findPrim, props));
 
@@ -2376,9 +2376,9 @@ namespace GridProxy
                                 region.ObjectsPrimitives[findPrim.LocalID].Properties = props;
                         }
                     }
-                }
+                //}
 
-                OnObjectProperties(new ObjectPropertiesEventArgs(null, props));
+                OnObjectProperties(new ObjectPropertiesEventArgs(region, findPrim, props));
             }
             return packet;
         }
@@ -2410,12 +2410,12 @@ namespace GridProxy
             props.Permissions.OwnerMask = (PermissionMask)op.ObjectData.OwnerMask;
 
             //if (Client.Settings.OBJECT_TRACKING)
-            {
+            //{
                 //Primitive findPrim = this.ObjectsPrimitives.Find(
                 //        delegate (Primitive prim) { return prim.ID == op.ObjectData.ObjectID; });
-                Primitive findPrim = region.ObjectsPrimitives.Values.FirstOrDefault(x => { return x.ID == op.ObjectData.ObjectID; });
+                Primitive findPrim = region.ObjectsPrimitives.Find(x => { return x.ID == op.ObjectData.ObjectID; });
 
-                if (findPrim != default(Primitive))
+                if (findPrim != null)
                 {
                     lock (region.ObjectsPrimitives)
                     {
@@ -2427,9 +2427,9 @@ namespace GridProxy
                         }
                     }
                 }
-            }
+            //}
 
-            OnObjectPropertiesFamily(new ObjectPropertiesFamilyEventArgs(null, props, requestType));
+            OnObjectPropertiesFamily(new ObjectPropertiesFamilyEventArgs(region, findPrim, props, requestType));
             return packet;
         }
 
@@ -3014,6 +3014,86 @@ namespace GridProxy
             this.m_Prim = prim;
             this.m_Update = update;
             this.m_TimeDilation = timeDilation;
+        }
+    }
+
+
+    /// <summary>Provides additional primitive data for the <see cref="ObjectManager.ObjectProperties"/> event</summary>
+    /// <remarks><para>The <see cref="ObjectManager.ObjectProperties"/> event occurs when the simulator sends
+    /// an <see cref="ObjectPropertiesPacket"/> containing additional details for a Primitive, Foliage data or Attachment data</para>
+    /// <para>The <see cref="ObjectManager.ObjectProperties"/> event is also raised when a <see cref="ObjectManager.SelectObject"/> request is
+    /// made.</para>
+    /// </remarks>
+    /// <example>
+    /// The following code example uses the <see cref="PrimEventArgs.Prim"/>, <see cref="PrimEventArgs.Simulator"/> and
+    /// <see cref="ObjectPropertiesEventArgs.Properties"/>
+    /// properties to display new attachments and send a request for additional properties containing the name of the
+    /// attachment then display it on the <see cref="Console"/> window.
+    /// <code>    
+    ///     // Subscribe to the event that provides additional primitive details
+    ///     Client.Objects.ObjectProperties += Objects_ObjectProperties;
+    ///      
+    ///     // handle the properties data that arrives
+    ///     private void Objects_ObjectProperties(object sender, ObjectPropertiesEventArgs e)
+    ///     {
+    ///         Console.WriteLine("Primitive Properties: {0} Name is {1}", e.Properties.ObjectID, e.Properties.Name);
+    ///     }   
+    /// </code>
+    /// </example>
+    public class ObjectPropertiesEventArgs : EventArgs
+    {
+        protected readonly RegionProxy m_Simulator;
+        protected readonly Primitive.ObjectProperties m_Properties;
+
+        /// <summary>Get the simulator the object is located</summary>
+        public RegionProxy Simulator { get { return m_Simulator; } }
+        /// <summary>Get the primitive properties</summary>
+        public Primitive.ObjectProperties Properties { get { return m_Properties; } }
+
+        public Primitive Prim { get; private set; }
+
+        /// <summary>
+        /// Construct a new instance of the ObjectPropertiesEventArgs class
+        /// </summary>
+        /// <param name="simulator">The simulator the object is located</param>
+        /// <param name="props">The primitive Properties</param>
+        public ObjectPropertiesEventArgs(RegionProxy simulator, Primitive prim, Primitive.ObjectProperties props)
+        {
+            this.m_Simulator = simulator;
+            this.Prim = prim;
+            this.m_Properties = props;
+        }
+    }
+
+
+    /// <summary>Provides additional primitive data, permissions and sale info for the <see cref="ObjectManager.ObjectPropertiesFamily"/> event</summary>
+    /// <remarks><para>The <see cref="ObjectManager.ObjectPropertiesFamily"/> event occurs when the simulator sends
+    /// an <see cref="ObjectPropertiesPacket"/> containing additional details for a Primitive, Foliage data or Attachment. This includes
+    /// Permissions, Sale info, and other basic details on an object</para>
+    /// <para>The <see cref="ObjectManager.ObjectProperties"/> event is also raised when a <see cref="ObjectManager.RequestObjectPropertiesFamily"/> request is
+    /// made, the viewer equivalent is hovering the mouse cursor over an object</para>
+    /// </remarks>    
+    public class ObjectPropertiesFamilyEventArgs : EventArgs
+    {
+        private readonly RegionProxy m_Simulator;
+        private readonly Primitive.ObjectProperties m_Properties;
+        private readonly ReportType m_Type;
+
+        /// <summary>Get the simulator the object is located</summary>
+        public RegionProxy Simulator { get { return m_Simulator; } }
+        /// <summary></summary>
+        public Primitive.ObjectProperties Properties { get { return m_Properties; } }
+        /// <summary></summary>
+        public ReportType Type { get { return m_Type; } }
+
+        public Primitive Prim { get; private set; }
+
+        public ObjectPropertiesFamilyEventArgs(RegionProxy simulator, Primitive prim, Primitive.ObjectProperties props, ReportType type)
+        {
+            this.m_Simulator = simulator;
+            this.Prim = prim;
+            this.m_Properties = props;
+            this.m_Type = type;
         }
     }
     #endregion

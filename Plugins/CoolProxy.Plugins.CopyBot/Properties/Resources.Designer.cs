@@ -83,6 +83,16 @@ namespace CoolProxy.Plugins.CopyBot.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Inv_Eye {
+            get {
+                object obj = ResourceManager.GetObject("Inv_Eye", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Object {
             get {
                 object obj = ResourceManager.GetObject("Object", resourceCulture);

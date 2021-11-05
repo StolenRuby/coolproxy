@@ -42,6 +42,7 @@ namespace CoolProxy.Plugins.CopyBot
         Vector3 ImportOffset = new Vector3(0, 0, 3);
 
         Primitive SeedPrim = null;
+        InventoryItem InvSeedItem = null;
 
         public CopyBotPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
         {
@@ -56,7 +57,25 @@ namespace CoolProxy.Plugins.CopyBot
 
             GUI.AddSingleMenuItem("Save As...", exportAvatar);
 
+            GUI.AddInventoryItemOption("Import With...", importWithInv, AssetType.Object);
+
             Proxy.Objects.ObjectUpdate += Objects_ObjectUpdate;
+        }
+
+        private void importWithInv(InventoryItem inventoryItem)
+        {
+            if (ImporterBusy) return;
+
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.Filter = "Object File|*.xml";
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    var options = new ImportOptions(dialog.FileName);
+                    options.InvItem = inventoryItem;
+                    new ImportForm(Proxy, options, this).ShowDialog();
+                }
+            }
         }
 
         private void importXMLWithSeed(object sender, EventArgs e)
@@ -221,6 +240,7 @@ namespace CoolProxy.Plugins.CopyBot
             Attachments.Clear();
 
             SeedPrim = options.SeedPrim;
+            InvSeedItem = options.InvItem;
 
             importProgressForm = new ImportProgressForm();
             importProgressForm.Show();
@@ -372,13 +392,17 @@ namespace CoolProxy.Plugins.CopyBot
 
         public void RezSupply()
         {
-            if(SeedPrim == null)
+            if (InvSeedItem != null)
             {
-                Proxy.Objects.AddPrim(Proxy.Network.CurrentSim, ImportPrims[CurrentPrim].PrimData, UUID.Zero, ImportPrims[CurrentPrim].Position, ImportPrims[CurrentPrim].Scale, ImportPrims[CurrentPrim].Rotation);
+                Proxy.Objects.RezInventoryItem(Proxy.Network.CurrentSim, InvSeedItem, Proxy.Agent.SimPosition + ImportOffset);
+            }
+            else if (SeedPrim != null)
+            {
+                Proxy.Objects.DuplicateObject(Proxy.Network.CurrentSim, SeedPrim.LocalID, Proxy.Agent.SimPosition + ImportOffset - SeedPrim.Position, PrimFlags.CreateSelected);
             }
             else
             {
-                Proxy.Objects.DuplicateObject(Proxy.Network.CurrentSim, SeedPrim.LocalID, Proxy.Agent.SimPosition + ImportOffset - SeedPrim.Position, PrimFlags.CreateSelected);
+                Proxy.Objects.AddPrim(Proxy.Network.CurrentSim, ImportPrims[CurrentPrim].PrimData, UUID.Zero, ImportPrims[CurrentPrim].Position, ImportPrims[CurrentPrim].Scale, ImportPrims[CurrentPrim].Rotation);
             }
         }
 
@@ -519,6 +543,8 @@ namespace CoolProxy.Plugins.CopyBot
         public bool KeepPositions { get; set; } = false;
 
         public Primitive SeedPrim { get; set; } = null;
+
+        public InventoryItem InvItem { get; set; } = null;
 
         public ImportOptions(string filename)
         {

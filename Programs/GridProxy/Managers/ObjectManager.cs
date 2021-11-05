@@ -634,6 +634,50 @@ namespace GridProxy
             simulator.Inject(dup, Direction.Outgoing);
         }
 
+        public void RezInventoryItem(RegionProxy simulator, InventoryItem item, Vector3 pos)
+        {
+            RezObjectPacket rez = new RezObjectPacket();
+            rez.AgentData.AgentID = Frame.Agent.AgentID;
+            rez.AgentData.SessionID = Frame.Agent.SessionID;
+
+            rez.RezData.BypassRaycast = 1;
+            rez.RezData.EveryoneMask = (uint)item.Permissions.EveryoneMask;
+            rez.RezData.GroupMask = (uint)item.Permissions.GroupMask;
+            rez.RezData.NextOwnerMask = (uint)item.Permissions.NextOwnerMask;
+            rez.RezData.FromTaskID = UUID.Zero;
+            rez.RezData.ItemFlags = item.Flags;
+            rez.RezData.RayEnd = pos;
+            rez.RezData.RayEndIsIntersection = false;
+            rez.RezData.RayStart = pos;
+            rez.RezData.RayTargetID = UUID.Zero;
+            rez.RezData.RemoveItem = false;
+            rez.RezData.RezSelected = true;
+
+            rez.InventoryData.CreationDate = (int)Utils.DateTimeToUnixTime(item.CreationDate);
+            rez.InventoryData.CreatorID = item.CreatorID;
+            rez.InventoryData.Flags = item.Flags;
+            rez.InventoryData.ItemID = item.UUID;
+            rez.InventoryData.FolderID = item.ParentUUID;
+            rez.InventoryData.GroupID = item.GroupID;
+            rez.InventoryData.GroupOwned = item.GroupOwned;
+            rez.InventoryData.InvType = (sbyte)item.InventoryType;
+            rez.InventoryData.Name = Utils.StringToBytes(item.Name);
+            rez.InventoryData.Description = Utils.StringToBytes(item.Description);
+            rez.InventoryData.BaseMask = (uint)item.Permissions.BaseMask;
+            rez.InventoryData.EveryoneMask = (uint)item.Permissions.EveryoneMask;
+            rez.InventoryData.NextOwnerMask = (uint)item.Permissions.NextOwnerMask;
+            rez.InventoryData.GroupMask = (uint)item.Permissions.GroupMask;
+            rez.InventoryData.OwnerMask = (uint)item.Permissions.OwnerMask;
+            rez.InventoryData.OwnerID = item.OwnerID;
+            rez.InventoryData.SalePrice = item.SalePrice;
+            rez.InventoryData.SaleType = (byte)item.SaleType;
+            rez.InventoryData.TransactionID = UUID.Zero;
+            rez.InventoryData.Type = 0;
+            rez.InventoryData.CRC = InventoryManager.ItemCRC(item);
+
+            simulator.Inject(rez, Direction.Outgoing);
+        }
+
         /// <summary>
         /// Set the textures to apply to the faces of an object
         /// </summary>

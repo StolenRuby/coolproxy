@@ -73,6 +73,7 @@ namespace CoolProxy.Plugins.CopyBot
 
             importOptions.KeepPositions = checkBox1.Checked;
             importOptions.SeedPrim = Options.SeedPrim;
+            importOptions.InvItem = Options.InvItem;
 
             foreach(DataGridViewRow row in dataGridView.Rows)
             {

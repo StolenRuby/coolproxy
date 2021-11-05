@@ -23,7 +23,7 @@ namespace CoolProxy.Plugins.ChatCommands
             Vector3 pos = Proxy.Agent.SimPosition;
             pos.Z -= 3.0f;
 
-            Proxy.Objects.AddPrim(Proxy.Network.CurrentSim, Primitive.ConstructionData.DefaultPrim(), UUID.Zero,
+            Proxy.Objects.AddPrim(Proxy.Network.CurrentSim, Primitive.ConstructionData.DefaultCube, UUID.Zero,
                 pos, new Vector3(30.0f, 30.0f, 0.25f), Quaternion.Identity);
 
             return string.Empty;

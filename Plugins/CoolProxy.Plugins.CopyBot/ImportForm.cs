@@ -16,13 +16,9 @@ namespace CoolProxy.Plugins.CopyBot
 {
     public partial class ImportForm : Form
     {
-        private readonly CoolProxyFrame Proxy;
-
-        Dictionary<int, Linkset> indexToLinkset = new Dictionary<int, Linkset>();
-
         CopyBotPlugin ThePlugin;
 
-        bool ViaCopybot = false;
+        bool ViaCopybot = true;
 
         ImportOptions Options;
 
@@ -30,7 +26,6 @@ namespace CoolProxy.Plugins.CopyBot
         {
             Options = options;
 
-            Proxy = frame;
             InitializeComponent();
 
             ThePlugin = plugin;
@@ -77,6 +72,7 @@ namespace CoolProxy.Plugins.CopyBot
             ImportOptions importOptions = new ImportOptions();
 
             importOptions.KeepPositions = checkBox1.Checked;
+            importOptions.SeedPrim = Options.SeedPrim;
 
             foreach(DataGridViewRow row in dataGridView.Rows)
             {

@@ -57,6 +57,7 @@ namespace CoolProxy.Plugins.CopyBot
             this.ClientSize = new System.Drawing.Size(345, 86);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.progressBar1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ImportProgressForm";

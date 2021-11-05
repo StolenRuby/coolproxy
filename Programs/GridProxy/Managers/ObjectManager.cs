@@ -619,6 +619,21 @@ namespace GridProxy
             simulator.Inject(add, Direction.Outgoing);
         }
 
+        public void DuplicateObject(RegionProxy simulator, uint local_id, Vector3 offset, PrimFlags flags)
+        {
+            ObjectDuplicatePacket dup = new ObjectDuplicatePacket();
+            dup.Header.Reliable = true;
+            dup.AgentData.AgentID = Frame.Agent.AgentID;
+            dup.AgentData.SessionID = Frame.Agent.SessionID;
+            dup.SharedData.Offset = offset;
+            dup.SharedData.DuplicateFlags = (uint)flags;
+            dup.ObjectData = new ObjectDuplicatePacket.ObjectDataBlock[1];
+            dup.ObjectData[0] = new ObjectDuplicatePacket.ObjectDataBlock();
+            dup.ObjectData[0].ObjectLocalID = local_id;
+
+            simulator.Inject(dup, Direction.Outgoing);
+        }
+
         /// <summary>
         /// Set the textures to apply to the faces of an object
         /// </summary>
@@ -651,6 +666,38 @@ namespace GridProxy
             image.ObjectData[0].MediaURL = Utils.StringToBytes(mediaUrl);
 
             simulator.Inject(image, Direction.Outgoing);
+        }
+
+        public void SetShape(RegionProxy region, uint local, Primitive.ConstructionData data)
+        {
+            ObjectShapePacket packet = new ObjectShapePacket();
+            packet.Header.Reliable = true;
+            packet.AgentData.AgentID = Frame.Agent.AgentID;
+            packet.AgentData.SessionID = Frame.Agent.SessionID;
+
+            packet.ObjectData = new ObjectShapePacket.ObjectDataBlock[1];
+            packet.ObjectData[0] = new ObjectShapePacket.ObjectDataBlock();
+            packet.ObjectData[0].ObjectLocalID = local;
+            packet.ObjectData[0].PathCurve = (byte)data.PathCurve;
+            packet.ObjectData[0].PathBegin = Primitive.PackBeginCut(data.PathBegin);
+            packet.ObjectData[0].PathEnd = Primitive.PackEndCut(data.PathEnd);
+            packet.ObjectData[0].PathRadiusOffset = Primitive.PackPathTwist(data.PathRadiusOffset);
+            packet.ObjectData[0].PathRevolutions = Primitive.PackPathRevolutions(data.PathRevolutions);
+            packet.ObjectData[0].PathScaleX = Primitive.PackPathScale(data.PathScaleX);
+            packet.ObjectData[0].PathScaleY = Primitive.PackPathScale(data.PathScaleY);
+            packet.ObjectData[0].PathShearX = (byte)Primitive.PackPathShear(data.PathShearX);
+            packet.ObjectData[0].PathShearY = (byte)Primitive.PackPathShear(data.PathShearY);
+            packet.ObjectData[0].PathSkew = Primitive.PackPathTwist(data.PathSkew);
+            packet.ObjectData[0].PathTaperX = Primitive.PackPathTaper(data.PathTaperX);
+            packet.ObjectData[0].PathTaperY = Primitive.PackPathTaper(data.PathTaperY);
+            packet.ObjectData[0].PathTwist = Primitive.PackPathTwist(data.PathTwist);
+            packet.ObjectData[0].PathTwistBegin = Primitive.PackPathTwist(data.PathTwistBegin);
+            packet.ObjectData[0].ProfileCurve = data.profileCurve;
+            packet.ObjectData[0].ProfileBegin = Primitive.PackBeginCut(data.ProfileBegin);
+            packet.ObjectData[0].ProfileEnd = Primitive.PackEndCut(data.ProfileEnd);
+            packet.ObjectData[0].ProfileHollow = Primitive.PackProfileHollow(data.ProfileHollow);
+
+            region.Inject(packet, Direction.Outgoing);
         }
 
         /// <summary>
@@ -733,6 +780,8 @@ namespace GridProxy
 
             simulator.Inject(extra, Direction.Outgoing);
 
+            if (sculpt.Type == SculptType.Mesh) return;
+
             // Not sure why, but if you don't send this the sculpted prim disappears
             ObjectShapePacket shape = new ObjectShapePacket();
             shape.Header.Reliable = true;
@@ -769,6 +818,40 @@ namespace GridProxy
             extra.ObjectData[0].ParamInUse = false;
             extra.ObjectData[0].ParamData = Utils.EmptyBytes;
             extra.ObjectData[0].ParamSize = 0;
+
+            simulator.Inject(extra, Direction.Outgoing);
+        }
+
+        public void SetExtraParams(RegionProxy simulator, uint localID, Primitive.SculptData sculpt, Primitive.FlexibleData flex, Primitive.LightData light)
+        {
+            ObjectExtraParamsPacket extra = new ObjectExtraParamsPacket();
+            extra.Header.Reliable = true;
+
+            extra.AgentData.AgentID = Frame.Agent.AgentID;
+            extra.AgentData.SessionID = Frame.Agent.SessionID;
+
+            extra.ObjectData = new ObjectExtraParamsPacket.ObjectDataBlock[3];
+
+            extra.ObjectData[0] = new ObjectExtraParamsPacket.ObjectDataBlock();
+            extra.ObjectData[0].ObjectLocalID = localID;
+            extra.ObjectData[0].ParamType = (byte)ExtraParamType.Sculpt;
+            extra.ObjectData[0].ParamInUse = sculpt != null;
+            extra.ObjectData[0].ParamData = sculpt == null ? Utils.EmptyBytes : sculpt.GetBytes();
+            extra.ObjectData[0].ParamSize = (uint)extra.ObjectData[0].ParamData.Length;
+
+            extra.ObjectData[1] = new ObjectExtraParamsPacket.ObjectDataBlock();
+            extra.ObjectData[1].ObjectLocalID = localID;
+            extra.ObjectData[1].ParamType = (byte)ExtraParamType.Light;
+            extra.ObjectData[1].ParamInUse = light != null;
+            extra.ObjectData[1].ParamData = light == null ? Utils.EmptyBytes : light.GetBytes();
+            extra.ObjectData[1].ParamSize = (uint)extra.ObjectData[1].ParamData.Length;
+
+            extra.ObjectData[2] = new ObjectExtraParamsPacket.ObjectDataBlock();
+            extra.ObjectData[2].ObjectLocalID = localID;
+            extra.ObjectData[2].ParamType = (byte)ExtraParamType.Flexible;
+            extra.ObjectData[2].ParamInUse = flex != null;
+            extra.ObjectData[2].ParamData = flex == null ? Utils.EmptyBytes : flex.GetBytes();
+            extra.ObjectData[2].ParamSize = (uint)extra.ObjectData[2].ParamData.Length;
 
             simulator.Inject(extra, Direction.Outgoing);
         }
@@ -924,12 +1007,12 @@ namespace GridProxy
         /// <param name="localID">The objects ID which is local to the simulator the object is in</param>
         /// <param name="attachPoint">The point on the avatar the object will be attached</param>
         /// <param name="rotation">The rotation of the attached object</param>
-        public void AttachObject(RegionProxy simulator, uint localID, AttachmentPoint attachPoint, Quaternion rotation)
+        public void AttachObject(RegionProxy simulator, uint localID, AttachmentPoint attachPoint, Quaternion rotation, bool add = false)
         {
             ObjectAttachPacket attach = new ObjectAttachPacket();
             attach.AgentData.AgentID = Frame.Agent.AgentID;
             attach.AgentData.SessionID = Frame.Agent.SessionID;
-            attach.AgentData.AttachmentPoint = (byte)attachPoint;
+            attach.AgentData.AttachmentPoint = (byte)((byte)attachPoint | (add ? 0x80 : 0));
 
             attach.ObjectData = new ObjectAttachPacket.ObjectDataBlock[1];
             attach.ObjectData[0] = new ObjectAttachPacket.ObjectDataBlock();
@@ -1080,6 +1163,33 @@ namespace GridProxy
             multiObjectUpdate.ObjectData[0].Type = (byte)type;
             multiObjectUpdate.ObjectData[0].ObjectLocalID = localID;
             multiObjectUpdate.ObjectData[0].Data = data.GetBytes();
+
+            simulator.Inject(multiObjectUpdate, Direction.Outgoing);
+        }
+
+        public void UpdateObject(RegionProxy simulator, uint localID, Vector3 pos, Vector3 scale, Quaternion rot)
+        {
+            MultipleObjectUpdatePacket multiObjectUpdate = new MultipleObjectUpdatePacket();
+            multiObjectUpdate.Header.Reliable = true;
+            multiObjectUpdate.AgentData.AgentID = Frame.Agent.AgentID;
+            multiObjectUpdate.AgentData.SessionID = Frame.Agent.SessionID;
+
+            multiObjectUpdate.ObjectData = new MultipleObjectUpdatePacket.ObjectDataBlock[3];
+
+            multiObjectUpdate.ObjectData[0] = new MultipleObjectUpdatePacket.ObjectDataBlock();
+            multiObjectUpdate.ObjectData[0].Type = (byte)UpdateType.Position;
+            multiObjectUpdate.ObjectData[0].ObjectLocalID = localID;
+            multiObjectUpdate.ObjectData[0].Data = pos.GetBytes();
+
+            multiObjectUpdate.ObjectData[1] = new MultipleObjectUpdatePacket.ObjectDataBlock();
+            multiObjectUpdate.ObjectData[1].Type = (byte)UpdateType.Rotation;
+            multiObjectUpdate.ObjectData[1].ObjectLocalID = localID;
+            multiObjectUpdate.ObjectData[1].Data = rot.GetBytes();
+
+            multiObjectUpdate.ObjectData[2] = new MultipleObjectUpdatePacket.ObjectDataBlock();
+            multiObjectUpdate.ObjectData[2].Type = (byte)UpdateType.Scale;
+            multiObjectUpdate.ObjectData[2].ObjectLocalID = localID;
+            multiObjectUpdate.ObjectData[2].Data = scale.GetBytes();
 
             simulator.Inject(multiObjectUpdate, Direction.Outgoing);
         }

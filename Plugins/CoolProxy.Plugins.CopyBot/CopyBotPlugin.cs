@@ -25,21 +25,23 @@ namespace CoolProxy.Plugins.CopyBot
         private GUIManager GUI;
         private CoolProxyFrame Proxy;
 
+        ImportProgressForm importProgressForm;
+
         public bool ImporterBusy { get; private set; } = false;
 
-        Primitive currentPrim;
-        Vector3 currentPosition;
-        AutoResetEvent primDone = new AutoResetEvent(false);
-        List<Primitive> primsCreated;
-        List<uint> linkQueue;
-        uint rootLocalID;
-        ImporterState state = ImporterState.Idle;
+        List<Primitive> ImportPrims;
 
-        BackgroundWorker importWorker;
-        List<Linkset> Linksets;
+        Dictionary<uint, List<Primitive>> LinkSets = new Dictionary<uint, List<Primitive>>();
+        Dictionary<uint, uint> IDToLocalID = new Dictionary<uint, uint>();
 
-        private bool CancellingImport = false;
+        Dictionary<uint, AttachmentInfo> Attachments = new Dictionary<uint, AttachmentInfo>();
+        Dictionary<uint, uint> AttachingItems = new Dictionary<uint, uint>();
 
+        int CurrentPrim = 0;
+
+        Vector3 ImportOffset = new Vector3(0, 0, 3);
+
+        Primitive SeedPrim = null;
 
         public CopyBotPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
         {
@@ -48,14 +50,39 @@ namespace CoolProxy.Plugins.CopyBot
             Proxy = frame;
             Instance = this;
 
-            //GUI.AddToolButton("Objects", "Clear Selection", (x, y) => { Proxy.Agent.ClearSelection(); });
-            GUI.AddToolButton("Objects", "Export Selected Objects", exportSelectedObjects);
-            GUI.AddToolButton("Objects", "Import Object from File", importXML);
+            GUI.AddToolButton("CopyBot", "Export Selected Objects", exportSelectedObjects);
+            GUI.AddToolButton("CopyBot", "Import Object from File", importXML);
+            GUI.AddToolButton("CopyBot", "Import with Selected Object", importXMLWithSeed);
 
-            //GUI.AddSingleMenuItem("-", (a) => { });
             GUI.AddSingleMenuItem("Save As...", exportAvatar);
 
             Proxy.Objects.ObjectUpdate += Objects_ObjectUpdate;
+        }
+
+        private void importXMLWithSeed(object sender, EventArgs e)
+        {
+            if (ImporterBusy) return;
+
+            if(Proxy.Agent.Selection.Length == 1)
+            {
+                uint local_id = Proxy.Agent.Selection[0];
+                Primitive prim = Proxy.Network.CurrentSim.ObjectsPrimitives.Find(x => x.LocalID == local_id);
+
+                using (OpenFileDialog dialog = new OpenFileDialog())
+                {
+                    dialog.Filter = "Object File|*.xml";
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        var options = new ImportOptions(dialog.FileName);
+                        options.SeedPrim = prim;
+                        new ImportForm(Proxy, options, this).ShowDialog();
+                    }
+                }
+            }
+            else
+            {
+                Proxy.SayToUser("You need to be selecting exactly one object.");
+            }
         }
 
         private void importXML(object sender, EventArgs e)
@@ -99,6 +126,8 @@ namespace CoolProxy.Plugins.CopyBot
         {
             OpenExportForm(null);
         }
+
+        //////////////////////////////////////////////////////////////////////////////
 
         public void UploadWearble(string name, byte[] data, WearableType wearabletype, AssetType assettype)
         {
@@ -184,11 +213,14 @@ namespace CoolProxy.Plugins.CopyBot
         {
             if (ImporterBusy) return;
 
-            Proxy.SayToUser(string.Format("Importing {0} linksets", options.Linksets.Count));
-
-            Linksets = options.Linksets;
             ImporterBusy = true;
-            CancellingImport = false;
+
+            IDToLocalID.Clear();
+            LinkSets.Clear();
+            AttachingItems.Clear();
+            Attachments.Clear();
+
+            SeedPrim = options.SeedPrim;
 
             importProgressForm = new ImportProgressForm();
             importProgressForm.Show();
@@ -199,242 +231,82 @@ namespace CoolProxy.Plugins.CopyBot
                 UploadWearble(item.Name, item.AssetData, item.WearableType, AssetType.Bodypart);
             }
 
-            importWorker = new BackgroundWorker();
-            importWorker.DoWork += Worker_DoWork;
-            importWorker.RunWorkerCompleted += ImportWorker_RunWorkerCompleted;
-            importWorker.RunWorkerAsync();
+            Vector3 center_pos = FindCenterPos(options.Linksets);
+            Vector3 import_pos = Proxy.Agent.SimPosition + ImportOffset;
+
+            ImportPrims = new List<Primitive>();
+            foreach(var linkset in options.Linksets)
+            {
+                linkset.RootPrim.ParentID = 0;
+
+                if (linkset.RootPrim.PrimData.State != 0)
+                {
+                    Attachments[linkset.RootPrim.LocalID] = new AttachmentInfo(linkset.RootPrim.PrimData.AttachmentPoint, linkset.RootPrim.Position, linkset.RootPrim.Rotation);
+                    linkset.RootPrim.PrimData.State = 0;
+                    linkset.RootPrim.Position = import_pos;
+                    linkset.RootPrim.Rotation = Quaternion.Identity;
+                }
+                else
+                {
+                    linkset.RootPrim.Position -= center_pos;
+                    linkset.RootPrim.Position += import_pos;
+                }
+
+                ImportPrims.Add(linkset.RootPrim);
+                foreach (var child in linkset.Children)
+                {
+                    child.Rotation = linkset.RootPrim.Rotation * child.Rotation;
+                    child.Position *= linkset.RootPrim.Rotation;
+                    child.Position += linkset.RootPrim.Position;
+                    ImportPrims.Add(child);
+                }
+            }
+
+            CurrentPrim = 0;
+
+            RezSupply();
+        }
+
+        Vector3 FindCenterPos(List<Linkset> linksets)
+        {
+            if (linksets.Count == 0)
+                return Vector3.Zero;
+            else if (linksets.Count == 1)
+                return linksets[0].RootPrim.Position;
+
+            Vector3 south_west = linksets[0].RootPrim.Position;
+            Vector3 north_east = south_west;
+
+            foreach(var linkset in linksets)
+            {
+                Vector3 pos = linkset.RootPrim.Position;
+
+                if (pos.X < south_west.X) south_west.X = pos.X;
+                if (pos.Y < south_west.Y) south_west.Y = pos.Y;
+                if (pos.Z < south_west.Z) south_west.Z = pos.Z;
+
+                if (pos.X > north_east.X) north_east.X = pos.X;
+                if (pos.Y > north_east.Y) north_east.Y = pos.Y;
+                if (pos.Z > north_east.Z) north_east.Z = pos.Z;
+            }
+
+            Vector3 diff = north_east - south_west;
+            diff *= 0.5f;
+            diff += south_west;
+
+            return diff;
         }
 
         public void CancelImport()
         {
-            CancellingImport = true;
-        }
-
-        private void ImportWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
             ImporterBusy = false;
-            Proxy.AlertMessage(CancellingImport ? "Import cancelled." : "Import complete.", false);
         }
 
-
-        ImportProgressForm importProgressForm;
-
-        int CountPrims(List<Linkset> linksets)
+        private void FinishImport()
         {
-            int count = linksets.Count;
-            foreach (var set in linksets)
-                count += set.Children.Count;
-            return count;
-        }
-
-        private void Worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            primsCreated = new List<Primitive>();
-            linkQueue = new List<uint>();
-
-            //Proxy.SayToUser("Importing " + Linksets.Count + " structures.");
-
-            int linkset_count = CountPrims(Linksets);
-            int count = 0;
-
-            importProgressForm?.ReportProgress(count, linkset_count);
-
-            foreach (Linkset linkset in Linksets)
-            {
-                if (CancellingImport) return;
-                if (linkset.RootPrim.LocalID != 0)
-                {
-                    state = ImporterState.RezzingParent;
-                    currentPrim = linkset.RootPrim;
-                    // HACK: Import the structure just above our head
-                    // We need a more elaborate solution for importing with relative or absolute offsets
-                    linkset.RootPrim.Position = Proxy.Agent.SimPosition;
-                    linkset.RootPrim.Position.Z += 3.0f;
-                    currentPosition = linkset.RootPrim.Position;
-
-                    // Rez the root prim with no rotation
-                    Quaternion rootRotation = linkset.RootPrim.Rotation;
-                    linkset.RootPrim.Rotation = Quaternion.Identity;
-
-                    Proxy.Objects.AddPrim(Proxy.Network.CurrentSim, linkset.RootPrim.PrimData, UUID.Zero,
-                        linkset.RootPrim.Position, linkset.RootPrim.Scale, linkset.RootPrim.Rotation);
-
-                    if (!primDone.WaitOne(10000, false))
-                    {
-                        Proxy.SayToUser("Rez failed, timed out while creating the root prim.");
-                        return;
-                    }
-
-                    Proxy.Objects.SetPosition(Proxy.Network.CurrentSim, primsCreated[primsCreated.Count - 1].LocalID, linkset.RootPrim.Position);
-
-                    importProgressForm?.ReportProgress(++count, linkset_count);
-
-                    state = ImporterState.RezzingChildren;
-
-                    // Rez the child prims
-                    foreach (Primitive prim in linkset.Children)
-                    {
-                        if (CancellingImport) return;
-
-                        currentPrim = prim;
-                        currentPosition = prim.Position + linkset.RootPrim.Position;
-
-                        Proxy.Objects.AddPrim(Proxy.Network.CurrentSim, prim.PrimData, UUID.Zero, currentPosition, prim.Scale, prim.Rotation);
-
-                        if (!primDone.WaitOne(10000, false))
-                        {
-                            Proxy.SayToUser("Rez failed, timed out while creating child prim.");
-                            return;
-                        }
-
-                        Proxy.Objects.SetPosition(Proxy.Network.CurrentSim, primsCreated[primsCreated.Count - 1].LocalID, currentPosition);
-                        importProgressForm?.ReportProgress(++count, linkset_count);
-                    }
-
-                    // Create a list of the local IDs of the newly created prims
-                    List<uint> primIDs = new List<uint>(primsCreated.Count);
-                    primIDs.Add(rootLocalID); // Root prim is first in list.
-
-                    if (linkset.Children.Count != 0)
-                    {
-                        // Add the rest of the prims to the list of local IDs
-                        foreach (Primitive prim in primsCreated)
-                        {
-                            if (prim.LocalID != rootLocalID)
-                                primIDs.Add(prim.LocalID);
-                        }
-                        linkQueue = new List<uint>(primIDs.Count);
-                        linkQueue.AddRange(primIDs);
-
-                        // Link and set the permissions + rotation
-                        state = ImporterState.Linking;
-                        Proxy.Objects.LinkPrims(Proxy.Network.CurrentSim, linkQueue);
-
-                        if (primDone.WaitOne(1000 * linkset.Children.Count, false))
-                            Proxy.Objects.SetRotation(Proxy.Network.CurrentSim, rootLocalID, rootRotation);
-                        else
-                            Proxy.SayToUser(string.Format("Warning: Failed to link {0} prims", linkQueue.Count));
-
-                    }
-                    else
-                    {
-                        Proxy.Objects.SetRotation(Proxy.Network.CurrentSim, rootLocalID, rootRotation);
-                    }
-
-                    // Set permissions on newly created prims
-                    Proxy.Objects.SetPermissions(Proxy.Network.CurrentSim, primIDs,
-                        PermissionWho.Everyone | PermissionWho.Group | PermissionWho.NextOwner,
-                        PermissionMask.All, true);
-
-                    state = ImporterState.Idle;
-                }
-                else
-                {
-                    // Skip linksets with a missing root prim
-                    Proxy.SayToUser("WARNING: Skipping a linkset with a missing root prim");
-                }
-
-                // Reset everything for the next linkset
-                primsCreated.Clear();
-            }
-
-            importProgressForm?.ReportProgress(count, linkset_count, true);
-        }
-
-        private void Objects_ObjectUpdate(object sender, GridProxy.PrimEventArgs e)
-        {
-            Primitive prim = e.Prim;
-
-            if(state != ImporterState.Linking)
-            {
-                if ((prim.Flags & PrimFlags.CreateSelected) == 0)
-                    return; // We received an update for an object we didn't create
-            }
-
-            switch (state)
-            {
-                case ImporterState.RezzingParent:
-                    rootLocalID = prim.LocalID;
-                    goto case ImporterState.RezzingChildren;
-                case ImporterState.RezzingChildren:
-                    if (!primsCreated.Contains(prim))
-                    {
-                        //Proxy.SayToUser("Setting properties for " + prim.LocalID);
-                        // TODO: Is there a way to set all of this at once, and update more ObjectProperties stuff?
-                        Proxy.Objects.SetPosition(e.Region, prim.LocalID, currentPosition);
-
-                        if (currentPrim.Sculpt != null && currentPrim.Sculpt.SculptTexture != UUID.Zero)
-                        {
-                            Proxy.Objects.SetSculpt(e.Region, prim.LocalID, currentPrim.Sculpt);
-                        }
-
-                        if (currentPrim.Light != null)
-                        {
-                            Proxy.Objects.SetLight(e.Region, prim.LocalID, currentPrim.Light);
-                        }
-
-                        if (currentPrim.Flexible != null)
-                        {
-                            Proxy.Objects.SetFlexible(e.Region, prim.LocalID, currentPrim.Flexible);
-                        }
-
-                        Proxy.Objects.SetTextures(e.Region, prim.LocalID, currentPrim.Textures);
-
-                        if (currentPrim.Properties != null && !string.IsNullOrEmpty(currentPrim.Properties.Name))
-                        {
-                            Proxy.Objects.SetName(e.Region, prim.LocalID, currentPrim.Properties.Name);
-                        }
-
-                        if (currentPrim.Properties != null && !string.IsNullOrEmpty(currentPrim.Properties.Description))
-                        {
-                            Proxy.Objects.SetDescription(e.Region, prim.LocalID, currentPrim.Properties.Description);
-                        }
-
-                        primsCreated.Add(prim);
-                        primDone.Set();
-                    }
-                    break;
-                case ImporterState.Linking:
-                    lock (linkQueue)
-                    {
-                        int index = linkQueue.IndexOf(prim.LocalID);
-                        if (index != -1)
-                        {
-                            linkQueue.RemoveAt(index);
-                            if (linkQueue.Count == 0)
-                                primDone.Set();
-                        }
-
-                    }
-                    break;
-            }
-        }
-
-        public static List<Linkset> PrimListToLinksetList(List<Primitive> prims)
-        {
-            // Build an organized structure from the imported prims
-            Dictionary<uint, Linkset> linksets = new Dictionary<uint, Linkset>();
-            for (int i = 0; i < prims.Count; i++)
-            {
-                Primitive prim = prims[i];
-
-                if (prim.ParentID == 0)
-                {
-                    if (linksets.ContainsKey(prim.LocalID))
-                        linksets[prim.LocalID].RootPrim = prim;
-                    else
-                        linksets[prim.LocalID] = new Linkset(prim);
-                }
-                else
-                {
-                    if (!linksets.ContainsKey(prim.ParentID))
-                        linksets[prim.ParentID] = new Linkset();
-
-                    linksets[prim.ParentID].Children.Add(prim);
-                }
-            }
-
-            return linksets.Values.ToList();
+            importProgressForm?.ReportProgress(CurrentPrim, ImportPrims.Count, true);
+            Proxy.AlertMessage("Import complete.", false);
+            ImporterBusy = false;
         }
 
         public static Bitmap WearableTypeToIcon(WearableType type)
@@ -496,14 +368,114 @@ namespace CoolProxy.Plugins.CopyBot
 
             return assetWearables;
         }
+
+
+        public void RezSupply()
+        {
+            if(SeedPrim == null)
+            {
+                Proxy.Objects.AddPrim(Proxy.Network.CurrentSim, ImportPrims[CurrentPrim].PrimData, UUID.Zero, ImportPrims[CurrentPrim].Position, ImportPrims[CurrentPrim].Scale, ImportPrims[CurrentPrim].Rotation);
+            }
+            else
+            {
+                Proxy.Objects.DuplicateObject(Proxy.Network.CurrentSim, SeedPrim.LocalID, Proxy.Agent.SimPosition + ImportOffset - SeedPrim.Position, PrimFlags.CreateSelected);
+            }
+        }
+
+        private void Objects_ObjectUpdate(object sender, GridProxy.PrimEventArgs e)
+        {
+            if (!ImporterBusy) return;
+
+            if ((e.IsNew && e.Prim.Flags.HasFlag(PrimFlags.CreateSelected))
+                || (SeedPrim != null && e.IsNew && e.Prim.PrimData.Equals(SeedPrim.PrimData))) // opensim doesn't seem to send CreateSelected for duplicated prims??
+            {
+                Primitive import_prim = ImportPrims[CurrentPrim];
+                Primitive prim = e.Prim;
+
+                if (import_prim.ParentID == 0)
+                {
+                    IDToLocalID[import_prim.LocalID] = e.Prim.LocalID;
+                    uint local_id = e.Prim.LocalID;
+                    LinkSets[local_id] = new List<Primitive>() { e.Prim };
+                }
+                else
+                {
+                    uint parent = IDToLocalID[import_prim.ParentID];
+                    LinkSets[parent].Add(e.Prim);
+                }
+
+                Proxy.Objects.UpdateObject(Proxy.Network.CurrentSim, e.Prim.LocalID, import_prim.Position, import_prim.Scale, import_prim.Rotation);
+
+                Proxy.Objects.SetShape(e.Region, prim.LocalID, import_prim.PrimData);
+
+                Proxy.Objects.SetExtraParams(Proxy.Network.CurrentSim, prim.LocalID, import_prim.Sculpt, import_prim.Flexible, import_prim.Light);
+
+                Proxy.Objects.SetTextures(e.Region, prim.LocalID, import_prim.Textures);
+
+                Proxy.Objects.SetName(e.Region, prim.LocalID, import_prim?.Properties?.Name ?? "Object");
+
+                Proxy.Objects.SetDescription(e.Region, prim.LocalID, import_prim?.Properties?.Description ?? "(No Description)");
+
+                CurrentPrim++;
+
+                if (CurrentPrim >= ImportPrims.Count)
+                {
+                    foreach (var pair in LinkSets)
+                    {
+                        Proxy.Objects.LinkPrims(Proxy.Network.CurrentSim, pair.Value.Select(x => x.LocalID).ToList());
+                    }
+
+                    if (Attachments.Count > 0)
+                    {
+                        importProgressForm?.ReportProgress(CurrentPrim, ImportPrims.Count, false);
+
+                        var link_timer = new LinkTimer(LinkSets, this);
+                        link_timer.Complete += () =>
+                        {
+                            foreach (var pair in Attachments)
+                            {
+                                uint local_id = IDToLocalID[pair.Key];
+                                AttachingItems[local_id] = pair.Key;
+                                Proxy.Objects.AttachObject(Proxy.Network.CurrentSim, local_id, pair.Value.Point, pair.Value.Rotation, true);
+                            }
+
+                            FinishImport();
+                        };
+                        link_timer.Start();
+                    }
+                    else
+                    {
+                        FinishImport();
+                    }
+                }
+                else
+                {
+                    importProgressForm?.ReportProgress(CurrentPrim, ImportPrims.Count, false);
+                    RezSupply();
+                }
+            }
+            else if(AttachingItems.ContainsKey(e.Prim.LocalID))
+            {
+                uint local_id = AttachingItems[e.Prim.LocalID];
+                Proxy.Objects.SetRotation(Proxy.Network.CurrentSim, e.Prim.LocalID, Attachments[local_id].Rotation);
+                Proxy.Objects.SetPosition(Proxy.Network.CurrentSim, e.Prim.LocalID, Attachments[local_id].Position);
+                AttachingItems.Remove(e.Prim.LocalID);
+            }
+        }
     }
 
-    public enum ImporterState
+    public class AttachmentInfo
     {
-        RezzingParent,
-        RezzingChildren,
-        Linking,
-        Idle
+        public Quaternion Rotation { get; set; }
+        public Vector3 Position { get; set; }
+        public AttachmentPoint Point { get; set; }
+
+        public AttachmentInfo(AttachmentPoint point, Vector3 pos, Quaternion rot)
+        {
+            Point = point;
+            Position = pos;
+            Rotation = rot;
+        }
     }
 
     public class Linkset
@@ -545,6 +517,8 @@ namespace CoolProxy.Plugins.CopyBot
         public List<Linkset> Linksets { get; private set; } = new List<Linkset>();
 
         public bool KeepPositions { get; set; } = false;
+
+        public Primitive SeedPrim { get; set; } = null;
 
         public ImportOptions(string filename)
         {
@@ -600,7 +574,7 @@ namespace CoolProxy.Plugins.CopyBot
                 else
                 {
                     Primitive prim = Primitive.FromOSD(kvp.Value);
-                    prim.LocalID = UInt32.Parse(kvp.Key);
+                    prim.LocalID = uint.Parse(kvp.Key);
                     prims.Add(prim);
                 }
             }
@@ -628,6 +602,52 @@ namespace CoolProxy.Plugins.CopyBot
             }
 
             Linksets = linksets.Values.ToList();
+        }
+    }
+
+    public delegate void LinkComplete();
+
+    public class LinkTimer : System.Timers.Timer
+    {
+        Dictionary<uint, List<Primitive>> PrimsToLink;
+
+        public event LinkComplete Complete;
+
+        private CopyBotPlugin Plugin;
+
+        public LinkTimer(Dictionary<uint, List<Primitive>> linksets, CopyBotPlugin plugin) : base()
+        {
+            Plugin = plugin;
+            PrimsToLink = linksets;
+
+            base.Interval = 500;
+            base.Elapsed += LinkTimer_Elapsed;
+        }
+
+        private void LinkTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if(Plugin.ImporterBusy == false)
+            {
+                base.Enabled = false;
+                return;
+            }
+
+            bool is_done = true;
+
+            foreach(var linkset in PrimsToLink.Values)
+            {
+                if (linkset.Where(x => x.ParentID == 0).ToList().Count > 1)
+                {
+                    is_done = false;
+                    break;
+                }
+            }
+
+            if(is_done)
+            {
+                base.Enabled = false;
+                Complete?.Invoke();
+            }
         }
     }
 }

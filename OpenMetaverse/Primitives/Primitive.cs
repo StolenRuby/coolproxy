@@ -184,32 +184,44 @@ namespace OpenMetaverse
                     ^ PCode.GetHashCode();
             }
 
-            public static ConstructionData DefaultPrim()
+            public bool Equals(ConstructionData other)
             {
-                var data = new Primitive.ConstructionData();
-                data.PCode = PCode.Prim;
-                data.Material = Material.Wood;
-                data.PathCurve = PathCurve.Line;
-                data.profileCurve = 1;
-                data.PathBegin = 0.0f;
-                data.PathEnd = 1.0f;
-                data.PathScaleX = 1.0f;
-                data.PathScaleY = 1.0f;
-                data.PathShearX = 0.0f;
-                data.PathShearY = 0.0f;
-                data.PathTwist = 0.0f;
-                data.PathTwistBegin = 0.0f;
-                data.PathRadiusOffset = 0.0f;
-                data.PathRevolutions = 1.0f;
-                data.PathSkew = 0.0f;
-                data.PathTaperX = 0.0f;
-                data.PathTaperY = 0.0f;
-                data.ProfileBegin = 0.0f;
-                data.ProfileEnd = 1.0f;
-                data.ProfileHollow = 0.0f;
-                data.State = 0x00;
-                return data;
+                if (ReferenceEquals(other, null))
+                {
+                    return false;
+                }
+                if (ReferenceEquals(this, other))
+                {
+                    return true;
+                }
+
+                return GetHashCode() == other.GetHashCode();
             }
+
+            public static ConstructionData DefaultCube { get; } = new Primitive.ConstructionData
+            {
+                PCode = PCode.Prim,
+                Material = Material.Wood,
+                PathCurve = PathCurve.Line,
+                profileCurve = 1,
+                PathBegin = 0.0f,
+                PathEnd = 1.0f,
+                PathScaleX = 1.0f,
+                PathScaleY = 1.0f,
+                PathShearX = 0.0f,
+                PathShearY = 0.0f,
+                PathTwist = 0.0f,
+                PathTwistBegin = 0.0f,
+                PathRadiusOffset = 0.0f,
+                PathRevolutions = 1.0f,
+                PathSkew = 0.0f,
+                PathTaperX = 0.0f,
+                PathTaperY = 0.0f,
+                ProfileBegin = 0.0f,
+                ProfileEnd = 1.0f,
+                ProfileHollow = 0.0f,
+                State = 0x00
+            };
         }
 
         /// <summary>

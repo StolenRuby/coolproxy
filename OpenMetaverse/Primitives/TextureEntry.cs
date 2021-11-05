@@ -616,12 +616,7 @@ namespace OpenMetaverse
                 tex["media_flags"] = OSD.FromInteger(Convert.ToInt32(MediaFlags));
                 tex["mapping"] = OSD.FromInteger((int)TexMapType);
                 tex["glow"] = OSD.FromReal(Glow);
-
-                if (TextureID != Primitive.TextureEntry.WHITE_TEXTURE)
-                    tex["imageid"] = OSD.FromUUID(TextureID);
-                else
-                    tex["imageid"] = OSD.FromUUID(UUID.Zero);
-
+                tex["imageid"] = OSD.FromUUID(TextureID);
                 tex["materialid"] = OSD.FromUUID(m_materialID);
 
                 return tex;

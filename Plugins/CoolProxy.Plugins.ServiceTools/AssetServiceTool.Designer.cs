@@ -317,6 +317,7 @@ namespace CoolProxy.Plugins.ServiceTools
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AssetServiceTool";
+            this.ShowIcon = false;
             this.Text = "Asset Upload...";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AssetServiceTool_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();

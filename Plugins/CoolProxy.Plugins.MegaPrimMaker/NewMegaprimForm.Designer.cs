@@ -163,6 +163,7 @@ namespace CoolProxy.Plugins.MegaPrimMaker
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "NewMegaprimForm";
+            this.ShowIcon = false;
             this.Text = "New Megaprim";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();

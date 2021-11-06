@@ -29,7 +29,6 @@ namespace CoolProxy.Plugins.Spammers
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.setTargetButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -38,7 +37,7 @@ namespace CoolProxy.Plugins.Spammers
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timer1 = new System.Windows.Forms.Timer();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -154,6 +153,7 @@ namespace CoolProxy.Plugins.Spammers
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TouchSpammerForm";
+            this.ShowIcon = false;
             this.Text = "Touch Spammer";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);

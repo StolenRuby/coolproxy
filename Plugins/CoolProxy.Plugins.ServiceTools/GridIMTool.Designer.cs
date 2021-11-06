@@ -481,6 +481,7 @@ namespace CoolProxy.Plugins.ServiceTools
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "GridIMTool";
+            this.ShowIcon = false;
             this.Text = "GridIM Tool";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GridIMTool_FormClosing);
             this.Shown += new System.EventHandler(this.GridIMTool_Shown);

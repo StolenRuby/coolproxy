@@ -136,6 +136,7 @@ namespace CoolProxy.Plugins.MagicRez
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MagicRezForm";
+            this.ShowIcon = false;
             this.Text = "Magic Rez";
             this.ResumeLayout(false);
             this.PerformLayout();

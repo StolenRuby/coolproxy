@@ -49,14 +49,16 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CoolProxyForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CoolProxyForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
+            this.numericUpDown2 = new L33T.GUI.NumericUpDown();
+            this.textBox1 = new L33T.GUI.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.gridsComboBox = new System.Windows.Forms.ComboBox();
@@ -131,12 +133,20 @@
             this.settingsTabPage = new System.Windows.Forms.TabPage();
             this.settingsTabControl = new System.Windows.Forms.TabControl();
             this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.checkBox1 = new CoolGUI.Controls.CheckBox();
+            this.checkBox9 = new CoolGUI.Controls.CheckBox();
+            this.checkBox2 = new CoolGUI.Controls.CheckBox();
             this.button4 = new System.Windows.Forms.Button();
+            this.checkBox6 = new CoolGUI.Controls.CheckBox();
+            this.checkBox3 = new CoolGUI.Controls.CheckBox();
+            this.numericUpDown5 = new L33T.GUI.NumericUpDown();
+            this.numericUpDown4 = new L33T.GUI.NumericUpDown();
             this.clearCacheButton = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.chatCommandsPanel = new System.Windows.Forms.Panel();
+            this.checkBox4 = new CoolGUI.Controls.CheckBox();
             this.label38 = new System.Windows.Forms.Label();
             this.tabPage16 = new System.Windows.Forms.TabPage();
             this.button26 = new System.Windows.Forms.Button();
@@ -172,11 +182,33 @@
             this.addGridButton = new System.Windows.Forms.Button();
             this.addGridTextbox = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
+            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.movePluginUp = new System.Windows.Forms.Button();
+            this.movePluginDown = new System.Windows.Forms.Button();
+            this.removePluginButton = new System.Windows.Forms.Button();
+            this.addPluginButton = new System.Windows.Forms.Button();
+            this.pluginsDataGridView = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.label7 = new System.Windows.Forms.Label();
+            this.checkBox5 = new CoolGUI.Controls.CheckBox();
+            this.checkBox8 = new CoolGUI.Controls.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.importOffsetZ = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
+            this.importOffsetY = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
+            this.importOffsetX = new System.Windows.Forms.NumericUpDown();
             this.tabPage10 = new System.Windows.Forms.TabPage();
             this.loadPluginTestButton = new System.Windows.Forms.Button();
             this.showDebugSettingsButton = new System.Windows.Forms.Button();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.button3 = new System.Windows.Forms.Button();
+            this.checkBox19 = new CoolGUI.Controls.CheckBox();
+            this.checkBox18 = new CoolGUI.Controls.CheckBox();
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.trayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.avatarTrackerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -184,6 +216,7 @@
             this.toolBoxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.assetLoggingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.assetTransfersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.inventoryBrowserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.quitCoolProxyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.blacklistContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -191,33 +224,10 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.saveXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.inventoryBrowserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabPage7 = new System.Windows.Forms.TabPage();
-            this.pluginsDataGridView = new System.Windows.Forms.DataGridView();
-            this.addPluginButton = new System.Windows.Forms.Button();
-            this.removePluginButton = new System.Windows.Forms.Button();
-            this.movePluginDown = new System.Windows.Forms.Button();
-            this.movePluginUp = new System.Windows.Forms.Button();
-            this.numericUpDown2 = new L33T.GUI.NumericUpDown();
-            this.textBox1 = new L33T.GUI.TextBox();
-            this.checkBox1 = new CoolGUI.Controls.CheckBox();
-            this.checkBox9 = new CoolGUI.Controls.CheckBox();
-            this.checkBox2 = new CoolGUI.Controls.CheckBox();
-            this.checkBox6 = new CoolGUI.Controls.CheckBox();
-            this.checkBox3 = new CoolGUI.Controls.CheckBox();
-            this.numericUpDown5 = new L33T.GUI.NumericUpDown();
-            this.numericUpDown4 = new L33T.GUI.NumericUpDown();
-            this.checkBox12 = new CoolGUI.Controls.CheckBox();
-            this.checkBox11 = new CoolGUI.Controls.CheckBox();
-            this.checkBox4 = new CoolGUI.Controls.CheckBox();
-            this.checkBox19 = new CoolGUI.Controls.CheckBox();
-            this.checkBox18 = new CoolGUI.Controls.CheckBox();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.avatarTrackerGridView)).BeginInit();
             this.tabPage3.SuspendLayout();
@@ -245,19 +255,23 @@
             this.settingsTabPage.SuspendLayout();
             this.settingsTabControl.SuspendLayout();
             this.tabPage9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.chatCommandsPanel.SuspendLayout();
             this.tabPage16.SuspendLayout();
             this.gridsTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridsDataGridView)).BeginInit();
+            this.tabPage7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pluginsDataGridView)).BeginInit();
+            this.tabPage8.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.importOffsetZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.importOffsetY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.importOffsetX)).BeginInit();
             this.tabPage10.SuspendLayout();
             this.trayContextMenu.SuspendLayout();
             this.blacklistContextMenuStrip.SuspendLayout();
-            this.tabPage7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pluginsDataGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -320,6 +334,29 @@
             this.label3.Size = new System.Drawing.Size(356, 31);
             this.label3.TabIndex = 40;
             this.label3.Text = ".: COOL PROXY IS COOL :.";
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.EnabledSetting = null;
+            this.numericUpDown2.Location = new System.Drawing.Point(260, 131);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            12000,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Setting = "GridProxyListenPort";
+            this.numericUpDown2.Size = new System.Drawing.Size(83, 20);
+            this.numericUpDown2.TabIndex = 37;
+            // 
+            // textBox1
+            // 
+            this.textBox1.EnabledSetting = null;
+            this.textBox1.Location = new System.Drawing.Point(131, 131);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Setting = "GridProxyListenAddress";
+            this.textBox1.Size = new System.Drawing.Size(123, 20);
+            this.textBox1.TabIndex = 36;
             // 
             // label2
             // 
@@ -1119,6 +1156,7 @@
             this.settingsTabControl.Controls.Add(this.tabPage16);
             this.settingsTabControl.Controls.Add(this.gridsTabPage);
             this.settingsTabControl.Controls.Add(this.tabPage7);
+            this.settingsTabControl.Controls.Add(this.tabPage8);
             this.settingsTabControl.Controls.Add(this.tabPage10);
             this.settingsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.settingsTabControl.Location = new System.Drawing.Point(3, 3);
@@ -1138,8 +1176,6 @@
             this.tabPage9.Controls.Add(this.checkBox3);
             this.tabPage9.Controls.Add(this.numericUpDown5);
             this.tabPage9.Controls.Add(this.numericUpDown4);
-            this.tabPage9.Controls.Add(this.checkBox12);
-            this.tabPage9.Controls.Add(this.checkBox11);
             this.tabPage9.Controls.Add(this.clearCacheButton);
             this.tabPage9.Controls.Add(this.label16);
             this.tabPage9.Controls.Add(this.label15);
@@ -1150,6 +1186,42 @@
             this.tabPage9.TabIndex = 0;
             this.tabPage9.Text = "General";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.EnabledSetting = null;
+            this.checkBox1.Location = new System.Drawing.Point(14, 120);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Setting = "EnableGridInfo";
+            this.checkBox1.Size = new System.Drawing.Size(174, 17);
+            this.checkBox1.TabIndex = 45;
+            this.checkBox1.Text = "Enable OpenSim Style Grid Info";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox9
+            // 
+            this.checkBox9.AutoSize = true;
+            this.checkBox9.EnabledSetting = "StartProxyAtLaunch";
+            this.checkBox9.Location = new System.Drawing.Point(34, 33);
+            this.checkBox9.Name = "checkBox9";
+            this.checkBox9.Setting = "HideProxyAtLaunch";
+            this.checkBox9.Size = new System.Drawing.Size(126, 17);
+            this.checkBox9.TabIndex = 44;
+            this.checkBox9.Text = "Auto Hide Cool Proxy";
+            this.checkBox9.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.EnabledSetting = null;
+            this.checkBox2.Location = new System.Drawing.Point(14, 12);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Setting = "StartProxyAtLaunch";
+            this.checkBox2.Size = new System.Drawing.Size(157, 17);
+            this.checkBox2.TabIndex = 43;
+            this.checkBox2.Text = "Start Proxy when Launched";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(311, 209);
@@ -1159,6 +1231,49 @@
             this.button4.Text = "Login Params";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // checkBox6
+            // 
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.EnabledSetting = null;
+            this.checkBox6.Location = new System.Drawing.Point(14, 97);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Setting = "MinimizeCoolProxyToTray";
+            this.checkBox6.Size = new System.Drawing.Size(166, 17);
+            this.checkBox6.TabIndex = 24;
+            this.checkBox6.Text = "Minimize CoolProxy to the tray";
+            this.checkBox6.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.EnabledSetting = null;
+            this.checkBox3.Location = new System.Drawing.Point(14, 74);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Setting = "KeepCoolProxyOnTop";
+            this.checkBox3.Size = new System.Drawing.Size(134, 17);
+            this.checkBox3.TabIndex = 23;
+            this.checkBox3.Text = "Keep CoolProxy on top";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown5
+            // 
+            this.numericUpDown5.EnabledSetting = null;
+            this.numericUpDown5.Location = new System.Drawing.Point(390, 35);
+            this.numericUpDown5.Name = "numericUpDown5";
+            this.numericUpDown5.Setting = "MaxSimultaneousDownloads";
+            this.numericUpDown5.Size = new System.Drawing.Size(56, 20);
+            this.numericUpDown5.TabIndex = 22;
+            // 
+            // numericUpDown4
+            // 
+            this.numericUpDown4.Enabled = false;
+            this.numericUpDown4.EnabledSetting = null;
+            this.numericUpDown4.Location = new System.Drawing.Point(390, 10);
+            this.numericUpDown4.Name = "numericUpDown4";
+            this.numericUpDown4.Setting = "MaxSimultaneousUploads";
+            this.numericUpDown4.Size = new System.Drawing.Size(56, 20);
+            this.numericUpDown4.TabIndex = 21;
             // 
             // clearCacheButton
             // 
@@ -1209,6 +1324,18 @@
             this.chatCommandsPanel.Name = "chatCommandsPanel";
             this.chatCommandsPanel.Size = new System.Drawing.Size(446, 234);
             this.chatCommandsPanel.TabIndex = 0;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.EnabledSetting = null;
+            this.checkBox4.Location = new System.Drawing.Point(11, 9);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Setting = "EnableChatCommands";
+            this.checkBox4.Size = new System.Drawing.Size(139, 17);
+            this.checkBox4.TabIndex = 64;
+            this.checkBox4.Text = "Enable Chat Commands";
+            this.checkBox4.UseVisualStyleBackColor = true;
             // 
             // label38
             // 
@@ -1583,6 +1710,240 @@
             this.label26.TabIndex = 0;
             this.label26.Text = "Add new grid:";
             // 
+            // tabPage7
+            // 
+            this.tabPage7.Controls.Add(this.movePluginUp);
+            this.tabPage7.Controls.Add(this.movePluginDown);
+            this.tabPage7.Controls.Add(this.removePluginButton);
+            this.tabPage7.Controls.Add(this.addPluginButton);
+            this.tabPage7.Controls.Add(this.pluginsDataGridView);
+            this.tabPage7.Location = new System.Drawing.Point(4, 22);
+            this.tabPage7.Name = "tabPage7";
+            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage7.Size = new System.Drawing.Size(452, 240);
+            this.tabPage7.TabIndex = 6;
+            this.tabPage7.Text = "Plugins";
+            this.tabPage7.UseVisualStyleBackColor = true;
+            // 
+            // movePluginUp
+            // 
+            this.movePluginUp.Enabled = false;
+            this.movePluginUp.Location = new System.Drawing.Point(371, 126);
+            this.movePluginUp.Name = "movePluginUp";
+            this.movePluginUp.Size = new System.Drawing.Size(75, 23);
+            this.movePluginUp.TabIndex = 9;
+            this.movePluginUp.Text = "Move Up";
+            this.movePluginUp.UseVisualStyleBackColor = true;
+            this.movePluginUp.Click += new System.EventHandler(this.movePluginUp_Click);
+            // 
+            // movePluginDown
+            // 
+            this.movePluginDown.Enabled = false;
+            this.movePluginDown.Location = new System.Drawing.Point(371, 155);
+            this.movePluginDown.Name = "movePluginDown";
+            this.movePluginDown.Size = new System.Drawing.Size(75, 23);
+            this.movePluginDown.TabIndex = 8;
+            this.movePluginDown.Text = "Move Down";
+            this.movePluginDown.UseVisualStyleBackColor = true;
+            this.movePluginDown.Click += new System.EventHandler(this.movePluginDown_Click);
+            // 
+            // removePluginButton
+            // 
+            this.removePluginButton.Enabled = false;
+            this.removePluginButton.Location = new System.Drawing.Point(371, 70);
+            this.removePluginButton.Name = "removePluginButton";
+            this.removePluginButton.Size = new System.Drawing.Size(75, 23);
+            this.removePluginButton.TabIndex = 7;
+            this.removePluginButton.Text = "Remove";
+            this.removePluginButton.UseVisualStyleBackColor = true;
+            this.removePluginButton.Click += new System.EventHandler(this.removePluginButton_Click);
+            // 
+            // addPluginButton
+            // 
+            this.addPluginButton.Location = new System.Drawing.Point(371, 41);
+            this.addPluginButton.Name = "addPluginButton";
+            this.addPluginButton.Size = new System.Drawing.Size(75, 23);
+            this.addPluginButton.TabIndex = 6;
+            this.addPluginButton.Text = "Add";
+            this.addPluginButton.UseVisualStyleBackColor = true;
+            this.addPluginButton.Click += new System.EventHandler(this.addPluginButton_Click);
+            // 
+            // pluginsDataGridView
+            // 
+            this.pluginsDataGridView.AllowDrop = true;
+            this.pluginsDataGridView.AllowUserToAddRows = false;
+            this.pluginsDataGridView.AllowUserToDeleteRows = false;
+            this.pluginsDataGridView.AllowUserToResizeColumns = false;
+            this.pluginsDataGridView.AllowUserToResizeRows = false;
+            dataGridViewCellStyle21.BackColor = System.Drawing.Color.Silver;
+            this.pluginsDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
+            this.pluginsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.pluginsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.Column1,
+            this.Column2});
+            this.pluginsDataGridView.ContextMenuStrip = this.regionsContextMenu;
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.ControlDark;
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.pluginsDataGridView.DefaultCellStyle = dataGridViewCellStyle22;
+            this.pluginsDataGridView.Location = new System.Drawing.Point(6, 6);
+            this.pluginsDataGridView.Name = "pluginsDataGridView";
+            this.pluginsDataGridView.ReadOnly = true;
+            this.pluginsDataGridView.RowHeadersVisible = false;
+            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.pluginsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle23;
+            this.pluginsDataGridView.RowTemplate.Height = 18;
+            this.pluginsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.pluginsDataGridView.Size = new System.Drawing.Size(359, 228);
+            this.pluginsDataGridView.TabIndex = 5;
+            this.pluginsDataGridView.SelectionChanged += new System.EventHandler(this.pluginsDataGridView_SelectionChanged);
+            this.pluginsDataGridView.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragDrop);
+            this.pluginsDataGridView.DragEnter += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragEnter);
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn1.HeaderText = "Plugin";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Version";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Filename";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column2.Visible = false;
+            // 
+            // tabPage8
+            // 
+            this.tabPage8.Controls.Add(this.label7);
+            this.tabPage8.Controls.Add(this.checkBox5);
+            this.tabPage8.Controls.Add(this.checkBox8);
+            this.tabPage8.Controls.Add(this.groupBox1);
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(452, 240);
+            this.tabPage8.TabIndex = 7;
+            this.tabPage8.Text = "Misc";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(36, 209);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(373, 13);
+            this.label7.TabIndex = 23;
+            this.label7.Text = "I need to come up with some way that plugins can add their own settings here";
+            // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.EnabledSetting = "AutomaticallyOpenKeyTool";
+            this.checkBox5.Location = new System.Drawing.Point(34, 35);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Setting = "AutomaticallyCloseKeyTool";
+            this.checkBox5.Size = new System.Drawing.Size(158, 17);
+            this.checkBox5.TabIndex = 22;
+            this.checkBox5.Text = "Automatically close KeyTool";
+            this.checkBox5.UseVisualStyleBackColor = true;
+            // 
+            // checkBox8
+            // 
+            this.checkBox8.AutoSize = true;
+            this.checkBox8.EnabledSetting = null;
+            this.checkBox8.Location = new System.Drawing.Point(14, 12);
+            this.checkBox8.Name = "checkBox8";
+            this.checkBox8.Setting = "AutomaticallyOpenKeyTool";
+            this.checkBox8.Size = new System.Drawing.Size(195, 17);
+            this.checkBox8.TabIndex = 21;
+            this.checkBox8.Text = "Automatically Open Key for KeyTool";
+            this.checkBox8.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.importOffsetZ);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.importOffsetY);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.importOffsetX);
+            this.groupBox1.Location = new System.Drawing.Point(326, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(120, 100);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Object Import Offset";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 73);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(17, 13);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "Z:";
+            // 
+            // importOffsetZ
+            // 
+            this.importOffsetZ.DecimalPlaces = 3;
+            this.importOffsetZ.Location = new System.Drawing.Point(29, 71);
+            this.importOffsetZ.Name = "importOffsetZ";
+            this.importOffsetZ.Size = new System.Drawing.Size(85, 20);
+            this.importOffsetZ.TabIndex = 4;
+            this.importOffsetZ.ValueChanged += new System.EventHandler(this.importOffset_ValueChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 47);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(17, 13);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Y:";
+            // 
+            // importOffsetY
+            // 
+            this.importOffsetY.DecimalPlaces = 3;
+            this.importOffsetY.Location = new System.Drawing.Point(29, 45);
+            this.importOffsetY.Name = "importOffsetY";
+            this.importOffsetY.Size = new System.Drawing.Size(85, 20);
+            this.importOffsetY.TabIndex = 2;
+            this.importOffsetY.ValueChanged += new System.EventHandler(this.importOffset_ValueChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 21);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(17, 13);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "X:";
+            // 
+            // importOffsetX
+            // 
+            this.importOffsetX.DecimalPlaces = 3;
+            this.importOffsetX.Location = new System.Drawing.Point(29, 19);
+            this.importOffsetX.Name = "importOffsetX";
+            this.importOffsetX.Size = new System.Drawing.Size(85, 20);
+            this.importOffsetX.TabIndex = 0;
+            this.importOffsetX.ValueChanged += new System.EventHandler(this.importOffset_ValueChanged);
+            // 
             // tabPage10
             // 
             this.tabPage10.Controls.Add(this.loadPluginTestButton);
@@ -1639,6 +2000,31 @@
             this.button3.TabIndex = 23;
             this.button3.Text = "Check for Update Now";
             this.button3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox19
+            // 
+            this.checkBox19.AutoSize = true;
+            this.checkBox19.Enabled = false;
+            this.checkBox19.EnabledSetting = null;
+            this.checkBox19.Location = new System.Drawing.Point(14, 35);
+            this.checkBox19.Name = "checkBox19";
+            this.checkBox19.Setting = "ShowConsole";
+            this.checkBox19.Size = new System.Drawing.Size(94, 17);
+            this.checkBox19.TabIndex = 30;
+            this.checkBox19.Text = "Show Console";
+            this.checkBox19.UseVisualStyleBackColor = true;
+            // 
+            // checkBox18
+            // 
+            this.checkBox18.AutoSize = true;
+            this.checkBox18.EnabledSetting = null;
+            this.checkBox18.Location = new System.Drawing.Point(14, 12);
+            this.checkBox18.Name = "checkBox18";
+            this.checkBox18.Setting = "AllowMultipleInstances";
+            this.checkBox18.Size = new System.Drawing.Size(139, 17);
+            this.checkBox18.TabIndex = 28;
+            this.checkBox18.Text = "Allow Multiple Instances";
+            this.checkBox18.UseVisualStyleBackColor = true;
             // 
             // trayIcon
             // 
@@ -1698,6 +2084,13 @@
             this.assetTransfersToolStripMenuItem.Text = "Asset Transfers";
             this.assetTransfersToolStripMenuItem.Click += new System.EventHandler(this.tabNameToolStripMenuItem_Click);
             // 
+            // inventoryBrowserToolStripMenuItem
+            // 
+            this.inventoryBrowserToolStripMenuItem.Name = "inventoryBrowserToolStripMenuItem";
+            this.inventoryBrowserToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.inventoryBrowserToolStripMenuItem.Text = "Inventory Browser";
+            this.inventoryBrowserToolStripMenuItem.Click += new System.EventHandler(this.inventoryBrowserToolStripMenuItem_Click);
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -1744,294 +2137,6 @@
             this.loadXMLToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.loadXMLToolStripMenuItem.Text = "Load XML";
             // 
-            // inventoryBrowserToolStripMenuItem
-            // 
-            this.inventoryBrowserToolStripMenuItem.Name = "inventoryBrowserToolStripMenuItem";
-            this.inventoryBrowserToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
-            this.inventoryBrowserToolStripMenuItem.Text = "Inventory Browser";
-            this.inventoryBrowserToolStripMenuItem.Click += new System.EventHandler(this.inventoryBrowserToolStripMenuItem_Click);
-            // 
-            // tabPage7
-            // 
-            this.tabPage7.Controls.Add(this.movePluginUp);
-            this.tabPage7.Controls.Add(this.movePluginDown);
-            this.tabPage7.Controls.Add(this.removePluginButton);
-            this.tabPage7.Controls.Add(this.addPluginButton);
-            this.tabPage7.Controls.Add(this.pluginsDataGridView);
-            this.tabPage7.Location = new System.Drawing.Point(4, 22);
-            this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(452, 240);
-            this.tabPage7.TabIndex = 6;
-            this.tabPage7.Text = "Plugins";
-            this.tabPage7.UseVisualStyleBackColor = true;
-            // 
-            // pluginsDataGridView
-            // 
-            this.pluginsDataGridView.AllowDrop = true;
-            this.pluginsDataGridView.AllowUserToAddRows = false;
-            this.pluginsDataGridView.AllowUserToDeleteRows = false;
-            this.pluginsDataGridView.AllowUserToResizeColumns = false;
-            this.pluginsDataGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle21.BackColor = System.Drawing.Color.Silver;
-            this.pluginsDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
-            this.pluginsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.pluginsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.Column1,
-            this.Column2});
-            this.pluginsDataGridView.ContextMenuStrip = this.regionsContextMenu;
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.ControlDark;
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.pluginsDataGridView.DefaultCellStyle = dataGridViewCellStyle22;
-            this.pluginsDataGridView.Location = new System.Drawing.Point(6, 6);
-            this.pluginsDataGridView.Name = "pluginsDataGridView";
-            this.pluginsDataGridView.ReadOnly = true;
-            this.pluginsDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.pluginsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle23;
-            this.pluginsDataGridView.RowTemplate.Height = 18;
-            this.pluginsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.pluginsDataGridView.Size = new System.Drawing.Size(359, 228);
-            this.pluginsDataGridView.TabIndex = 5;
-            this.pluginsDataGridView.SelectionChanged += new System.EventHandler(this.pluginsDataGridView_SelectionChanged);
-            this.pluginsDataGridView.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragDrop);
-            this.pluginsDataGridView.DragEnter += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragEnter);
-            // 
-            // addPluginButton
-            // 
-            this.addPluginButton.Location = new System.Drawing.Point(371, 41);
-            this.addPluginButton.Name = "addPluginButton";
-            this.addPluginButton.Size = new System.Drawing.Size(75, 23);
-            this.addPluginButton.TabIndex = 6;
-            this.addPluginButton.Text = "Add";
-            this.addPluginButton.UseVisualStyleBackColor = true;
-            this.addPluginButton.Click += new System.EventHandler(this.addPluginButton_Click);
-            // 
-            // removePluginButton
-            // 
-            this.removePluginButton.Enabled = false;
-            this.removePluginButton.Location = new System.Drawing.Point(371, 70);
-            this.removePluginButton.Name = "removePluginButton";
-            this.removePluginButton.Size = new System.Drawing.Size(75, 23);
-            this.removePluginButton.TabIndex = 7;
-            this.removePluginButton.Text = "Remove";
-            this.removePluginButton.UseVisualStyleBackColor = true;
-            this.removePluginButton.Click += new System.EventHandler(this.removePluginButton_Click);
-            // 
-            // movePluginDown
-            // 
-            this.movePluginDown.Enabled = false;
-            this.movePluginDown.Location = new System.Drawing.Point(371, 155);
-            this.movePluginDown.Name = "movePluginDown";
-            this.movePluginDown.Size = new System.Drawing.Size(75, 23);
-            this.movePluginDown.TabIndex = 8;
-            this.movePluginDown.Text = "Move Down";
-            this.movePluginDown.UseVisualStyleBackColor = true;
-            this.movePluginDown.Click += new System.EventHandler(this.movePluginDown_Click);
-            // 
-            // movePluginUp
-            // 
-            this.movePluginUp.Enabled = false;
-            this.movePluginUp.Location = new System.Drawing.Point(371, 126);
-            this.movePluginUp.Name = "movePluginUp";
-            this.movePluginUp.Size = new System.Drawing.Size(75, 23);
-            this.movePluginUp.TabIndex = 9;
-            this.movePluginUp.Text = "Move Up";
-            this.movePluginUp.UseVisualStyleBackColor = true;
-            this.movePluginUp.Click += new System.EventHandler(this.movePluginUp_Click);
-            // 
-            // numericUpDown2
-            // 
-            this.numericUpDown2.EnabledSetting = null;
-            this.numericUpDown2.Location = new System.Drawing.Point(260, 131);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            12000,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Setting = "GridProxyListenPort";
-            this.numericUpDown2.Size = new System.Drawing.Size(83, 20);
-            this.numericUpDown2.TabIndex = 37;
-            // 
-            // textBox1
-            // 
-            this.textBox1.EnabledSetting = null;
-            this.textBox1.Location = new System.Drawing.Point(131, 131);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Setting = "GridProxyListenAddress";
-            this.textBox1.Size = new System.Drawing.Size(123, 20);
-            this.textBox1.TabIndex = 36;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.EnabledSetting = null;
-            this.checkBox1.Location = new System.Drawing.Point(14, 120);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Setting = "EnableGridInfo";
-            this.checkBox1.Size = new System.Drawing.Size(174, 17);
-            this.checkBox1.TabIndex = 45;
-            this.checkBox1.Text = "Enable OpenSim Style Grid Info";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox9
-            // 
-            this.checkBox9.AutoSize = true;
-            this.checkBox9.EnabledSetting = "StartProxyAtLaunch";
-            this.checkBox9.Location = new System.Drawing.Point(34, 33);
-            this.checkBox9.Name = "checkBox9";
-            this.checkBox9.Setting = "HideProxyAtLaunch";
-            this.checkBox9.Size = new System.Drawing.Size(126, 17);
-            this.checkBox9.TabIndex = 44;
-            this.checkBox9.Text = "Auto Hide Cool Proxy";
-            this.checkBox9.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.EnabledSetting = null;
-            this.checkBox2.Location = new System.Drawing.Point(14, 12);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Setting = "StartProxyAtLaunch";
-            this.checkBox2.Size = new System.Drawing.Size(157, 17);
-            this.checkBox2.TabIndex = 43;
-            this.checkBox2.Text = "Start Proxy when Launched";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox6
-            // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.EnabledSetting = null;
-            this.checkBox6.Location = new System.Drawing.Point(14, 97);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Setting = "MinimizeCoolProxyToTray";
-            this.checkBox6.Size = new System.Drawing.Size(166, 17);
-            this.checkBox6.TabIndex = 24;
-            this.checkBox6.Text = "Minimize CoolProxy to the tray";
-            this.checkBox6.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.EnabledSetting = null;
-            this.checkBox3.Location = new System.Drawing.Point(14, 74);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Setting = "KeepCoolProxyOnTop";
-            this.checkBox3.Size = new System.Drawing.Size(134, 17);
-            this.checkBox3.TabIndex = 23;
-            this.checkBox3.Text = "Keep CoolProxy on top";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDown5
-            // 
-            this.numericUpDown5.EnabledSetting = null;
-            this.numericUpDown5.Location = new System.Drawing.Point(390, 35);
-            this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.Setting = "MaxSimultaneousDownloads";
-            this.numericUpDown5.Size = new System.Drawing.Size(56, 20);
-            this.numericUpDown5.TabIndex = 22;
-            // 
-            // numericUpDown4
-            // 
-            this.numericUpDown4.Enabled = false;
-            this.numericUpDown4.EnabledSetting = null;
-            this.numericUpDown4.Location = new System.Drawing.Point(390, 10);
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Setting = "MaxSimultaneousUploads";
-            this.numericUpDown4.Size = new System.Drawing.Size(56, 20);
-            this.numericUpDown4.TabIndex = 21;
-            // 
-            // checkBox12
-            // 
-            this.checkBox12.AutoSize = true;
-            this.checkBox12.EnabledSetting = "AutomaticallyOpenKeyTool";
-            this.checkBox12.Location = new System.Drawing.Point(266, 97);
-            this.checkBox12.Name = "checkBox12";
-            this.checkBox12.Setting = "AutomaticallyCloseKeyTool";
-            this.checkBox12.Size = new System.Drawing.Size(158, 17);
-            this.checkBox12.TabIndex = 20;
-            this.checkBox12.Text = "Automatically close KeyTool";
-            this.checkBox12.UseVisualStyleBackColor = true;
-            // 
-            // checkBox11
-            // 
-            this.checkBox11.AutoSize = true;
-            this.checkBox11.EnabledSetting = null;
-            this.checkBox11.Location = new System.Drawing.Point(241, 74);
-            this.checkBox11.Name = "checkBox11";
-            this.checkBox11.Setting = "AutomaticallyOpenKeyTool";
-            this.checkBox11.Size = new System.Drawing.Size(195, 17);
-            this.checkBox11.TabIndex = 19;
-            this.checkBox11.Text = "Automatically Open Key for KeyTool";
-            this.checkBox11.UseVisualStyleBackColor = true;
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.EnabledSetting = null;
-            this.checkBox4.Location = new System.Drawing.Point(11, 9);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Setting = "EnableChatCommands";
-            this.checkBox4.Size = new System.Drawing.Size(139, 17);
-            this.checkBox4.TabIndex = 64;
-            this.checkBox4.Text = "Enable Chat Commands";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            // 
-            // checkBox19
-            // 
-            this.checkBox19.AutoSize = true;
-            this.checkBox19.Enabled = false;
-            this.checkBox19.EnabledSetting = null;
-            this.checkBox19.Location = new System.Drawing.Point(14, 35);
-            this.checkBox19.Name = "checkBox19";
-            this.checkBox19.Setting = "ShowConsole";
-            this.checkBox19.Size = new System.Drawing.Size(94, 17);
-            this.checkBox19.TabIndex = 30;
-            this.checkBox19.Text = "Show Console";
-            this.checkBox19.UseVisualStyleBackColor = true;
-            // 
-            // checkBox18
-            // 
-            this.checkBox18.AutoSize = true;
-            this.checkBox18.EnabledSetting = null;
-            this.checkBox18.Location = new System.Drawing.Point(14, 12);
-            this.checkBox18.Name = "checkBox18";
-            this.checkBox18.Setting = "AllowMultipleInstances";
-            this.checkBox18.Size = new System.Drawing.Size(139, 17);
-            this.checkBox18.TabIndex = 28;
-            this.checkBox18.Text = "Allow Multiple Instances";
-            this.checkBox18.UseVisualStyleBackColor = true;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn1.HeaderText = "Plugin";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Version";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Filename";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column2.Visible = false;
-            // 
             // CoolProxyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2051,6 +2156,7 @@
             this.tabPage1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.avatarTrackerGridView)).EndInit();
             this.tabPage3.ResumeLayout(false);
@@ -2081,6 +2187,8 @@
             this.settingsTabControl.ResumeLayout(false);
             this.tabPage9.ResumeLayout(false);
             this.tabPage9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.chatCommandsPanel.ResumeLayout(false);
             this.chatCommandsPanel.PerformLayout();
@@ -2089,15 +2197,19 @@
             this.gridsTabPage.ResumeLayout(false);
             this.gridsTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridsDataGridView)).EndInit();
+            this.tabPage7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pluginsDataGridView)).EndInit();
+            this.tabPage8.ResumeLayout(false);
+            this.tabPage8.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.importOffsetZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.importOffsetY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.importOffsetX)).EndInit();
             this.tabPage10.ResumeLayout(false);
             this.tabPage10.PerformLayout();
             this.trayContextMenu.ResumeLayout(false);
             this.blacklistContextMenuStrip.ResumeLayout(false);
-            this.tabPage7.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pluginsDataGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2209,8 +2321,6 @@
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem2;
         private CoolGUI.Controls.CheckBox checkBox18;
         private CoolGUI.Controls.CheckBox checkBox19;
-        private CoolGUI.Controls.CheckBox checkBox12;
-        private CoolGUI.Controls.CheckBox checkBox11;
         private System.Windows.Forms.Button showDebugSettingsButton;
         private L33T.GUI.NumericUpDown numericUpDown4;
         private L33T.GUI.NumericUpDown numericUpDown5;
@@ -2265,6 +2375,17 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.TabPage tabPage8;
+        private CoolGUI.Controls.CheckBox checkBox5;
+        private CoolGUI.Controls.CheckBox checkBox8;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.NumericUpDown importOffsetZ;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown importOffsetY;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown importOffsetX;
+        private System.Windows.Forms.Label label7;
     }
 }
 

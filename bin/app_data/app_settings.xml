@@ -106,7 +106,7 @@
 			<key>type</key>
 			<string>string</string>
 			<key>value</key>
-			<string>Mobius Grid</string>
+			<string>Second Life</string>
 		</map>
 		<key>LastAccountUsed</key>
 		<map>
@@ -115,7 +115,7 @@
 			<key>type</key>
 			<string>string</string>
 			<key>value</key>
-			<string>Ruby</string>
+			<string></string>
 		</map>
 		<key>MaxSimultaneousDownloads</key>
 		<map>
@@ -153,19 +153,8 @@
 			<key>value</key>
 			<string>localhost</string>
 		</map>
-		<key>SecretMessage</key>
-		<map>
-			<key>comment</key>
-			<string>Stop reading this!</string>
-			<key>type</key>
-			<string>string</string>
-			<key>value</key>
-			<string>Stop!</string>
-		</map>
 		<key>EditorsChangeCreator</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -173,8 +162,6 @@
 		</map>
 		<key>EditorsChangeCreationDate</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -182,8 +169,6 @@
 		</map>
 		<key>EditorsChangePermissions</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -191,8 +176,6 @@
 		</map>
 		<key>TabLoginPopped</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -200,8 +183,6 @@
 		</map>
 		<key>TabLoginOpen</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -209,8 +190,6 @@
 		</map>
 		<key>TabAvatarTrackerPopped</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -218,8 +197,6 @@
 		</map>
 		<key>TabAvatarTrackerOpen</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -227,8 +204,6 @@
 		</map>
 		<key>TabRegionsPopped</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -236,8 +211,6 @@
 		</map>
 		<key>TabRegionsOpen</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -245,8 +218,6 @@
 		</map>
 		<key>TabToolBoxPopped</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -254,8 +225,6 @@
 		</map>
 		<key>TabToolBoxOpen</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -263,8 +232,6 @@
 		</map>
 		<key>TabAssetLoggingPopped</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -272,8 +239,6 @@
 		</map>
 		<key>TabAssetLoggingOpen</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -281,8 +246,6 @@
 		</map>
 		<key>TabAssetTransfersPopped</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -290,8 +253,6 @@
 		</map>
 		<key>TabAssetTransfersOpen</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -299,8 +260,6 @@
 		</map>
 		<key>TabSettingsPopped</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -308,8 +267,6 @@
 		</map>
 		<key>TabSettingsOpen</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -317,8 +274,6 @@
 		</map>
 		<key>SpoofMac</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -326,17 +281,13 @@
 		</map>
 		<key>SpecifiedMacAddress</key>
 		<map>
-			<key>comment</key>
-			<string>What address GridProxy should listen on</string>
 			<key>type</key>
 			<string>string</string>
 			<key>value</key>
-			<string>071ceb4d882ac286a39e981c31039c5c</string>
+			<string>00000000000000000000000000000000</string>
 		</map>
 		<key>SpoofId0</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -344,17 +295,13 @@
 		</map>
 		<key>SpecifiedId0Address</key>
 		<map>
-			<key>comment</key>
-			<string>What address GridProxy should listen on</string>
 			<key>type</key>
 			<string>string</string>
 			<key>value</key>
-			<string>4ca1a2e4b127846b957001871974b98d</string>
+			<string>00000000000000000000000000000000</string>
 		</map>
 		<key>SpoofVersion</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -362,8 +309,6 @@
 		</map>
 		<key>SpecifiedVersionChannel</key>
 		<map>
-			<key>comment</key>
-			<string>What address GridProxy should listen on</string>
 			<key>type</key>
 			<string>string</string>
 			<key>value</key>
@@ -371,8 +316,6 @@
 		</map>
 		<key>SpecifiedVersionMajor</key>
 		<map>
-			<key>comment</key>
-			<string>What address GridProxy should listen on</string>
 			<key>type</key>
 			<string>integer</string>
 			<key>value</key>
@@ -380,8 +323,6 @@
 		</map>
 		<key>SpecifiedVersionMinor</key>
 		<map>
-			<key>comment</key>
-			<string>What address GridProxy should listen on</string>
 			<key>type</key>
 			<string>integer</string>
 			<key>value</key>
@@ -389,8 +330,6 @@
 		</map>
 		<key>SpecifiedVersionPatch</key>
 		<map>
-			<key>comment</key>
-			<string>What address GridProxy should listen on</string>
 			<key>type</key>
 			<string>integer</string>
 			<key>value</key>
@@ -398,8 +337,6 @@
 		</map>
 		<key>SpecifiedVersionBuild</key>
 		<map>
-			<key>comment</key>
-			<string>What address GridProxy should listen on</string>
 			<key>type</key>
 			<string>integer</string>
 			<key>value</key>
@@ -407,17 +344,13 @@
 		</map>
 		<key>StartProxyAtLaunch</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
-			<boolean>1</boolean>
+			<boolean>0</boolean>
 		</map>
 		<key>HideProxyAtLaunch</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
@@ -425,8 +358,6 @@
 		</map>
 		<key>BridgeList</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>osd</string>
 			<key>value</key>
@@ -434,12 +365,21 @@
 		</map>
 		<key>PluginList</key>
 		<map>
-			<key>comment</key>
-			<string>What a cool example!</string>
 			<key>type</key>
 			<string>osd</string>
 			<key>value</key>
 			<array/>
+		</map>
+		<key>ImportOffset</key>
+		<map>
+			<key>type</key>
+			<string>vector</string>
+			<key>value</key>
+			<array>
+				<real>0</real>
+				<real>0</real>
+				<real>5</real>
+			</array>
 		</map>
 	</map>
 </llsd>

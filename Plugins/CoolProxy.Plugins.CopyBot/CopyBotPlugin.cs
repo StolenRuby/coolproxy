@@ -234,6 +234,8 @@ namespace CoolProxy.Plugins.CopyBot
 
             ImporterBusy = true;
 
+            ImportOffset = Settings.getVector("ImportOffset");
+
             IDToLocalID.Clear();
             LinkSets.Clear();
             AttachingItems.Clear();

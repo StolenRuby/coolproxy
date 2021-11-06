@@ -71,7 +71,21 @@ namespace CoolProxy
 
         public SettingsManager()
         {
-            LoadFile();
+            Settings.Clear();
+
+            string app_settings_dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CoolProxy\\");
+
+            if (!Directory.Exists(app_settings_dir))
+            {
+                Directory.CreateDirectory(app_settings_dir);
+            }
+
+            string settings_path = Path.Combine(app_settings_dir, "app_settings.xml");
+
+            LoadFile("./app_data/app_settings.xml");
+
+            if (File.Exists(settings_path))
+                LoadFile(settings_path);
         }
 
         ~SettingsManager()
@@ -79,24 +93,8 @@ namespace CoolProxy
             SaveFile();
         }
 
-        public void LoadFile()
+        public void LoadFile(string settings_path)
         {
-            Settings.Clear();
-
-            string app_settings_dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CoolProxy\\");
-
-            if(!Directory.Exists(app_settings_dir))
-            {
-                Directory.CreateDirectory(app_settings_dir);
-            }
-
-            string settings_path = Path.Combine(app_settings_dir, "app_settings.xml");
-
-            if (File.Exists(settings_path) == false)
-            {
-                settings_path = "./app_data/app_settings.xml";
-            }
-
             byte[] data = File.ReadAllBytes(settings_path);
 
             OSDMap map = (OSDMap)OSDParser.DeserializeLLSDXml(data);
@@ -140,16 +138,23 @@ namespace CoolProxy
                             break;
                     }
 
-                    string comment = string.Empty;
-
-                    if (setting_osd.ContainsKey("comment"))
-                        comment = setting_osd["comment"];
-
-                    Setting setting = new Setting(key, type, value, comment);
-
-                    if (value != null)
+                    if(Settings.ContainsKey(key))
                     {
-                        Settings.Add(key, setting);
+                        Settings[key].Value = value;
+                    }
+                    else
+                    {
+                        string comment = string.Empty;
+
+                        if (setting_osd.ContainsKey("comment"))
+                            comment = setting_osd["comment"];
+
+                        Setting setting = new Setting(key, type, value, comment);
+
+                        if (value != null)
+                        {
+                            Settings.Add(key, setting);
+                        }
                     }
                 }
             }

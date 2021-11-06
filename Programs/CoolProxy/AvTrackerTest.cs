@@ -30,13 +30,11 @@ namespace CoolProxy
 
             public Avatar Avatar { get; set; }
 
-            public string Name { get; set; } = string.Empty;
+            public string Name { get; set; } = null;
 
             public Vector3 CoarsePosition { get; set; } = new Vector3();
 
             public float Distance { get; set; } = 0.0f;
-
-            public string Client { get; set; } = "Unknown";
 
             public Color TagColor { get; set; } = Color.Gray;
 
@@ -157,13 +155,9 @@ namespace CoolProxy
         {
             dataGridView.SuspendLayout();
 
-            //int first = dataGridView.FirstDisplayedCell?.RowIndex ?? -1;
-
             Vector3 my_pos = Frame.Agent.SimPosition;
 
             List<UUID> selected = getSelectedAvatars();
-
-            //dataGridView.Rows.Clear();
 
             lock(avatarsInTracker)
             {
@@ -171,16 +165,7 @@ namespace CoolProxy
 
                 foreach (var item in list)
                 {
-                    string name = item.UUID.ToString();
-                    Vector3 pos = item.CoarsePosition;
-
-                    if (item.Avatar != null)
-                    {
-                        if (item.Avatar.Name != string.Empty)
-                            name = item.Avatar.Name;
-
-                        pos = item.Avatar.Position;
-                    }
+                    Vector3 pos = item.Avatar != null ? item.Avatar.Position : item.CoarsePosition;
 
                     float dist = Vector3.Distance(my_pos, pos);
 
@@ -190,18 +175,17 @@ namespace CoolProxy
 
                     if(row == null)
                     {
-                        int id = dataGridView.Rows.Add(name, pos_str, Math.Round(dist, 2));
+                        int id = dataGridView.Rows.Add(item.Name, pos_str, Math.Round(dist, 2));
                         row = item.Row = dataGridView.Rows[id];
                     }
                     else
                     {
-                        row.Cells[0].Value = name;
+                        row.Cells[0].Value = item.Name ?? item.UUID.ToString();
                         row.Cells[1].Value = pos_str;
                         row.Cells[2].Value = Math.Round(dist, 2);
                     }
 
                     row.Cells[2].Style.ForeColor = dist2Color(dist);
-                    //row.Cells[3].Style.ForeColor = item.TagColor;
                     row.Tag = item;
                     row.Selected = selected.Contains(item.UUID);
                 }
@@ -209,9 +193,6 @@ namespace CoolProxy
 
             if (dataGridView.SortedColumn != null)
                 dataGridView.Sort(dataGridView.SortedColumn, dataGridView.SortOrder == SortOrder.Ascending ? ListSortDirection.Ascending : ListSortDirection.Descending);
-
-            //if (first != -1)
-            //    dataGridView.FirstDisplayedCell = dataGridView.Rows[first].Cells[0];
 
             dataGridView.ResumeLayout();
         }
@@ -257,6 +238,7 @@ namespace CoolProxy
 
                     existing.Name = avatar.Name;
 
+                    GetDisplayName(existing);
                     
                     if(!trackerDictionary.ContainsKey(avatar.ID))
                     {
@@ -281,6 +263,41 @@ namespace CoolProxy
             }
         }
 
+        Dictionary<UUID, string> PitifulNameCache = new Dictionary<UUID, string>();
+
+        void GetDisplayName(AvatarInTracker entry)
+        {
+            if(PitifulNameCache.ContainsKey(entry.UUID))
+            {
+                entry.Name = PitifulNameCache[entry.UUID];
+                return;
+            }
+
+            PitifulNameCache[entry.UUID] = entry.Name;
+            Frame.Avatars.GetDisplayNames(new List<UUID> { entry.UUID }, (success, names, rejects) =>
+            {
+                if (success)
+                {
+                    foreach (var name in names)
+                    {
+                        if (name.ID == entry.UUID)
+                        {
+                            if (name.IsDefaultDisplayName)
+                            {
+                                entry.Name = name.DisplayName;
+                            }
+                            else
+                            {
+                                entry.Name = string.Format("{0} ({1})", name.DisplayName, name.UserName.ToLower());
+                            }
+                            PitifulNameCache[entry.UUID] = entry.Name;
+                            break;
+                        }
+                    }
+                }
+            });
+        }
+
         void UpdateList(RegionProxy sim, List<UUID> added, List<UUID> removed)
         {
             if (sim != Frame.Network.CurrentSim)
@@ -293,6 +310,7 @@ namespace CoolProxy
                 {
                     var entry = new AvatarInTracker(key);
 
+                    GetDisplayName(entry);
 
                     Vector3 pos;
                     if (sim.AvatarPositions.TryGetValue(key, out pos))

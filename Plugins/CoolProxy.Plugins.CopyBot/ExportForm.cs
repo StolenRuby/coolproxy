@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace CoolProxy.Plugins.CopyBot
 
         Avatar TargetAvatar;
 
-        enum OutputMode
+        public enum OutputMode
         {
             Save,
             Forge,
@@ -214,51 +215,46 @@ namespace CoolProxy.Plugins.CopyBot
                 }
             }
 
+            string filename = string.Empty;
+
             if (Mode == OutputMode.Save)
             {
                 using (SaveFileDialog dialog = new SaveFileDialog())
                 {
                     if (TargetAvatar != null)
                     {
-                        dialog.FileName = TargetAvatar.Name;
+                        filename = TargetAvatar.Name;
                     }
                     else if (selected.Count == 1)
                     {
                         var prim = Frame.Network.CurrentSim.ObjectsPrimitives[selected[0]];
                         if (prim.Properties != null)
                         {
-                            dialog.FileName = prim.Properties.Name;
+                            filename = prim.Properties.Name;
                         }
                     }
                     else
                     {
-                        dialog.FileName = "Multiple Objects";
+                        filename = "Multiple Objects";
                     }
 
-                    dialog.Filter = "Object XML|*.xml";
+                    dialog.Filter = "Object Backup|*.sog";
+                    dialog.FileName = filename;
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
-                        string output = OSDParser.SerializeLLSDXmlString(export);
-                        try { File.WriteAllText(dialog.FileName, output); }
-                        catch (Exception ex) { Frame.SayToUser(ex.Message); }
-
-                        Frame.AlertMessage("Saved to " + dialog.FileName, false);
-
-                        this.Close();
+                        filename = dialog.FileName;
                     }
+                    else return;
                 }
             }
-            else
+
+            // Start the exporter on a task to the form can dispose...
+            new Task(() =>
             {
-                ImportOptions importOptions = new ImportOptions(export);
+                new ExportWorker(Frame, export, final_selection, checkBox1.Checked, checkBox2.Checked, Mode, filename);
+            }).Start();
 
-                if (Mode == OutputMode.Import)
-                    CopyBotPlugin.Instance.ImportLinkset(importOptions);
-                else
-                    CopyBotPlugin.Instance.ForgeLinkset(importOptions);
-
-                this.Close();
-            }
+            this.Close();
         }
 
         private void closeButton_Click(object sender, EventArgs e)
@@ -271,15 +267,17 @@ namespace CoolProxy.Plugins.CopyBot
             Mode = OutputMode.Save;
             splitButton1.Text = "Save As...";
             checkBox1.Text = "Download Assets";
-            checkBox1.Visible = true;
             checkBox1.Checked = false;
+            checkBox1.Enabled = true;
         }
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Mode = OutputMode.Import;
             splitButton1.Text = "Import";
-            checkBox1.Visible = false;
+            checkBox1.Text = "Download Assets";
+            checkBox1.Checked = false;
+            checkBox1.Enabled = false;
         }
 
         private void forgeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -287,8 +285,8 @@ namespace CoolProxy.Plugins.CopyBot
             Mode = OutputMode.Forge;
             splitButton1.Text = "Forge";
             checkBox1.Text = "Preserve Properties";
-            checkBox1.Visible = true;
             checkBox1.Checked = true;
+            checkBox1.Enabled = true;
         }
 
         private void selectAllButton_Click(object sender, EventArgs e)
@@ -319,6 +317,217 @@ namespace CoolProxy.Plugins.CopyBot
                 else
                 {
                     dataGridView.Rows[i].Cells[0].Value = objects;
+                }
+            }
+        }
+
+        public class ExportWorker
+        {
+            CoolProxyFrame Proxy;
+
+            List<Primitive> PrimsToExport;
+            bool ExportContents;
+            bool ExportAssets;
+            OutputMode Mode;
+            string Filename;
+
+            OSDMap ExportMap;
+
+            Dictionary<UUID, AssetType> AssetsToExport = new Dictionary<UUID, AssetType>();
+
+            ZipArchive Archive;
+
+            public ExportWorker(CoolProxyFrame proxy, OSDMap map, List<Primitive> prims, bool assets, bool inv, OutputMode mode, string filename)
+            {
+                Proxy = proxy;
+                ExportMap = map;
+                PrimsToExport = prims;
+                ExportContents = inv;
+                ExportAssets = assets;
+                Mode = mode;
+                Filename = filename;
+
+                if(Mode == OutputMode.Import)
+                {
+                    FinishExport();
+                    return;
+                }
+                else if(Mode == OutputMode.Save)
+                {
+                    if (File.Exists(filename)) File.Delete(filename);
+                    Archive = ZipFile.Open(filename, ZipArchiveMode.Create);
+                }
+
+                if(!ExportAssets && !ExportContents)
+                {
+                    FinishExport();
+                }
+                else
+                {
+                    if (ExportAssets)
+                    {
+                        foreach(var prim in PrimsToExport)
+                        {
+                            if(prim.Sculpt != null)
+                            {
+                                UUID id = prim.Sculpt.SculptTexture;
+                                if(!AssetsToExport.ContainsKey(id))
+                                {
+                                    AssetsToExport[id] = prim.Sculpt.Type == SculptType.Mesh ? AssetType.Mesh : AssetType.Texture;
+                                }
+                            }
+
+                            LogTextureEntry(prim.Textures.DefaultTexture);
+                            foreach (var texture in prim.Textures.FaceTextures)
+                                LogTextureEntry(texture);
+                        }
+                    }
+
+                    if (ExportContents)
+                    {
+                        NextTaskInv();
+                    }
+                    else
+                    {
+                        NextAsset();
+                    }
+
+                    string nouns = string.Empty;
+                    if (ExportAssets && ExportContents)
+                        nouns = "inventory and assets";
+                    else if (ExportAssets)
+                        nouns = "assets";
+                    else if (ExportContents)
+                        nouns = "inventory";
+
+                    Proxy.AlertMessage("Starting export of " + nouns + "...", false);
+                }
+            }
+
+            void LogTextureEntry(Primitive.TextureEntryFace face)
+            {
+                if (face != null)
+                {
+                    UUID texture_id = face.TextureID;
+                    UUID material_id = face.MaterialID;
+
+                    if (!AssetsToExport.ContainsKey(texture_id))
+                        AssetsToExport[texture_id] = AssetType.Texture;
+
+                    if (!AssetsToExport.ContainsKey(material_id))
+                        AssetsToExport[texture_id] = AssetType.Texture;
+                }
+            }
+
+            void HandleInventory(uint object_id, bool success, List<InventoryBase> items)
+            {
+                if(success)
+                {
+                    OSDArray inv_items = new OSDArray();
+                    foreach(var item in items)
+                    {
+                        if(item is InventoryItem)
+                        {
+                            InventoryItem inv_item = (InventoryItem)item;
+                            if(inv_item.AssetUUID != UUID.Zero)
+                            {
+                                inv_items.Add(item.GetOSD());
+
+                                if(ExportAssets)
+                                {
+                                    AssetsToExport[inv_item.AssetUUID] = inv_item.AssetType;
+                                }
+                            }
+                        }
+                    }
+
+                    if(inv_items.Count > 0)
+                    {
+                        ((OSDMap)ExportMap[object_id.ToString()])["inventory"] = inv_items;
+                    }
+                }
+                else
+                {
+                    Logger.Log("[EXPORTER] Failed to download inventory for " + object_id.ToString(), Helpers.LogLevel.Info);
+                }
+
+                NextTaskInv();
+            }
+
+            void NextTaskInv()
+            {
+                if (PrimsToExport.Count > 0)
+                {
+                    Primitive next = PrimsToExport[0];
+                    PrimsToExport.Remove(next);
+                    Proxy.Inventory.GetTaskInventory(next.ID, next.LocalID, 10000, HandleInventory);
+                }
+                else
+                {
+                    Logger.Log("[EXPORTER] Finished downloading contents...", Helpers.LogLevel.Info);
+                    NextAsset();
+                }
+            }
+
+            private void HandleAsset(UUID id, bool success, byte[] data)
+            {
+                if(success)
+                {
+                    AddToArchive(id.ToString(), data);
+                }
+
+                NextAsset();
+            }
+
+            void NextAsset()
+            {
+                if(AssetsToExport.Count > 0)
+                {
+                    var first = AssetsToExport.First();
+                    AssetsToExport.Remove(first.Key);
+                    Proxy.OpenSim.Assets.DownloadAsset(first.Key, (x, y) => HandleAsset(first.Key, x, y));
+                }
+                else
+                {
+                    Logger.Log("[EXPORTER] Finished downloading assets...", Helpers.LogLevel.Info);
+                    FinishExport();
+                }
+            }
+
+            void AddToArchive(string name, byte[] data)
+            {
+                try
+                {
+                    var zipEntry = Archive.CreateEntry(name);
+
+                    using (var stream = new MemoryStream(data))
+                    using (var entry = zipEntry.Open())
+                    {
+                        stream.CopyTo(entry);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log(ex.Message, Helpers.LogLevel.Debug);
+                }
+            }
+
+            void FinishExport()
+            {
+                if (Mode == OutputMode.Save)
+                {
+                    AddToArchive("sog", OSDParser.SerializeLLSDXmlToBytes(ExportMap));
+                    Archive.Dispose();
+                    Proxy.AlertMessage("Saved to " + Filename, false);
+                }
+                else
+                {
+                    ImportOptions options = new ImportOptions(ExportMap);
+
+                    if (Mode == OutputMode.Import)
+                        CopyBotPlugin.Instance.ImportLinkset(options);
+                    else
+                        CopyBotPlugin.Instance.ForgeLinkset(options);
                 }
             }
         }

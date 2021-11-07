@@ -39,6 +39,7 @@ using OpenMetaverse;
 using Nwc.XmlRpc;
 using GridProxy;
 using static GridProxy.RegionManager;
+using System.Threading.Tasks;
 
 namespace GridProxy
 {
@@ -215,11 +216,13 @@ namespace GridProxy
         ///<summary>Raises the TaskInventoryReply Event</summary>
         /// <param name="e">A TaskInventoryReplyEventArgs object containing
         /// the data sent from the simulator</param>
-        protected virtual void OnTaskInventoryReply(TaskInventoryReplyEventArgs e)
+        protected virtual bool OnTaskInventoryReply(TaskInventoryReplyEventArgs e)
         {
             EventHandler<TaskInventoryReplyEventArgs> handler = m_TaskInventoryReply;
             if (handler != null)
                 handler(this, e);
+
+            return e.Handled;
         }
 
         /// <summary>Thread sync lock object</summary>
@@ -864,8 +867,8 @@ namespace GridProxy
             {
                 ReplyTaskInventoryPacket reply = (ReplyTaskInventoryPacket)packet;
 
-                OnTaskInventoryReply(new TaskInventoryReplyEventArgs(reply.InventoryData.TaskID, reply.InventoryData.Serial,
-                    Utils.BytesToString(reply.InventoryData.Filename)));
+                return OnTaskInventoryReply(new TaskInventoryReplyEventArgs(reply.InventoryData.TaskID, reply.InventoryData.Serial,
+                    Utils.BytesToString(reply.InventoryData.Filename))) ? null : packet;
             }
             return packet;
         }
@@ -2908,6 +2911,8 @@ namespace GridProxy
             return transactionID;
         }
 
+        public delegate void TaskInventoryHandler(uint object_id, bool success, List<InventoryBase> inv);
+
         /// <summary>
         /// Retrieve a listing of the items contained in a task (Primitive)
         /// </summary>
@@ -2918,77 +2923,80 @@ namespace GridProxy
         /// if a timeout occurs</returns>
         /// <remarks>This request blocks until the response from the simulator arrives 
         /// or timeoutMS is exceeded</remarks>
-        public List<InventoryBase> GetTaskInventory(UUID objectID, UInt32 objectLocalID, Int32 timeoutMS)
+        public void GetTaskInventory(UUID objectID, uint objectLocalID, int timeoutMS, TaskInventoryHandler inv_callback)
         {
-            throw new Exception("Ruby is lazy");
-            //String filename = null;
-            //AutoResetEvent taskReplyEvent = new AutoResetEvent(false);
+            new Task(() =>
+            {
+                string filename = null;
+                AutoResetEvent taskReplyEvent = new AutoResetEvent(false);
 
-            //EventHandler<TaskInventoryReplyEventArgs> callback =
-            //    delegate(object sender, TaskInventoryReplyEventArgs e)
-            //    {
-            //        if (e.ItemID == objectID)
-            //        {
-            //            filename = e.AssetFilename;
-            //            taskReplyEvent.Set();
-            //        }
-            //    };
+                EventHandler<TaskInventoryReplyEventArgs> callback =
+                    delegate (object sender, TaskInventoryReplyEventArgs e)
+                    {
+                        if (e.ItemID == objectID)
+                        {
+                            filename = e.AssetFilename;
+                            taskReplyEvent.Set();
+                            e.Handled = true;
+                        }
+                    };
 
-            //TaskInventoryReply += callback;
+                TaskInventoryReply += callback;
 
-            //RequestTaskInventory(objectLocalID);
+                RequestTaskInventory(objectLocalID);
 
-            //if (taskReplyEvent.WaitOne(timeoutMS, false))
-            //{
-            //    TaskInventoryReply -= callback;
+                if (taskReplyEvent.WaitOne(timeoutMS, false))
+                {
+                    TaskInventoryReply -= callback;
 
-            //    if (!String.IsNullOrEmpty(filename))
-            //    {
-            //        byte[] assetData = null;
-            //        ulong xferID = 0;
-            //        AutoResetEvent taskDownloadEvent = new AutoResetEvent(false);
+                    if (!string.IsNullOrEmpty(filename))
+                    {
+                        byte[] assetData = null;
+                        ulong xferID = 0;
+                        AutoResetEvent taskDownloadEvent = new AutoResetEvent(false);
 
-            //        EventHandler<XferReceivedEventArgs> xferCallback =
-            //            delegate(object sender, XferReceivedEventArgs e)
-            //            {
-            //                if (e.Xfer.XferID == xferID)
-            //                {
-            //                    assetData = e.Xfer.AssetData;
-            //                    taskDownloadEvent.Set();
-            //                }
-            //            };
+                        EventHandler<XferReceivedEventArgs> xferCallback =
+                            delegate (object sender, XferReceivedEventArgs e)
+                            {
+                                if (e.Xfer.XferID == xferID)
+                                {
+                                    assetData = e.Xfer.AssetData;
+                                    taskDownloadEvent.Set();
+                                }
+                            };
 
-            //        Client.Assets.XferReceived += xferCallback;
+                        Frame.Assets.XferReceived += xferCallback;
 
-            //        // Start the actual asset xfer
-            //        xferID = Client.Assets.RequestAssetXfer(filename, true, false, UUID.Zero, AssetType.Unknown, true);
+                        // Start the actual asset xfer
+                        xferID = Frame.Assets.RequestAssetXfer(filename, true, false, UUID.Zero, AssetType.Unknown, true);
 
-            //        if (taskDownloadEvent.WaitOne(timeoutMS, false))
-            //        {
-            //            Client.Assets.XferReceived -= xferCallback;
+                        if (taskDownloadEvent.WaitOne(timeoutMS, false))
+                        {
+                            Frame.Assets.XferReceived -= xferCallback;
 
-            //            String taskList = Utils.BytesToString(assetData);
-            //            return ParseTaskInventory(taskList);
-            //        }
-            //        else
-            //        {
-            //            OpenMetaverse.Logger.Log("Timed out waiting for task inventory download for " + filename, Helpers.LogLevel.Warning);
-            //            Client.Assets.XferReceived -= xferCallback;
-            //            return null;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        OpenMetaverse.Logger.DebugLog("Task is empty for " + objectLocalID);
-            //        return new List<InventoryBase>(0);
-            //    }
-            //}
-            //else
-            //{
-            //    OpenMetaverse.Logger.Log("Timed out waiting for task inventory reply for " + objectLocalID, Helpers.LogLevel.Warning);
-            //    TaskInventoryReply -= callback;
-            //    return null;
-            //}
+                            string taskList = Utils.BytesToString(assetData);
+                            inv_callback.Invoke(objectLocalID, true, ParseTaskInventory(taskList));
+                        }
+                        else
+                        {
+                            OpenMetaverse.Logger.Log("Timed out waiting for task inventory download for " + filename, Helpers.LogLevel.Warning);
+                            Frame.Assets.XferReceived -= xferCallback;
+                            inv_callback.Invoke(objectLocalID, false, null);
+                        }
+                    }
+                    else
+                    {
+                        OpenMetaverse.Logger.DebugLog("Task is empty for " + objectLocalID);
+                        inv_callback.Invoke(objectLocalID, true, new List<InventoryBase>(0));
+                    }
+                }
+                else
+                {
+                    OpenMetaverse.Logger.Log("Timed out waiting for task inventory reply for " + objectLocalID, Helpers.LogLevel.Warning);
+                    TaskInventoryReply -= callback;
+                    inv_callback.Invoke(objectLocalID, false, null);
+                }
+            }).Start();
         }
 
         /// <summary>
@@ -4211,6 +4219,8 @@ namespace GridProxy
         private readonly UUID m_ItemID;
         private readonly Int16 m_Serial;
         private readonly String m_AssetFilename;
+
+        public bool Handled { get; set; } = false;
 
         public UUID ItemID { get { return m_ItemID; } }
         public Int16 Serial { get { return m_Serial; } }

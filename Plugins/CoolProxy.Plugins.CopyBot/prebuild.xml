@@ -23,6 +23,8 @@
 	<Reference name="OpenMetaverse"/>
 	<Reference name="OpenMetaverseTypes"/>
 	<Reference name="OpenMetaverse.StructuredData"/>
+	<Reference name="System.IO.Compression"/>
+	<Reference name="System.IO.Compression.FileSystem"/>
 	<Reference name="GridProxy"/>
 	<Reference name="CoolProxy"/>
 	<Reference name="XMLRPC"/>

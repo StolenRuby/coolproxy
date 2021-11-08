@@ -669,6 +669,7 @@ namespace GridProxy
             {
                 HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(uri);
                 req.KeepAlive = false;
+                req.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(delegate { return true; });
 
                 foreach (string header in headers.Keys)
                 {

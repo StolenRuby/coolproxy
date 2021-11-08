@@ -415,7 +415,7 @@ namespace CoolProxy.Plugins.CopyBot
                         AssetsToExport[texture_id] = AssetType.Texture;
 
                     if (!AssetsToExport.ContainsKey(material_id))
-                        AssetsToExport[texture_id] = AssetType.Texture;
+                        AssetsToExport[material_id] = AssetType.Texture;
                 }
             }
 
@@ -469,11 +469,11 @@ namespace CoolProxy.Plugins.CopyBot
                 }
             }
 
-            private void HandleAsset(UUID id, bool success, byte[] data)
+            private void HandleAsset(UUID id, AssetType type, bool success, byte[] data)
             {
                 if(success)
                 {
-                    AddToArchive(id.ToString(), data);
+                    AddToArchive(id.ToString() + "." + type.ToString(), data);
                 }
 
                 NextAsset();
@@ -485,7 +485,7 @@ namespace CoolProxy.Plugins.CopyBot
                 {
                     var first = AssetsToExport.First();
                     AssetsToExport.Remove(first.Key);
-                    Proxy.OpenSim.Assets.DownloadAsset(first.Key, (x, y) => HandleAsset(first.Key, x, y));
+                    Proxy.OpenSim.Assets.DownloadAsset(first.Key, (x, y) => HandleAsset(first.Key, first.Value, x, y));
                 }
                 else
                 {

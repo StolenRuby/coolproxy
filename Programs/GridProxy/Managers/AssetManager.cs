@@ -1816,7 +1816,7 @@ namespace GridProxy
                 }
                 else
                 {
-                    Buffer.BlockCopy(xfer.DataPacket.Data, 0, download.AssetData, 1000 * (int)packetNum, xfer.DataPacket.Data.Length);
+                    Buffer.BlockCopy(xfer.DataPacket.Data, 0, download.AssetData, download.Transferred /*1000 * (int)packetNum*/, xfer.DataPacket.Data.Length); // opensim sends 1024?
                     download.Transferred += xfer.DataPacket.Data.Length;
                 }
 

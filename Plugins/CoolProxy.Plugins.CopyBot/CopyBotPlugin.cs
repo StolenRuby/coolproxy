@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -28,6 +29,12 @@ namespace CoolProxy.Plugins.CopyBot
         ImportProgressForm importProgressForm;
 
         public bool ImporterBusy { get; private set; } = false;
+        public bool BuildingLinkset { get; private set; } = false;
+
+        ZipArchive Zip;
+        int EntryIndex;
+        UUID FolderID;
+        Dictionary<UUID, UUID> AssetReplacements;
 
         List<Primitive> ImportPrims;
 
@@ -36,8 +43,12 @@ namespace CoolProxy.Plugins.CopyBot
 
         Dictionary<uint, AttachmentInfo> Attachments = new Dictionary<uint, AttachmentInfo>();
         Dictionary<uint, uint> AttachingItems = new Dictionary<uint, uint>();
+        List<AssetWearable> Wearables = new List<AssetWearable>();
 
         int CurrentPrim = 0;
+
+        int CurrentItem = 0;
+        List<ImportableItem> Content;
 
         Vector3 ImportOffset = new Vector3(0, 0, 3);
 
@@ -68,7 +79,7 @@ namespace CoolProxy.Plugins.CopyBot
 
             using (OpenFileDialog dialog = new OpenFileDialog())
             {
-                dialog.Filter = "Object File|*.xml";
+                dialog.Filter = "Object Backup|*.sog";
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     var options = new ImportOptions(dialog.FileName);
@@ -89,7 +100,7 @@ namespace CoolProxy.Plugins.CopyBot
 
                 using (OpenFileDialog dialog = new OpenFileDialog())
                 {
-                    dialog.Filter = "Object File|*.xml";
+                    dialog.Filter = "Object Backup|*.sog";
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
                         var options = new ImportOptions(dialog.FileName);
@@ -110,7 +121,7 @@ namespace CoolProxy.Plugins.CopyBot
             {
                 using (OpenFileDialog dialog = new OpenFileDialog())
                 {
-                    dialog.Filter = "Object File|*.xml";
+                    dialog.Filter = "Object Backup|*.sog";
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
                         new ImportForm(Proxy, new ImportOptions(dialog.FileName), this).ShowDialog();
@@ -236,22 +247,23 @@ namespace CoolProxy.Plugins.CopyBot
 
             ImportOffset = Settings.getVector("ImportOffset");
 
+            Zip = options.Archive;
+
             IDToLocalID.Clear();
             LinkSets.Clear();
             AttachingItems.Clear();
             Attachments.Clear();
+            Wearables.Clear();
 
             SeedPrim = options.SeedPrim;
             InvSeedItem = options.InvItem;
 
+            Content = options.Contents;
+
             importProgressForm = new ImportProgressForm();
             importProgressForm.Show();
 
-            var wearables = GenerateWearable(options.Wearables);
-            foreach (var item in wearables)
-            {
-                UploadWearble(item.Name, item.AssetData, item.WearableType, AssetType.Bodypart);
-            }
+            Wearables = GenerateWearable(options.Wearables);
 
             Vector3 center_pos = FindCenterPos(options.Linksets);
             Vector3 import_pos = Proxy.Agent.SimPosition + ImportOffset;
@@ -285,8 +297,29 @@ namespace CoolProxy.Plugins.CopyBot
             }
 
             CurrentPrim = 0;
+            CurrentItem = 0;
 
-            RezSupply();
+            if(Zip != null)
+            {
+                if(Zip.Entries.Count > 1)
+                {
+                    AssetReplacements = new Dictionary<UUID, UUID>();
+                    EntryIndex = 0;
+
+                    UUID parent_id = Proxy.Inventory.SuitcaseID == UUID.Zero ? Proxy.Inventory.InventoryRoot : Proxy.Inventory.SuitcaseID;
+
+                    FolderID = UUID.Random();
+                    Proxy.OpenSim.XInventory.AddFolder("uploads", FolderID, parent_id, Proxy.Agent.AgentID, FolderType.None, 1, (success) =>
+                    {
+                        UploadNextAsset();
+                    });
+
+                    importProgressForm.Text = "Uploading Assets...";
+                    return;
+                }
+            }
+            
+            FinishInit();
         }
 
         Vector3 FindCenterPos(List<Linkset> linksets)
@@ -322,13 +355,28 @@ namespace CoolProxy.Plugins.CopyBot
         public void CancelImport()
         {
             ImporterBusy = false;
+            Zip = null; // ???
         }
 
         private void FinishImport()
         {
-            importProgressForm?.ReportProgress(CurrentPrim, ImportPrims.Count, true);
-            Proxy.AlertMessage("Import complete.", false);
-            ImporterBusy = false;
+            BuildingLinkset = false;
+
+            if(Zip == null || Content.Count < 1)
+            {
+                importProgressForm.Text = "Import Complete";
+                importProgressForm?.ReportProgress(CurrentPrim, ImportPrims.Count, true);
+                Proxy.AlertMessage("Import complete.", false);
+                ImporterBusy = false;
+            }
+            else
+            {
+                importProgressForm.Text = "Importing Content...";
+                importProgressForm?.ReportProgress(CurrentItem, Content.Count, false);
+
+                CurrentItem = 0;
+                ImportContent();
+            }
         }
 
         public static Bitmap WearableTypeToIcon(WearableType type)
@@ -418,9 +466,10 @@ namespace CoolProxy.Plugins.CopyBot
                 Primitive import_prim = ImportPrims[CurrentPrim];
                 Primitive prim = e.Prim;
 
+                IDToLocalID[import_prim.LocalID] = e.Prim.LocalID;
+
                 if (import_prim.ParentID == 0)
                 {
-                    IDToLocalID[import_prim.LocalID] = e.Prim.LocalID;
                     uint local_id = e.Prim.LocalID;
                     LinkSets[local_id] = new List<Primitive>() { e.Prim };
                 }
@@ -448,31 +497,25 @@ namespace CoolProxy.Plugins.CopyBot
                 {
                     foreach (var pair in LinkSets)
                     {
-                        Proxy.Objects.LinkPrims(Proxy.Network.CurrentSim, pair.Value.Select(x => x.LocalID).ToList());
+                        if (pair.Value.Count > 1)
+                            Proxy.Objects.LinkPrims(Proxy.Network.CurrentSim, pair.Value.Select(x => x.LocalID).ToList());
                     }
 
-                    if (Attachments.Count > 0)
-                    {
-                        importProgressForm?.ReportProgress(CurrentPrim, ImportPrims.Count, false);
+                    importProgressForm?.ReportProgress(CurrentPrim, ImportPrims.Count, false);
 
-                        var link_timer = new LinkTimer(LinkSets, this);
-                        link_timer.Complete += () =>
+                    var link_timer = new LinkTimer(LinkSets, this);
+                    link_timer.Complete += () =>
+                    {
+                        foreach (var pair in Attachments)
                         {
-                            foreach (var pair in Attachments)
-                            {
-                                uint local_id = IDToLocalID[pair.Key];
-                                AttachingItems[local_id] = pair.Key;
-                                Proxy.Objects.AttachObject(Proxy.Network.CurrentSim, local_id, pair.Value.Point, pair.Value.Rotation, true);
-                            }
+                            uint local_id = IDToLocalID[pair.Key];
+                            AttachingItems[local_id] = pair.Key;
+                            Proxy.Objects.AttachObject(Proxy.Network.CurrentSim, local_id, pair.Value.Point, pair.Value.Rotation, true);
+                        }
 
-                            FinishImport();
-                        };
-                        link_timer.Start();
-                    }
-                    else
-                    {
                         FinishImport();
-                    }
+                    };
+                    link_timer.Start();
                 }
                 else
                 {
@@ -487,6 +530,149 @@ namespace CoolProxy.Plugins.CopyBot
                 Proxy.Objects.SetPosition(Proxy.Network.CurrentSim, e.Prim.LocalID, Attachments[local_id].Position);
                 AttachingItems.Remove(e.Prim.LocalID);
             }
+        }
+
+        void UploadNextAsset()
+        {
+            EntryIndex++;
+
+            if(EntryIndex > Zip.Entries.Count)
+            {
+                importProgressForm.Text = "Importing...";
+                importProgressForm?.ReportProgress(CurrentPrim, ImportPrims.Count, false);
+                FinishInit();
+                return;
+            }
+
+            var entry = Zip.Entries[EntryIndex - 1];
+
+            if(entry.Name == "sog")
+            {
+                UploadNextAsset();
+                return;
+            }
+
+            int last_index = entry.Name.LastIndexOf(".");
+            string type = entry.Name.Substring(last_index + 1);
+            string name = entry.Name.Substring(0, last_index);
+
+            if (Enum.TryParse(type, out AssetType at))
+            {
+                if (UUID.TryParse(name, out UUID id))
+                {
+                    using(Stream stream = entry.Open())
+                    {
+                        byte[] data;
+
+                        using(MemoryStream mem = new MemoryStream())
+                        {
+                            stream.CopyTo(mem);
+                            data = mem.ToArray();
+                        }
+
+                        Proxy.OpenSim.Assets.UploadAsset(UUID.Random(), at, id.ToString(), "", UUID.Zero, data, (success, new_id) =>
+                        {
+                            AssetReplacements[id] = new_id;
+                            importProgressForm?.ReportProgress(EntryIndex - 1, Zip.Entries.Count - 1, false);
+                            UploadNextAsset();
+                        });
+                    }
+                }
+            }
+        }
+
+        void FinishInit()
+        {
+            foreach (var item in Wearables)
+            {
+                if(Zip != null && item.Textures != null)
+                {
+                    foreach(var tex in item.Textures)
+                    {
+                        item.Textures[tex.Key] = AssetReplacements[tex.Value];
+                    }
+                }
+
+                UploadWearble(item.Name, item.AssetData, item.WearableType, item.AssetType);
+            }
+
+            if(Zip != null)
+            {
+                foreach (var prim in ImportPrims)
+                {
+                    if (prim.Sculpt != null && prim.Sculpt.SculptTexture != UUID.Zero)
+                    {
+                        prim.Sculpt.SculptTexture = AssetReplacements[prim.Sculpt.SculptTexture];
+                    }
+
+                    if (prim.Textures != null)
+                    {
+                        if (prim.Textures.DefaultTexture.TextureID != UUID.Zero)
+                            prim.Textures.DefaultTexture.TextureID = AssetReplacements[prim.Textures.DefaultTexture.TextureID];
+
+                        if (prim.Textures.DefaultTexture.MaterialID != UUID.Zero)
+                            prim.Textures.DefaultTexture.MaterialID = AssetReplacements[prim.Textures.DefaultTexture.MaterialID];
+
+                        foreach (var entry in prim.Textures.FaceTextures)
+                        {
+                            if (entry != null)
+                            {
+                                if (entry.TextureID != UUID.Zero)
+                                    entry.TextureID = AssetReplacements[entry.TextureID];
+
+                                if (entry.MaterialID != UUID.Zero)
+                                    entry.MaterialID = AssetReplacements[entry.MaterialID];
+                            }
+                        }
+                    }
+                }
+            }
+
+            BuildingLinkset = true;
+            RezSupply();
+        }
+
+        void ImportContent()
+        {
+            if(CurrentItem >= Content.Count)
+            {
+                Proxy.Inventory.RequestFolderContents(FolderID, Proxy.Agent.AgentID, true, true, InventorySortOrder.ByDate, false);
+                importProgressForm?.ReportProgress(Content.Count, Content.Count, true);
+                importProgressForm.Text = "Import Complete";
+                Proxy.AlertMessage("Import complete.", false);
+                ImporterBusy = false;
+                Zip = null;
+                return;
+            }
+
+            ImportableItem importable = Content[CurrentItem];
+            InventoryItem item = importable.Item;
+
+            item.AssetUUID = AssetReplacements[item.AssetUUID];
+            item.ParentUUID = FolderID;
+            item.UUID = UUID.Random();
+            item.CreatorData = string.Empty;
+            item.OwnerID = Proxy.Agent.AgentID;
+
+            Proxy.OpenSim.XInventory.AddItem(item, (success) =>
+            {
+                if(success)
+                {
+                    uint local_id = IDToLocalID[importable.ObjectID];
+                    if(item.AssetType == AssetType.LSLText)
+                    {
+                        Proxy.Inventory.CopyScriptToTask(local_id, item, true);
+                    }
+                    else
+                    {
+                        Proxy.Inventory.UpdateTaskInventory(local_id, item);
+                    }
+                }
+
+                CurrentItem++;
+                importProgressForm?.ReportProgress(CurrentItem, Content.Count, false);
+                ImportContent();
+            });
         }
     }
 
@@ -536,9 +722,23 @@ namespace CoolProxy.Plugins.CopyBot
         }
     }
 
+    public class ImportableItem
+    {
+        public uint ObjectID { get; private set; } = 0;
+        public InventoryItem Item { get; private set; } = null;
+
+        public ImportableItem(OSD item, uint object_id)
+        {
+            Item = InventoryItem.FromOSD(item);
+            ObjectID = object_id;
+        }
+    }
+
     public class ImportOptions
     {
         public List<ImportableWearable> Wearables { get; private set; } = new List<ImportableWearable>();
+
+        public List<ImportableItem> Contents { get; set; } = new List<ImportableItem>();
 
         public List<Linkset> Linksets { get; private set; } = new List<Linkset>();
 
@@ -548,13 +748,22 @@ namespace CoolProxy.Plugins.CopyBot
 
         public InventoryItem InvItem { get; set; } = null;
 
+        public ZipArchive Archive { get; set; } = null;
+
         public ImportOptions(string filename)
         {
             try
             {
-                string xml = File.ReadAllText(filename);
-                OSD osd = OSDParser.DeserializeLLSDXml(xml);
+                Archive = ZipFile.OpenRead(filename);
+                var entry = Archive.GetEntry("sog");
+                var stream = entry.Open();
+                OSD osd = OSDParser.DeserializeLLSDXml(stream);
                 AddFromOSD(osd);
+
+                if(Archive.Entries.Count < 2)
+                {
+                    Archive = null;
+                }
             }
             catch
             {
@@ -601,9 +810,19 @@ namespace CoolProxy.Plugins.CopyBot
                 }
                 else
                 {
-                    Primitive prim = Primitive.FromOSD(kvp.Value);
+                    OSDMap prim_osd = (OSDMap)kvp.Value;
+                    Primitive prim = Primitive.FromOSD(prim_osd);
                     prim.LocalID = uint.Parse(kvp.Key);
                     prims.Add(prim);
+
+                    if(prim_osd.ContainsKey("inventory"))
+                    {
+                        OSDArray item_array = (OSDArray)prim_osd["inventory"];
+                        foreach(var item in item_array)
+                        {
+                            Contents.Add(new ImportableItem(item, prim.LocalID));
+                        }
+                    }
                 }
             }
 

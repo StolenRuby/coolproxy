@@ -49,6 +49,7 @@
             this.selectObjectsButton = new System.Windows.Forms.Button();
             this.selectAllButton = new System.Windows.Forms.Button();
             this.selectWearablesButton = new System.Windows.Forms.Button();
+            this.checkBox2 = new CoolGUI.Controls.CheckBox();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
@@ -168,12 +169,12 @@
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.EnabledSetting = null;
-            this.checkBox1.Location = new System.Drawing.Point(13, 248);
+            this.checkBox1.Location = new System.Drawing.Point(18, 248);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Setting = null;
-            this.checkBox1.Size = new System.Drawing.Size(125, 17);
+            this.checkBox1.Size = new System.Drawing.Size(96, 17);
             this.checkBox1.TabIndex = 29;
-            this.checkBox1.Text = "Use original positions";
+            this.checkBox1.Text = "Keep Positions";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // closeButton
@@ -225,11 +226,24 @@
             this.selectWearablesButton.UseVisualStyleBackColor = true;
             this.selectWearablesButton.Click += new System.EventHandler(this.selectWearablesButton_Click);
             // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.EnabledSetting = null;
+            this.checkBox2.Location = new System.Drawing.Point(130, 248);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Setting = null;
+            this.checkBox2.Size = new System.Drawing.Size(94, 17);
+            this.checkBox2.TabIndex = 33;
+            this.checkBox2.Text = "Upload Assets";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
             // ImportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(239, 301);
+            this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.splitButton1);
             this.Controls.Add(this.checkBox1);
@@ -272,5 +286,6 @@
         private System.Windows.Forms.Button selectObjectsButton;
         private System.Windows.Forms.Button selectAllButton;
         private System.Windows.Forms.Button selectWearablesButton;
+        private CoolGUI.Controls.CheckBox checkBox2;
     }
 }

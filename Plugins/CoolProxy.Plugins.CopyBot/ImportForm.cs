@@ -36,6 +36,11 @@ namespace CoolProxy.Plugins.CopyBot
 
         private void PostBuild(object sender, EventArgs e)
         {
+            if(Options.Archive == null)
+            {
+                checkBox2.Enabled = false;
+            }
+
             foreach(var wearable in Options.Wearables)
             {
                 UUID id = UUID.Random();
@@ -52,6 +57,7 @@ namespace CoolProxy.Plugins.CopyBot
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Options.Archive = null; // ???
             this.Close();
         }
 
@@ -74,6 +80,12 @@ namespace CoolProxy.Plugins.CopyBot
             importOptions.KeepPositions = checkBox1.Checked;
             importOptions.SeedPrim = Options.SeedPrim;
             importOptions.InvItem = Options.InvItem;
+
+            if(checkBox2.Checked)
+            {
+                importOptions.Archive = Options.Archive;
+                importOptions.Contents = Options.Contents;
+            }
 
             foreach(DataGridViewRow row in dataGridView.Rows)
             {

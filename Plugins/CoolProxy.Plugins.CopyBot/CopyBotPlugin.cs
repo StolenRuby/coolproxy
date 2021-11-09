@@ -581,6 +581,16 @@ namespace CoolProxy.Plugins.CopyBot
             }
         }
 
+        UUID ReplaceAsset(UUID original_id)
+        {
+            if(AssetReplacements.ContainsKey(original_id))
+            {
+                return AssetReplacements[original_id];
+            }
+
+            return original_id;
+        }
+
         void FinishInit()
         {
             foreach (var item in Wearables)
@@ -589,7 +599,7 @@ namespace CoolProxy.Plugins.CopyBot
                 {
                     foreach(var tex in item.Textures)
                     {
-                        item.Textures[tex.Key] = AssetReplacements[tex.Value];
+                        item.Textures[tex.Key] = ReplaceAsset(tex.Value);
                     }
                 }
 
@@ -602,26 +612,26 @@ namespace CoolProxy.Plugins.CopyBot
                 {
                     if (prim.Sculpt != null && prim.Sculpt.SculptTexture != UUID.Zero)
                     {
-                        prim.Sculpt.SculptTexture = AssetReplacements[prim.Sculpt.SculptTexture];
+                        prim.Sculpt.SculptTexture = ReplaceAsset(prim.Sculpt.SculptTexture);
                     }
 
                     if (prim.Textures != null)
                     {
                         if (prim.Textures.DefaultTexture.TextureID != UUID.Zero)
-                            prim.Textures.DefaultTexture.TextureID = AssetReplacements[prim.Textures.DefaultTexture.TextureID];
+                            prim.Textures.DefaultTexture.TextureID = ReplaceAsset(prim.Textures.DefaultTexture.TextureID);
 
                         if (prim.Textures.DefaultTexture.MaterialID != UUID.Zero)
-                            prim.Textures.DefaultTexture.MaterialID = AssetReplacements[prim.Textures.DefaultTexture.MaterialID];
+                            prim.Textures.DefaultTexture.MaterialID = ReplaceAsset(prim.Textures.DefaultTexture.MaterialID);
 
                         foreach (var entry in prim.Textures.FaceTextures)
                         {
                             if (entry != null)
                             {
                                 if (entry.TextureID != UUID.Zero)
-                                    entry.TextureID = AssetReplacements[entry.TextureID];
+                                    entry.TextureID = ReplaceAsset(entry.TextureID);
 
                                 if (entry.MaterialID != UUID.Zero)
-                                    entry.MaterialID = AssetReplacements[entry.MaterialID];
+                                    entry.MaterialID = ReplaceAsset(entry.MaterialID);
                             }
                         }
                     }
@@ -648,7 +658,7 @@ namespace CoolProxy.Plugins.CopyBot
             ImportableItem importable = Content[CurrentItem];
             InventoryItem item = importable.Item;
 
-            item.AssetUUID = AssetReplacements[item.AssetUUID];
+            item.AssetUUID = ReplaceAsset(item.AssetUUID);
             item.ParentUUID = FolderID;
             item.UUID = UUID.Random();
             item.CreatorData = string.Empty;

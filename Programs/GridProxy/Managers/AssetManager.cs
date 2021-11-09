@@ -461,7 +461,7 @@ namespace GridProxy
         /// <param name="sourceType">Source location of the requested asset</param>
         /// <param name="transactionID">UUID of the transaction</param>
         /// <param name="callback">The callback to fire when the simulator responds with the asset data</param>
-        public void RequestAsset(UUID assetID, UUID itemID, UUID taskID, AssetType asset_type, bool priority, SourceType sourceType, UUID transactionID, AssetReceivedCallback callback)
+        public void RequestAsset(UUID assetID, UUID itemID, UUID taskID, AssetType asset_type, bool priority, SourceType sourceType, UUID transactionID, AssetReceivedCallback callback, bool allow_fallback = false)
         {
             if (assetID == UUID.Zero || callback == null)
                 return;
@@ -549,7 +549,7 @@ namespace GridProxy
 
                         Frame.Assets.Cache.SaveAssetToCache(assetID, responseData);
                     }
-                    else // download failed
+                    else if(allow_fallback) // download failed
                     {
                         Logger.Log(
                             string.Format("Failed to fetch asset {0} over HTTP, falling back to UDP: {1}",
@@ -560,11 +560,70 @@ namespace GridProxy
 
                         RequestAssetUDP(assetID, itemID, taskID, asset_type, priority, sourceType, transactionID, callback);
                     }
+                    else
+                    {
+                        AssetDownload image = new AssetDownload();
+                        image.ID = assetID;
+                        image.AssetData = null;
+                        image.Size = 0;
+                        image.Transferred = 0;
+                        image.AssetType = asset_type;
+                        image.Success = false;
+
+                        DownloadProgress?.Invoke(new AssetDownloadProgressEventArgs(AssetDownloadState.Failed, assetID, asset_type, image.Size, image.Transferred));
+                        callback(image, null);
+                    }
                 }
             );
 
             Frame.HTTP.Downloads.QueueDownload(req);
             DownloadProgress?.Invoke(new AssetDownloadProgressEventArgs(AssetDownloadState.Queued, assetID, asset_type, 0, 0));
+        }
+
+        public delegate void AssetDataCallback(bool success, byte[] data);
+        public void EasyDownloadAsset(UUID asset_id, AssetType asset_type, AssetDataCallback callback)
+        {
+
+            string cap_url = string.Empty;
+
+            if (!Frame.Network.CurrentSim.Caps.TryGetValue("ViewerAsset", out cap_url))
+            {
+                if (asset_type == AssetType.Texture)
+                    Frame.Network.CurrentSim.Caps.TryGetValue("GetTexture", out cap_url);
+                else if (asset_type == AssetType.Mesh)
+                    Frame.Network.CurrentSim.Caps.TryGetValue("GetMesh", out cap_url);
+            }
+
+            if (cap_url == string.Empty)
+            {
+                callback(false, null);
+                return;
+            }
+
+            string str_type = assetRequestStrings[asset_type];
+
+            string url = string.Format("{0}/?{1}={2}", cap_url, str_type, asset_id.ToString());
+
+            WebClient webClient = new WebClient();
+            webClient.DownloadDataCompleted += (x, y) =>
+            {
+                try
+                {
+                    if(y.Error == null)
+                    {
+                        callback(true, y.Result);
+                    }
+                    else
+                    {
+                        callback(false, null);
+                    }
+                }
+                catch
+                {
+                    callback(false, null);
+                }
+            };
+            webClient.DownloadDataAsync(new Uri(url));
         }
 
         private void RequestAssetUDP(UUID assetID, UUID itemID, UUID taskID, AssetType type, bool priority, SourceType sourceType, UUID transactionID, AssetReceivedCallback callback)

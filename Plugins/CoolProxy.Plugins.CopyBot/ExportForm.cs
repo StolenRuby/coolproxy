@@ -337,6 +337,8 @@ namespace CoolProxy.Plugins.CopyBot
 
             ZipArchive Archive;
 
+            bool UseRobust = false;
+
             public ExportWorker(CoolProxyFrame proxy, OSDMap map, List<Primitive> prims, bool assets, bool inv, OutputMode mode, string filename)
             {
                 Proxy = proxy;
@@ -346,6 +348,7 @@ namespace CoolProxy.Plugins.CopyBot
                 ExportAssets = assets;
                 Mode = mode;
                 Filename = filename;
+                UseRobust = proxy.Network.CurrentSim.AssetServerURI != string.Empty;
 
                 if(Mode == OutputMode.Import)
                 {
@@ -371,7 +374,7 @@ namespace CoolProxy.Plugins.CopyBot
                             if(prim.Sculpt != null)
                             {
                                 UUID id = prim.Sculpt.SculptTexture;
-                                if(!AssetsToExport.ContainsKey(id))
+                                if(!AssetsToExport.ContainsKey(id) && id != UUID.Zero)
                                 {
                                     AssetsToExport[id] = prim.Sculpt.Type == SculptType.Mesh ? AssetType.Mesh : AssetType.Texture;
                                 }
@@ -411,10 +414,10 @@ namespace CoolProxy.Plugins.CopyBot
                     UUID texture_id = face.TextureID;
                     UUID material_id = face.MaterialID;
 
-                    if (!AssetsToExport.ContainsKey(texture_id))
+                    if (!AssetsToExport.ContainsKey(texture_id) && texture_id != UUID.Zero)
                         AssetsToExport[texture_id] = AssetType.Texture;
 
-                    if (!AssetsToExport.ContainsKey(material_id))
+                    if (!AssetsToExport.ContainsKey(material_id) && material_id != UUID.Zero)
                         AssetsToExport[material_id] = AssetType.Texture;
                 }
             }
@@ -460,7 +463,7 @@ namespace CoolProxy.Plugins.CopyBot
                 {
                     Primitive next = PrimsToExport[0];
                     PrimsToExport.Remove(next);
-                    Proxy.Inventory.GetTaskInventory(next.ID, next.LocalID, 10000, HandleInventory);
+                    Proxy.Inventory.GetTaskInventory(next.ID, next.LocalID, 60000, HandleInventory);
                 }
                 else
                 {
@@ -485,7 +488,11 @@ namespace CoolProxy.Plugins.CopyBot
                 {
                     var first = AssetsToExport.First();
                     AssetsToExport.Remove(first.Key);
-                    Proxy.OpenSim.Assets.DownloadAsset(first.Key, (x, y) => HandleAsset(first.Key, first.Value, x, y));
+
+                    if (UseRobust)
+                        Proxy.OpenSim.Assets.DownloadAsset(first.Key, (x, y) => HandleAsset(first.Key, first.Value, x, y));
+                    else
+                        Proxy.Assets.EasyDownloadAsset(first.Key, first.Value, (x, y) => HandleAsset(first.Key, first.Value, x, y));
                 }
                 else
                 {

@@ -513,7 +513,10 @@ namespace CoolProxy.Plugins.CopyBot
                             Proxy.Objects.AttachObject(Proxy.Network.CurrentSim, local_id, pair.Value.Point, pair.Value.Rotation, true);
                         }
 
-                        FinishImport();
+                        if(AttachingItems.Count == 0)
+                        {
+                            FinishImport();
+                        }
                     };
                     link_timer.Start();
                 }
@@ -529,6 +532,11 @@ namespace CoolProxy.Plugins.CopyBot
                 Proxy.Objects.SetRotation(Proxy.Network.CurrentSim, e.Prim.LocalID, Attachments[local_id].Rotation);
                 Proxy.Objects.SetPosition(Proxy.Network.CurrentSim, e.Prim.LocalID, Attachments[local_id].Position);
                 AttachingItems.Remove(e.Prim.LocalID);
+
+                if(AttachingItems.Count == 0)
+                {
+                    FinishImport();
+                }
             }
         }
 
@@ -638,8 +646,15 @@ namespace CoolProxy.Plugins.CopyBot
                 }
             }
 
-            BuildingLinkset = true;
-            RezSupply();
+            if(ImportPrims.Count > 0)
+            {
+                BuildingLinkset = true;
+                RezSupply();
+            }
+            else
+            {
+                FinishImport();
+            }
         }
 
         void ImportContent()

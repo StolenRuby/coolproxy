@@ -381,5 +381,19 @@
 				<real>5</real>
 			</array>
 		</map>
+		<key>RainbowSelectionBeam</key>
+		<map>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
+		<key>QuadSelectionBeam</key>
+		<map>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
 	</map>
 </llsd>

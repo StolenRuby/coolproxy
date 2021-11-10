@@ -224,6 +224,8 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.saveXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkBox11 = new CoolGUI.Controls.CheckBox();
+            this.checkBox12 = new CoolGUI.Controls.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -1830,6 +1832,8 @@
             // 
             // tabPage8
             // 
+            this.tabPage8.Controls.Add(this.checkBox12);
+            this.tabPage8.Controls.Add(this.checkBox11);
             this.tabPage8.Controls.Add(this.label7);
             this.tabPage8.Controls.Add(this.checkBox5);
             this.tabPage8.Controls.Add(this.checkBox8);
@@ -2137,6 +2141,30 @@
             this.loadXMLToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.loadXMLToolStripMenuItem.Text = "Load XML";
             // 
+            // checkBox11
+            // 
+            this.checkBox11.AutoSize = true;
+            this.checkBox11.EnabledSetting = null;
+            this.checkBox11.Location = new System.Drawing.Point(14, 75);
+            this.checkBox11.Name = "checkBox11";
+            this.checkBox11.Setting = "RainbowSelectionBeam";
+            this.checkBox11.Size = new System.Drawing.Size(145, 17);
+            this.checkBox11.TabIndex = 24;
+            this.checkBox11.Text = "Rainbow Selection Beam";
+            this.checkBox11.UseVisualStyleBackColor = true;
+            // 
+            // checkBox12
+            // 
+            this.checkBox12.AutoSize = true;
+            this.checkBox12.EnabledSetting = null;
+            this.checkBox12.Location = new System.Drawing.Point(14, 98);
+            this.checkBox12.Name = "checkBox12";
+            this.checkBox12.Setting = "QuadSelectionBeam";
+            this.checkBox12.Size = new System.Drawing.Size(129, 17);
+            this.checkBox12.TabIndex = 25;
+            this.checkBox12.Text = "Quad Selection Beam";
+            this.checkBox12.UseVisualStyleBackColor = true;
+            // 
             // CoolProxyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2386,6 +2414,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown importOffsetX;
         private System.Windows.Forms.Label label7;
+        private CoolGUI.Controls.CheckBox checkBox12;
+        private CoolGUI.Controls.CheckBox checkBox11;
     }
 }
 

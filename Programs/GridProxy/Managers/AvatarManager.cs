@@ -750,8 +750,8 @@ namespace GridProxy
                 signaledAnimations.Add(animation);
             }
 
-            Avatar avatar = simulator.ObjectsAvatars.Values.FirstOrDefault(avi => avi.ID == data.Sender.ID);
-            if (avatar != default(Avatar))
+            Avatar avatar = simulator.ObjectsAvatars.Find(avi => avi.ID == data.Sender.ID);
+            if (avatar != null)
             {
                 avatar.Animations = signaledAnimations;
             }
@@ -793,8 +793,8 @@ namespace GridProxy
                     appearanceFlags = (AppearanceFlags)appearance.AppearanceData[0].Flags;
                 }
 
-                Avatar av = simulator.ObjectsAvatars.Values.FirstOrDefault((Avatar a) => { return a.ID == appearance.Sender.ID; });
-                if (av != default(Avatar))
+                Avatar av = simulator.ObjectsAvatars.Find((Avatar a) => { return a.ID == appearance.Sender.ID; });
+                if (av != null)
                 {
                     av.Textures = textureEntry;
                     av.VisualParameters = visualParams.ToArray();

@@ -26,9 +26,9 @@ namespace CoolProxy.Plugins.Useful
             GUI.AddSingleMenuItem("Teleport To", (avatar_id) =>
             {
                 var avatars = Proxy.Network.CurrentSim.ObjectsAvatars;
-                Avatar avatar = avatars.Values.FirstOrDefault(x => x.ID == avatar_id);
+                Avatar avatar = avatars.Find(x => x.ID == avatar_id);
 
-                if (avatar != default(Avatar))
+                if (avatar != null)
                 {
                     Proxy.Agent.Teleport(Proxy.Network.CurrentSim.Handle, avatar.Position);
                 }

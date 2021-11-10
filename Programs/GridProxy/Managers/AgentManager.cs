@@ -625,7 +625,161 @@ namespace GridProxy
 
         #endregion Teleporting
 
+        #region Animations
 
+        /// <summary>
+        /// Send an AgentAnimation packet that toggles a single animation on
+        /// </summary>
+        /// <param name="animation">The <seealso cref="UUID"/> of the animation to start playing</param>
+        /// <param name="reliable">Whether to ensure delivery of this packet or not</param>
+        public void AnimationStart(UUID animation, bool reliable)
+        {
+            Dictionary<UUID, bool> animations = new Dictionary<UUID, bool>();
+            animations[animation] = true;
+
+            Animate(animations, reliable);
+        }
+
+        /// <summary>
+        /// Send an AgentAnimation packet that toggles a single animation off
+        /// </summary>
+        /// <param name="animation">The <seealso cref="UUID"/> of a 
+        /// currently playing animation to stop playing</param>
+        /// <param name="reliable">Whether to ensure delivery of this packet or not</param>
+        public void AnimationStop(UUID animation, bool reliable)
+        {
+            Dictionary<UUID, bool> animations = new Dictionary<UUID, bool>();
+            animations[animation] = false;
+
+            Animate(animations, reliable);
+        }
+
+        /// <summary>
+        /// Send an AgentAnimation packet that will toggle animations on or off
+        /// </summary>
+        /// <param name="animations">A list of animation <seealso cref="UUID"/>s, and whether to
+        /// turn that animation on or off</param>
+        /// <param name="reliable">Whether to ensure delivery of this packet or not</param>
+        public void Animate(Dictionary<UUID, bool> animations, bool reliable)
+        {
+            AgentAnimationPacket animate = new AgentAnimationPacket();
+            animate.Header.Reliable = reliable;
+
+            animate.AgentData.AgentID = Frame.Agent.AgentID;
+            animate.AgentData.SessionID = Frame.Agent.SessionID;
+            animate.AnimationList = new AgentAnimationPacket.AnimationListBlock[animations.Count];
+            int i = 0;
+
+            foreach (KeyValuePair<UUID, bool> animation in animations)
+            {
+                animate.AnimationList[i] = new AgentAnimationPacket.AnimationListBlock();
+                animate.AnimationList[i].AnimID = animation.Key;
+                animate.AnimationList[i].StartAnim = animation.Value;
+
+                i++;
+            }
+
+            // TODO: Implement support for this
+            animate.PhysicalAvatarEventList = new AgentAnimationPacket.PhysicalAvatarEventListBlock[0];
+
+            Frame.Network.InjectPacket(animate, Direction.Outgoing);
+        }
+
+        #endregion Animations
+
+        #region Movement actions
+
+        /// <summary>
+        /// Use the autopilot sim function to move the avatar to a new
+        /// position. Uses double precision to get precise movements
+        /// </summary>
+        /// <remarks>The z value is currently not handled properly by the simulator</remarks>
+        /// <param name="globalX">Global X coordinate to move to</param>
+        /// <param name="globalY">Global Y coordinate to move to</param>
+        /// <param name="z">Z coordinate to move to</param>
+        public void AutoPilot(double globalX, double globalY, double z)
+        {
+            GenericMessagePacket autopilot = new GenericMessagePacket();
+
+            autopilot.AgentData.AgentID = Frame.Agent.AgentID;
+            autopilot.AgentData.SessionID = Frame.Agent.SessionID;
+            autopilot.AgentData.TransactionID = UUID.Zero;
+            autopilot.MethodData.Invoice = UUID.Zero;
+            autopilot.MethodData.Method = Utils.StringToBytes("autopilot");
+            autopilot.ParamList = new GenericMessagePacket.ParamListBlock[3];
+            autopilot.ParamList[0] = new GenericMessagePacket.ParamListBlock();
+            autopilot.ParamList[0].Parameter = Utils.StringToBytes(globalX.ToString());
+            autopilot.ParamList[1] = new GenericMessagePacket.ParamListBlock();
+            autopilot.ParamList[1].Parameter = Utils.StringToBytes(globalY.ToString());
+            autopilot.ParamList[2] = new GenericMessagePacket.ParamListBlock();
+            autopilot.ParamList[2].Parameter = Utils.StringToBytes(z.ToString());
+
+            Frame.Network.InjectPacket(autopilot, Direction.Outgoing);
+        }
+
+        /// <summary>
+        /// Use the autopilot sim function to move the avatar to a new position
+        /// </summary>
+        /// <remarks>The z value is currently not handled properly by the simulator</remarks>
+        /// <param name="globalX">Integer value for the global X coordinate to move to</param>
+        /// <param name="globalY">Integer value for the global Y coordinate to move to</param>
+        /// <param name="z">Floating-point value for the Z coordinate to move to</param>
+        public void AutoPilot(ulong globalX, ulong globalY, float z)
+        {
+            GenericMessagePacket autopilot = new GenericMessagePacket();
+
+            autopilot.AgentData.AgentID = Frame.Agent.AgentID;
+            autopilot.AgentData.SessionID = Frame.Agent.SessionID;
+            autopilot.AgentData.TransactionID = UUID.Zero;
+            autopilot.MethodData.Invoice = UUID.Zero;
+            autopilot.MethodData.Method = Utils.StringToBytes("autopilot");
+            autopilot.ParamList = new GenericMessagePacket.ParamListBlock[3];
+            autopilot.ParamList[0] = new GenericMessagePacket.ParamListBlock();
+            autopilot.ParamList[0].Parameter = Utils.StringToBytes(globalX.ToString());
+            autopilot.ParamList[1] = new GenericMessagePacket.ParamListBlock();
+            autopilot.ParamList[1].Parameter = Utils.StringToBytes(globalY.ToString());
+            autopilot.ParamList[2] = new GenericMessagePacket.ParamListBlock();
+            autopilot.ParamList[2].Parameter = Utils.StringToBytes(z.ToString());
+
+            Frame.Network.InjectPacket(autopilot, Direction.Outgoing);
+        }
+
+        /// <summary>
+        /// Use the autopilot sim function to move the avatar to a new position
+        /// </summary>
+        /// <remarks>The z value is currently not handled properly by the simulator</remarks>
+        /// <param name="localX">Integer value for the local X coordinate to move to</param>
+        /// <param name="localY">Integer value for the local Y coordinate to move to</param>
+        /// <param name="z">Floating-point value for the Z coordinate to move to</param>
+        public void AutoPilotLocal(int localX, int localY, float z)
+        {
+            uint x, y;
+            Utils.LongToUInts(Frame.Network.CurrentSim.Handle, out x, out y);
+            AutoPilot((ulong)(x + localX), (ulong)(y + localY), z);
+        }
+
+        /// <summary>Macro to cancel autopilot sim function</summary>
+        /// <remarks>Not certain if this is how it is really done</remarks>
+        /// <returns>true if control flags were set and AgentUpdate was sent to the simulator</returns>
+        public bool AutoPilotCancel()
+        {
+        //    if (Client.Settings.SEND_AGENT_UPDATES)
+        //    {
+        //        Movement.AtPos = true;
+        //        Movement.SendUpdate();
+        //        Movement.AtPos = false;
+        //        Movement.SendUpdate();
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        Logger.Log("Attempted to AutoPilotCancel() but agent updates are disabled", Helpers.LogLevel.Warning, Client);
+        //        return false;
+        //    }
+            return false;
+        }
+
+        #endregion Movement actions
 
         /////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////

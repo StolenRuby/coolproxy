@@ -1133,7 +1133,7 @@ namespace GridProxy
         // SimProxy: proxy for a single simulator
         public class RegionProxy
         {
-            public Dictionary<uint, Avatar> ObjectsAvatars = new Dictionary<uint, Avatar>();
+            public InternalDictionary<uint, Avatar> ObjectsAvatars = new InternalDictionary<uint, Avatar>();
 
             public InternalDictionary<uint, Primitive> ObjectsPrimitives = new InternalDictionary<uint, Primitive>();
 

@@ -142,9 +142,9 @@ namespace CoolProxy.Plugins.CopyBot
 
         private void exportAvatar(UUID target)
         {
-            Avatar avatar = Proxy.Network.CurrentSim.ObjectsAvatars.Values.FirstOrDefault(x => x.ID == target);
+            Avatar avatar = Proxy.Network.CurrentSim.ObjectsAvatars.Find(x => x.ID == target);
 
-            if (avatar == default(Avatar))
+            if (avatar == null)
             {
                 return;
             }

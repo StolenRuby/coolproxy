@@ -33,9 +33,9 @@ namespace CoolProxy.Plugins.ChatCommands
                 find = string.Join(" ", newArray);
             }
 
-            var av = Proxy.Network.CurrentSim.ObjectsAvatars.Values.FirstOrDefault(avatar => avatar.Name.ToLower().Contains(find));
+            var av = Proxy.Network.CurrentSim.ObjectsAvatars.Find(avatar => avatar.Name.ToLower().Contains(find));
 
-            if (av != default(Avatar))
+            if (av != null)
             {
                 TeleportLocationRequestPacket teleport = new TeleportLocationRequestPacket();
                 teleport.AgentData.AgentID = Proxy.Agent.AgentID;

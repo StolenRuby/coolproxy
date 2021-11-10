@@ -28,17 +28,16 @@ namespace CoolProxy
             this.Proxy = CoolProxy.Frame;
             InitializeComponent();
 
-            var avatars = Proxy.Network.CurrentSim.ObjectsAvatars.Values;
             Vector3 my_pos = Proxy.Agent.SimPosition;
 
-            foreach(var av in avatars)
+            Proxy.Network.CurrentSim.ObjectsAvatars.ForEach(av =>
             {
                 float dist = Vector3.Distance(av.Position, my_pos);
 
                 string dist_str = av.ID == Proxy.Agent.AgentID ? "n/a" : Math.Round(dist, 2).ToString() + "m";
 
                 dataGridView2.Rows.Add(av.Name, dist_str, av.ID);
-            }
+            });
 
             this.TopMost = CoolProxy.Settings.getBool("KeepCoolProxyOnTop");
             CoolProxy.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };

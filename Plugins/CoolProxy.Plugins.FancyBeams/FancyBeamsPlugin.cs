@@ -7,12 +7,15 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CoolProxy.Plugins.FancyBeams
 {
     public class FancyBeamsPlugin : CoolProxyPlugin
     {
         CoolProxyFrame Proxy;
+
+        Timer beamTimer;
 
         public FancyBeamsPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
         {
@@ -24,6 +27,45 @@ namespace CoolProxy.Plugins.FancyBeams
 
             settings.getSetting("QuadSelectionBeam").OnChanged += (x, y) => EnableQuadBeam = (bool)y.Value;
             EnableQuadBeam = settings.getBool("QuadSelectionBeam");
+
+            beamTimer = new Timer();
+            beamTimer.Tick += BeamTick;
+
+            gui.AddToolCheckbox("Avatar", "Rainbow Beam Trail", toggleBeamTrail);
+        }
+
+        private void BeamTick(object sender, EventArgs e)
+        {
+            ViewerEffectPacket ve = new ViewerEffectPacket();
+            ve.AgentData.AgentID = Proxy.Agent.AgentID;
+            ve.AgentData.SessionID = Proxy.Agent.SessionID;
+
+            ve.Effect = new ViewerEffectPacket.EffectBlock[1];
+
+            byte[] type_data = new byte[56];
+
+            Proxy.Agent.AgentID.ToBytes(type_data, 0);
+
+            var agent_pos = Proxy.Agent.SimPosition;
+            Util.RegionHandleToWorldLoc(Proxy.Network.CurrentSim.Handle, out uint x, out uint y);
+
+            Vector3d pos = new Vector3d(agent_pos.X + x, agent_pos.Y + y, agent_pos.Z);
+            pos.ToBytes(type_data, 32);
+
+            ve.Effect[0] = new ViewerEffectPacket.EffectBlock();
+            ve.Effect[0].AgentID = Proxy.Agent.AgentID;
+            ve.Effect[0].Color = GetNextColor();
+            ve.Effect[0].Duration = 3.0f;
+            ve.Effect[0].ID = UUID.Random();
+            ve.Effect[0].Type = (byte)EffectType.Beam;
+            ve.Effect[0].TypeData = type_data;
+
+            Proxy.Network.InjectPacket(ve, Direction.Outgoing);
+        }
+
+        private void toggleBeamTrail(object sender, EventArgs e)
+        {
+            beamTimer.Enabled = (sender as CheckBox).Checked;
         }
 
         // https://stackoverflow.com/questions/2288498/how-do-i-get-a-rainbow-color-gradient-in-c
@@ -54,6 +96,18 @@ namespace CoolProxy.Plugins.FancyBeams
         bool EnableRainbowBeam = true;
         float RainbowProgress = 0.0f;
 
+        byte[] GetNextColor()
+        {
+            RainbowProgress += 0.025f;
+            if (RainbowProgress > 3)
+            {
+                RainbowProgress = 0.0f;
+            }
+
+            Color next_color = Rainbow(RainbowProgress);
+            return new byte[4] { next_color.R, next_color.G, next_color.B, next_color.A };
+        }
+
         private Packet HandleViewerEffect(Packet packet, RegionManager.RegionProxy sim)
         {
             ViewerEffectPacket ve = (ViewerEffectPacket)packet;
@@ -63,15 +117,7 @@ namespace CoolProxy.Plugins.FancyBeams
                 {
                     if(EnableRainbowBeam)
                     {
-                        RainbowProgress += 0.025f;
-                        if(RainbowProgress > 3)
-                        {
-                            RainbowProgress = 0.0f;
-                        }
-
-                        Color next_color = Rainbow(RainbowProgress);
-                        byte[] color = new byte[4] { next_color.R, next_color.G, next_color.B, next_color.A };
-                        Buffer.BlockCopy(color, 0, effect.Color, 0, 4);
+                        Buffer.BlockCopy(GetNextColor(), 0, effect.Color, 0, 4);
                     }
 
                     if (EnableQuadBeam)

@@ -1,5 +1,6 @@
 ﻿using Nwc.XmlRpc;
 using OpenMetaverse;
+using OpenMetaverse.Interfaces;
 using OpenMetaverse.Packets;
 using OpenMetaverse.StructuredData;
 using System;
@@ -25,6 +26,8 @@ namespace GridProxy
     public class RegionManager
     {
         public delegate Packet PacketDelegate(Packet packet, RegionProxy sim);
+
+        public delegate void EventQueueDelegate(string name, IMessage message, RegionProxy region);
 
         //public delegate void GenericRegionDelegate(RegionProxy region);
 
@@ -54,6 +57,8 @@ namespace GridProxy
         private ObservableDictionary<string, CapInfo> KnownCaps = new ObservableDictionary<string, CapInfo>();
 
         private Dictionary<string, List<CapsDelegate>> KnownCapsDelegates = new Dictionary<string, List<CapsDelegate>>();
+
+        private Dictionary<string, List<EventQueueDelegate>> EventQueueDelegates = new Dictionary<string, List<EventQueueDelegate>>();
 
         private string CapProxyURL = string.Empty;
 
@@ -1091,6 +1096,16 @@ namespace GridProxy
 
                     OpenMetaverse.Logger.Log("DEBUG: Modified EstablishAgentCommunication to " + body["sim-ip-and-port"].AsString() + " with seed cap " + capsURL, Helpers.LogLevel.Debug);
                 }
+
+                if(EventQueueDelegates.TryGetValue(message, out var delegates))
+                {
+                    IMessage imessage = OpenMetaverse.Messages.MessageUtils.DecodeEvent(message, body);
+
+                    foreach (var del in delegates)
+                    {
+                        del(message, imessage, capReq.Info.Sim);
+                    }
+                }
             }
             return false;
         }
@@ -1125,6 +1140,37 @@ namespace GridProxy
                 if (delegateArray.Contains(capsDelegate))
                 {
                     delegateArray.Remove(capsDelegate);
+                }
+            }
+        }
+
+        public void AddEventDelegate(string name, EventQueueDelegate callback)
+        {
+            lock (this)
+            {
+                if (!EventQueueDelegates.ContainsKey(name))
+                {
+                    EventQueueDelegates[name] = new List<EventQueueDelegate>();
+                }
+                List<EventQueueDelegate> delegateArray = EventQueueDelegates[name];
+                if (!delegateArray.Contains(callback))
+                {
+                    delegateArray.Add(callback);
+                }
+            }
+        }
+
+        public void RemoveEventDelegate(string name, EventQueueDelegate callback)
+        {
+            lock (this)
+            {
+                if (EventQueueDelegates.ContainsKey(name))
+                {
+                    List<EventQueueDelegate> delegateArray = EventQueueDelegates[name];
+                    if (delegateArray.Contains(callback))
+                    {
+                        delegateArray.Remove(callback);
+                    }
                 }
             }
         }

@@ -382,9 +382,9 @@ namespace CoolGUI.Controls
                 InventoryFolder fb = (InventoryFolder)ty.Tag;
 
                 if (fa.PreferredType != FolderType.None && fb.PreferredType == FolderType.None)
-                    return 1;
-                else if (fa.PreferredType == FolderType.None && fb.PreferredType != FolderType.None)
                     return -1;
+                else if (fa.PreferredType == FolderType.None && fb.PreferredType != FolderType.None)
+                    return 1;
                 else return string.Compare(fa.Name, fb.Name);
             }
             else if (tx.Tag is InventoryItem && ty.Tag is InventoryItem)

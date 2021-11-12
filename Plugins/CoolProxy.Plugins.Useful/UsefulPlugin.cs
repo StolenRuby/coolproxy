@@ -51,6 +51,7 @@ namespace CoolProxy.Plugins.Useful
             GUI.AddMultipleMenuItem("Copy Keys", copyAvatarKeys);
 
             GUI.AddToolButton("UUID", "Avatar Picker to Clipboard", avatarPickerToClipboard);
+            GUI.AddToolButton("UUID", "Group Picker to Clipboard", groupPickerToClipboard);
             GUI.AddToolButton("UUID", "KeyTool from Clipboard", handleKeyToolButton);
 
             if(Util.IsDebugMode)
@@ -65,6 +66,17 @@ namespace CoolProxy.Plugins.Useful
 
             GUI.AddInventoryItemOption("Play Locally", handlePlaySoundLocally, AssetType.Sound);
             GUI.AddInventoryItemOption("Play Inworld", handlePlaySoundInworld, AssetType.Sound);
+        }
+
+        private void groupPickerToClipboard(object sender, EventArgs e)
+        {
+            GroupPickerForm groupPickerForm = new GroupPickerForm(GroupPowers.None);
+            groupPickerForm.StartPosition = FormStartPosition.CenterScreen;
+
+            if(groupPickerForm.ShowDialog() == DialogResult.OK)
+            {
+                Clipboard.SetText(groupPickerForm.GroupID.ToString());
+            }
         }
 
         private void copyAvatarKey(UUID avatar)

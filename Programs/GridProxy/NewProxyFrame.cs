@@ -23,6 +23,7 @@ namespace GridProxy
         public InventoryManager Inventory { get; private set; }
         public GridManager Grid { get; private set; }
         public AssetManager Assets { get; private set; }
+        public GroupManager Groups { get; private set; } 
 
         public string[] Args { get; private set; }
 
@@ -62,6 +63,7 @@ namespace GridProxy
             Inventory = new InventoryManager(this);
             Grid = new GridManager(this);
             Assets = new AssetManager(this);
+            Groups = new GroupManager(this);
 
             Login.AddLoginResponseDelegate(onLoginResponse);
             Network.AddDelegate(PacketType.LogoutReply, Direction.Incoming, onLogoutReply);

@@ -136,6 +136,8 @@ namespace CoolProxy
             // Login masking
             CoolProxy.Frame.Login.AddLoginRequestDelegate(handleLoginRequest);
             CoolProxy.Frame.Login.AddLoginResponseDelegate(handleLoginResponse);
+
+            firstTimeMinimized = CoolProxy.Settings.getBool("AlertStillRunning");
         }
 
         ////// Chat Commands
@@ -540,7 +542,7 @@ namespace CoolProxy
                 }
             }
 
-            SavePlugins();
+            SavePlugins(true);
         }
 
         private void handleLoginRequest(object sender, XmlRpcRequestEventArgs e)
@@ -989,6 +991,8 @@ namespace CoolProxy
                 {
                     this.Show();
                     this.WindowState = FormWindowState.Normal;
+
+                    CoolProxy.Settings.setBool("AlertStillRunning", false);
                 }
                 else
                 {
@@ -1545,7 +1549,9 @@ namespace CoolProxy
             }
         }
 
-        private void SavePlugins()
+        bool HasBeenToldToRestart = false;
+
+        private void SavePlugins(bool is_startup = false)
         {
             pluginList.Clear();
             OSDArray osd_array = new OSDArray();
@@ -1557,6 +1563,12 @@ namespace CoolProxy
             }
 
             CoolProxy.Settings.setOSD("PluginList", osd_array);
+
+            if(!HasBeenToldToRestart && !is_startup)
+            {
+                HasBeenToldToRestart = true;
+                MessageBox.Show("You need to restart CoolProxy for plugins to reload!");
+            }    
         }
 
         private void removePluginButton_Click(object sender, EventArgs e)

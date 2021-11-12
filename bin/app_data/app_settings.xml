@@ -395,5 +395,12 @@
 			<key>value</key>
 			<boolean>1</boolean>
 		</map>
+		<key>AlertStillRunning</key>
+		<map>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
 	</map>
 </llsd>

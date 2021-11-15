@@ -54,6 +54,8 @@ namespace CoolProxy.Plugins.Useful
             GUI.AddToolButton("UUID", "Group Picker to Clipboard", groupPickerToClipboard);
             GUI.AddToolButton("UUID", "KeyTool from Clipboard", handleKeyToolButton);
 
+            GUI.AddTrayOption("KeyTool from Clipboard", handleKeyToolButton);
+
             if(Util.IsDebugMode)
             GUI.AddToggleFormQuick("Assets", "Upload Asset", new UploaderForm());
 

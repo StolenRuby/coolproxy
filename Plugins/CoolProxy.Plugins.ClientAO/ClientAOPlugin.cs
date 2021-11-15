@@ -133,6 +133,10 @@ namespace CoolProxy.Plugins.ClientAO
             {
                 LoadNotecard(x);
             }, AssetType.Notecard);
+
+            gui.AddTrayOption("-", null);
+            gui.AddTrayOption("Edit Client AO", (x, y) => EditorForm.Show());
+            gui.AddTrayCheck("Enable Client AO", (x, y) => settings.setBool("EnableAO", !(x as ToolStripMenuItem).Checked), () => Enabled);
         }
 
         public List<AOState> Current = new List<AOState>();

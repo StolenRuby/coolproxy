@@ -70,6 +70,10 @@ namespace CoolProxy.Plugins.CopyBot
 
             GUI.AddInventoryItemOption("Import With...", importWithInv, AssetType.Object);
 
+            gui.AddTrayOption("-", null);
+            GUI.AddTrayOption("Import Object from File...", importXML);
+            GUI.AddTrayOption("Export Selected Objects...", exportSelectedObjects);
+
             Proxy.Objects.ObjectUpdate += Objects_ObjectUpdate;
         }
 

@@ -1396,9 +1396,9 @@ namespace CoolProxy
             }
             else
             {
+                this.Show();
                 this.WindowState = FormWindowState.Normal;
-                this.Activate();
-                //trayIcon.Visible = false;
+                this.Focus();
 
                 TabPage page = tabControl1.TabPages.Cast<TabPage>().First(x => x.Text == (string)item.Tag);
 

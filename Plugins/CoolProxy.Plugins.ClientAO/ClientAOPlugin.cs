@@ -121,7 +121,6 @@ namespace CoolProxy.Plugins.ClientAO
 
             frame.Avatars.AvatarAnimation += Avatars_AvatarAnimation;
 
-            gui.AddToolCheckbox("Avatar", "Enable Animation Override", "EnableAO");
             settings.getSetting("EnableAO").OnChanged += (x, y) =>
             {
                 Enabled = (bool)y.Value;
@@ -135,7 +134,7 @@ namespace CoolProxy.Plugins.ClientAO
             }, AssetType.Notecard);
 
             gui.AddTrayOption("-", null);
-            gui.AddTrayOption("Edit Client AO", (x, y) => EditorForm.Show());
+            gui.AddTrayOption("Animation Override", (x, y) => EditorForm.Show());
             gui.AddTrayCheck("Enable Client AO", (x, y) => settings.setBool("EnableAO", !(x as ToolStripMenuItem).Checked), () => Enabled);
         }
 

@@ -9,12 +9,15 @@ namespace CoolProxy.Plugins.ClientAO
 {
     class AOCommand : Command
     {
+        SettingsManager Settings;
+
         public AOCommand(SettingsManager settings, CoolProxyFrame frame)
         {
+            Settings = settings;
             Proxy = frame;
             CMD = ".ao";
             Name = "Controls for Client AO";
-            Description = "blarg";
+            Description = "Usage: .ao <on/off>\n.ao load <path/to/notecard>";
             Category = CommandCategory.Other;
 
 
@@ -28,21 +31,32 @@ namespace CoolProxy.Plugins.ClientAO
                 return "Not enough args!";
             }
 
-
-            //Load notecard from path
-            //exemple: /ao Objects/My AOs/wetikon/config.txt
-            string[] tmp = new string[args.Length - 1];
-            //join the arguments together with spaces, to
-            //take care of folder and item names with spaces in them
-            for (int i = 1; i < args.Length; i++)
+            string cmd = args[1];
+            if("load" == cmd)
             {
-                tmp[i - 1] = args[i];
-            }
+                //Load notecard from path
+                //exemple: /ao Objects/My AOs/wetikon/config.txt
+                string[] tmp = new string[args.Length - 2];
+                //join the arguments together with spaces, to
+                //take care of folder and item names with spaces in them
+                for (int i = 2; i < args.Length; i++)
+                {
+                    tmp[i - 2] = args[i];
+                }
 
-            PathNames = string.Join(" ", tmp).Split(new char[] { '/' });
-            PathIndex = 0;
-            CurrentFolder = Proxy.Inventory.InventoryRoot;
-            Proxy.Inventory.RequestFolderContents(CurrentFolder, Proxy.Agent.AgentID, PathNames.Length > 1, PathNames.Length == 1, InventorySortOrder.ByName);
+                PathNames = string.Join(" ", tmp).Split(new char[] { '/' });
+                PathIndex = 0;
+                CurrentFolder = Proxy.Inventory.InventoryRoot;
+                Proxy.Inventory.RequestFolderContents(CurrentFolder, Proxy.Agent.AgentID, PathNames.Length > 1, PathNames.Length == 1, InventorySortOrder.ByName);
+            }
+            else if ("on" == cmd)
+            {
+                Settings.setBool("EnableAO", true);
+            }
+            else if ("off" == cmd)
+            {
+                Settings.setBool("EnableAO", false);
+            }
 
             return string.Empty;
         }

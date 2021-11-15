@@ -5,66 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CoolProxy.Plugins.ClientAO
 {
     public class ClientAOPlugin : CoolProxyPlugin
     {
-        public class AOAnim
-        {
-            public UUID ItemID { get; private set; } = UUID.Zero;
-            public UUID AssetID { get; private set; } = UUID.Zero;
-            public string Name { get; private set; } = string.Empty;
-
-            public AOAnim(UUID item_id, UUID asset_id, string name)
-            {
-                ItemID = item_id;
-                AssetID = asset_id;
-                Name = name;
-            }
-        }
-
-        public class AOState
-        {
-            public List<AOAnim> Entries = new List<AOAnim>();
-
-            public bool Cycle { get; set; } = true;
-            public bool Randomise { get; set; } = true;
-
-            private int Current = 0;
-
-            public AOAnim GetNext()
-            {
-                if (Entries.Count < 2 || !Cycle)
-                {
-                    return Entries[0];
-                }
-                else
-                {
-                    if (Randomise)
-                    {
-                        var random = new Random();
-                        int index = random.Next(Entries.Count);
-                        return Entries[index];
-                    }
-                    else
-                    {
-                        if (++Current >= Entries.Count)
-                        {
-                            Current = 0;
-                        }
-
-                        return Entries[Current];
-                    }
-                }
-            }
-
-            public AOState()
-            {
-
-            }
-        }
-
         public static readonly Dictionary<UUID, string> DefaultAnimToState = new Dictionary<UUID, string>()
         {
             {Animations.WALK, "Walking" },
@@ -123,61 +69,131 @@ namespace CoolProxy.Plugins.ClientAO
             {"Jump.D", "Jumping" },
         };
 
-        Dictionary<string, AOState> Overrides = new Dictionary<string, AOState>();
-
         public static ClientAOPlugin Instance;
 
-        private CoolProxyFrame Proxy;
+        internal CoolProxyFrame Proxy;
 
-        private bool Enabled = false;
+        private bool mEnabled = false;
+        public bool Enabled
+        {
+            get
+            {
+                return mEnabled;
+            }
+            set
+            {
+                mEnabled = value;
+                if(!mEnabled)
+                {
+                    Dictionary<UUID, bool> stop = new Dictionary<UUID, bool>();
+                    foreach(var ao in Current)
+                    {
+                        stop.Add(ao.CurrentAnim.AssetID, false);
+                    }
+                    Current.Clear();
+
+                    if (stop.Count > 0)
+                    {
+                        Proxy.Agent.Animate(stop, false);
+                    }
+                    EditorForm.UpdatePlaying();
+                }
+                else
+                {
+                    UpdateAO();
+                }
+            }
+        }
+
+        private ClientAOEditor EditorForm;
+
+        internal string AOName = string.Empty;
+
+        internal Dictionary<string, AOState> Overrides = new Dictionary<string, AOState>();
 
         public ClientAOPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
         {
             Proxy = frame;
             Instance = this;
 
+            EditorForm = new ClientAOEditor(this);
+            gui.AddToggleFormQuick("Avatar", "Animation Override", EditorForm);
+
             frame.Avatars.AvatarAnimation += Avatars_AvatarAnimation;
+
+            gui.AddToolCheckbox("Avatar", "Enable Animation Override", "EnableAO");
+            settings.getSetting("EnableAO").OnChanged += (x, y) =>
+            {
+                Enabled = (bool)y.Value;
+                Proxy.SayToUser("AO " + (Enabled ? "enabled" : "disabled"));
+            };
+            Enabled = settings.getBool("EnableAO");
+
+            gui.AddInventoryItemOption("Load as AO", x =>
+            {
+                LoadNotecard(x);
+            }, AssetType.Notecard);
         }
 
-        Dictionary<UUID, AOAnim> CurrentOverrides = new Dictionary<UUID, AOAnim>();
+        public List<AOState> Current = new List<AOState>();
+
+        public UUID[] CurrentAnims = new UUID[0];
 
         private void Avatars_AvatarAnimation(object sender, AvatarAnimationEventArgs e)
         {
-            if(e.AvatarID == Proxy.Agent.AgentID && Enabled)
+            if(e.AvatarID == Proxy.Agent.AgentID)
             {
-                var signaled_anims = e.Animations.Select(x => x.AnimationID).ToArray();
+                CurrentAnims = e.Animations.Select(x => x.AnimationID).ToArray();
+                if (Enabled) UpdateAO();
+            }
+        }
 
-                Dictionary<UUID, bool> anims = new Dictionary<UUID, bool>();
+        public void UpdateAO()
+        {
+            List<string> current_states = new List<string>();
 
-                foreach(var pair in CurrentOverrides.ToArray())
+            Dictionary<UUID, bool> anims = new Dictionary<UUID, bool>();
+
+            foreach (var anim in CurrentAnims)
+            {
+                if (DefaultAnimToState.TryGetValue(anim, out string state_name))
                 {
-                    if(!signaled_anims.Contains(pair.Key))
-                    {
-                        var anim = pair.Value;
-                        anims.Add(anim.AssetID, false);
-                        CurrentOverrides.Remove(pair.Key);
-                    }
-                }
+                    current_states.Add(state_name);
 
-                foreach(var signaled_anim in signaled_anims)
-                {
-                    if(!CurrentOverrides.ContainsKey(signaled_anim))
+                    int index = Current.FindIndex(x => x.StateName == state_name);
+                    if (index == -1)
                     {
-                        if (DefaultAnimToState.TryGetValue(signaled_anim, out string state_name))
+                        if(Overrides.TryGetValue(state_name, out var state))
                         {
-                            var state = Overrides[state_name];
+                            Current.Add(state);
+                            if (state.Cycle)
+                            {
+                                if (state.Randomise)
+                                    state.Random();
+                                else
+                                    state.Next();
+                            }
 
-                            var anim = state.GetNext();
-                            anims.Add(anim.AssetID, true);
-                            CurrentOverrides.Add(signaled_anim, anim);
+                            anims.Add(state.CurrentAnim.AssetID, true);
                         }
                     }
                 }
+            }
 
-                if(anims.Count > 0)
+            foreach (var state in Current.ToArray())
+            {
+                if (!current_states.Contains(state.StateName))
                 {
-                    Proxy.Agent.Animate(anims, false);
+                    var anim = state.CurrentAnim;
+                    anims.Add(anim.AssetID, false);
+                    Current.Remove(state);
                 }
+            }
+
+            if (anims.Count > 0)
+            {
+                Proxy.Agent.Animate(anims, false);
+                EditorForm.UpdatePlaying();
             }
         }
 
@@ -188,6 +204,8 @@ namespace CoolProxy.Plugins.ClientAO
             {
                 if(success)
                 {
+                    AOName = notecard.Name;
+
                     AssetNotecard asset = new AssetNotecard(notecard.AssetUUID, data);
                     asset.Decode();
 
@@ -236,7 +254,7 @@ namespace CoolProxy.Plugins.ClientAO
                             continue;
                         }
 
-                        AOState state = new AOState();
+                        AOState state = new AOState(pair.Key);
 
                         foreach(var anim_name in pair.Value)
                         {
@@ -256,13 +274,98 @@ namespace CoolProxy.Plugins.ClientAO
                     }
 
                     Proxy.SayToUser("Finished Loading!");
-                    Enabled = true;
+                    EditorForm.UpdateUI();
+
+                    if (Enabled) UpdateAO();
                 }
                 else
                 {
                     Proxy.SayToUser("Failed to download notecard!");
                 }
             });
+        }
+    }
+
+    public class AOAnim
+    {
+        public UUID ItemID { get; private set; } = UUID.Zero;
+        public UUID AssetID { get; private set; } = UUID.Zero;
+        public string Name { get; private set; } = string.Empty;
+
+        public AOAnim(UUID item_id, UUID asset_id, string name)
+        {
+            ItemID = item_id;
+            AssetID = asset_id;
+            Name = name;
+        }
+    }
+
+    public class AOState
+    {
+        public List<AOAnim> Entries = new List<AOAnim>();
+
+        public bool Cycle { get; set; } = true;
+        public bool Randomise { get; set; } = true;
+
+        private int Current = 0;
+
+        public AOAnim CurrentAnim { get; private set; } = null;
+
+        public string StateName { get; private set; }
+
+        public bool Random()
+        {
+            var current = CurrentAnim;
+            Current = new Random().Next(Entries.Count);
+            CurrentAnim = Entries[Current];
+            return current != CurrentAnim;
+        }
+
+        public bool Next()
+        {
+            var current = CurrentAnim;
+
+            if (Entries.Count < 2)
+            {
+                CurrentAnim = Entries[0];
+            }
+            else
+            {
+                if (++Current >= Entries.Count)
+                {
+                    Current = 0;
+                }
+
+                CurrentAnim = Entries[Current];
+            }
+
+            return current != CurrentAnim;
+        }
+
+        public bool Previous()
+        {
+            var current = CurrentAnim;
+
+            if (Entries.Count < 2)
+            {
+                CurrentAnim = Entries[0];
+            }
+            else
+            {
+                if (--Current < 0)
+                {
+                    Current = Entries.Count - 1;
+                }
+
+                CurrentAnim = Entries[Current];
+            }
+
+            return current != CurrentAnim;
+        }
+
+        public AOState(string state_name)
+        {
+            StateName = state_name;
         }
     }
 }

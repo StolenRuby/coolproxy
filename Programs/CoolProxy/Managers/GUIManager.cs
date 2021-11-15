@@ -9,6 +9,8 @@ using System.Windows.Forms;
 
 namespace CoolProxy
 {
+    public delegate bool TrayIconEnable();
+
     public class GUIManager
     {
         private CoolProxyForm coolForm;
@@ -85,6 +87,19 @@ namespace CoolProxy
         public void AddToggleFormQuick(string cat, string name, Form form)
         {
             coolForm.AddToggleFormQuick(cat, name, form);
+        }
+
+        ////////////////////
+        ///
+
+        public void AddTrayOption(string label, EventHandler option, TrayIconEnable opening = null, object tag = null)
+        {
+            coolForm.AddTrayOption(label, option, opening, tag);
+        }
+
+        public void AddTrayCheck(string label, EventHandler option, TrayIconEnable check, object tag = null)
+        {
+            coolForm.AddTrayCheck(label, option, check, tag);
         }
     }
 }

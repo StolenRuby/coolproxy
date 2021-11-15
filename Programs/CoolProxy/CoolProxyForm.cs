@@ -138,6 +138,14 @@ namespace CoolProxy
             CoolProxy.Frame.Login.AddLoginResponseDelegate(handleLoginResponse);
 
             firstTimeMinimized = CoolProxy.Settings.getBool("AlertStillRunning");
+
+            AddTrayOption("Avatar Tracker", tabNameToolStripMenuItem_Click, null, "Avatar Tracker");
+            AddTrayOption("Regions", tabNameToolStripMenuItem_Click, null, "Regions");
+            AddTrayOption("ToolBox", tabNameToolStripMenuItem_Click, null, "ToolBox");
+            AddTrayOption("Asset Logging", tabNameToolStripMenuItem_Click, null, "Asset Logging");
+            AddTrayOption("Asset Transfers", tabNameToolStripMenuItem_Click, null, "Asset Transfers");
+            AddTrayOption("-", null, null, "");
+            AddTrayOption("Inventory Browser", inventoryBrowserToolStripMenuItem_Click, null, "");
         }
 
         ////// Chat Commands
@@ -500,6 +508,59 @@ namespace CoolProxy
         internal void AddInventoryItemOption(string label, CoolGUI.Controls.HandleInventory handle, InventoryType invType)
         {
             inventoryBrowserForm.AddInventoryItemOption(label, handle, invType);
+        }
+
+        public class TrayOption
+        {
+            public string Label { get; set; }
+            public EventHandler Option { get; set; }
+            public TrayIconEnable Enable { get; set; }
+            public TrayIconEnable Checked { get; set; }
+            public object Tag { get; set; }
+
+            public TrayOption(string label, EventHandler option, TrayIconEnable enabled, TrayIconEnable check, object tag)
+            {
+                Label = label;
+                Option = option;
+                Enable = enabled;
+                Checked = check;
+                Tag = tag;
+            }
+        }
+
+        List<TrayOption> TrayOptions = new List<TrayOption>();
+
+        internal void AddTrayOption(string label, EventHandler option, TrayIconEnable opening = null, object tag = null)
+        {
+            TrayOptions.Add(new TrayOption(label, option, opening, null, tag));
+        }
+
+        internal void AddTrayCheck(string label, EventHandler option, TrayIconEnable check, object tag = null)
+        {
+            TrayOptions.Add(new TrayOption(label, option, null, check, tag));
+        }
+
+        private void trayContextMenu_Opening(object sender, CancelEventArgs e)
+        {
+            trayContextMenu.Items.Clear();
+            foreach (var option in TrayOptions)
+            {
+                var item = trayContextMenu.Items.Add(option.Label);
+                if(item is ToolStripMenuItem)
+                {
+                    ToolStripMenuItem menu_item = (ToolStripMenuItem)item;
+
+                    menu_item.Tag = option.Tag;
+
+                    if (option.Enable != null)
+                        menu_item.Enabled = option.Enable();
+
+                    if (option.Checked != null)
+                        menu_item.Checked = option.Checked();
+
+                    menu_item.Click += option.Option;
+                }
+            }
         }
 
         private void LoadPlugins()
@@ -1185,7 +1246,12 @@ namespace CoolProxy
                 }
             }
 
-            if(CoolProxy.Settings.getBool("StartProxyAtLaunch"))
+            if (TrayOptions.Last().Label != "-")
+                AddTrayOption("-", null, null, "");
+
+            AddTrayOption("Quit CoolProxy", quitCoolProxyToolStripMenuItem_Click, null, "");
+
+            if (CoolProxy.Settings.getBool("StartProxyAtLaunch"))
             {
                 ToggleProxy();
 
@@ -1319,7 +1385,7 @@ namespace CoolProxy
         {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
 
-            if (openTabs.TryGetValue(item.Text, out Form form))
+            if (openTabs.TryGetValue((string)item.Tag, out Form form))
             {
                 if (form.Visible)
                 {
@@ -1334,7 +1400,7 @@ namespace CoolProxy
                 this.Activate();
                 //trayIcon.Visible = false;
 
-                TabPage page = tabControl1.TabPages.Cast<TabPage>().First(x => x.Text == item.Text);
+                TabPage page = tabControl1.TabPages.Cast<TabPage>().First(x => x.Text == (string)item.Tag);
 
                 tabControl1.SelectedTab = page;
             }

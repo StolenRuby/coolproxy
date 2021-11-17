@@ -36,6 +36,8 @@ namespace CoolProxy.Plugins.FancyBeams
             new Vector3(0.0f, -0.5f,   0.25f),
         };
 
+        UUID[] BeamIDs;
+
         CoolProxyFrame Proxy;
 
         Timer beamTimer;
@@ -58,6 +60,10 @@ namespace CoolProxy.Plugins.FancyBeams
             beamTimer.Tick += BeamTick;
 
             gui.AddToolCheckbox("Avatar", "Rainbow Beam Trail", toggleBeamTrail);
+
+            BeamIDs = new UUID[BeamOffsets.Count];
+            for (int i = 0; i < BeamIDs.Length; i++)
+                BeamIDs[i] = UUID.Random();
         }
 
         private void BeamTick(object sender, EventArgs e)
@@ -185,17 +191,17 @@ namespace CoolProxy.Plugins.FancyBeams
                             blocks = new List<ViewerEffectPacket.EffectBlock>();
                         }
 
-                        foreach (var offset in BeamOffsets)
+                        for(int i = 0; i < BeamOffsets.Count; i++)
                         {
                             var beam = new ViewerEffectPacket.EffectBlock();
-                            beam.ID = UUID.Random();
+                            beam.ID = BeamIDs[i];
                             beam.AgentID = effect.AgentID;
                             beam.Type = effect.Type;
                             beam.Duration = effect.Duration;
                             beam.Color = effect.Color;
                             beam.TypeData = effect.TypeData.ToArray(); // ToArray to clone it...
 
-                            var rotated_offset = offset;
+                            var rotated_offset = BeamOffsets[i];
                             rotated_offset *= roll;
                             rotated_offset *= yaw;
                             rotated_offset *= pitch;

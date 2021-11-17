@@ -563,6 +563,14 @@ namespace CoolProxy
             }
         }
 
+        internal void AddSettingsTab(string label, Panel panel)
+        {
+            TabPage page = new TabPage();
+            page.Text = label;
+            page.Controls.Add(panel);
+            miscPluginsTabControl.TabPages.Add(page);
+        }
+
         private void LoadPlugins()
         {
             OSD osd = CoolProxy.Settings.getOSD("PluginList");

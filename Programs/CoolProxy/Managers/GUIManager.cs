@@ -101,5 +101,14 @@ namespace CoolProxy
         {
             coolForm.AddTrayCheck(label, option, check, tag);
         }
+
+
+        ////////////////////
+        ///
+
+        public void AddSettingsTab(string label, Panel panel)
+        {
+            coolForm.AddSettingsTab(label, panel);
+        }
     }
 }

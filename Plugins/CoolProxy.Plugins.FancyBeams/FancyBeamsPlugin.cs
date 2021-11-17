@@ -64,6 +64,41 @@ namespace CoolProxy.Plugins.FancyBeams
             BeamIDs = new UUID[BeamOffsets.Count];
             for (int i = 0; i < BeamIDs.Length; i++)
                 BeamIDs[i] = UUID.Random();
+
+            AddSettingsTab(gui);
+        }
+
+        private void AddSettingsTab(GUIManager gui)
+        {
+            Panel panel = new Panel();
+            panel.Dock = DockStyle.Fill;
+
+            var checkbox = new CoolGUI.Controls.CheckBox();
+            checkbox.AutoSize = true;
+            checkbox.Location = new Point(14, 12);
+            checkbox.Setting = "RainbowSelectionBeam";
+            checkbox.Text = "Rainbow Selection Beam";
+
+            panel.Controls.Add(checkbox);
+
+            checkbox = new CoolGUI.Controls.CheckBox();
+            checkbox.AutoSize = true;
+            checkbox.Location = new Point(14, 35);
+            checkbox.Setting = "ShapedSelectionBeam";
+            checkbox.Text = "Shaped Selection Beam";
+
+            panel.Controls.Add(checkbox);
+
+            checkbox = new CoolGUI.Controls.CheckBox();
+            checkbox.AutoSize = true;
+            checkbox.EnabledSetting = "ShapedSelectionBeam";
+            checkbox.Location = new Point(36, 58);
+            checkbox.Setting = "RotateShapedBeam";
+            checkbox.Text = "Rotate Selection Beam";
+
+            panel.Controls.Add(checkbox);
+
+            gui.AddSettingsTab("Tractor Beam", panel);
         }
 
         private void BeamTick(object sender, EventArgs e)

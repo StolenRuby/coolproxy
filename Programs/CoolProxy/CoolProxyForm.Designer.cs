@@ -182,7 +182,9 @@
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.label7 = new System.Windows.Forms.Label();
+            this.miscPluginsTabControl = new System.Windows.Forms.TabControl();
+            this.tabPage11 = new System.Windows.Forms.TabPage();
+            this.tabPage12 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.importOffsetZ = new System.Windows.Forms.NumericUpDown();
@@ -212,13 +214,10 @@
             this.numericUpDown5 = new L33T.GUI.NumericUpDown();
             this.numericUpDown4 = new L33T.GUI.NumericUpDown();
             this.checkBox4 = new CoolGUI.Controls.CheckBox();
-            this.checkBox12 = new CoolGUI.Controls.CheckBox();
-            this.checkBox11 = new CoolGUI.Controls.CheckBox();
-            this.checkBox5 = new CoolGUI.Controls.CheckBox();
             this.checkBox8 = new CoolGUI.Controls.CheckBox();
+            this.checkBox5 = new CoolGUI.Controls.CheckBox();
             this.checkBox19 = new CoolGUI.Controls.CheckBox();
             this.checkBox18 = new CoolGUI.Controls.CheckBox();
-            this.checkBox14 = new CoolGUI.Controls.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -257,6 +256,9 @@
             this.tabPage7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pluginsDataGridView)).BeginInit();
             this.tabPage8.SuspendLayout();
+            this.miscPluginsTabControl.SuspendLayout();
+            this.tabPage11.SuspendLayout();
+            this.tabPage12.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.importOffsetZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.importOffsetY)).BeginInit();
@@ -1710,13 +1712,7 @@
             // 
             // tabPage8
             // 
-            this.tabPage8.Controls.Add(this.checkBox14);
-            this.tabPage8.Controls.Add(this.checkBox12);
-            this.tabPage8.Controls.Add(this.checkBox11);
-            this.tabPage8.Controls.Add(this.label7);
-            this.tabPage8.Controls.Add(this.groupBox1);
-            this.tabPage8.Controls.Add(this.checkBox5);
-            this.tabPage8.Controls.Add(this.checkBox8);
+            this.tabPage8.Controls.Add(this.miscPluginsTabControl);
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
@@ -1725,14 +1721,39 @@
             this.tabPage8.Text = "Misc";
             this.tabPage8.UseVisualStyleBackColor = true;
             // 
-            // label7
+            // miscPluginsTabControl
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(36, 209);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(373, 13);
-            this.label7.TabIndex = 23;
-            this.label7.Text = "I need to come up with some way that plugins can add their own settings here";
+            this.miscPluginsTabControl.Controls.Add(this.tabPage11);
+            this.miscPluginsTabControl.Controls.Add(this.tabPage12);
+            this.miscPluginsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.miscPluginsTabControl.Location = new System.Drawing.Point(3, 3);
+            this.miscPluginsTabControl.Name = "miscPluginsTabControl";
+            this.miscPluginsTabControl.SelectedIndex = 0;
+            this.miscPluginsTabControl.Size = new System.Drawing.Size(446, 234);
+            this.miscPluginsTabControl.TabIndex = 27;
+            // 
+            // tabPage11
+            // 
+            this.tabPage11.Controls.Add(this.checkBox8);
+            this.tabPage11.Controls.Add(this.checkBox5);
+            this.tabPage11.Location = new System.Drawing.Point(4, 22);
+            this.tabPage11.Name = "tabPage11";
+            this.tabPage11.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage11.Size = new System.Drawing.Size(438, 208);
+            this.tabPage11.TabIndex = 0;
+            this.tabPage11.Text = "KeyTool";
+            this.tabPage11.UseVisualStyleBackColor = true;
+            // 
+            // tabPage12
+            // 
+            this.tabPage12.Controls.Add(this.groupBox1);
+            this.tabPage12.Location = new System.Drawing.Point(4, 22);
+            this.tabPage12.Name = "tabPage12";
+            this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage12.Size = new System.Drawing.Size(438, 208);
+            this.tabPage12.TabIndex = 1;
+            this.tabPage12.Text = "CopyBot";
+            this.tabPage12.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
@@ -1742,10 +1763,10 @@
             this.groupBox1.Controls.Add(this.importOffsetY);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.importOffsetX);
-            this.groupBox1.Location = new System.Drawing.Point(326, 6);
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(120, 100);
-            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Object Import Offset";
             // 
@@ -1765,7 +1786,6 @@
             this.importOffsetZ.Name = "importOffsetZ";
             this.importOffsetZ.Size = new System.Drawing.Size(85, 20);
             this.importOffsetZ.TabIndex = 4;
-            this.importOffsetZ.ValueChanged += new System.EventHandler(this.importOffset_ValueChanged);
             // 
             // label5
             // 
@@ -1783,7 +1803,6 @@
             this.importOffsetY.Name = "importOffsetY";
             this.importOffsetY.Size = new System.Drawing.Size(85, 20);
             this.importOffsetY.TabIndex = 2;
-            this.importOffsetY.ValueChanged += new System.EventHandler(this.importOffset_ValueChanged);
             // 
             // label4
             // 
@@ -1801,7 +1820,6 @@
             this.importOffsetX.Name = "importOffsetX";
             this.importOffsetX.Size = new System.Drawing.Size(85, 20);
             this.importOffsetX.TabIndex = 0;
-            this.importOffsetX.ValueChanged += new System.EventHandler(this.importOffset_ValueChanged);
             // 
             // tabPage10
             // 
@@ -2024,29 +2042,17 @@
             this.checkBox4.Text = "Enable Chat Commands";
             this.checkBox4.UseVisualStyleBackColor = true;
             // 
-            // checkBox12
+            // checkBox8
             // 
-            this.checkBox12.AutoSize = true;
-            this.checkBox12.EnabledSetting = null;
-            this.checkBox12.Location = new System.Drawing.Point(14, 98);
-            this.checkBox12.Name = "checkBox12";
-            this.checkBox12.Setting = "ShapedSelectionBeam";
-            this.checkBox12.Size = new System.Drawing.Size(140, 17);
-            this.checkBox12.TabIndex = 25;
-            this.checkBox12.Text = "Shaped Selection Beam";
-            this.checkBox12.UseVisualStyleBackColor = true;
-            // 
-            // checkBox11
-            // 
-            this.checkBox11.AutoSize = true;
-            this.checkBox11.EnabledSetting = null;
-            this.checkBox11.Location = new System.Drawing.Point(14, 75);
-            this.checkBox11.Name = "checkBox11";
-            this.checkBox11.Setting = "RainbowSelectionBeam";
-            this.checkBox11.Size = new System.Drawing.Size(145, 17);
-            this.checkBox11.TabIndex = 24;
-            this.checkBox11.Text = "Rainbow Selection Beam";
-            this.checkBox11.UseVisualStyleBackColor = true;
+            this.checkBox8.AutoSize = true;
+            this.checkBox8.EnabledSetting = null;
+            this.checkBox8.Location = new System.Drawing.Point(14, 12);
+            this.checkBox8.Name = "checkBox8";
+            this.checkBox8.Setting = "AutomaticallyOpenKeyTool";
+            this.checkBox8.Size = new System.Drawing.Size(195, 17);
+            this.checkBox8.TabIndex = 21;
+            this.checkBox8.Text = "Automatically Open Key for KeyTool";
+            this.checkBox8.UseVisualStyleBackColor = true;
             // 
             // checkBox5
             // 
@@ -2059,18 +2065,6 @@
             this.checkBox5.TabIndex = 22;
             this.checkBox5.Text = "Automatically close KeyTool";
             this.checkBox5.UseVisualStyleBackColor = true;
-            // 
-            // checkBox8
-            // 
-            this.checkBox8.AutoSize = true;
-            this.checkBox8.EnabledSetting = null;
-            this.checkBox8.Location = new System.Drawing.Point(14, 12);
-            this.checkBox8.Name = "checkBox8";
-            this.checkBox8.Setting = "AutomaticallyOpenKeyTool";
-            this.checkBox8.Size = new System.Drawing.Size(195, 17);
-            this.checkBox8.TabIndex = 21;
-            this.checkBox8.Text = "Automatically Open Key for KeyTool";
-            this.checkBox8.UseVisualStyleBackColor = true;
             // 
             // checkBox19
             // 
@@ -2096,18 +2090,6 @@
             this.checkBox18.TabIndex = 28;
             this.checkBox18.Text = "Allow Multiple Instances";
             this.checkBox18.UseVisualStyleBackColor = true;
-            // 
-            // checkBox14
-            // 
-            this.checkBox14.AutoSize = true;
-            this.checkBox14.EnabledSetting = "ShapedSelectionBeam";
-            this.checkBox14.Location = new System.Drawing.Point(34, 121);
-            this.checkBox14.Name = "checkBox14";
-            this.checkBox14.Setting = "RotateShapedBeam";
-            this.checkBox14.Size = new System.Drawing.Size(128, 17);
-            this.checkBox14.TabIndex = 26;
-            this.checkBox14.Text = "Rotate Shaped Beam";
-            this.checkBox14.UseVisualStyleBackColor = true;
             // 
             // CoolProxyForm
             // 
@@ -2169,7 +2151,10 @@
             this.tabPage7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pluginsDataGridView)).EndInit();
             this.tabPage8.ResumeLayout(false);
-            this.tabPage8.PerformLayout();
+            this.miscPluginsTabControl.ResumeLayout(false);
+            this.tabPage11.ResumeLayout(false);
+            this.tabPage11.PerformLayout();
+            this.tabPage12.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.importOffsetZ)).EndInit();
@@ -2341,6 +2326,9 @@
         private System.Windows.Forms.TabPage tabPage8;
         private CoolGUI.Controls.CheckBox checkBox5;
         private CoolGUI.Controls.CheckBox checkBox8;
+        private System.Windows.Forms.TabControl miscPluginsTabControl;
+        private System.Windows.Forms.TabPage tabPage11;
+        private System.Windows.Forms.TabPage tabPage12;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.NumericUpDown importOffsetZ;
@@ -2348,10 +2336,6 @@
         private System.Windows.Forms.NumericUpDown importOffsetY;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown importOffsetX;
-        private System.Windows.Forms.Label label7;
-        private CoolGUI.Controls.CheckBox checkBox12;
-        private CoolGUI.Controls.CheckBox checkBox11;
-        private CoolGUI.Controls.CheckBox checkBox14;
     }
 }
 

@@ -218,6 +218,7 @@
             this.checkBox8 = new CoolGUI.Controls.CheckBox();
             this.checkBox19 = new CoolGUI.Controls.CheckBox();
             this.checkBox18 = new CoolGUI.Controls.CheckBox();
+            this.checkBox14 = new CoolGUI.Controls.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -1709,6 +1710,7 @@
             // 
             // tabPage8
             // 
+            this.tabPage8.Controls.Add(this.checkBox14);
             this.tabPage8.Controls.Add(this.checkBox12);
             this.tabPage8.Controls.Add(this.checkBox11);
             this.tabPage8.Controls.Add(this.label7);
@@ -2028,10 +2030,10 @@
             this.checkBox12.EnabledSetting = null;
             this.checkBox12.Location = new System.Drawing.Point(14, 98);
             this.checkBox12.Name = "checkBox12";
-            this.checkBox12.Setting = "QuadSelectionBeam";
-            this.checkBox12.Size = new System.Drawing.Size(129, 17);
+            this.checkBox12.Setting = "ShapedSelectionBeam";
+            this.checkBox12.Size = new System.Drawing.Size(140, 17);
             this.checkBox12.TabIndex = 25;
-            this.checkBox12.Text = "Quad Selection Beam";
+            this.checkBox12.Text = "Shaped Selection Beam";
             this.checkBox12.UseVisualStyleBackColor = true;
             // 
             // checkBox11
@@ -2094,6 +2096,18 @@
             this.checkBox18.TabIndex = 28;
             this.checkBox18.Text = "Allow Multiple Instances";
             this.checkBox18.UseVisualStyleBackColor = true;
+            // 
+            // checkBox14
+            // 
+            this.checkBox14.AutoSize = true;
+            this.checkBox14.EnabledSetting = "ShapedSelectionBeam";
+            this.checkBox14.Location = new System.Drawing.Point(34, 121);
+            this.checkBox14.Name = "checkBox14";
+            this.checkBox14.Setting = "RotateShapedBeam";
+            this.checkBox14.Size = new System.Drawing.Size(128, 17);
+            this.checkBox14.TabIndex = 26;
+            this.checkBox14.Text = "Rotate Shaped Beam";
+            this.checkBox14.UseVisualStyleBackColor = true;
             // 
             // CoolProxyForm
             // 
@@ -2337,6 +2351,7 @@
         private System.Windows.Forms.Label label7;
         private CoolGUI.Controls.CheckBox checkBox12;
         private CoolGUI.Controls.CheckBox checkBox11;
+        private CoolGUI.Controls.CheckBox checkBox14;
     }
 }
 

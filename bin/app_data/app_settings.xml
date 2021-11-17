@@ -388,7 +388,14 @@
 			<key>value</key>
 			<boolean>1</boolean>
 		</map>
-		<key>QuadSelectionBeam</key>
+		<key>ShapedSelectionBeam</key>
+		<map>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
+		<key>RotateShapedBeam</key>
 		<map>
 			<key>type</key>
 			<string>bool</string>

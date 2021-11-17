@@ -52,9 +52,6 @@ namespace CoolProxy.Plugins.Useful
 
             GUI.AddToolButton("UUID", "Avatar Picker to Clipboard", avatarPickerToClipboard);
             GUI.AddToolButton("UUID", "Group Picker to Clipboard", groupPickerToClipboard);
-            GUI.AddToolButton("UUID", "KeyTool from Clipboard", handleKeyToolButton);
-
-            GUI.AddTrayOption("KeyTool from Clipboard", handleKeyToolButton);
 
             var uploader_form = new UploaderForm();
 
@@ -115,30 +112,6 @@ namespace CoolProxy.Plugins.Useful
                 Clipboard.SetText(avatarPickerSearchForm.SelectedID.ToString());
             }
         }
-
-        private void handleKeyToolButton(object sender, EventArgs e)
-        {
-            UUID key = UUID.Zero;
-            if (UUID.TryParse(Clipboard.GetText(), out key))
-            {
-                Proxy.SayToUser("KeyTool", "Running KeyTool on " + key.ToString());
-
-                Thread keytoolGUIThread = null;
-                keytoolGUIThread = new Thread(new ThreadStart(() =>
-                {
-                    var keytoolGUI = new KeyToolForm(Proxy, key);
-                    //keytoolGUI.FormClosed += (x, y) => { keytoolGUIThread = null; keytoolGUI = null; };
-                    //Application.Run(keytoolGUI);
-                    keytoolGUI.ShowDialog();
-                    keytoolGUIThread = null;
-                    keytoolGUI = null;
-                }));
-                keytoolGUIThread.SetApartmentState(ApartmentState.STA);
-                keytoolGUIThread.Start();
-            }
-            else Proxy.SayToUser("KeyTool", "Invalid UUID");
-        }
-
 
         private void handlePlaySoundInworld(InventoryItem inventoryItem)
         {

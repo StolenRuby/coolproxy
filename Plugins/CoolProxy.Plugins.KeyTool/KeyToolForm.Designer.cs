@@ -1,4 +1,4 @@
-﻿namespace CoolProxy
+﻿namespace CoolProxy.Plugins.KeyTool
 {
     partial class KeyToolForm
     {

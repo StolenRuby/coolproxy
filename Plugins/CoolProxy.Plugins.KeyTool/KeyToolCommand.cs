@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CoolProxy.Plugins.ChatCommands
+namespace CoolProxy.Plugins.KeyTool
 {
     class KeyToolCommand : Command
     {

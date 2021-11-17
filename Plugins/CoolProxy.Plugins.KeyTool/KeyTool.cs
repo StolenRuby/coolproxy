@@ -10,7 +10,7 @@ using OpenMetaverse;
 using OpenMetaverse.Packets;
 using static GridProxy.RegionManager;
 
-namespace CoolProxy
+namespace CoolProxy.Plugins.KeyTool
 {
     public enum KT_TYPE
     {
@@ -622,42 +622,42 @@ namespace CoolProxy
         {
             if (kt_type == KT_TYPE.KT_ASSET)
             {
-                UUID folder_id = CoolProxy.Frame.Inventory.SuitcaseID != UUID.Zero ?
-                    CoolProxy.Frame.Inventory.FindSuitcaseFolderForType((FolderType)asset_type) :
-                    CoolProxy.Frame.Inventory.FindFolderForType((FolderType)asset_type);
+                UUID folder_id = KeyToolPlugin.Proxy.Inventory.SuitcaseID != UUID.Zero ?
+                    KeyToolPlugin.Proxy.Inventory.FindSuitcaseFolderForType((FolderType)asset_type) :
+                    KeyToolPlugin.Proxy.Inventory.FindFolderForType((FolderType)asset_type);
 
                 UUID item_id = UUID.Random();
 
-                CoolProxy.Frame.OpenSim.XInventory.AddItem(
-                    folder_id, item_id, asset_id, CoolProxy.Frame.Agent.AgentID,
+                KeyToolPlugin.Proxy.OpenSim.XInventory.AddItem(
+                    folder_id, item_id, asset_id, KeyToolPlugin.Proxy.Agent.AgentID,
                     asset_type, (InventoryType)asset_type, 0, asset_id.ToString(), "", DateTime.UtcNow, success =>
                     {
                         if (success)
                         {
-                            CoolProxy.Frame.Inventory.RequestFetchInventory(item_id, CoolProxy.Frame.Agent.AgentID, false);
+                            KeyToolPlugin.Proxy.Inventory.RequestFetchInventory(item_id, KeyToolPlugin.Proxy.Agent.AgentID, false);
                         }
-                        else CoolProxy.Frame.AlertMessage("Error adding item to suitcase!", false);
+                        else KeyToolPlugin.Proxy.AlertMessage("Error adding item to suitcase!", false);
                     });
             }
             else if(kt_type == KT_TYPE.KT_AGENT)
             {
-                CoolProxy.Frame.SayToUser(string.Format("{0} is an agent secondlife:///app/agent/{0}/about", asset_id));
+                KeyToolPlugin.Proxy.SayToUser(string.Format("{0} is an agent secondlife:///app/agent/{0}/about", asset_id));
             }
             else if(kt_type == KT_TYPE.KT_GROUP)
             {
-                CoolProxy.Frame.SayToUser(string.Format("{0} is a group secondlife:///app/group/{0}/about", asset_id));
+                KeyToolPlugin.Proxy.SayToUser(string.Format("{0} is a group secondlife:///app/group/{0}/about", asset_id));
             }
             else if(kt_type == KT_TYPE.KT_ITEM)
             {
-                CoolProxy.Frame.SayToUser(string.Format("{0} is an inventory item secondlife:///app/inventory/{0}/select", asset_id));
+                KeyToolPlugin.Proxy.SayToUser(string.Format("{0} is an inventory item secondlife:///app/inventory/{0}/select", asset_id));
             }
             else if (kt_type == KT_TYPE.KT_PARCEL)
             {
-                CoolProxy.Frame.SayToUser(string.Format("{0} is a parcel secondlife:///app/parcel/{0}/about", asset_id));
+                KeyToolPlugin.Proxy.SayToUser(string.Format("{0} is a parcel secondlife:///app/parcel/{0}/about", asset_id));
             }
             else if (kt_type == KT_TYPE.KT_REGION)
             {
-                CoolProxy.Frame.SayToUser(string.Format("{0} is a region secondlife:///app/region/{0}/about", asset_id));
+                KeyToolPlugin.Proxy.SayToUser(string.Format("{0} is a region secondlife:///app/region/{0}/about", asset_id));
             }
         }
     }

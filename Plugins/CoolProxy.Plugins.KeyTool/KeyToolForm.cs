@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CoolProxy
+namespace CoolProxy.Plugins.KeyTool
 {
     public partial class KeyToolForm : Form
     {
@@ -60,8 +60,8 @@ namespace CoolProxy
             this.BringToFront();
 
 
-            this.TopMost = CoolProxy.Settings.getBool("KeepCoolProxyOnTop");
-            CoolProxy.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
+            this.TopMost = KeyToolPlugin.Settings.getBool("KeepCoolProxyOnTop");
+            KeyToolPlugin.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
         }
 
         ~KeyToolForm()
@@ -103,11 +103,11 @@ namespace CoolProxy
                 case RESULT.YES:
                     //Frame.SayToUser("KeyTool", mKey.ToString() + " is a " + type);
                     label.ForeColor = Color.Green;
-                    if (CoolProxy.Settings.getBool("AutomaticallyOpenKeyTool"))
+                    if (KeyToolPlugin.Settings.getBool("AutomaticallyOpenKeyTool"))
                     {
                         new Task(() => KeyTool.openKey(ktype, atype, mKey)).Start();
 
-                        if (CoolProxy.Settings.getBool("AutomaticallyCloseKeyTool"))
+                        if (KeyToolPlugin.Settings.getBool("AutomaticallyCloseKeyTool"))
                         {
                             //this.Invoke(new MethodInvoker(() => { this.Dispose(); this.Close(); }));
                             this.Close();

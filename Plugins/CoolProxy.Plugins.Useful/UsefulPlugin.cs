@@ -56,8 +56,22 @@ namespace CoolProxy.Plugins.Useful
 
             GUI.AddTrayOption("KeyTool from Clipboard", handleKeyToolButton);
 
+            var uploader_form = new UploaderForm();
+
             if(Util.IsDebugMode)
-            GUI.AddToggleFormQuick("Assets", "Upload Asset", new UploaderForm());
+            {
+                GUI.AddToggleFormQuick("Assets", "Upload Asset", uploader_form);
+                GUI.AddTrayOption("Upload Asset...", (x, y) =>
+                {
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    openFileDialog.Filter = Util.GetCombinedFilter();
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        uploader_form.SetFile(openFileDialog.FileName);
+                        uploader_form.Show();
+                    }
+                });
+            }
 
             GUI.AddInventoryItemOption("Copy Item ID", x => Clipboard.SetText(x.UUID.ToString()));
             GUI.AddInventoryItemOption("Copy Asset ID", x => Clipboard.SetText(x.AssetUUID.ToString()));

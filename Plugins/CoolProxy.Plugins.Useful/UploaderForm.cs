@@ -66,29 +66,33 @@ namespace CoolProxy.Plugins.Useful
             }
         }
 
+        public void SetFile(string filename)
+        {
+            textBox1.Text = filename;
+            textBox1.SelectionStart = textBox1.Text.Length;
+            textBox1.ScrollToCaret();
+            textBox1.Refresh();
+
+            InventoryType inv_type;
+            AssetType ass_type;
+            Enum flags;
+
+            TypesFromExt(Path.GetExtension(filename), out inv_type, out ass_type, out flags);
+
+            inventoryTypeCombo.SelectedItem = inv_type;
+            assetTypeCombo.SelectedItem = ass_type;
+
+            if (flags != null)
+                wearableTypeCombo.SelectedItem = flags;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = Util.GetCombinedFilter();
             if(openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                textBox1.Text = openFileDialog.FileName;
-                textBox1.SelectionStart = textBox1.Text.Length;
-                textBox1.ScrollToCaret();
-                textBox1.Refresh();
-
-                InventoryType inv_type;
-                AssetType ass_type;
-                Enum flags;
-
-                TypesFromExt(Path.GetExtension(openFileDialog.FileName), out inv_type, out ass_type, out flags);
-
-                inventoryTypeCombo.SelectedItem = inv_type;
-                assetTypeCombo.SelectedItem = ass_type;
-
-                if (flags != null)
-                    wearableTypeCombo.SelectedItem = flags;
-
+                SetFile(openFileDialog.FileName);
             }
         }
 

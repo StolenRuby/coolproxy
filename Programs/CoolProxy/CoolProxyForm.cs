@@ -1230,9 +1230,7 @@ namespace CoolProxy
         {
             inventoryBrowserForm.InitOptions();
 
-            AddToggleFormQuick("Inventory", "Inventory Browser", inventoryBrowserForm);
-
-
+            //AddToggleFormQuick("Inventory", "Inventory Browser", inventoryBrowserForm);
 
             LoadPlugins();
 

@@ -236,17 +236,13 @@ namespace CoolProxy
 
         private void Avatars_AvatarAnimation(object sender, AvatarAnimationEventArgs e)
         {
-            foreach(var anim in e.Animations)
-            {
-                LogAnimation(anim.AnimationID, e.AvatarID);
-            }
+            UUID[] anims = e.Animations.Select(x => x.AnimationID).ToArray();
+            LogAnimation(anims, e.AvatarID);
         }
 
         List<UUID> default_animations = Animations.ToDictionary().Keys.ToList();
 
-        List<UUID> loggedAnimations = new List<UUID>();
-
-        Dictionary<UUID, string> Key2Fullnames = new Dictionary<UUID, string>();
+        Dictionary<UUID, Tuple<int, Dictionary<UUID, DateTime>>> AvatarAnimations = new Dictionary<UUID, Tuple<int, Dictionary<UUID, DateTime>>>();
 
         string quick_format_name(AgentDisplayName name)
         {
@@ -267,57 +263,63 @@ namespace CoolProxy
             }
         }
 
-        void LogAnimation(UUID anim, UUID avatar)
+        void LogAnimation(UUID[] anims, UUID avatar)
         {
-            if (animsDataGridView.InvokeRequired) animsDataGridView.BeginInvoke(new Action(() => LogAnimation(anim, avatar)));
+            if (animsDataGridView.InvokeRequired) animsDataGridView.BeginInvoke(new Action(() => LogAnimation(anims, avatar)));
             else
             {
-                lock(loggedAnimations)
+                Dictionary<UUID, DateTime> logged_anims = null;
+
+                if(!AvatarAnimations.TryGetValue(avatar, out var tuple))
                 {
-                    if(!loggedAnimations.Contains(anim) && !default_animations.Contains(anim))
+                    int index = animsDataGridView.Rows.Add(avatar.ToString(), avatar.ToString(), anims.Length, 0);
+                    logged_anims = new Dictionary<UUID, DateTime>();
+                    tuple = new Tuple<int, Dictionary<UUID, DateTime>>(index, logged_anims);
+                    AvatarAnimations[avatar] = tuple;
+
+                    CoolProxy.Frame.Avatars.GetDisplayNames(new List<UUID>() { avatar }, (success, names, z) =>
                     {
-                        string name_val;
-
-                        if (!Key2Fullnames.TryGetValue(avatar, out string str_name))
+                        if (success)
                         {
-                            name_val = avatar.ToString();
-                            Key2Fullnames.Add(avatar, avatar.ToString());
-                            CoolProxy.Frame.Avatars.GetDisplayNames(new List<UUID>() { avatar }, (success, names, z) =>
+                            foreach (var name in names)
                             {
-                                if (success)
+                                if (name.ID == avatar)
                                 {
-                                    foreach (var name in names)
-                                    {
-                                        UpdateLogName(name);
-                                    }
+                                    UpdateLogName(name, index);
+                                    break;
                                 }
-                            });
+                            }
                         }
-                        else name_val = str_name;
+                    });
+                }
+                else
+                {
+                    logged_anims = tuple.Item2;
+                }
 
-                        animsDataGridView.Rows.Add(anim.ToString(), name_val);
-                        loggedAnimations.Add(anim);
+                lock(logged_anims)
+                {
+                    foreach(UUID anim in anims)
+                    {
+                        if (!default_animations.Contains(anim))
+                        {
+                            logged_anims[anim] = DateTime.UtcNow;
+                        }
                     }
                 }
+
+                animsDataGridView.Rows[tuple.Item1].Cells[2].Value = anims.Length.ToString();
+                animsDataGridView.Rows[tuple.Item1].Cells[3].Value = logged_anims.Count.ToString();
             }
         }
 
-        private void UpdateLogName(AgentDisplayName name)
+        private void UpdateLogName(AgentDisplayName name, int index)
         {
-            if (animsDataGridView.InvokeRequired) animsDataGridView.BeginInvoke(new Action(() => UpdateLogName(name)));
+            if (animsDataGridView.InvokeRequired) animsDataGridView.BeginInvoke(new Action(() => UpdateLogName(name, index)));
             else
             {
-                string n = quick_format_name(name);
-                Key2Fullnames[name.ID] = n;
-
-                string str_key = name.ID.ToString();
-                foreach(DataGridViewRow row in animsDataGridView.Rows)
-                {
-                    if((string)row.Cells[1].Value == str_key)
-                    {
-                        row.Cells[1].Value = n;
-                    }
-                }
+                animsDataGridView.Rows[index].Tag = name;
+                animsDataGridView.Rows[index].Cells[1].Value = quick_format_name(name);
             }
         }
 
@@ -1473,16 +1475,6 @@ namespace CoolProxy
             CoolProxy.Frame.Network.CurrentSim.Inject(packet, local ? GridProxy.Direction.Incoming : GridProxy.Direction.Outgoing);
         }
 
-        private void animationLogContextMenu_Opening(object sender, CancelEventArgs e)
-        {
-            int count = animsDataGridView.SelectedRows.Count;
-            if(count == 0)
-            {
-                e.Cancel = true;
-                return;
-            }
-        }
-
         private void soundsDataGridView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             int count = soundsDataGridView.SelectedRows.Count;
@@ -1490,28 +1482,6 @@ namespace CoolProxy
             {
                 UUID sound_id = UUID.Parse((string)soundsDataGridView.SelectedRows[0].Cells[1].Value);
                 TriggerSound(sound_id, true);
-            }
-        }
-
-        private void forgeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UUID folder_id = CoolProxy.Frame.Inventory.SuitcaseID != UUID.Zero ?
-                CoolProxy.Frame.Inventory.FindSuitcaseFolderForType(FolderType.Animation) :
-                CoolProxy.Frame.Inventory.FindFolderForType(FolderType.Animation);
-
-            foreach (DataGridViewRow row in animsDataGridView.SelectedRows)
-            {
-                UUID anim_id = UUID.Parse((string)row.Cells[0].Value);
-                UUID item_id = UUID.Random();
-
-                CoolProxy.Frame.OpenSim.XInventory.AddItem(folder_id, item_id, anim_id, AssetType.Animation, InventoryType.Animation, 0, anim_id.ToString(), "", DateTime.UtcNow, (item_succes) =>
-                {
-                    if (item_succes)
-                    {
-                        CoolProxy.Frame.Inventory.RequestFetchInventory(item_id, CoolProxy.Frame.Agent.AgentID, false);
-                    }
-                    else CoolProxy.Frame.SayToUser("Failed to forge!");
-                });
             }
         }
 
@@ -1783,6 +1753,19 @@ namespace CoolProxy
         {
             Vector3 offset = new Vector3((float)importOffsetX.Value, (float)importOffsetY.Value, (float)importOffsetZ.Value);
             CoolProxy.Settings.setVector("ImportOffset", offset);
+        }
+
+        private void animsDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var row = animsDataGridView.Rows[e.RowIndex];
+            UUID agent_id = UUID.Parse((string)row.Cells[0].Value);
+            AgentDisplayName name = (AgentDisplayName)row.Tag;
+            var form = new AvatarAnimationsForm(name, AvatarAnimations[agent_id].Item2);
+
+            form.TopMost = CoolProxy.Settings.getBool("KeepCoolProxyOnTop");
+            CoolProxy.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { form.TopMost = (bool)y.Value; };
+
+            form.Show();
         }
     }
 }

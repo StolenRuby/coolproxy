@@ -84,11 +84,6 @@
             this.tabControl4 = new System.Windows.Forms.TabControl();
             this.tabPage18 = new System.Windows.Forms.TabPage();
             this.animsDataGridView = new System.Windows.Forms.DataGridView();
-            this.animKeyColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.animOwnerColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.animationLogContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.forgeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage19 = new System.Windows.Forms.TabPage();
             this.soundsDataGridView = new System.Windows.Forms.DataGridView();
             this.soundTypeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -203,6 +198,10 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.saveXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.animOwnerColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numericUpDown2 = new L33T.GUI.NumericUpDown();
             this.textBox1 = new L33T.GUI.TextBox();
             this.checkBox1 = new CoolGUI.Controls.CheckBox();
@@ -228,7 +227,6 @@
             this.tabControl4.SuspendLayout();
             this.tabPage18.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.animsDataGridView)).BeginInit();
-            this.animationLogContextMenu.SuspendLayout();
             this.tabPage19.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.soundsDataGridView)).BeginInit();
             this.soundsListContextMenu.SuspendLayout();
@@ -615,9 +613,10 @@
             this.animsDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             this.animsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.animsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.animKeyColumn,
-            this.animOwnerColumn});
-            this.animsDataGridView.ContextMenuStrip = this.animationLogContextMenu;
+            this.Column5,
+            this.animOwnerColumn,
+            this.Column3,
+            this.Column4});
             dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.ControlDark;
             dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -635,44 +634,7 @@
             this.animsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.animsDataGridView.Size = new System.Drawing.Size(446, 234);
             this.animsDataGridView.TabIndex = 2;
-            // 
-            // animKeyColumn
-            // 
-            this.animKeyColumn.HeaderText = "Asset ID";
-            this.animKeyColumn.Name = "animKeyColumn";
-            this.animKeyColumn.ReadOnly = true;
-            this.animKeyColumn.Width = 220;
-            // 
-            // animOwnerColumn
-            // 
-            this.animOwnerColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.animOwnerColumn.HeaderText = "Owner Name";
-            this.animOwnerColumn.Name = "animOwnerColumn";
-            this.animOwnerColumn.ReadOnly = true;
-            // 
-            // animationLogContextMenu
-            // 
-            this.animationLogContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.forgeToolStripMenuItem,
-            this.saveAsToolStripMenuItem2});
-            this.animationLogContextMenu.Name = "animationLogContextMenu";
-            this.animationLogContextMenu.ShowImageMargin = false;
-            this.animationLogContextMenu.Size = new System.Drawing.Size(145, 48);
-            this.animationLogContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.animationLogContextMenu_Opening);
-            // 
-            // forgeToolStripMenuItem
-            // 
-            this.forgeToolStripMenuItem.Name = "forgeToolStripMenuItem";
-            this.forgeToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
-            this.forgeToolStripMenuItem.Text = "Copy to Inventory";
-            this.forgeToolStripMenuItem.Click += new System.EventHandler(this.forgeToolStripMenuItem_Click);
-            // 
-            // saveAsToolStripMenuItem2
-            // 
-            this.saveAsToolStripMenuItem2.Name = "saveAsToolStripMenuItem2";
-            this.saveAsToolStripMenuItem2.Size = new System.Drawing.Size(144, 22);
-            this.saveAsToolStripMenuItem2.Text = "Save As...";
-            this.saveAsToolStripMenuItem2.Visible = false;
+            this.animsDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.animsDataGridView_CellDoubleClick);
             // 
             // tabPage19
             // 
@@ -1911,6 +1873,34 @@
             this.loadXMLToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.loadXMLToolStripMenuItem.Text = "Load XML";
             // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "agent_id";
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            this.Column5.Visible = false;
+            // 
+            // animOwnerColumn
+            // 
+            this.animOwnerColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.animOwnerColumn.HeaderText = "Avatar";
+            this.animOwnerColumn.Name = "animOwnerColumn";
+            this.animOwnerColumn.ReadOnly = true;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Playing";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.Width = 75;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Logged";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Width = 75;
+            // 
             // numericUpDown2
             // 
             this.numericUpDown2.EnabledSetting = null;
@@ -2079,7 +2069,6 @@
             this.tabControl4.ResumeLayout(false);
             this.tabPage18.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.animsDataGridView)).EndInit();
-            this.animationLogContextMenu.ResumeLayout(false);
             this.tabPage19.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.soundsDataGridView)).EndInit();
             this.soundsListContextMenu.ResumeLayout(false);
@@ -2174,8 +2163,6 @@
         private System.Windows.Forms.DataGridView animsDataGridView;
         private System.Windows.Forms.TabPage tabPage19;
         private System.Windows.Forms.DataGridView soundsDataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn animKeyColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn animOwnerColumn;
         private System.Windows.Forms.NotifyIcon trayIcon;
         private System.Windows.Forms.ContextMenuStrip trayContextMenu;
         private System.Windows.Forms.TabControl tabControl5;
@@ -2220,15 +2207,12 @@
         private System.Windows.Forms.Button editGridsButton;
         private System.Windows.Forms.CheckBox checkBox13;
         private System.Windows.Forms.CheckBox checkBox10;
-        private System.Windows.Forms.ContextMenuStrip animationLogContextMenu;
-        private System.Windows.Forms.ToolStripMenuItem forgeToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip soundsListContextMenu;
         private System.Windows.Forms.ToolStripMenuItem playLocallyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem playInworldToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem forgeToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem2;
         private CoolGUI.Controls.CheckBox checkBox18;
         private CoolGUI.Controls.CheckBox checkBox19;
         private System.Windows.Forms.Button showDebugSettingsButton;
@@ -2290,6 +2274,10 @@
         private System.Windows.Forms.NumericUpDown importOffsetY;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown importOffsetX;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn animOwnerColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
     }
 }
 

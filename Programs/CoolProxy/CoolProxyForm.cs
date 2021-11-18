@@ -128,11 +128,6 @@ namespace CoolProxy
 
             CoolProxy.Frame.OnNewChatCommand += ChatCommandAdded;
 
-            Vector3 import_offset = CoolProxy.Settings.getVector("ImportOffset");
-            importOffsetX.Value = (decimal)import_offset.X;
-            importOffsetY.Value = (decimal)import_offset.Y;
-            importOffsetZ.Value = (decimal)import_offset.Z;
-
             // Login masking
             CoolProxy.Frame.Login.AddLoginRequestDelegate(handleLoginRequest);
             CoolProxy.Frame.Login.AddLoginResponseDelegate(handleLoginResponse);
@@ -1747,12 +1742,6 @@ namespace CoolProxy
             pluginsDataGridView.ResumeLayout();
 
             SavePlugins();
-        }
-
-        private void importOffset_ValueChanged(object sender, EventArgs e)
-        {
-            Vector3 offset = new Vector3((float)importOffsetX.Value, (float)importOffsetY.Value, (float)importOffsetZ.Value);
-            CoolProxy.Settings.setVector("ImportOffset", offset);
         }
 
         private void animsDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

@@ -75,6 +75,75 @@ namespace CoolProxy.Plugins.CopyBot
             GUI.AddTrayOption("Export Selected Objects...", exportSelectedObjects);
 
             Proxy.Objects.ObjectUpdate += Objects_ObjectUpdate;
+
+
+            AddSettingsTab(gui, settings);
+        }
+
+        private void AddSettingsTab(GUIManager gui, SettingsManager settings)
+        {
+            Panel panel = new Panel();
+            panel.Dock = DockStyle.Fill;
+
+            Vector3 import_offset = settings.getVector("ImportOffset");
+
+            var offset_x = new NumericUpDown();
+            var offset_y = new NumericUpDown();
+            var offset_z = new NumericUpDown();
+
+            EventHandler handle_change = (x, y) =>
+            {
+                Vector3 offset = new Vector3((float)offset_x.Value, (float)offset_y.Value, (float)offset_z.Value);
+                settings.setVector("ImportOffset", offset);
+            };
+
+            var label_x = new Label();
+            label_x.Location = new Point(6, 21);
+            label_x.Size = new Size(17, 13);
+            label_x.Text = "X:";
+
+            offset_x.DecimalPlaces = 3;
+            offset_x.Location = new Point(29, 19);
+            offset_x.Size = new Size(85, 20);
+            offset_x.Value = (decimal)import_offset.X;
+            offset_x.ValueChanged += handle_change;
+
+            var label_y = new Label();
+            label_y.Location = new Point(6, 47);
+            label_y.Size = new Size(17, 13);
+            label_y.Text = "Y:";
+
+            offset_y.DecimalPlaces = 3;
+            offset_y.Location = new Point(29, 45);
+            offset_y.Size = new Size(85, 20);
+            offset_y.Value = (decimal)import_offset.Y;
+            offset_y.ValueChanged += handle_change;
+
+            var label_z = new Label();
+            label_z.Location = new Point(6, 73);
+            label_z.Size = new Size(17, 13);
+            label_z.Text = "Z:";
+
+            offset_z.DecimalPlaces = 3;
+            offset_z.Location = new Point(29, 71);
+            offset_z.Size = new Size(85, 20);
+            offset_z.Value = (decimal)import_offset.Z;
+            offset_z.ValueChanged += handle_change;
+
+            var group_box = new GroupBox();
+            group_box.Controls.Add(label_x);
+            group_box.Controls.Add(offset_x);
+            group_box.Controls.Add(label_y);
+            group_box.Controls.Add(offset_y);
+            group_box.Controls.Add(label_z);
+            group_box.Controls.Add(offset_z);
+            group_box.Location = new Point(6, 6);
+            group_box.Size = new Size(120, 100);
+            group_box.Text = "Object Import Offset";
+
+            panel.Controls.Add(group_box);
+
+            gui.AddSettingsTab("CopyBot", panel);
         }
 
         private void importWithInv(InventoryItem inventoryItem)

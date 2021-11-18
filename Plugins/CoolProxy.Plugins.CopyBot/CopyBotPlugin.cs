@@ -62,9 +62,9 @@ namespace CoolProxy.Plugins.CopyBot
             Proxy = frame;
             Instance = this;
 
-            GUI.AddToolButton("CopyBot", "Export Selected Objects", exportSelectedObjects);
-            GUI.AddToolButton("CopyBot", "Import Object from File", importXML);
-            GUI.AddToolButton("CopyBot", "Import with Selected Object", importXMLWithSeed);
+            //GUI.AddToolButton("CopyBot", "Export Selected Objects", exportSelectedObjects);
+            //GUI.AddToolButton("CopyBot", "Import Object from File", importXML);
+            GUI.AddToolButton("Objects", "Import with Selected Object", importXMLWithSeed);
 
             GUI.AddSingleMenuItem("Save As...", exportAvatar);
 

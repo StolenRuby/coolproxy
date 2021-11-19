@@ -1,9 +1,11 @@
 ﻿using GridProxy;
 using OpenMetaverse;
 using OpenMetaverse.Packets;
+using OpenMetaverse.StructuredData;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,92 +15,97 @@ namespace CoolProxy.Plugins.FancyBeams
 {
     public class FancyBeamsPlugin : CoolProxyPlugin
     {
-        List<Vector3> BeamOffsets = new List<Vector3>()
-        {
-            new Vector3(0.0f, -0.5f,    0.5f),
-            new Vector3(0.0f, -0.25f,   0.5f),
-            new Vector3(0.0f,  0.0f,    0.5f),
-            new Vector3(0.0f,  0.25f,   0.5f),
+        List<Color4> Colours = new List<Color4>();
+        List<Vector3> Offsets = new List<Vector3>();
+        List<UUID> BeamIDs = new List<UUID>();
 
-            new Vector3(0.0f,  0.5f,    0.5f),
-            new Vector3(0.0f,  0.5f,   0.25f),
-            new Vector3(0.0f,  0.5f,    0.0f),
-            new Vector3(0.0f,  0.5f,  -0.25f),
+        float BeamScale = 1.0f;
 
-            new Vector3(0.0f,  0.5f,   -0.5f),
-            new Vector3(0.0f,  0.25f,  -0.5f),
-            new Vector3(0.0f,  0.0f,   -0.5f),
-            new Vector3(0.0f, -0.25f,  -0.5f),
-
-            new Vector3(0.0f, -0.5f,   -0.5f),
-            new Vector3(0.0f, -0.5f,  -0.25f),
-            new Vector3(0.0f, -0.5f,    0.0f),
-            new Vector3(0.0f, -0.5f,   0.25f),
-        };
-
-        UUID[] BeamIDs;
+        bool EnableRainbowBeam = true;
+        bool RotateBeamShape = true;
+        float RainbowProgress = 0.0f;
 
         CoolProxyFrame Proxy;
 
         Timer beamTimer;
 
+        public static string BeamsFolderDir { get; private set; }
+
+        internal static SettingsManager Settings { get; set; }
+
+        internal static BeamSettingsPanel BeamSettingsPanel { get; set; }
+
         public FancyBeamsPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
         {
             Proxy = frame;
+            Settings = settings;
+
             frame.Network.AddDelegate(PacketType.ViewerEffect, Direction.Outgoing, HandleViewerEffect);
 
             settings.getSetting("RainbowSelectionBeam").OnChanged += (x, y) => EnableRainbowBeam = (bool)y.Value;
             EnableRainbowBeam = settings.getBool("RainbowSelectionBeam");
 
-            settings.getSetting("ShapedSelectionBeam").OnChanged += (x, y) => EnableShapedBeam = (bool)y.Value;
-            EnableShapedBeam = settings.getBool("ShapedSelectionBeam");
-
             settings.getSetting("RotateShapedBeam").OnChanged += (x, y) => RotateBeamShape = (bool)y.Value;
             RotateBeamShape = settings.getBool("RotateShapedBeam");
+
+            settings.getSetting("BeamScale").OnChanged += (x, y) => BeamScale = (float)(double)y.Value;
 
             beamTimer = new Timer();
             beamTimer.Tick += BeamTick;
 
             gui.AddToolCheckbox("Avatar", "Rainbow Beam Trail", toggleBeamTrail);
 
-            BeamIDs = new UUID[BeamOffsets.Count];
-            for (int i = 0; i < BeamIDs.Length; i++)
-                BeamIDs[i] = UUID.Random();
+            BeamsFolderDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CoolProxy\\beams\\");
 
-            AddSettingsTab(gui);
+            if(!Directory.Exists(BeamsFolderDir))
+            {
+                Directory.CreateDirectory(BeamsFolderDir);
+            }
+
+            settings.getSetting("BeamShape").OnChanged += OnBeamChanged;
+            settings.setString("BeamShape", settings.getString("BeamShape")); // hack: re-apply the settings to trigger the load
+
+            BeamSettingsPanel = new BeamSettingsPanel(settings);
+            gui.AddSettingsTab("Tractor Beam", BeamSettingsPanel);
         }
 
-        private void AddSettingsTab(GUIManager gui)
+        private void OnBeamChanged(object source, SettingChangedEventArgs e)
         {
-            Panel panel = new Panel();
-            panel.Dock = DockStyle.Fill;
+            string val = (string)e.Value;
+            LoadBeam(val == string.Empty ? val : BeamsFolderDir + val + ".xml");
+        }
 
-            var checkbox = new CoolGUI.Controls.CheckBox();
-            checkbox.AutoSize = true;
-            checkbox.Location = new Point(14, 12);
-            checkbox.Setting = "RainbowSelectionBeam";
-            checkbox.Text = "Rainbow Selection Beam";
+        void LoadBeam(string filename)
+        {
+            Offsets.Clear();
+            Colours.Clear();
+            BeamIDs.Clear();
 
-            panel.Controls.Add(checkbox);
+            if (filename == string.Empty)
+                return;
 
-            checkbox = new CoolGUI.Controls.CheckBox();
-            checkbox.AutoSize = true;
-            checkbox.Location = new Point(14, 35);
-            checkbox.Setting = "ShapedSelectionBeam";
-            checkbox.Text = "Shaped Selection Beam";
+            if(!File.Exists(filename))
+            {
+                Settings.setString("BeamShape", string.Empty);
+                return;
+            }
 
-            panel.Controls.Add(checkbox);
+            byte[] data = File.ReadAllBytes(filename);
+            OSD osd = OSDParser.DeserializeLLSDXml(data);
+            OSDArray array = (OSDArray)osd;
+            foreach (var entry in array)
+            {
+                OSDMap map = (OSDMap)entry;
 
-            checkbox = new CoolGUI.Controls.CheckBox();
-            checkbox.AutoSize = true;
-            checkbox.EnabledSetting = "ShapedSelectionBeam";
-            checkbox.Location = new Point(36, 58);
-            checkbox.Setting = "RotateShapedBeam";
-            checkbox.Text = "Rotate Selection Beam";
+                Color4 colour = map["colour"].AsColor4();
+                Vector3 offset = map["offset"].AsVector3();
 
-            panel.Controls.Add(checkbox);
+                offset.Z *= -1.0f;
 
-            gui.AddSettingsTab("Tractor Beam", panel);
+                Colours.Add(colour);
+                Offsets.Add(offset);
+                BeamIDs.Add(UUID.Random());
+            }
         }
 
         private void BeamTick(object sender, EventArgs e)
@@ -159,11 +166,6 @@ namespace CoolProxy.Plugins.FancyBeams
             }
         }
 
-        bool EnableShapedBeam = true;
-        bool EnableRainbowBeam = true;
-        bool RotateBeamShape = true;
-        float RainbowProgress = 0.0f;
-
         byte[] GetNextColor()
         {
             RainbowProgress += 0.025f;
@@ -188,7 +190,7 @@ namespace CoolProxy.Plugins.FancyBeams
                         Buffer.BlockCopy(GetNextColor(), 0, effect.Color, 0, 4);
                     }
 
-                    if (EnableShapedBeam)
+                    if (Offsets.Count > 0)
                     {
                         Vector3d position = new Vector3d(effect.TypeData, 32);
 
@@ -226,17 +228,18 @@ namespace CoolProxy.Plugins.FancyBeams
                             blocks = new List<ViewerEffectPacket.EffectBlock>();
                         }
 
-                        for(int i = 0; i < BeamOffsets.Count; i++)
+                        for(int i = 0; i < Offsets.Count; i++)
                         {
                             var beam = new ViewerEffectPacket.EffectBlock();
                             beam.ID = BeamIDs[i];
                             beam.AgentID = effect.AgentID;
                             beam.Type = effect.Type;
                             beam.Duration = effect.Duration;
-                            beam.Color = effect.Color;
+                            beam.Color = EnableRainbowBeam ? effect.Color : Colours[i].GetBytes();
                             beam.TypeData = effect.TypeData.ToArray(); // ToArray to clone it...
 
-                            var rotated_offset = BeamOffsets[i];
+                            var rotated_offset = Offsets[i];
+                            rotated_offset *= BeamScale;
                             rotated_offset *= roll;
                             rotated_offset *= yaw;
                             rotated_offset *= pitch;

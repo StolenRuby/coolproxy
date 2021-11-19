@@ -386,21 +386,28 @@
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
-			<boolean>1</boolean>
-		</map>
-		<key>ShapedSelectionBeam</key>
-		<map>
-			<key>type</key>
-			<string>bool</string>
-			<key>value</key>
-			<boolean>1</boolean>
+			<boolean>0</boolean>
 		</map>
 		<key>RotateShapedBeam</key>
 		<map>
 			<key>type</key>
 			<string>bool</string>
 			<key>value</key>
-			<boolean>1</boolean>
+			<boolean>0</boolean>
+		</map>
+		<key>BeamShape</key>
+		<map>
+			<key>type</key>
+			<string>string</string>
+			<key>value</key>
+			<string></string>
+		</map>
+		<key>BeamScale</key>
+		<map>
+			<key>type</key>
+			<string>double</string>
+			<key>value</key>
+			<real>1.0</real>
 		</map>
 		<key>AlertStillRunning</key>
 		<map>

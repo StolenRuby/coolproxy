@@ -60,6 +60,16 @@ namespace CoolProxy.Plugins.FancyBeams
             if(!Directory.Exists(BeamsFolderDir))
             {
                 Directory.CreateDirectory(BeamsFolderDir);
+
+                if(Directory.Exists(".\\app_data\\beams\\"))
+                {
+                    string[] default_beams = Directory.GetFiles(".\\app_data\\beams\\", "*.xml");
+                    foreach(string file in default_beams)
+                    {
+                        string filename = Path.GetFileName(file);
+                        File.Copy(file, BeamsFolderDir + filename);
+                    }
+                }
             }
 
             settings.getSetting("BeamShape").OnChanged += OnBeamChanged;

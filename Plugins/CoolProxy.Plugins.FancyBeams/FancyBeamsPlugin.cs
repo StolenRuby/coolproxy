@@ -27,8 +27,6 @@ namespace CoolProxy.Plugins.FancyBeams
 
         CoolProxyFrame Proxy;
 
-        Timer beamTimer;
-
         public static string BeamsFolderDir { get; private set; }
 
         internal static SettingsManager Settings { get; set; }
@@ -49,11 +47,6 @@ namespace CoolProxy.Plugins.FancyBeams
             RotateBeamShape = settings.getBool("RotateShapedBeam");
 
             settings.getSetting("BeamScale").OnChanged += (x, y) => BeamScale = (float)(double)y.Value;
-
-            beamTimer = new Timer();
-            beamTimer.Tick += BeamTick;
-
-            gui.AddToolCheckbox("Avatar", "Rainbow Beam Trail", toggleBeamTrail);
 
             BeamsFolderDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CoolProxy\\beams\\");
 
@@ -117,40 +110,6 @@ namespace CoolProxy.Plugins.FancyBeams
                 Offsets.Add(offset);
                 BeamIDs.Add(UUID.Random());
             }
-        }
-
-        private void BeamTick(object sender, EventArgs e)
-        {
-            ViewerEffectPacket ve = new ViewerEffectPacket();
-            ve.AgentData.AgentID = Proxy.Agent.AgentID;
-            ve.AgentData.SessionID = Proxy.Agent.SessionID;
-
-            ve.Effect = new ViewerEffectPacket.EffectBlock[1];
-
-            byte[] type_data = new byte[56];
-
-            Proxy.Agent.AgentID.ToBytes(type_data, 0);
-
-            var agent_pos = Proxy.Agent.SimPosition;
-            Util.RegionHandleToWorldLoc(Proxy.Network.CurrentSim.Handle, out uint x, out uint y);
-
-            Vector3d pos = new Vector3d(agent_pos.X + x, agent_pos.Y + y, agent_pos.Z);
-            pos.ToBytes(type_data, 32);
-
-            ve.Effect[0] = new ViewerEffectPacket.EffectBlock();
-            ve.Effect[0].AgentID = Proxy.Agent.AgentID;
-            ve.Effect[0].Color = GetNextColor();
-            ve.Effect[0].Duration = 3.0f;
-            ve.Effect[0].ID = UUID.Random();
-            ve.Effect[0].Type = (byte)EffectType.Beam;
-            ve.Effect[0].TypeData = type_data;
-
-            Proxy.Network.InjectPacket(ve, Direction.Outgoing);
-        }
-
-        private void toggleBeamTrail(object sender, EventArgs e)
-        {
-            beamTimer.Enabled = (sender as CheckBox).Checked;
         }
 
         // https://stackoverflow.com/questions/2288498/how-do-i-get-a-rainbow-color-gradient-in-c

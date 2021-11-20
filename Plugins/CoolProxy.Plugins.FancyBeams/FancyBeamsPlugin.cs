@@ -110,6 +110,7 @@ namespace CoolProxy.Plugins.FancyBeams
                 Color4 colour = map["colour"].AsColor4();
                 Vector3 offset = map["offset"].AsVector3();
 
+                offset.Y *= -1.0f;
                 offset.Z *= -1.0f;
 
                 Colours.Add(colour);

@@ -1253,16 +1253,6 @@ namespace CoolProxy
                 AddTrayOption("-", null, null, "");
 
             AddTrayOption("Quit CoolProxy", quitCoolProxyToolStripMenuItem_Click, null, "");
-
-            if (CoolProxy.Settings.getBool("StartProxyAtLaunch"))
-            {
-                ToggleProxy();
-
-                if(CoolProxy.Settings.getBool("HideProxyAtLaunch"))
-                {
-                    this.Close();
-                }
-            }
         }
 
         Dictionary<string, Size> formSizeList = new Dictionary<string, Size>()
@@ -1802,6 +1792,19 @@ namespace CoolProxy
             else
             {
                 MessageBox.Show("CoolProxy is already on your grids list!");
+            }
+        }
+
+        private void CoolProxyForm_Shown(object sender, EventArgs e)
+        {
+            if (CoolProxy.Settings.getBool("StartProxyAtLaunch"))
+            {
+                ToggleProxy();
+
+                if (CoolProxy.Settings.getBool("HideProxyAtLaunch"))
+                {
+                    this.WindowState = FormWindowState.Minimized;
+                }
             }
         }
     }

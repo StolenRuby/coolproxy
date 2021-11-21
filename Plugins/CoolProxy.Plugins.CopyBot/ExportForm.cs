@@ -221,17 +221,17 @@ namespace CoolProxy.Plugins.CopyBot
             {
                 using (SaveFileDialog dialog = new SaveFileDialog())
                 {
-                    if (TargetAvatar != null)
-                    {
-                        filename = TargetAvatar.Name;
-                    }
-                    else if (selected.Count == 1)
+                    if (selected.Count == 1)
                     {
                         var prim = Frame.Network.CurrentSim.ObjectsPrimitives[selected[0]];
                         if (prim.Properties != null)
                         {
                             filename = prim.Properties.Name;
                         }
+                    }
+                    else if (TargetAvatar != null)
+                    {
+                        filename = TargetAvatar.Name;
                     }
                     else
                     {

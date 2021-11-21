@@ -1301,9 +1301,17 @@ namespace CoolProxy
             string size_setting = "Form" + tab_name + "Size";
             string popped_setting = "Tab" + tab_name + "Popped";
             string open_setting = "Tab" + tab_name + "Open";
+            string pos_settings = "Tab" + tab_name + "Pos";
 
 
             CoolProxy.Settings.setBool(popped_setting, true);
+
+            Vector3 form_pos = CoolProxy.Settings.getVector(pos_settings);
+            if (form_pos != Vector3.Zero)
+            {
+                testForm.StartPosition = FormStartPosition.Manual;
+                testForm.Location = new Point((int)form_pos.X, (int)form_pos.Y);
+            }
 
             Size size;
             if(formSizeList.TryGetValue(size_setting, out size))
@@ -1360,6 +1368,11 @@ namespace CoolProxy
                 CoolProxy.Settings.setBool(open_setting, false);
                 y.Cancel = true;
                 testForm.Hide();
+            };
+
+            testForm.Move += (x, y) =>
+            {
+                CoolProxy.Settings.setVector(pos_settings, new Vector3(testForm.Location.X, testForm.Location.Y, 0.0f));
             };
 
             testForm.VisibleChanged += (x, y) =>

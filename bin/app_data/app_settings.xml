@@ -188,6 +188,17 @@
 			<key>value</key>
 			<boolean>0</boolean>
 		</map>
+		<key>TabLoginPos</key>
+		<map>
+			<key>type</key>
+			<string>vector</string>
+			<key>value</key>
+			<array>
+				<real>0</real>
+				<real>0</real>
+				<real>0</real>
+			</array>
+		</map>
 		<key>TabAvatarTrackerPopped</key>
 		<map>
 			<key>type</key>
@@ -201,6 +212,17 @@
 			<string>bool</string>
 			<key>value</key>
 			<boolean>0</boolean>
+		</map>
+		<key>TabAvatarTrackerPos</key>
+		<map>
+			<key>type</key>
+			<string>vector</string>
+			<key>value</key>
+			<array>
+				<real>0</real>
+				<real>0</real>
+				<real>0</real>
+			</array>
 		</map>
 		<key>TabRegionsPopped</key>
 		<map>
@@ -216,6 +238,17 @@
 			<key>value</key>
 			<boolean>0</boolean>
 		</map>
+		<key>TabRegionsPos</key>
+		<map>
+			<key>type</key>
+			<string>vector</string>
+			<key>value</key>
+			<array>
+				<real>0</real>
+				<real>0</real>
+				<real>0</real>
+			</array>
+		</map>
 		<key>TabToolBoxPopped</key>
 		<map>
 			<key>type</key>
@@ -229,6 +262,17 @@
 			<string>bool</string>
 			<key>value</key>
 			<boolean>0</boolean>
+		</map>
+		<key>TabToolBoxPos</key>
+		<map>
+			<key>type</key>
+			<string>vector</string>
+			<key>value</key>
+			<array>
+				<real>0</real>
+				<real>0</real>
+				<real>0</real>
+			</array>
 		</map>
 		<key>TabAssetLoggingPopped</key>
 		<map>
@@ -244,6 +288,17 @@
 			<key>value</key>
 			<boolean>0</boolean>
 		</map>
+		<key>TabAssetLoggingPos</key>
+		<map>
+			<key>type</key>
+			<string>vector</string>
+			<key>value</key>
+			<array>
+				<real>0</real>
+				<real>0</real>
+				<real>0</real>
+			</array>
+		</map>
 		<key>TabAssetTransfersPopped</key>
 		<map>
 			<key>type</key>
@@ -258,6 +313,17 @@
 			<key>value</key>
 			<boolean>0</boolean>
 		</map>
+		<key>TabAssetTransfersPos</key>
+		<map>
+			<key>type</key>
+			<string>vector</string>
+			<key>value</key>
+			<array>
+				<real>0</real>
+				<real>0</real>
+				<real>0</real>
+			</array>
+		</map>
 		<key>TabSettingsPopped</key>
 		<map>
 			<key>type</key>
@@ -271,6 +337,17 @@
 			<string>bool</string>
 			<key>value</key>
 			<boolean>0</boolean>
+		</map>
+		<key>TabSettingsPos</key>
+		<map>
+			<key>type</key>
+			<string>vector</string>
+			<key>value</key>
+			<array>
+				<real>0</real>
+				<real>0</real>
+				<real>0</real>
+			</array>
 		</map>
 		<key>SpoofMac</key>
 		<map>

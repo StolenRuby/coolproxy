@@ -57,6 +57,8 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
+            this.numericUpDown2 = new L33T.GUI.NumericUpDown();
+            this.textBox1 = new L33T.GUI.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.gridsComboBox = new System.Windows.Forms.ComboBox();
@@ -130,34 +132,23 @@
             this.settingsTabPage = new System.Windows.Forms.TabPage();
             this.settingsTabControl = new System.Windows.Forms.TabControl();
             this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.checkBox1 = new CoolGUI.Controls.CheckBox();
+            this.checkBox9 = new CoolGUI.Controls.CheckBox();
+            this.checkBox2 = new CoolGUI.Controls.CheckBox();
             this.button4 = new System.Windows.Forms.Button();
+            this.checkBox6 = new CoolGUI.Controls.CheckBox();
+            this.checkBox3 = new CoolGUI.Controls.CheckBox();
+            this.numericUpDown5 = new L33T.GUI.NumericUpDown();
+            this.numericUpDown4 = new L33T.GUI.NumericUpDown();
             this.clearCacheButton = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.chatCommandsPanel = new System.Windows.Forms.Panel();
+            this.checkBox4 = new CoolGUI.Controls.CheckBox();
             this.label38 = new System.Windows.Forms.Label();
-            this.tabPage16 = new System.Windows.Forms.TabPage();
-            this.button26 = new System.Windows.Forms.Button();
-            this.textBox17 = new System.Windows.Forms.TextBox();
-            this.button27 = new System.Windows.Forms.Button();
-            this.label23 = new System.Windows.Forms.Label();
-            this.button24 = new System.Windows.Forms.Button();
-            this.textBox16 = new System.Windows.Forms.TextBox();
-            this.button25 = new System.Windows.Forms.Button();
-            this.label22 = new System.Windows.Forms.Label();
-            this.button22 = new System.Windows.Forms.Button();
-            this.textBox15 = new System.Windows.Forms.TextBox();
-            this.button23 = new System.Windows.Forms.Button();
-            this.label21 = new System.Windows.Forms.Label();
-            this.button12 = new System.Windows.Forms.Button();
-            this.textBox14 = new System.Windows.Forms.TextBox();
-            this.button21 = new System.Windows.Forms.Button();
-            this.label20 = new System.Windows.Forms.Label();
-            this.button11 = new System.Windows.Forms.Button();
-            this.textBox13 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label19 = new System.Windows.Forms.Label();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.miscPluginsTabControl = new System.Windows.Forms.TabControl();
             this.gridsTabPage = new System.Windows.Forms.TabPage();
             this.checkBox10 = new System.Windows.Forms.CheckBox();
             this.checkBox13 = new System.Windows.Forms.CheckBox();
@@ -180,13 +171,34 @@
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.miscPluginsTabControl = new System.Windows.Forms.TabControl();
+            this.tabPage16 = new System.Windows.Forms.TabPage();
+            this.button26 = new System.Windows.Forms.Button();
+            this.textBox17 = new System.Windows.Forms.TextBox();
+            this.button27 = new System.Windows.Forms.Button();
+            this.label23 = new System.Windows.Forms.Label();
+            this.button24 = new System.Windows.Forms.Button();
+            this.textBox16 = new System.Windows.Forms.TextBox();
+            this.button25 = new System.Windows.Forms.Button();
+            this.label22 = new System.Windows.Forms.Label();
+            this.button22 = new System.Windows.Forms.Button();
+            this.textBox15 = new System.Windows.Forms.TextBox();
+            this.button23 = new System.Windows.Forms.Button();
+            this.label21 = new System.Windows.Forms.Label();
+            this.button12 = new System.Windows.Forms.Button();
+            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.button21 = new System.Windows.Forms.Button();
+            this.label20 = new System.Windows.Forms.Label();
+            this.button11 = new System.Windows.Forms.Button();
+            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
             this.tabPage10 = new System.Windows.Forms.TabPage();
             this.loadPluginTestButton = new System.Windows.Forms.Button();
             this.showDebugSettingsButton = new System.Windows.Forms.Button();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.button3 = new System.Windows.Forms.Button();
+            this.checkBox19 = new CoolGUI.Controls.CheckBox();
+            this.checkBox18 = new CoolGUI.Controls.CheckBox();
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.trayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.blacklistContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -194,21 +206,11 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.saveXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.numericUpDown2 = new L33T.GUI.NumericUpDown();
-            this.textBox1 = new L33T.GUI.TextBox();
-            this.checkBox1 = new CoolGUI.Controls.CheckBox();
-            this.checkBox9 = new CoolGUI.Controls.CheckBox();
-            this.checkBox2 = new CoolGUI.Controls.CheckBox();
-            this.checkBox6 = new CoolGUI.Controls.CheckBox();
-            this.checkBox3 = new CoolGUI.Controls.CheckBox();
-            this.numericUpDown5 = new L33T.GUI.NumericUpDown();
-            this.numericUpDown4 = new L33T.GUI.NumericUpDown();
-            this.checkBox4 = new CoolGUI.Controls.CheckBox();
-            this.checkBox19 = new CoolGUI.Controls.CheckBox();
-            this.checkBox18 = new CoolGUI.Controls.CheckBox();
+            this.addCoolProxyToViewerButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.avatarTrackerGridView)).BeginInit();
             this.tabPage3.SuspendLayout();
@@ -235,19 +237,18 @@
             this.settingsTabPage.SuspendLayout();
             this.settingsTabControl.SuspendLayout();
             this.tabPage9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.chatCommandsPanel.SuspendLayout();
-            this.tabPage16.SuspendLayout();
+            this.tabPage8.SuspendLayout();
             this.gridsTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridsDataGridView)).BeginInit();
             this.tabPage7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pluginsDataGridView)).BeginInit();
-            this.tabPage8.SuspendLayout();
+            this.tabPage16.SuspendLayout();
             this.tabPage10.SuspendLayout();
             this.blacklistContextMenuStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -310,6 +311,29 @@
             this.label3.Size = new System.Drawing.Size(356, 31);
             this.label3.TabIndex = 40;
             this.label3.Text = ".: COOL PROXY IS COOL :.";
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.EnabledSetting = null;
+            this.numericUpDown2.Location = new System.Drawing.Point(260, 131);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            12000,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Setting = "GridProxyListenPort";
+            this.numericUpDown2.Size = new System.Drawing.Size(83, 20);
+            this.numericUpDown2.TabIndex = 37;
+            // 
+            // textBox1
+            // 
+            this.textBox1.EnabledSetting = null;
+            this.textBox1.Location = new System.Drawing.Point(131, 131);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Setting = "GridProxyListenAddress";
+            this.textBox1.Size = new System.Drawing.Size(123, 20);
+            this.textBox1.TabIndex = 36;
             // 
             // label2
             // 
@@ -1131,6 +1155,42 @@
             this.tabPage9.TabIndex = 0;
             this.tabPage9.Text = "General";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.EnabledSetting = null;
+            this.checkBox1.Location = new System.Drawing.Point(14, 120);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Setting = "EnableGridInfo";
+            this.checkBox1.Size = new System.Drawing.Size(174, 17);
+            this.checkBox1.TabIndex = 45;
+            this.checkBox1.Text = "Enable OpenSim Style Grid Info";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox9
+            // 
+            this.checkBox9.AutoSize = true;
+            this.checkBox9.EnabledSetting = "StartProxyAtLaunch";
+            this.checkBox9.Location = new System.Drawing.Point(34, 33);
+            this.checkBox9.Name = "checkBox9";
+            this.checkBox9.Setting = "HideProxyAtLaunch";
+            this.checkBox9.Size = new System.Drawing.Size(126, 17);
+            this.checkBox9.TabIndex = 44;
+            this.checkBox9.Text = "Auto Hide Cool Proxy";
+            this.checkBox9.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.EnabledSetting = null;
+            this.checkBox2.Location = new System.Drawing.Point(14, 12);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Setting = "StartProxyAtLaunch";
+            this.checkBox2.Size = new System.Drawing.Size(157, 17);
+            this.checkBox2.TabIndex = 43;
+            this.checkBox2.Text = "Start Proxy when Launched";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(311, 209);
@@ -1140,6 +1200,49 @@
             this.button4.Text = "Login Params";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // checkBox6
+            // 
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.EnabledSetting = null;
+            this.checkBox6.Location = new System.Drawing.Point(14, 97);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Setting = "MinimizeCoolProxyToTray";
+            this.checkBox6.Size = new System.Drawing.Size(166, 17);
+            this.checkBox6.TabIndex = 24;
+            this.checkBox6.Text = "Minimize CoolProxy to the tray";
+            this.checkBox6.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.EnabledSetting = null;
+            this.checkBox3.Location = new System.Drawing.Point(14, 74);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Setting = "KeepCoolProxyOnTop";
+            this.checkBox3.Size = new System.Drawing.Size(134, 17);
+            this.checkBox3.TabIndex = 23;
+            this.checkBox3.Text = "Keep CoolProxy on top";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown5
+            // 
+            this.numericUpDown5.EnabledSetting = null;
+            this.numericUpDown5.Location = new System.Drawing.Point(390, 35);
+            this.numericUpDown5.Name = "numericUpDown5";
+            this.numericUpDown5.Setting = "MaxSimultaneousDownloads";
+            this.numericUpDown5.Size = new System.Drawing.Size(56, 20);
+            this.numericUpDown5.TabIndex = 22;
+            // 
+            // numericUpDown4
+            // 
+            this.numericUpDown4.Enabled = false;
+            this.numericUpDown4.EnabledSetting = null;
+            this.numericUpDown4.Location = new System.Drawing.Point(390, 10);
+            this.numericUpDown4.Name = "numericUpDown4";
+            this.numericUpDown4.Setting = "MaxSimultaneousUploads";
+            this.numericUpDown4.Size = new System.Drawing.Size(56, 20);
+            this.numericUpDown4.TabIndex = 21;
             // 
             // clearCacheButton
             // 
@@ -1191,6 +1294,18 @@
             this.chatCommandsPanel.Size = new System.Drawing.Size(446, 234);
             this.chatCommandsPanel.TabIndex = 0;
             // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.EnabledSetting = null;
+            this.checkBox4.Location = new System.Drawing.Point(11, 9);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Setting = "EnableChatCommands";
+            this.checkBox4.Size = new System.Drawing.Size(139, 17);
+            this.checkBox4.TabIndex = 64;
+            this.checkBox4.Text = "Enable Chat Commands";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
             // label38
             // 
             this.label38.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -1199,219 +1314,25 @@
             this.label38.Size = new System.Drawing.Size(2, 225);
             this.label38.TabIndex = 47;
             // 
-            // tabPage16
+            // tabPage8
             // 
-            this.tabPage16.Controls.Add(this.button26);
-            this.tabPage16.Controls.Add(this.textBox17);
-            this.tabPage16.Controls.Add(this.button27);
-            this.tabPage16.Controls.Add(this.label23);
-            this.tabPage16.Controls.Add(this.button24);
-            this.tabPage16.Controls.Add(this.textBox16);
-            this.tabPage16.Controls.Add(this.button25);
-            this.tabPage16.Controls.Add(this.label22);
-            this.tabPage16.Controls.Add(this.button22);
-            this.tabPage16.Controls.Add(this.textBox15);
-            this.tabPage16.Controls.Add(this.button23);
-            this.tabPage16.Controls.Add(this.label21);
-            this.tabPage16.Controls.Add(this.button12);
-            this.tabPage16.Controls.Add(this.textBox14);
-            this.tabPage16.Controls.Add(this.button21);
-            this.tabPage16.Controls.Add(this.label20);
-            this.tabPage16.Controls.Add(this.button11);
-            this.tabPage16.Controls.Add(this.textBox13);
-            this.tabPage16.Controls.Add(this.button2);
-            this.tabPage16.Controls.Add(this.label19);
-            this.tabPage16.Location = new System.Drawing.Point(4, 22);
-            this.tabPage16.Name = "tabPage16";
-            this.tabPage16.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage16.Size = new System.Drawing.Size(452, 240);
-            this.tabPage16.TabIndex = 3;
-            this.tabPage16.Text = "Storage";
-            this.tabPage16.UseVisualStyleBackColor = true;
+            this.tabPage8.Controls.Add(this.miscPluginsTabControl);
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(452, 240);
+            this.tabPage8.TabIndex = 7;
+            this.tabPage8.Text = "Extras";
+            this.tabPage8.UseVisualStyleBackColor = true;
             // 
-            // button26
+            // miscPluginsTabControl
             // 
-            this.button26.Location = new System.Drawing.Point(327, 199);
-            this.button26.Name = "button26";
-            this.button26.Size = new System.Drawing.Size(36, 20);
-            this.button26.TabIndex = 19;
-            this.button26.Text = "...";
-            this.button26.UseVisualStyleBackColor = true;
-            this.button26.Visible = false;
-            // 
-            // textBox17
-            // 
-            this.textBox17.Location = new System.Drawing.Point(26, 199);
-            this.textBox17.Name = "textBox17";
-            this.textBox17.ReadOnly = true;
-            this.textBox17.Size = new System.Drawing.Size(295, 20);
-            this.textBox17.TabIndex = 18;
-            this.textBox17.Text = "./tbd";
-            this.textBox17.Visible = false;
-            // 
-            // button27
-            // 
-            this.button27.Location = new System.Drawing.Point(369, 199);
-            this.button27.Name = "button27";
-            this.button27.Size = new System.Drawing.Size(58, 20);
-            this.button27.TabIndex = 17;
-            this.button27.Text = "Default";
-            this.button27.UseVisualStyleBackColor = true;
-            this.button27.Visible = false;
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(23, 183);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(29, 13);
-            this.label23.TabIndex = 16;
-            this.label23.Text = "TBD";
-            this.label23.Visible = false;
-            // 
-            // button24
-            // 
-            this.button24.Location = new System.Drawing.Point(327, 158);
-            this.button24.Name = "button24";
-            this.button24.Size = new System.Drawing.Size(36, 20);
-            this.button24.TabIndex = 15;
-            this.button24.Text = "...";
-            this.button24.UseVisualStyleBackColor = true;
-            // 
-            // textBox16
-            // 
-            this.textBox16.Location = new System.Drawing.Point(26, 158);
-            this.textBox16.Name = "textBox16";
-            this.textBox16.ReadOnly = true;
-            this.textBox16.Size = new System.Drawing.Size(295, 20);
-            this.textBox16.TabIndex = 14;
-            this.textBox16.Text = "./packets";
-            // 
-            // button25
-            // 
-            this.button25.Location = new System.Drawing.Point(369, 158);
-            this.button25.Name = "button25";
-            this.button25.Size = new System.Drawing.Size(58, 20);
-            this.button25.TabIndex = 13;
-            this.button25.Text = "Default";
-            this.button25.UseVisualStyleBackColor = true;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(23, 142);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(79, 13);
-            this.label22.TabIndex = 12;
-            this.label22.Text = "Packet Presets";
-            // 
-            // button22
-            // 
-            this.button22.Location = new System.Drawing.Point(327, 76);
-            this.button22.Name = "button22";
-            this.button22.Size = new System.Drawing.Size(36, 20);
-            this.button22.TabIndex = 11;
-            this.button22.Text = "...";
-            this.button22.UseVisualStyleBackColor = true;
-            // 
-            // textBox15
-            // 
-            this.textBox15.Location = new System.Drawing.Point(26, 76);
-            this.textBox15.Name = "textBox15";
-            this.textBox15.ReadOnly = true;
-            this.textBox15.Size = new System.Drawing.Size(295, 20);
-            this.textBox15.TabIndex = 10;
-            this.textBox15.Text = "./plugins";
-            // 
-            // button23
-            // 
-            this.button23.Location = new System.Drawing.Point(369, 76);
-            this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(58, 20);
-            this.button23.TabIndex = 9;
-            this.button23.Text = "Default";
-            this.button23.UseVisualStyleBackColor = true;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(23, 60);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(41, 13);
-            this.label21.TabIndex = 8;
-            this.label21.Text = "Plugins";
-            // 
-            // button12
-            // 
-            this.button12.Location = new System.Drawing.Point(327, 117);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(36, 20);
-            this.button12.TabIndex = 7;
-            this.button12.Text = "...";
-            this.button12.UseVisualStyleBackColor = true;
-            // 
-            // textBox14
-            // 
-            this.textBox14.Location = new System.Drawing.Point(26, 117);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.ReadOnly = true;
-            this.textBox14.Size = new System.Drawing.Size(295, 20);
-            this.textBox14.TabIndex = 6;
-            this.textBox14.Text = "./assets";
-            // 
-            // button21
-            // 
-            this.button21.Location = new System.Drawing.Point(369, 117);
-            this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(58, 20);
-            this.button21.TabIndex = 5;
-            this.button21.Text = "Default";
-            this.button21.UseVisualStyleBackColor = true;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(23, 101);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(89, 13);
-            this.label20.TabIndex = 4;
-            this.label20.Text = "Asset Downloads";
-            // 
-            // button11
-            // 
-            this.button11.Location = new System.Drawing.Point(327, 35);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(36, 20);
-            this.button11.TabIndex = 3;
-            this.button11.Text = "...";
-            this.button11.UseVisualStyleBackColor = true;
-            // 
-            // textBox13
-            // 
-            this.textBox13.Location = new System.Drawing.Point(26, 35);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.ReadOnly = true;
-            this.textBox13.Size = new System.Drawing.Size(295, 20);
-            this.textBox13.TabIndex = 2;
-            this.textBox13.Text = "./cache";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(369, 35);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(58, 20);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Default";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(23, 19);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(38, 13);
-            this.label19.TabIndex = 0;
-            this.label19.Text = "Cache";
+            this.miscPluginsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.miscPluginsTabControl.Location = new System.Drawing.Point(3, 3);
+            this.miscPluginsTabControl.Name = "miscPluginsTabControl";
+            this.miscPluginsTabControl.SelectedIndex = 0;
+            this.miscPluginsTabControl.Size = new System.Drawing.Size(446, 234);
+            this.miscPluginsTabControl.TabIndex = 27;
             // 
             // gridsTabPage
             // 
@@ -1682,28 +1603,223 @@
             this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column2.Visible = false;
             // 
-            // tabPage8
+            // tabPage16
             // 
-            this.tabPage8.Controls.Add(this.miscPluginsTabControl);
-            this.tabPage8.Location = new System.Drawing.Point(4, 22);
-            this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(452, 240);
-            this.tabPage8.TabIndex = 7;
-            this.tabPage8.Text = "Extras";
-            this.tabPage8.UseVisualStyleBackColor = true;
+            this.tabPage16.Controls.Add(this.button26);
+            this.tabPage16.Controls.Add(this.textBox17);
+            this.tabPage16.Controls.Add(this.button27);
+            this.tabPage16.Controls.Add(this.label23);
+            this.tabPage16.Controls.Add(this.button24);
+            this.tabPage16.Controls.Add(this.textBox16);
+            this.tabPage16.Controls.Add(this.button25);
+            this.tabPage16.Controls.Add(this.label22);
+            this.tabPage16.Controls.Add(this.button22);
+            this.tabPage16.Controls.Add(this.textBox15);
+            this.tabPage16.Controls.Add(this.button23);
+            this.tabPage16.Controls.Add(this.label21);
+            this.tabPage16.Controls.Add(this.button12);
+            this.tabPage16.Controls.Add(this.textBox14);
+            this.tabPage16.Controls.Add(this.button21);
+            this.tabPage16.Controls.Add(this.label20);
+            this.tabPage16.Controls.Add(this.button11);
+            this.tabPage16.Controls.Add(this.textBox13);
+            this.tabPage16.Controls.Add(this.button2);
+            this.tabPage16.Controls.Add(this.label19);
+            this.tabPage16.Location = new System.Drawing.Point(4, 22);
+            this.tabPage16.Name = "tabPage16";
+            this.tabPage16.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage16.Size = new System.Drawing.Size(452, 240);
+            this.tabPage16.TabIndex = 3;
+            this.tabPage16.Text = "Storage";
+            this.tabPage16.UseVisualStyleBackColor = true;
             // 
-            // miscPluginsTabControl
+            // button26
             // 
-            this.miscPluginsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.miscPluginsTabControl.Location = new System.Drawing.Point(3, 3);
-            this.miscPluginsTabControl.Name = "miscPluginsTabControl";
-            this.miscPluginsTabControl.SelectedIndex = 0;
-            this.miscPluginsTabControl.Size = new System.Drawing.Size(446, 234);
-            this.miscPluginsTabControl.TabIndex = 27;
+            this.button26.Location = new System.Drawing.Point(327, 199);
+            this.button26.Name = "button26";
+            this.button26.Size = new System.Drawing.Size(36, 20);
+            this.button26.TabIndex = 19;
+            this.button26.Text = "...";
+            this.button26.UseVisualStyleBackColor = true;
+            this.button26.Visible = false;
+            // 
+            // textBox17
+            // 
+            this.textBox17.Location = new System.Drawing.Point(26, 199);
+            this.textBox17.Name = "textBox17";
+            this.textBox17.ReadOnly = true;
+            this.textBox17.Size = new System.Drawing.Size(295, 20);
+            this.textBox17.TabIndex = 18;
+            this.textBox17.Text = "./tbd";
+            this.textBox17.Visible = false;
+            // 
+            // button27
+            // 
+            this.button27.Location = new System.Drawing.Point(369, 199);
+            this.button27.Name = "button27";
+            this.button27.Size = new System.Drawing.Size(58, 20);
+            this.button27.TabIndex = 17;
+            this.button27.Text = "Default";
+            this.button27.UseVisualStyleBackColor = true;
+            this.button27.Visible = false;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(23, 183);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(29, 13);
+            this.label23.TabIndex = 16;
+            this.label23.Text = "TBD";
+            this.label23.Visible = false;
+            // 
+            // button24
+            // 
+            this.button24.Location = new System.Drawing.Point(327, 158);
+            this.button24.Name = "button24";
+            this.button24.Size = new System.Drawing.Size(36, 20);
+            this.button24.TabIndex = 15;
+            this.button24.Text = "...";
+            this.button24.UseVisualStyleBackColor = true;
+            // 
+            // textBox16
+            // 
+            this.textBox16.Location = new System.Drawing.Point(26, 158);
+            this.textBox16.Name = "textBox16";
+            this.textBox16.ReadOnly = true;
+            this.textBox16.Size = new System.Drawing.Size(295, 20);
+            this.textBox16.TabIndex = 14;
+            this.textBox16.Text = "./packets";
+            // 
+            // button25
+            // 
+            this.button25.Location = new System.Drawing.Point(369, 158);
+            this.button25.Name = "button25";
+            this.button25.Size = new System.Drawing.Size(58, 20);
+            this.button25.TabIndex = 13;
+            this.button25.Text = "Default";
+            this.button25.UseVisualStyleBackColor = true;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(23, 142);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(79, 13);
+            this.label22.TabIndex = 12;
+            this.label22.Text = "Packet Presets";
+            // 
+            // button22
+            // 
+            this.button22.Location = new System.Drawing.Point(327, 76);
+            this.button22.Name = "button22";
+            this.button22.Size = new System.Drawing.Size(36, 20);
+            this.button22.TabIndex = 11;
+            this.button22.Text = "...";
+            this.button22.UseVisualStyleBackColor = true;
+            // 
+            // textBox15
+            // 
+            this.textBox15.Location = new System.Drawing.Point(26, 76);
+            this.textBox15.Name = "textBox15";
+            this.textBox15.ReadOnly = true;
+            this.textBox15.Size = new System.Drawing.Size(295, 20);
+            this.textBox15.TabIndex = 10;
+            this.textBox15.Text = "./plugins";
+            // 
+            // button23
+            // 
+            this.button23.Location = new System.Drawing.Point(369, 76);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(58, 20);
+            this.button23.TabIndex = 9;
+            this.button23.Text = "Default";
+            this.button23.UseVisualStyleBackColor = true;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(23, 60);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(41, 13);
+            this.label21.TabIndex = 8;
+            this.label21.Text = "Plugins";
+            // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(327, 117);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(36, 20);
+            this.button12.TabIndex = 7;
+            this.button12.Text = "...";
+            this.button12.UseVisualStyleBackColor = true;
+            // 
+            // textBox14
+            // 
+            this.textBox14.Location = new System.Drawing.Point(26, 117);
+            this.textBox14.Name = "textBox14";
+            this.textBox14.ReadOnly = true;
+            this.textBox14.Size = new System.Drawing.Size(295, 20);
+            this.textBox14.TabIndex = 6;
+            this.textBox14.Text = "./assets";
+            // 
+            // button21
+            // 
+            this.button21.Location = new System.Drawing.Point(369, 117);
+            this.button21.Name = "button21";
+            this.button21.Size = new System.Drawing.Size(58, 20);
+            this.button21.TabIndex = 5;
+            this.button21.Text = "Default";
+            this.button21.UseVisualStyleBackColor = true;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(23, 101);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(89, 13);
+            this.label20.TabIndex = 4;
+            this.label20.Text = "Asset Downloads";
+            // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(327, 35);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(36, 20);
+            this.button11.TabIndex = 3;
+            this.button11.Text = "...";
+            this.button11.UseVisualStyleBackColor = true;
+            // 
+            // textBox13
+            // 
+            this.textBox13.Location = new System.Drawing.Point(26, 35);
+            this.textBox13.Name = "textBox13";
+            this.textBox13.ReadOnly = true;
+            this.textBox13.Size = new System.Drawing.Size(295, 20);
+            this.textBox13.TabIndex = 2;
+            this.textBox13.Text = "./cache";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(369, 35);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(58, 20);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Default";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(23, 19);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(38, 13);
+            this.label19.TabIndex = 0;
+            this.label19.Text = "Cache";
             // 
             // tabPage10
             // 
+            this.tabPage10.Controls.Add(this.addCoolProxyToViewerButton);
             this.tabPage10.Controls.Add(this.loadPluginTestButton);
             this.tabPage10.Controls.Add(this.showDebugSettingsButton);
             this.tabPage10.Controls.Add(this.checkBox7);
@@ -1759,6 +1875,31 @@
             this.button3.Text = "Check for Update Now";
             this.button3.UseVisualStyleBackColor = true;
             // 
+            // checkBox19
+            // 
+            this.checkBox19.AutoSize = true;
+            this.checkBox19.Enabled = false;
+            this.checkBox19.EnabledSetting = null;
+            this.checkBox19.Location = new System.Drawing.Point(14, 35);
+            this.checkBox19.Name = "checkBox19";
+            this.checkBox19.Setting = "ShowConsole";
+            this.checkBox19.Size = new System.Drawing.Size(94, 17);
+            this.checkBox19.TabIndex = 30;
+            this.checkBox19.Text = "Show Console";
+            this.checkBox19.UseVisualStyleBackColor = true;
+            // 
+            // checkBox18
+            // 
+            this.checkBox18.AutoSize = true;
+            this.checkBox18.EnabledSetting = null;
+            this.checkBox18.Location = new System.Drawing.Point(14, 12);
+            this.checkBox18.Name = "checkBox18";
+            this.checkBox18.Setting = "AllowMultipleInstances";
+            this.checkBox18.Size = new System.Drawing.Size(139, 17);
+            this.checkBox18.TabIndex = 28;
+            this.checkBox18.Text = "Allow Multiple Instances";
+            this.checkBox18.UseVisualStyleBackColor = true;
+            // 
             // trayIcon
             // 
             this.trayIcon.ContextMenuStrip = this.trayContextMenu;
@@ -1809,144 +1950,15 @@
             this.loadXMLToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.loadXMLToolStripMenuItem.Text = "Load XML";
             // 
-            // numericUpDown2
+            // addCoolProxyToViewerButton
             // 
-            this.numericUpDown2.EnabledSetting = null;
-            this.numericUpDown2.Location = new System.Drawing.Point(260, 131);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            12000,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Setting = "GridProxyListenPort";
-            this.numericUpDown2.Size = new System.Drawing.Size(83, 20);
-            this.numericUpDown2.TabIndex = 37;
-            // 
-            // textBox1
-            // 
-            this.textBox1.EnabledSetting = null;
-            this.textBox1.Location = new System.Drawing.Point(131, 131);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Setting = "GridProxyListenAddress";
-            this.textBox1.Size = new System.Drawing.Size(123, 20);
-            this.textBox1.TabIndex = 36;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.EnabledSetting = null;
-            this.checkBox1.Location = new System.Drawing.Point(14, 120);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Setting = "EnableGridInfo";
-            this.checkBox1.Size = new System.Drawing.Size(174, 17);
-            this.checkBox1.TabIndex = 45;
-            this.checkBox1.Text = "Enable OpenSim Style Grid Info";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox9
-            // 
-            this.checkBox9.AutoSize = true;
-            this.checkBox9.EnabledSetting = "StartProxyAtLaunch";
-            this.checkBox9.Location = new System.Drawing.Point(34, 33);
-            this.checkBox9.Name = "checkBox9";
-            this.checkBox9.Setting = "HideProxyAtLaunch";
-            this.checkBox9.Size = new System.Drawing.Size(126, 17);
-            this.checkBox9.TabIndex = 44;
-            this.checkBox9.Text = "Auto Hide Cool Proxy";
-            this.checkBox9.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.EnabledSetting = null;
-            this.checkBox2.Location = new System.Drawing.Point(14, 12);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Setting = "StartProxyAtLaunch";
-            this.checkBox2.Size = new System.Drawing.Size(157, 17);
-            this.checkBox2.TabIndex = 43;
-            this.checkBox2.Text = "Start Proxy when Launched";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox6
-            // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.EnabledSetting = null;
-            this.checkBox6.Location = new System.Drawing.Point(14, 97);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Setting = "MinimizeCoolProxyToTray";
-            this.checkBox6.Size = new System.Drawing.Size(166, 17);
-            this.checkBox6.TabIndex = 24;
-            this.checkBox6.Text = "Minimize CoolProxy to the tray";
-            this.checkBox6.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.EnabledSetting = null;
-            this.checkBox3.Location = new System.Drawing.Point(14, 74);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Setting = "KeepCoolProxyOnTop";
-            this.checkBox3.Size = new System.Drawing.Size(134, 17);
-            this.checkBox3.TabIndex = 23;
-            this.checkBox3.Text = "Keep CoolProxy on top";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDown5
-            // 
-            this.numericUpDown5.EnabledSetting = null;
-            this.numericUpDown5.Location = new System.Drawing.Point(390, 35);
-            this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.Setting = "MaxSimultaneousDownloads";
-            this.numericUpDown5.Size = new System.Drawing.Size(56, 20);
-            this.numericUpDown5.TabIndex = 22;
-            // 
-            // numericUpDown4
-            // 
-            this.numericUpDown4.Enabled = false;
-            this.numericUpDown4.EnabledSetting = null;
-            this.numericUpDown4.Location = new System.Drawing.Point(390, 10);
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Setting = "MaxSimultaneousUploads";
-            this.numericUpDown4.Size = new System.Drawing.Size(56, 20);
-            this.numericUpDown4.TabIndex = 21;
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.EnabledSetting = null;
-            this.checkBox4.Location = new System.Drawing.Point(11, 9);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Setting = "EnableChatCommands";
-            this.checkBox4.Size = new System.Drawing.Size(139, 17);
-            this.checkBox4.TabIndex = 64;
-            this.checkBox4.Text = "Enable Chat Commands";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            // 
-            // checkBox19
-            // 
-            this.checkBox19.AutoSize = true;
-            this.checkBox19.Enabled = false;
-            this.checkBox19.EnabledSetting = null;
-            this.checkBox19.Location = new System.Drawing.Point(14, 35);
-            this.checkBox19.Name = "checkBox19";
-            this.checkBox19.Setting = "ShowConsole";
-            this.checkBox19.Size = new System.Drawing.Size(94, 17);
-            this.checkBox19.TabIndex = 30;
-            this.checkBox19.Text = "Show Console";
-            this.checkBox19.UseVisualStyleBackColor = true;
-            // 
-            // checkBox18
-            // 
-            this.checkBox18.AutoSize = true;
-            this.checkBox18.EnabledSetting = null;
-            this.checkBox18.Location = new System.Drawing.Point(14, 12);
-            this.checkBox18.Name = "checkBox18";
-            this.checkBox18.Setting = "AllowMultipleInstances";
-            this.checkBox18.Size = new System.Drawing.Size(139, 17);
-            this.checkBox18.TabIndex = 28;
-            this.checkBox18.Text = "Allow Multiple Instances";
-            this.checkBox18.UseVisualStyleBackColor = true;
+            this.addCoolProxyToViewerButton.Location = new System.Drawing.Point(215, 8);
+            this.addCoolProxyToViewerButton.Name = "addCoolProxyToViewerButton";
+            this.addCoolProxyToViewerButton.Size = new System.Drawing.Size(231, 23);
+            this.addCoolProxyToViewerButton.TabIndex = 34;
+            this.addCoolProxyToViewerButton.Text = "Add CoolProxy Login to SL Viewer";
+            this.addCoolProxyToViewerButton.UseVisualStyleBackColor = true;
+            this.addCoolProxyToViewerButton.Click += new System.EventHandler(this.addCoolProxyToViewerButton_Click);
             // 
             // CoolProxyForm
             // 
@@ -1967,6 +1979,7 @@
             this.tabPage1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.avatarTrackerGridView)).EndInit();
             this.tabPage3.ResumeLayout(false);
@@ -1996,23 +2009,22 @@
             this.settingsTabControl.ResumeLayout(false);
             this.tabPage9.ResumeLayout(false);
             this.tabPage9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.chatCommandsPanel.ResumeLayout(false);
             this.chatCommandsPanel.PerformLayout();
-            this.tabPage16.ResumeLayout(false);
-            this.tabPage16.PerformLayout();
+            this.tabPage8.ResumeLayout(false);
             this.gridsTabPage.ResumeLayout(false);
             this.gridsTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridsDataGridView)).EndInit();
             this.tabPage7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pluginsDataGridView)).EndInit();
-            this.tabPage8.ResumeLayout(false);
+            this.tabPage16.ResumeLayout(false);
+            this.tabPage16.PerformLayout();
             this.tabPage10.ResumeLayout(false);
             this.tabPage10.PerformLayout();
             this.blacklistContextMenuStrip.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2171,6 +2183,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn animOwnerColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.Button addCoolProxyToViewerButton;
     }
 }
 

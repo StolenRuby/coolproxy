@@ -1754,5 +1754,55 @@ namespace CoolProxy
 
             form.Show();
         }
+
+        private void addCoolProxyToViewerButton_Click(object sender, EventArgs e)
+        {
+            string sl_user_data = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SecondLife\\user_settings\\");
+
+            if (!Directory.Exists(sl_user_data))
+            {
+                MessageBox.Show("user_settings directory not found! Do you not have the official LL viewer installed?");
+                return;
+            }
+
+            string settings_path = Path.Combine(sl_user_data, "grids.xml");
+
+            OSDMap grids_map;
+
+            if (File.Exists(settings_path))
+            {
+                grids_map = (OSDMap)OSDParser.DeserializeLLSDXml(File.ReadAllBytes(settings_path));
+            }
+            else grids_map = new OSDMap();
+
+            if(!grids_map.ContainsKey("cool.proxy"))
+            {
+                OSDMap grid = new OSDMap();
+                grid["label"] = "Cool Proxy";
+                grid["keyname"] = "cool.proxy";
+                grid["system_grid"] = false;
+
+                OSDArray identifiers = new OSDArray();
+                identifiers.Add("agent");
+                identifiers.Add("account");
+                grid["login_identifier_types"] = identifiers;
+
+                grid["login_page"] = string.Format("http://{0}:{1}/splash", CoolProxy.Frame.Config.clientFacingAddress, CoolProxy.Frame.Config.loginPort);
+                grid["login_uri"] = string.Format("http://{0}:{1}/login", CoolProxy.Frame.Config.clientFacingAddress, CoolProxy.Frame.Config.loginPort);
+                grid["slurl_base"] = string.Format("http://{0}:{1}/slurl", CoolProxy.Frame.Config.clientFacingAddress, CoolProxy.Frame.Config.loginPort);
+                grid["web_profile_url"] = string.Format("http://{0}:{1}/profile", CoolProxy.Frame.Config.clientFacingAddress, CoolProxy.Frame.Config.loginPort);
+
+                grids_map["cool.proxy"] = grid;
+
+                byte[] data = OSDParser.SerializeLLSDXmlBytes(grids_map);
+                File.WriteAllBytes(settings_path, data);
+
+                MessageBox.Show("Done! CoolProxy will now be on the grid list! (Ctrl+Shift+G if you can't see it!");
+            }
+            else
+            {
+                MessageBox.Show("CoolProxy is already on your grids list!");
+            }
+        }
     }
 }

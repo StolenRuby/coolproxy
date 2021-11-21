@@ -72,6 +72,8 @@ namespace GridProxy
         /// </summary>
         public Uri remoteLoginUri = new Uri("https://login.agni.lindenlab.com/cgi-bin/login.cgi");
 
+        public bool is_linden_grid = true;
+
         /// <summary>
         /// construct a default proxy configuration, parsing command line arguments (try --help)
         /// </summary>

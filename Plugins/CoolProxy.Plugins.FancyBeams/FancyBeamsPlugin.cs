@@ -190,7 +190,7 @@ namespace CoolProxy.Plugins.FancyBeams
 
                         Quaternion roll = RotateBeamShape ? Quaternion.CreateFromEulers(new Vector3((float)(360.0d * r * DEG_TO_RAD), 0.0f, 0.0f)) : Quaternion.Identity;
 
-                        bool is_opensim = true; // todo: grid detection somewhere
+                        bool is_opensim = !Proxy.IsLindenGrid;
                         List<ViewerEffectPacket.EffectBlock> blocks = null;
 
                         if(is_opensim)

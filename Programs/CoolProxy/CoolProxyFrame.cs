@@ -13,6 +13,8 @@ namespace CoolProxy
     {
         public OpenSimManager OpenSim { get; private set; }
 
+        public bool IsLindenGrid { get; internal set; } = false;
+
         public CoolProxyFrame(string[] args) : this(args, null) { }
 
         internal event NewChatCommandAdded OnNewChatCommand;

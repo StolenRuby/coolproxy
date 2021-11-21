@@ -691,6 +691,8 @@ namespace CoolProxy
                 }
             }
 
+            CoolProxy.Frame.IsLindenGrid = CoolProxy.Frame.Config.is_linden_grid;
+
             string first_name = (string)responseData["first_name"];
             string last_name = (string)responseData["last_name"];
 
@@ -997,6 +999,7 @@ namespace CoolProxy
             var info = gridManager.getInfoFromName(gridname);
 
             CoolProxy.Frame.Config.remoteLoginUri = new Uri(info.LoginURI);
+            CoolProxy.Frame.Config.is_linden_grid = info.IsLindenGrid;
             //MessageBox.Show(CoolProxy.Frame.Config.remoteLoginUri.ToString());
 
             // Update account list...

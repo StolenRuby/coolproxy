@@ -57,8 +57,6 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new L33T.GUI.NumericUpDown();
-            this.textBox1 = new L33T.GUI.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.gridsComboBox = new System.Windows.Forms.ComboBox();
@@ -132,20 +130,12 @@
             this.settingsTabPage = new System.Windows.Forms.TabPage();
             this.settingsTabControl = new System.Windows.Forms.TabControl();
             this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.checkBox1 = new CoolGUI.Controls.CheckBox();
-            this.checkBox9 = new CoolGUI.Controls.CheckBox();
-            this.checkBox2 = new CoolGUI.Controls.CheckBox();
             this.button4 = new System.Windows.Forms.Button();
-            this.checkBox6 = new CoolGUI.Controls.CheckBox();
-            this.checkBox3 = new CoolGUI.Controls.CheckBox();
-            this.numericUpDown5 = new L33T.GUI.NumericUpDown();
-            this.numericUpDown4 = new L33T.GUI.NumericUpDown();
             this.clearCacheButton = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.chatCommandsPanel = new System.Windows.Forms.Panel();
-            this.checkBox4 = new CoolGUI.Controls.CheckBox();
             this.label38 = new System.Windows.Forms.Label();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.miscPluginsTabControl = new System.Windows.Forms.TabControl();
@@ -197,8 +187,6 @@
             this.showDebugSettingsButton = new System.Windows.Forms.Button();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.button3 = new System.Windows.Forms.Button();
-            this.checkBox19 = new CoolGUI.Controls.CheckBox();
-            this.checkBox18 = new CoolGUI.Controls.CheckBox();
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.trayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.blacklistContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -207,10 +195,21 @@
             this.saveXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addCoolProxyToViewerButton = new System.Windows.Forms.Button();
+            this.numericUpDown2 = new L33T.GUI.NumericUpDown();
+            this.textBox1 = new L33T.GUI.TextBox();
+            this.checkBox1 = new CoolGUI.Controls.CheckBox();
+            this.checkBox9 = new CoolGUI.Controls.CheckBox();
+            this.checkBox2 = new CoolGUI.Controls.CheckBox();
+            this.checkBox6 = new CoolGUI.Controls.CheckBox();
+            this.checkBox3 = new CoolGUI.Controls.CheckBox();
+            this.numericUpDown5 = new L33T.GUI.NumericUpDown();
+            this.numericUpDown4 = new L33T.GUI.NumericUpDown();
+            this.checkBox4 = new CoolGUI.Controls.CheckBox();
+            this.checkBox19 = new CoolGUI.Controls.CheckBox();
+            this.checkBox18 = new CoolGUI.Controls.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.avatarTrackerGridView)).BeginInit();
             this.tabPage3.SuspendLayout();
@@ -237,8 +236,6 @@
             this.settingsTabPage.SuspendLayout();
             this.settingsTabControl.SuspendLayout();
             this.tabPage9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.chatCommandsPanel.SuspendLayout();
             this.tabPage8.SuspendLayout();
@@ -249,6 +246,9 @@
             this.tabPage16.SuspendLayout();
             this.tabPage10.SuspendLayout();
             this.blacklistContextMenuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -304,36 +304,15 @@
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(52, 30);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(356, 31);
             this.label3.TabIndex = 40;
             this.label3.Text = ".: COOL PROXY IS COOL :.";
-            // 
-            // numericUpDown2
-            // 
-            this.numericUpDown2.EnabledSetting = null;
-            this.numericUpDown2.Location = new System.Drawing.Point(260, 131);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            12000,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Setting = "GridProxyListenPort";
-            this.numericUpDown2.Size = new System.Drawing.Size(83, 20);
-            this.numericUpDown2.TabIndex = 37;
-            // 
-            // textBox1
-            // 
-            this.textBox1.EnabledSetting = null;
-            this.textBox1.Location = new System.Drawing.Point(131, 131);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Setting = "GridProxyListenAddress";
-            this.textBox1.Size = new System.Drawing.Size(123, 20);
-            this.textBox1.TabIndex = 36;
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label2
             // 
@@ -346,6 +325,8 @@
             // 
             // button1
             // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.Location = new System.Drawing.Point(154, 201);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(160, 29);
@@ -356,6 +337,8 @@
             // 
             // gridsComboBox
             // 
+            this.gridsComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gridsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.gridsComboBox.FormattingEnabled = true;
             this.gridsComboBox.Location = new System.Drawing.Point(131, 89);
@@ -374,6 +357,7 @@
             // 
             // editGridsButton
             // 
+            this.editGridsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.editGridsButton.Location = new System.Drawing.Point(349, 89);
             this.editGridsButton.Name = "editGridsButton";
             this.editGridsButton.Size = new System.Drawing.Size(49, 21);
@@ -384,6 +368,7 @@
             // 
             // label12
             // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(395, 249);
             this.label12.Name = "label12";
@@ -1155,44 +1140,9 @@
             this.tabPage9.TabIndex = 0;
             this.tabPage9.Text = "General";
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.EnabledSetting = null;
-            this.checkBox1.Location = new System.Drawing.Point(14, 120);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Setting = "EnableGridInfo";
-            this.checkBox1.Size = new System.Drawing.Size(174, 17);
-            this.checkBox1.TabIndex = 45;
-            this.checkBox1.Text = "Enable OpenSim Style Grid Info";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox9
-            // 
-            this.checkBox9.AutoSize = true;
-            this.checkBox9.EnabledSetting = "StartProxyAtLaunch";
-            this.checkBox9.Location = new System.Drawing.Point(34, 33);
-            this.checkBox9.Name = "checkBox9";
-            this.checkBox9.Setting = "HideProxyAtLaunch";
-            this.checkBox9.Size = new System.Drawing.Size(126, 17);
-            this.checkBox9.TabIndex = 44;
-            this.checkBox9.Text = "Auto Hide Cool Proxy";
-            this.checkBox9.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.EnabledSetting = null;
-            this.checkBox2.Location = new System.Drawing.Point(14, 12);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Setting = "StartProxyAtLaunch";
-            this.checkBox2.Size = new System.Drawing.Size(157, 17);
-            this.checkBox2.TabIndex = 43;
-            this.checkBox2.Text = "Start Proxy when Launched";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
             // button4
             // 
+            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button4.Location = new System.Drawing.Point(311, 209);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(135, 23);
@@ -1201,51 +1151,9 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // checkBox6
-            // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.EnabledSetting = null;
-            this.checkBox6.Location = new System.Drawing.Point(14, 97);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Setting = "MinimizeCoolProxyToTray";
-            this.checkBox6.Size = new System.Drawing.Size(166, 17);
-            this.checkBox6.TabIndex = 24;
-            this.checkBox6.Text = "Minimize CoolProxy to the tray";
-            this.checkBox6.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.EnabledSetting = null;
-            this.checkBox3.Location = new System.Drawing.Point(14, 74);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Setting = "KeepCoolProxyOnTop";
-            this.checkBox3.Size = new System.Drawing.Size(134, 17);
-            this.checkBox3.TabIndex = 23;
-            this.checkBox3.Text = "Keep CoolProxy on top";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDown5
-            // 
-            this.numericUpDown5.EnabledSetting = null;
-            this.numericUpDown5.Location = new System.Drawing.Point(390, 35);
-            this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.Setting = "MaxSimultaneousDownloads";
-            this.numericUpDown5.Size = new System.Drawing.Size(56, 20);
-            this.numericUpDown5.TabIndex = 22;
-            // 
-            // numericUpDown4
-            // 
-            this.numericUpDown4.Enabled = false;
-            this.numericUpDown4.EnabledSetting = null;
-            this.numericUpDown4.Location = new System.Drawing.Point(390, 10);
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Setting = "MaxSimultaneousUploads";
-            this.numericUpDown4.Size = new System.Drawing.Size(56, 20);
-            this.numericUpDown4.TabIndex = 21;
-            // 
             // clearCacheButton
             // 
+            this.clearCacheButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.clearCacheButton.Location = new System.Drawing.Point(14, 209);
             this.clearCacheButton.Name = "clearCacheButton";
             this.clearCacheButton.Size = new System.Drawing.Size(135, 23);
@@ -1256,6 +1164,7 @@
             // 
             // label16
             // 
+            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label16.AutoSize = true;
             this.label16.Location = new System.Drawing.Point(234, 37);
             this.label16.Name = "label16";
@@ -1265,6 +1174,7 @@
             // 
             // label15
             // 
+            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label15.AutoSize = true;
             this.label15.Location = new System.Drawing.Point(246, 12);
             this.label15.Name = "label15";
@@ -1293,18 +1203,6 @@
             this.chatCommandsPanel.Name = "chatCommandsPanel";
             this.chatCommandsPanel.Size = new System.Drawing.Size(446, 234);
             this.chatCommandsPanel.TabIndex = 0;
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.EnabledSetting = null;
-            this.checkBox4.Location = new System.Drawing.Point(11, 9);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Setting = "EnableChatCommands";
-            this.checkBox4.Size = new System.Drawing.Size(139, 17);
-            this.checkBox4.TabIndex = 64;
-            this.checkBox4.Text = "Enable Chat Commands";
-            this.checkBox4.UseVisualStyleBackColor = true;
             // 
             // label38
             // 
@@ -1356,6 +1254,7 @@
             // 
             // checkBox10
             // 
+            this.checkBox10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBox10.AutoSize = true;
             this.checkBox10.Location = new System.Drawing.Point(211, 222);
             this.checkBox10.Name = "checkBox10";
@@ -1366,6 +1265,7 @@
             // 
             // checkBox13
             // 
+            this.checkBox13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBox13.AutoSize = true;
             this.checkBox13.Checked = true;
             this.checkBox13.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -1378,6 +1278,7 @@
             // 
             // debugGridInfoButton
             // 
+            this.debugGridInfoButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.debugGridInfoButton.Location = new System.Drawing.Point(374, 129);
             this.debugGridInfoButton.Name = "debugGridInfoButton";
             this.debugGridInfoButton.Size = new System.Drawing.Size(72, 23);
@@ -1387,6 +1288,7 @@
             // 
             // removeGridButton
             // 
+            this.removeGridButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.removeGridButton.Location = new System.Drawing.Point(374, 100);
             this.removeGridButton.Name = "removeGridButton";
             this.removeGridButton.Size = new System.Drawing.Size(72, 23);
@@ -1397,6 +1299,7 @@
             // 
             // refreshGridInfoButton
             // 
+            this.refreshGridInfoButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.refreshGridInfoButton.Location = new System.Drawing.Point(374, 71);
             this.refreshGridInfoButton.Name = "refreshGridInfoButton";
             this.refreshGridInfoButton.Size = new System.Drawing.Size(72, 23);
@@ -1411,6 +1314,9 @@
             this.gridsDataGridView.AllowUserToResizeRows = false;
             dataGridViewCellStyle19.BackColor = System.Drawing.Color.Silver;
             this.gridsDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle19;
+            this.gridsDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gridsDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.gridsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1461,6 +1367,7 @@
             // 
             // addGridButton
             // 
+            this.addGridButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.addGridButton.Location = new System.Drawing.Point(321, 28);
             this.addGridButton.Name = "addGridButton";
             this.addGridButton.Size = new System.Drawing.Size(47, 20);
@@ -1471,6 +1378,8 @@
             // 
             // addGridTextbox
             // 
+            this.addGridTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.addGridTextbox.Location = new System.Drawing.Point(44, 28);
             this.addGridTextbox.Name = "addGridTextbox";
             this.addGridTextbox.Size = new System.Drawing.Size(270, 20);
@@ -1502,6 +1411,7 @@
             // 
             // movePluginUp
             // 
+            this.movePluginUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.movePluginUp.Enabled = false;
             this.movePluginUp.Location = new System.Drawing.Point(371, 126);
             this.movePluginUp.Name = "movePluginUp";
@@ -1513,6 +1423,7 @@
             // 
             // movePluginDown
             // 
+            this.movePluginDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.movePluginDown.Enabled = false;
             this.movePluginDown.Location = new System.Drawing.Point(371, 155);
             this.movePluginDown.Name = "movePluginDown";
@@ -1524,6 +1435,7 @@
             // 
             // removePluginButton
             // 
+            this.removePluginButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.removePluginButton.Enabled = false;
             this.removePluginButton.Location = new System.Drawing.Point(371, 70);
             this.removePluginButton.Name = "removePluginButton";
@@ -1535,6 +1447,7 @@
             // 
             // addPluginButton
             // 
+            this.addPluginButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.addPluginButton.Location = new System.Drawing.Point(371, 41);
             this.addPluginButton.Name = "addPluginButton";
             this.addPluginButton.Size = new System.Drawing.Size(75, 23);
@@ -1552,6 +1465,9 @@
             this.pluginsDataGridView.AllowUserToResizeRows = false;
             dataGridViewCellStyle21.BackColor = System.Drawing.Color.Silver;
             this.pluginsDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
+            this.pluginsDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pluginsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.pluginsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
@@ -1635,6 +1551,7 @@
             // 
             // button26
             // 
+            this.button26.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button26.Location = new System.Drawing.Point(327, 199);
             this.button26.Name = "button26";
             this.button26.Size = new System.Drawing.Size(36, 20);
@@ -1645,6 +1562,8 @@
             // 
             // textBox17
             // 
+            this.textBox17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox17.Location = new System.Drawing.Point(26, 199);
             this.textBox17.Name = "textBox17";
             this.textBox17.ReadOnly = true;
@@ -1655,6 +1574,7 @@
             // 
             // button27
             // 
+            this.button27.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button27.Location = new System.Drawing.Point(369, 199);
             this.button27.Name = "button27";
             this.button27.Size = new System.Drawing.Size(58, 20);
@@ -1675,6 +1595,7 @@
             // 
             // button24
             // 
+            this.button24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button24.Location = new System.Drawing.Point(327, 158);
             this.button24.Name = "button24";
             this.button24.Size = new System.Drawing.Size(36, 20);
@@ -1684,6 +1605,8 @@
             // 
             // textBox16
             // 
+            this.textBox16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox16.Location = new System.Drawing.Point(26, 158);
             this.textBox16.Name = "textBox16";
             this.textBox16.ReadOnly = true;
@@ -1693,6 +1616,7 @@
             // 
             // button25
             // 
+            this.button25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button25.Location = new System.Drawing.Point(369, 158);
             this.button25.Name = "button25";
             this.button25.Size = new System.Drawing.Size(58, 20);
@@ -1711,6 +1635,7 @@
             // 
             // button22
             // 
+            this.button22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button22.Location = new System.Drawing.Point(327, 76);
             this.button22.Name = "button22";
             this.button22.Size = new System.Drawing.Size(36, 20);
@@ -1720,6 +1645,8 @@
             // 
             // textBox15
             // 
+            this.textBox15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox15.Location = new System.Drawing.Point(26, 76);
             this.textBox15.Name = "textBox15";
             this.textBox15.ReadOnly = true;
@@ -1729,6 +1656,7 @@
             // 
             // button23
             // 
+            this.button23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button23.Location = new System.Drawing.Point(369, 76);
             this.button23.Name = "button23";
             this.button23.Size = new System.Drawing.Size(58, 20);
@@ -1747,6 +1675,7 @@
             // 
             // button12
             // 
+            this.button12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button12.Location = new System.Drawing.Point(327, 117);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(36, 20);
@@ -1756,6 +1685,8 @@
             // 
             // textBox14
             // 
+            this.textBox14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox14.Location = new System.Drawing.Point(26, 117);
             this.textBox14.Name = "textBox14";
             this.textBox14.ReadOnly = true;
@@ -1765,6 +1696,7 @@
             // 
             // button21
             // 
+            this.button21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button21.Location = new System.Drawing.Point(369, 117);
             this.button21.Name = "button21";
             this.button21.Size = new System.Drawing.Size(58, 20);
@@ -1783,6 +1715,7 @@
             // 
             // button11
             // 
+            this.button11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button11.Location = new System.Drawing.Point(327, 35);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(36, 20);
@@ -1792,6 +1725,8 @@
             // 
             // textBox13
             // 
+            this.textBox13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox13.Location = new System.Drawing.Point(26, 35);
             this.textBox13.Name = "textBox13";
             this.textBox13.ReadOnly = true;
@@ -1801,6 +1736,7 @@
             // 
             // button2
             // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.Location = new System.Drawing.Point(369, 35);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(58, 20);
@@ -1836,6 +1772,7 @@
             // 
             // loadPluginTestButton
             // 
+            this.loadPluginTestButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.loadPluginTestButton.Location = new System.Drawing.Point(6, 182);
             this.loadPluginTestButton.Name = "loadPluginTestButton";
             this.loadPluginTestButton.Size = new System.Drawing.Size(147, 23);
@@ -1846,6 +1783,7 @@
             // 
             // showDebugSettingsButton
             // 
+            this.showDebugSettingsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.showDebugSettingsButton.Location = new System.Drawing.Point(6, 211);
             this.showDebugSettingsButton.Name = "showDebugSettingsButton";
             this.showDebugSettingsButton.Size = new System.Drawing.Size(147, 23);
@@ -1856,6 +1794,7 @@
             // 
             // checkBox7
             // 
+            this.checkBox7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox7.AutoSize = true;
             this.checkBox7.Enabled = false;
             this.checkBox7.Location = new System.Drawing.Point(300, 190);
@@ -1867,6 +1806,7 @@
             // 
             // button3
             // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button3.Enabled = false;
             this.button3.Location = new System.Drawing.Point(296, 211);
             this.button3.Name = "button3";
@@ -1874,31 +1814,6 @@
             this.button3.TabIndex = 23;
             this.button3.Text = "Check for Update Now";
             this.button3.UseVisualStyleBackColor = true;
-            // 
-            // checkBox19
-            // 
-            this.checkBox19.AutoSize = true;
-            this.checkBox19.Enabled = false;
-            this.checkBox19.EnabledSetting = null;
-            this.checkBox19.Location = new System.Drawing.Point(14, 35);
-            this.checkBox19.Name = "checkBox19";
-            this.checkBox19.Setting = "ShowConsole";
-            this.checkBox19.Size = new System.Drawing.Size(94, 17);
-            this.checkBox19.TabIndex = 30;
-            this.checkBox19.Text = "Show Console";
-            this.checkBox19.UseVisualStyleBackColor = true;
-            // 
-            // checkBox18
-            // 
-            this.checkBox18.AutoSize = true;
-            this.checkBox18.EnabledSetting = null;
-            this.checkBox18.Location = new System.Drawing.Point(14, 12);
-            this.checkBox18.Name = "checkBox18";
-            this.checkBox18.Setting = "AllowMultipleInstances";
-            this.checkBox18.Size = new System.Drawing.Size(139, 17);
-            this.checkBox18.TabIndex = 28;
-            this.checkBox18.Text = "Allow Multiple Instances";
-            this.checkBox18.UseVisualStyleBackColor = true;
             // 
             // trayIcon
             // 
@@ -1952,6 +1867,7 @@
             // 
             // addCoolProxyToViewerButton
             // 
+            this.addCoolProxyToViewerButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.addCoolProxyToViewerButton.Location = new System.Drawing.Point(215, 8);
             this.addCoolProxyToViewerButton.Name = "addCoolProxyToViewerButton";
             this.addCoolProxyToViewerButton.Size = new System.Drawing.Size(231, 23);
@@ -1959,6 +1875,150 @@
             this.addCoolProxyToViewerButton.Text = "Add CoolProxy Login to SL Viewer";
             this.addCoolProxyToViewerButton.UseVisualStyleBackColor = true;
             this.addCoolProxyToViewerButton.Click += new System.EventHandler(this.addCoolProxyToViewerButton_Click);
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown2.EnabledSetting = null;
+            this.numericUpDown2.Location = new System.Drawing.Point(260, 131);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            12000,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Setting = "GridProxyListenPort";
+            this.numericUpDown2.Size = new System.Drawing.Size(83, 20);
+            this.numericUpDown2.TabIndex = 37;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.EnabledSetting = null;
+            this.textBox1.Location = new System.Drawing.Point(131, 131);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Setting = "GridProxyListenAddress";
+            this.textBox1.Size = new System.Drawing.Size(123, 20);
+            this.textBox1.TabIndex = 36;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.EnabledSetting = null;
+            this.checkBox1.Location = new System.Drawing.Point(14, 120);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Setting = "EnableGridInfo";
+            this.checkBox1.Size = new System.Drawing.Size(174, 17);
+            this.checkBox1.TabIndex = 45;
+            this.checkBox1.Text = "Enable OpenSim Style Grid Info";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox9
+            // 
+            this.checkBox9.AutoSize = true;
+            this.checkBox9.EnabledSetting = "StartProxyAtLaunch";
+            this.checkBox9.Location = new System.Drawing.Point(34, 33);
+            this.checkBox9.Name = "checkBox9";
+            this.checkBox9.Setting = "HideProxyAtLaunch";
+            this.checkBox9.Size = new System.Drawing.Size(126, 17);
+            this.checkBox9.TabIndex = 44;
+            this.checkBox9.Text = "Auto Hide Cool Proxy";
+            this.checkBox9.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.EnabledSetting = null;
+            this.checkBox2.Location = new System.Drawing.Point(14, 12);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Setting = "StartProxyAtLaunch";
+            this.checkBox2.Size = new System.Drawing.Size(157, 17);
+            this.checkBox2.TabIndex = 43;
+            this.checkBox2.Text = "Start Proxy when Launched";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox6
+            // 
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.EnabledSetting = null;
+            this.checkBox6.Location = new System.Drawing.Point(14, 97);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Setting = "MinimizeCoolProxyToTray";
+            this.checkBox6.Size = new System.Drawing.Size(166, 17);
+            this.checkBox6.TabIndex = 24;
+            this.checkBox6.Text = "Minimize CoolProxy to the tray";
+            this.checkBox6.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.EnabledSetting = null;
+            this.checkBox3.Location = new System.Drawing.Point(14, 74);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Setting = "KeepCoolProxyOnTop";
+            this.checkBox3.Size = new System.Drawing.Size(134, 17);
+            this.checkBox3.TabIndex = 23;
+            this.checkBox3.Text = "Keep CoolProxy on top";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown5
+            // 
+            this.numericUpDown5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown5.EnabledSetting = null;
+            this.numericUpDown5.Location = new System.Drawing.Point(390, 35);
+            this.numericUpDown5.Name = "numericUpDown5";
+            this.numericUpDown5.Setting = "MaxSimultaneousDownloads";
+            this.numericUpDown5.Size = new System.Drawing.Size(56, 20);
+            this.numericUpDown5.TabIndex = 22;
+            // 
+            // numericUpDown4
+            // 
+            this.numericUpDown4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown4.Enabled = false;
+            this.numericUpDown4.EnabledSetting = null;
+            this.numericUpDown4.Location = new System.Drawing.Point(390, 10);
+            this.numericUpDown4.Name = "numericUpDown4";
+            this.numericUpDown4.Setting = "MaxSimultaneousUploads";
+            this.numericUpDown4.Size = new System.Drawing.Size(56, 20);
+            this.numericUpDown4.TabIndex = 21;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.EnabledSetting = null;
+            this.checkBox4.Location = new System.Drawing.Point(11, 9);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Setting = "EnableChatCommands";
+            this.checkBox4.Size = new System.Drawing.Size(139, 17);
+            this.checkBox4.TabIndex = 64;
+            this.checkBox4.Text = "Enable Chat Commands";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // checkBox19
+            // 
+            this.checkBox19.AutoSize = true;
+            this.checkBox19.Enabled = false;
+            this.checkBox19.EnabledSetting = null;
+            this.checkBox19.Location = new System.Drawing.Point(14, 35);
+            this.checkBox19.Name = "checkBox19";
+            this.checkBox19.Setting = "ShowConsole";
+            this.checkBox19.Size = new System.Drawing.Size(94, 17);
+            this.checkBox19.TabIndex = 30;
+            this.checkBox19.Text = "Show Console";
+            this.checkBox19.UseVisualStyleBackColor = true;
+            // 
+            // checkBox18
+            // 
+            this.checkBox18.AutoSize = true;
+            this.checkBox18.EnabledSetting = null;
+            this.checkBox18.Location = new System.Drawing.Point(14, 12);
+            this.checkBox18.Name = "checkBox18";
+            this.checkBox18.Setting = "AllowMultipleInstances";
+            this.checkBox18.Size = new System.Drawing.Size(139, 17);
+            this.checkBox18.TabIndex = 28;
+            this.checkBox18.Text = "Allow Multiple Instances";
+            this.checkBox18.UseVisualStyleBackColor = true;
             // 
             // CoolProxyForm
             // 
@@ -1969,6 +2029,7 @@
             this.DoubleBuffered = true;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(590, 319);
             this.Name = "CoolProxyForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cool Proxy";
@@ -1979,7 +2040,6 @@
             this.tabPage1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.avatarTrackerGridView)).EndInit();
             this.tabPage3.ResumeLayout(false);
@@ -2009,8 +2069,6 @@
             this.settingsTabControl.ResumeLayout(false);
             this.tabPage9.ResumeLayout(false);
             this.tabPage9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.chatCommandsPanel.ResumeLayout(false);
             this.chatCommandsPanel.PerformLayout();
@@ -2025,6 +2083,9 @@
             this.tabPage10.ResumeLayout(false);
             this.tabPage10.PerformLayout();
             this.blacklistContextMenuStrip.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             this.ResumeLayout(false);
 
         }

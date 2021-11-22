@@ -190,6 +190,8 @@ namespace CoolProxy.Plugins.FancyBeams
 
                         Quaternion roll = RotateBeamShape ? Quaternion.CreateFromEulers(new Vector3((float)(360.0d * r * DEG_TO_RAD), 0.0f, 0.0f)) : Quaternion.Identity;
 
+                        float distance_multiplier = Vector3.Distance(local_pos, agent_pos) * 0.1f;
+
                         bool is_opensim = !Proxy.IsLindenGrid;
                         List<ViewerEffectPacket.EffectBlock> blocks = null;
 
@@ -209,7 +211,7 @@ namespace CoolProxy.Plugins.FancyBeams
                             beam.TypeData = effect.TypeData.ToArray(); // ToArray to clone it...
 
                             var rotated_offset = Offsets[i];
-                            rotated_offset *= BeamScale;
+                            rotated_offset *= distance_multiplier * BeamScale;
                             rotated_offset *= roll;
                             rotated_offset *= yaw;
                             rotated_offset *= pitch;

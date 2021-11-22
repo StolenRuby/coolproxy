@@ -85,7 +85,6 @@ namespace CoolProxy.Plugins.ClientAO
                             if (item.Name.ToLower() == next_name && item is InventoryNotecard)
                             {
                                 InventoryNotecard notecard = item as InventoryNotecard;
-                                Proxy.SayToUser("Notecard found! Asset ID is " + notecard.AssetUUID.ToString());
                                 CurrentFolder = UUID.Zero;
                                 ClientAOPlugin.Instance.LoadNotecard(notecard);
                                 return;

@@ -500,5 +500,12 @@
 			<key>value</key>
 			<boolean>0</boolean>
 		</map>
+		<key>OverrideSits</key>
+		<map>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
 	</map>
 </llsd>

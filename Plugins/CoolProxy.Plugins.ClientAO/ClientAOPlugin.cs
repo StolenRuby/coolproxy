@@ -73,6 +73,8 @@ namespace CoolProxy.Plugins.ClientAO
 
         internal CoolProxyFrame Proxy;
 
+        private bool OverrideSits = false;
+
         private bool mEnabled = false;
         public bool Enabled
         {
@@ -128,6 +130,27 @@ namespace CoolProxy.Plugins.ClientAO
             };
             Enabled = settings.getBool("EnableAO");
 
+            settings.getSetting("OverrideSits").OnChanged += (x, y) =>
+            {
+                OverrideSits = (bool)y.Value;
+
+                foreach(var state in Current)
+                {
+                    if(state.StateName == "Sitting")
+                    {
+                        Dictionary<UUID, bool> anims = new Dictionary<UUID, bool>();
+
+                        if (OverrideSits)
+                            Proxy.Agent.AnimationStart(state.CurrentAnim.AssetID, false);
+                        else
+                            Proxy.Agent.AnimationStop(state.CurrentAnim.AssetID, false);
+
+                        break;
+                    }
+                }
+            };
+            OverrideSits = settings.getBool("OverrideSits");
+
             gui.AddInventoryItemOption("Load as AO", x =>
             {
                 LoadNotecard(x);
@@ -177,7 +200,8 @@ namespace CoolProxy.Plugins.ClientAO
                                     state.Next();
                             }
 
-                            anims.Add(state.CurrentAnim.AssetID, true);
+                            if (state.StateName != "Sitting" || (state.StateName == "Sitting" && OverrideSits))
+                                anims.Add(state.CurrentAnim.AssetID, true);
                         }
                     }
                 }
@@ -202,6 +226,8 @@ namespace CoolProxy.Plugins.ClientAO
 
         public void LoadNotecard(InventoryItem notecard)
         {
+            Proxy.SayToUser("Loading notecard `" + notecard.Name + "`");
+
             // todo: download via caps...
             Proxy.OpenSim.Assets.DownloadAsset(notecard.AssetUUID, (success, data) =>
             {

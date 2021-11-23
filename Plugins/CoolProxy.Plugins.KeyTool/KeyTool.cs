@@ -622,22 +622,33 @@ namespace CoolProxy.Plugins.KeyTool
         {
             if (kt_type == KT_TYPE.KT_ASSET)
             {
-                UUID folder_id = KeyToolPlugin.Proxy.Inventory.SuitcaseID != UUID.Zero ?
-                    KeyToolPlugin.Proxy.Inventory.FindSuitcaseFolderForType((FolderType)asset_type) :
-                    KeyToolPlugin.Proxy.Inventory.FindFolderForType((FolderType)asset_type);
+                if(KeyToolPlugin.Proxy.Network.CurrentSim.InvetoryServerURI != string.Empty)
+                {
+                    UUID folder_id = KeyToolPlugin.Proxy.Inventory.SuitcaseID != UUID.Zero ?
+                        KeyToolPlugin.Proxy.Inventory.FindSuitcaseFolderForType((FolderType)asset_type) :
+                        KeyToolPlugin.Proxy.Inventory.FindFolderForType(asset_type);
 
-                UUID item_id = UUID.Random();
+                    UUID item_id = UUID.Random();
 
-                KeyToolPlugin.Proxy.OpenSim.XInventory.AddItem(
-                    folder_id, item_id, asset_id, KeyToolPlugin.Proxy.Agent.AgentID,
-                    asset_type, (InventoryType)asset_type, 0, asset_id.ToString(), "", DateTime.UtcNow, success =>
-                    {
-                        if (success)
+                    KeyToolPlugin.Proxy.OpenSim.XInventory.AddItem(
+                        folder_id, item_id, asset_id, KeyToolPlugin.Proxy.Agent.AgentID,
+                        asset_type, (InventoryType)asset_type, 0, asset_id.ToString(), "", DateTime.UtcNow, success =>
                         {
-                            KeyToolPlugin.Proxy.Inventory.RequestFetchInventory(item_id, KeyToolPlugin.Proxy.Agent.AgentID, false);
-                        }
-                        else KeyToolPlugin.Proxy.AlertMessage("Error adding item to suitcase!", false);
-                    });
+                            if (success)
+                            {
+                                KeyToolPlugin.Proxy.Inventory.RequestFetchInventory(item_id, KeyToolPlugin.Proxy.Agent.AgentID, false);
+                            }
+                            else KeyToolPlugin.Proxy.AlertMessage("Error adding item to suitcase!", false);
+                        });
+                }
+                else
+                {
+                    UUID folder_id = KeyToolPlugin.Proxy.Inventory.FindFolderForType(asset_type);
+                    if (KeyToolPlugin.NotecardMagic != null)
+                    {
+                        KeyToolPlugin.NotecardMagic.GetAsset(folder_id, asset_id, asset_type, (InventoryType)asset_type);
+                    }
+                }
             }
             else if(kt_type == KT_TYPE.KT_AGENT)
             {

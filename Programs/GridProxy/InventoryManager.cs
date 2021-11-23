@@ -512,6 +512,8 @@ namespace GridProxy
 
                     try { createdCallback(true, item); }
                     catch (Exception ex) { OpenMetaverse.Logger.Log(ex.Message, Helpers.LogLevel.Error, null, ex); }
+
+                    return null;
                 }
 
                 // TODO: Is this callback even triggered when items are copied?

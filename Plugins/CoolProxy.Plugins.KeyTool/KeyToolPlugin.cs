@@ -1,4 +1,5 @@
-﻿using OpenMetaverse;
+﻿using CoolProxy.Plugins.NotecardMagic;
+using OpenMetaverse;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -15,6 +16,8 @@ namespace CoolProxy.Plugins.KeyTool
         public static SettingsManager Settings { get; private set; }
         public static CoolProxyFrame Proxy { get; private set; }
 
+        internal static INotecardMagic NotecardMagic = null;
+
         public KeyToolPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
         {
             Settings = settings;
@@ -24,6 +27,8 @@ namespace CoolProxy.Plugins.KeyTool
             gui.AddTrayOption("KeyTool from Clipboard", handleKeyToolButton);
 
             AddSettingsTab(gui);
+
+            NotecardMagic = Proxy.RequestModuleInterface<INotecardMagic>();
         }
 
         private void AddSettingsTab(GUIManager gui)

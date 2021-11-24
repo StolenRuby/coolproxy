@@ -21,7 +21,7 @@ namespace CoolProxy.Plugins.NotecardMagic
 
         public void GetAsset(UUID folder_id, UUID asset_id, AssetType asset_type, InventoryType inventory_type)
         {
-            Proxy.Inventory.RequestCreateItem(Proxy.Inventory.InventoryRoot, "Magic", "definitely not toasting", AssetType.Notecard, UUID.Zero, InventoryType.Notecard, PermissionMask.All, (success, new_note_item) =>
+            Proxy.Inventory.RequestCreateItem(Proxy.Inventory.InventoryRoot, "New Note", string.Empty, AssetType.Notecard, UUID.Zero, InventoryType.Notecard, PermissionMask.All, (success, new_note_item) =>
             {
                 if(!success)
                 {
@@ -34,14 +34,13 @@ namespace CoolProxy.Plugins.NotecardMagic
                 AssetNotecard notecard = new AssetNotecard();
                 notecard.EmbeddedItems = new List<InventoryItem>();
                 notecard.EmbeddedItems.Add(item);
-                notecard.BodyText = "You should have patched toasting.";
                 notecard.Encode();
 
                 Proxy.Inventory.RequestUpdateNotecardTask(notecard.AssetData, new_note_item.UUID, UUID.Zero, (update_success, error_message, item_id, new_asset_id) =>
                 {
                     if(update_success)
                     {
-                        Proxy.Inventory.RequestCopyItemFromNotecard(UUID.Zero, item_id, Proxy.Inventory.InventoryRoot, item.UUID, (the_item) =>
+                        Proxy.Inventory.RequestCopyItemFromNotecard(UUID.Zero, item_id, folder_id, item.UUID, (the_item) =>
                         {
                             Proxy.Inventory.RemoveItem(item_id);
                         });

@@ -409,7 +409,7 @@ namespace GridProxy
             Frame.Network.AddDelegate(PacketType.FetchInventoryReply, Direction.Incoming, new PacketDelegate(onFetchInventoryReply));
             Frame.Network.AddDelegate(PacketType.ReplyTaskInventory, Direction.Incoming, new PacketDelegate(onReplyTaskInventory));
             
-            //Client.Network.RegisterEventCallback("BulkUpdateInventory", new Caps.EventQueueCallback(BulkUpdateInventoryCapHandler));
+            Frame.Network.AddEventDelegate("BulkUpdateInventory", new EventQueueDelegate(BulkUpdateInventoryCapHandler));
             //Client.Network.RegisterEventCallback("ScriptRunningReply", new Caps.EventQueueCallback(ScriptRunningReplyMessageHandler));
 
             // Watch for inventory given to us through instant message            
@@ -3969,7 +3969,7 @@ namespace GridProxy
 
         #region Packet Handlers
         
-        protected void BulkUpdateInventoryCapHandler(string capsKey, OpenMetaverse.Interfaces.IMessage message, Simulator simulator)
+        protected void BulkUpdateInventoryCapHandler(string capsKey, OpenMetaverse.Interfaces.IMessage message, RegionProxy simulator)
         {
             BulkUpdateInventoryMessage msg = (BulkUpdateInventoryMessage)message;
 

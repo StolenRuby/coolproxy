@@ -160,6 +160,10 @@
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.button5 = new System.Windows.Forms.Button();
+            this.assetCacheDirTextbox = new System.Windows.Forms.TextBox();
+            this.button6 = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.addCoolProxyToViewerButton = new System.Windows.Forms.Button();
             this.loadPluginTestButton = new System.Windows.Forms.Button();
             this.showDebugSettingsButton = new System.Windows.Forms.Button();
@@ -172,6 +176,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.saveXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.githubLinkLabel = new System.Windows.Forms.LinkLabel();
             this.numericUpDown2 = new L33T.GUI.NumericUpDown();
             this.textBox1 = new L33T.GUI.TextBox();
             this.checkBox1 = new CoolGUI.Controls.CheckBox();
@@ -184,10 +189,6 @@
             this.checkBox4 = new CoolGUI.Controls.CheckBox();
             this.checkBox19 = new CoolGUI.Controls.CheckBox();
             this.checkBox18 = new CoolGUI.Controls.CheckBox();
-            this.button5 = new System.Windows.Forms.Button();
-            this.assetCacheDirTextbox = new System.Windows.Forms.TextBox();
-            this.button6 = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -267,6 +268,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.githubLinkLabel);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.numericUpDown2);
             this.panel1.Controls.Add(this.textBox1);
@@ -1493,6 +1495,46 @@
             this.tabPage10.Text = "Advanced";
             this.tabPage10.UseVisualStyleBackColor = true;
             // 
+            // button5
+            // 
+            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button5.Location = new System.Drawing.Point(346, 65);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(36, 20);
+            this.button5.TabIndex = 38;
+            this.button5.Text = "...";
+            this.button5.UseVisualStyleBackColor = true;
+            // 
+            // assetCacheDirTextbox
+            // 
+            this.assetCacheDirTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.assetCacheDirTextbox.Location = new System.Drawing.Point(105, 65);
+            this.assetCacheDirTextbox.Name = "assetCacheDirTextbox";
+            this.assetCacheDirTextbox.ReadOnly = true;
+            this.assetCacheDirTextbox.Size = new System.Drawing.Size(235, 20);
+            this.assetCacheDirTextbox.TabIndex = 37;
+            this.assetCacheDirTextbox.Text = "./asset_cache";
+            // 
+            // button6
+            // 
+            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button6.Location = new System.Drawing.Point(388, 65);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(58, 20);
+            this.button6.TabIndex = 36;
+            this.button6.Text = "Default";
+            this.button6.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(11, 68);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(86, 13);
+            this.label4.TabIndex = 35;
+            this.label4.Text = "Asset Cache Dir:";
+            // 
             // addCoolProxyToViewerButton
             // 
             this.addCoolProxyToViewerButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -1598,6 +1640,18 @@
             this.loadXMLToolStripMenuItem.Name = "loadXMLToolStripMenuItem";
             this.loadXMLToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.loadXMLToolStripMenuItem.Text = "Load XML";
+            // 
+            // githubLinkLabel
+            // 
+            this.githubLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.githubLinkLabel.AutoSize = true;
+            this.githubLinkLabel.Location = new System.Drawing.Point(5, 249);
+            this.githubLinkLabel.Name = "githubLinkLabel";
+            this.githubLinkLabel.Size = new System.Drawing.Size(40, 13);
+            this.githubLinkLabel.TabIndex = 41;
+            this.githubLinkLabel.TabStop = true;
+            this.githubLinkLabel.Text = "GitHub";
+            this.githubLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.githubLinkLabel_LinkClicked);
             // 
             // numericUpDown2
             // 
@@ -1742,46 +1796,6 @@
             this.checkBox18.TabIndex = 28;
             this.checkBox18.Text = "Allow Multiple Instances";
             this.checkBox18.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.Location = new System.Drawing.Point(346, 65);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(36, 20);
-            this.button5.TabIndex = 38;
-            this.button5.Text = "...";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // assetCacheDirTextbox
-            // 
-            this.assetCacheDirTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.assetCacheDirTextbox.Location = new System.Drawing.Point(105, 65);
-            this.assetCacheDirTextbox.Name = "assetCacheDirTextbox";
-            this.assetCacheDirTextbox.ReadOnly = true;
-            this.assetCacheDirTextbox.Size = new System.Drawing.Size(235, 20);
-            this.assetCacheDirTextbox.TabIndex = 37;
-            this.assetCacheDirTextbox.Text = "./asset_cache";
-            // 
-            // button6
-            // 
-            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button6.Location = new System.Drawing.Point(388, 65);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(58, 20);
-            this.button6.TabIndex = 36;
-            this.button6.Text = "Default";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(11, 68);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(86, 13);
-            this.label4.TabIndex = 35;
-            this.label4.Text = "Asset Cache Dir:";
             // 
             // CoolProxyForm
             // 
@@ -1988,6 +2002,7 @@
         private System.Windows.Forms.TextBox assetCacheDirTextbox;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.LinkLabel githubLinkLabel;
     }
 }
 

@@ -1823,5 +1823,10 @@ namespace CoolProxy
                 }
             }
         }
+
+        private void githubLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/StolenRuby/coolproxy");
+        }
     }
 }

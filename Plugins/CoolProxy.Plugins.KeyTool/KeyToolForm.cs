@@ -47,6 +47,8 @@ namespace CoolProxy.Plugins.KeyTool
             showType(KT_TYPE.KT_ASSET, AssetType.Mesh, RESULT.MAYBE);
             showType(KT_TYPE.KT_ASSET, AssetType.Object, RESULT.MAYBE);
             showType(KT_TYPE.KT_ASSET, AssetType.Settings, RESULT.MAYBE);
+            showType(KT_TYPE.KT_ASSET, AssetType.Notecard, RESULT.MAYBE);
+            showType(KT_TYPE.KT_ASSET, AssetType.LSLText, RESULT.MAYBE);
 
             mInstances.Add(this);
 

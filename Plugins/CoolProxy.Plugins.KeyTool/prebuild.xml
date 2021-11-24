@@ -23,6 +23,7 @@
 	<Reference name="OpenMetaverse"/>
 	<Reference name="OpenMetaverseTypes"/>
 	<Reference name="OpenMetaverse.StructuredData"/>
+	<Reference name="CoolProxy.Plugins.NotecardMagic"/>
 	<Reference name="GridProxy"/>
 	<Reference name="CoolProxy"/>
 	<Reference name="XMLRPC"/>

@@ -95,7 +95,8 @@ namespace CoolProxy.Plugins.KeyTool
                         AssetType.Object,
                         AssetType.Mesh,
                         AssetType.Settings,
-                        AssetType.Notecard
+                        AssetType.Notecard,
+                        AssetType.LSLText
                     };
 
                     foreach(var t in assetTypes)
@@ -117,6 +118,7 @@ namespace CoolProxy.Plugins.KeyTool
                 tryAsset(AssetType.Object);
                 tryAsset(AssetType.Mesh);
                 tryAsset(AssetType.Settings);
+                tryAsset(AssetType.LSLText);
             }
         }
 
@@ -172,20 +174,44 @@ namespace CoolProxy.Plugins.KeyTool
 
         void tryAgent()
         {
-            if (sAvatarNameRequests <= 0)
+            Frame.Avatars.GetDisplayNames(new List<UUID>() { mKey }, (success, names, rejects) =>
             {
-                sAvatarNameRequests = 0;
-                Frame.Network.AddDelegate(PacketType.UUIDNameReply, Direction.Incoming, onUUIDNameReply);
-            }
+                if (success)
+                {
+                    //callback(mKey, KT_TYPE.KT_AGENT, AssetType.Unknown, !rejects.Contains(mKey)); // this should work but doesn't...
 
-            UUIDNameRequestPacket request = new UUIDNameRequestPacket();
-            request.UUIDNameBlock = new UUIDNameRequestPacket.UUIDNameBlockBlock[1];
-            request.UUIDNameBlock[0] = new UUIDNameRequestPacket.UUIDNameBlockBlock();
-            request.UUIDNameBlock[0].ID = mKey;
-            Frame.Network.InjectPacket(request, Direction.Outgoing);
+                    foreach (var name in names)
+                    {
+                        if(name.ID == mKey)
+                        {
+                            callback(mKey, KT_TYPE.KT_AGENT, AssetType.Unknown, true);
+                            return;
+                        }
+                    }
 
-            sAvatarNameRequests++;
-            mAvatarNameRequests++;
+                    callback(mKey, KT_TYPE.KT_AGENT, AssetType.Unknown, false);
+                }
+                else
+                {
+                    if (names == null && rejects == null) // no cap
+                    {
+                        if (sAvatarNameRequests <= 0)
+                        {
+                            sAvatarNameRequests = 0;
+                            Frame.Network.AddDelegate(PacketType.UUIDNameReply, Direction.Incoming, onUUIDNameReply);
+                        }
+
+                        UUIDNameRequestPacket request = new UUIDNameRequestPacket();
+                        request.UUIDNameBlock = new UUIDNameRequestPacket.UUIDNameBlockBlock[1];
+                        request.UUIDNameBlock[0] = new UUIDNameRequestPacket.UUIDNameBlockBlock();
+                        request.UUIDNameBlock[0].ID = mKey;
+                        Frame.Network.InjectPacket(request, Direction.Outgoing);
+
+                        sAvatarNameRequests++;
+                        mAvatarNameRequests++;
+                    }
+                }
+            });
         }
 
         private Packet onUUIDNameReply(Packet packet, RegionProxy endPoint)

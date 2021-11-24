@@ -1335,7 +1335,12 @@ namespace CoolProxy
             show.Click += (x, y) =>
             {
                 if (testForm.Visible)
+                {
+                    if (testForm.WindowState == FormWindowState.Minimized)
+                        testForm.WindowState = FormWindowState.Normal;
+
                     testForm.Activate();
+                }
                 else
                     testForm.Show();
             };

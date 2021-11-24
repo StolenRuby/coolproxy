@@ -622,7 +622,7 @@ namespace CoolProxy.Plugins.KeyTool
         {
             if (kt_type == KT_TYPE.KT_ASSET)
             {
-                if(KeyToolPlugin.Proxy.Network.CurrentSim.InvetoryServerURI != string.Empty)
+                if(KeyToolPlugin.Mode == OpenAssetMode.SuperSuitcase)
                 {
                     UUID folder_id = KeyToolPlugin.Proxy.Inventory.SuitcaseID != UUID.Zero ?
                         KeyToolPlugin.Proxy.Inventory.FindSuitcaseFolderForType((FolderType)asset_type) :
@@ -641,13 +641,17 @@ namespace CoolProxy.Plugins.KeyTool
                             else KeyToolPlugin.Proxy.AlertMessage("Error adding item to suitcase!", false);
                         });
                 }
-                else
+                else if(KeyToolPlugin.Mode == OpenAssetMode.NotecardMagic)
                 {
                     UUID folder_id = KeyToolPlugin.Proxy.Inventory.FindFolderForType(asset_type);
                     if (KeyToolPlugin.NotecardMagic != null)
                     {
                         KeyToolPlugin.NotecardMagic.GetAsset(folder_id, asset_id, asset_type, (InventoryType)asset_type);
                     }
+                }
+                else
+                {
+                    KeyToolPlugin.Proxy.SayToUser(string.Format("{0} is a {1}", asset_id, asset_type));
                 }
             }
             else if(kt_type == KT_TYPE.KT_AGENT)

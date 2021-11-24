@@ -36,6 +36,13 @@
 			<key>value</key>
 			<boolean>1</boolean>
 		</map>
+		<key>KeyToolOpenAssetMode</key>
+		<map>
+			<key>type</key>
+			<string>integer</string>
+			<key>value</key>
+			<integer>1</integer>
+		</map>
 		<key>EnableChatCommands</key>
 		<map>
 			<key>comment</key>

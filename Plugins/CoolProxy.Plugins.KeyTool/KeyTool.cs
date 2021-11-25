@@ -9,6 +9,7 @@ using CoolProxy;
 using OpenMetaverse;
 using OpenMetaverse.Packets;
 using static GridProxy.RegionManager;
+using System.Diagnostics;
 
 namespace CoolProxy.Plugins.KeyTool
 {
@@ -669,9 +670,9 @@ namespace CoolProxy.Plugins.KeyTool
                 }
                 else if(KeyToolPlugin.Mode == OpenAssetMode.NotecardMagic)
                 {
-                    UUID folder_id = KeyToolPlugin.Proxy.Inventory.FindFolderForType(asset_type);
                     if (KeyToolPlugin.NotecardMagic != null)
                     {
+                        UUID folder_id = KeyToolPlugin.Proxy.Inventory.FindFolderForType(asset_type);
                         KeyToolPlugin.NotecardMagic.GetAsset(folder_id, asset_id, asset_type, (InventoryType)asset_type);
                     }
                 }
@@ -682,23 +683,23 @@ namespace CoolProxy.Plugins.KeyTool
             }
             else if(kt_type == KT_TYPE.KT_AGENT)
             {
-                KeyToolPlugin.Proxy.SayToUser(string.Format("{0} is an agent secondlife:///app/agent/{0}/about", asset_id));
+                Process.Start(string.Format("secondlife:///app/agent/{0}/about", asset_id));
             }
             else if(kt_type == KT_TYPE.KT_GROUP)
             {
-                KeyToolPlugin.Proxy.SayToUser(string.Format("{0} is a group secondlife:///app/group/{0}/about", asset_id));
+                Process.Start(string.Format("secondlife:///app/group/{0}/about", asset_id));
             }
             else if(kt_type == KT_TYPE.KT_ITEM)
             {
-                KeyToolPlugin.Proxy.SayToUser(string.Format("{0} is an inventory item secondlife:///app/inventory/{0}/select", asset_id));
+                Process.Start(string.Format("secondlife:///app/inventory/{0}/select", asset_id));
             }
             else if (kt_type == KT_TYPE.KT_PARCEL)
             {
-                KeyToolPlugin.Proxy.SayToUser(string.Format("{0} is a parcel secondlife:///app/parcel/{0}/about", asset_id));
+                Process.Start(string.Format("secondlife:///app/parcel/{0}/about", asset_id));
             }
             else if (kt_type == KT_TYPE.KT_REGION)
             {
-                KeyToolPlugin.Proxy.SayToUser(string.Format("{0} is a region secondlife:///app/region/{0}/about", asset_id));
+                Process.Start(string.Format("secondlife:///app/region/{0}/about", asset_id));
             }
         }
     }

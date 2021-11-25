@@ -34,24 +34,24 @@ namespace CoolProxy
             this.Hide();
         }
 
-        internal void AddInventoryItemOption(string label, HandleInventory handle, InventoryType invType)
+        internal void AddInventoryItemOption(string label, HandleInventory handle, InventoryType invType, EnableInventory enable = null)
         {
-            inventoryTree1.AddInventoryItemOption(label, handle, invType);
+            inventoryTree1.AddInventoryItemOption(label, handle, invType, enable);
         }
 
-        internal void AddInventoryItemOption(string label, HandleInventory handle, AssetType assetType)
+        internal void AddInventoryItemOption(string label, HandleInventory handle, AssetType assetType, EnableInventory enable = null)
         {
-            inventoryTree1.AddInventoryItemOption(label, handle, assetType);
+            inventoryTree1.AddInventoryItemOption(label, handle, assetType, enable);
         }
 
-        internal void AddInventoryItemOption(string label, HandleInventory handle)
+        internal void AddInventoryItemOption(string label, HandleInventory handle, EnableInventory enable = null)
         {
-            inventoryTree1.AddInventoryItemOption(label, handle);
+            inventoryTree1.AddInventoryItemOption(label, handle, enable);
         }
 
-        internal void AddInventoryFolderOption(string label, HandleInventoryFolder handle)
+        internal void AddInventoryFolderOption(string label, HandleInventoryFolder handle, EnableInventoryFolder enable = null)
         {
-            inventoryTree1.AddInventoryFolderOption(label, handle);
+            inventoryTree1.AddInventoryFolderOption(label, handle, enable);
         }
 
         private void handleSaveFolderAs(InventoryFolder inventoryFolder)

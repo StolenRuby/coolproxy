@@ -47,24 +47,24 @@ namespace CoolProxy
 
         /////////////////////////////////////
 
-        public void AddInventoryItemOption(string label, HandleInventory handle, AssetType assetType)
+        public void AddInventoryItemOption(string label, HandleInventory handle, AssetType assetType, EnableInventory enable = null)
         {
-            coolForm.AddInventoryItemOption(label, handle, assetType);
+            coolForm.AddInventoryItemOption(label, handle, assetType, enable);
         }
 
-        public void AddInventoryItemOption(string label, HandleInventory handle, InventoryType invType)
+        public void AddInventoryItemOption(string label, HandleInventory handle, InventoryType invType, EnableInventory enable = null)
         {
-            coolForm.AddInventoryItemOption(label, handle, invType);
+            coolForm.AddInventoryItemOption(label, handle, invType, enable);
         }
 
-        public void AddInventoryItemOption(string label, HandleInventory handle)
+        public void AddInventoryItemOption(string label, HandleInventory handle, EnableInventory enable = null)
         {
-            coolForm.AddInventoryItemOption(label, handle);
+            coolForm.AddInventoryItemOption(label, handle, enable);
         }
 
-        public void AddInventoryFolderOption(string label, HandleInventoryFolder handle)
+        public void AddInventoryFolderOption(string label, HandleInventoryFolder handle, EnableInventoryFolder enable = null)
         {
-            coolForm.AddInventoryFolderOption(label, handle);
+            coolForm.AddInventoryFolderOption(label, handle, enable);
         }
 
 

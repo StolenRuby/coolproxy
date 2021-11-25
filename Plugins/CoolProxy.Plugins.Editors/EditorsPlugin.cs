@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenMetaverse;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,8 +20,8 @@ namespace CoolProxy.Plugins.Editors
             Proxy = frame;
 
 
-            GUI.AddInventoryItemOption("Hex Edit", x => new HexEditor(x, this).Show());
-            GUI.AddInventoryItemOption("Text Edit", x => new TextEditor(x, this).Show());
+            GUI.AddInventoryItemOption("Hex Edit", x => new HexEditor(x, this).Show(), x => x.AssetUUID != UUID.Zero);
+            GUI.AddInventoryItemOption("Text Edit", x => new TextEditor(x, this).Show(), x => x.AssetUUID != UUID.Zero);
         }
     }
 }

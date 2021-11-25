@@ -71,11 +71,11 @@ namespace CoolProxy.Plugins.Useful
             }
 
             GUI.AddInventoryItemOption("Copy Item ID", x => Clipboard.SetText(x.UUID.ToString()));
-            GUI.AddInventoryItemOption("Copy Asset ID", x => Clipboard.SetText(x.AssetUUID.ToString()));
+            GUI.AddInventoryItemOption("Copy Asset ID", x => Clipboard.SetText(x.AssetUUID.ToString()), x => x.AssetUUID != UUID.Zero);
 
             GUI.AddInventoryFolderOption("Copy Folder ID", x => Clipboard.SetText(x.UUID.ToString()));
 
-            GUI.AddInventoryItemOption("Save As...", handleSaveItemAs);
+            GUI.AddInventoryItemOption("Save As...", handleSaveItemAs, x => x.AssetUUID != UUID.Zero);
 
             GUI.AddInventoryItemOption("Play Locally", handlePlaySoundLocally, AssetType.Sound);
             GUI.AddInventoryItemOption("Play Inworld", handlePlaySoundInworld, AssetType.Sound);

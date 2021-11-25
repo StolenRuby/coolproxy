@@ -39,7 +39,9 @@ namespace CoolGUI.Controls
 {
 
     public delegate void HandleInventory(InventoryItem inventoryItem);
+    public delegate bool EnableInventory(InventoryItem inventoryItem);
     public delegate void HandleInventoryFolder(InventoryFolder inventoryFolder);
+    public delegate bool EnableInventoryFolder(InventoryFolder inventoryFolder);
 
     /// <summary>
     /// TreeView GUI component for browsing a client's inventory
@@ -432,13 +434,25 @@ namespace CoolGUI.Controls
             UpdateFolder(e.FolderID);
         }
 
+        struct FolderOptionPair
+        {
+            public HandleInventoryFolder Handle;
+            public EnableInventoryFolder Enable;
+        }
 
-        private Dictionary<string, HandleInventory> allTypeOptions = new Dictionary<string, HandleInventory>();
-        private Dictionary<string, HandleInventoryFolder> folderOptions = new Dictionary<string, HandleInventoryFolder>();
+        struct ItemOptionPair
+        {
+            public HandleInventory Handle;
+            public EnableInventory Enable;
+        }
 
-        private Dictionary<InventoryType, Dictionary<string, HandleInventory>> invTypeOptions = new Dictionary<InventoryType, Dictionary<string, HandleInventory>>();
 
-        private Dictionary<AssetType, Dictionary<string, HandleInventory>> assetTypeOptions = new Dictionary<AssetType, Dictionary<string, HandleInventory>>();
+        private Dictionary<string, ItemOptionPair> allTypeOptions = new Dictionary<string, ItemOptionPair>();
+        private Dictionary<string, FolderOptionPair> folderOptions = new Dictionary<string, FolderOptionPair>();
+
+        private Dictionary<InventoryType, Dictionary<string, ItemOptionPair>> invTypeOptions = new Dictionary<InventoryType, Dictionary<string, ItemOptionPair>>();
+
+        private Dictionary<AssetType, Dictionary<string, ItemOptionPair>> assetTypeOptions = new Dictionary<AssetType, Dictionary<string, ItemOptionPair>>();
 
 
         void InventoryTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -461,16 +475,18 @@ namespace CoolGUI.Controls
 
                     foreach (var pair in allTypeOptions)
                     {
-                        _ContextMenu.Items.Add(pair.Key, null, (x, y) => pair.Value(item));
+                        var add = _ContextMenu.Items.Add(pair.Key, null, (x, y) => pair.Value.Handle(item));
+                        add.Enabled = pair.Value.Enable?.Invoke(item) ?? true;
                     }
 
-                    Dictionary<string, HandleInventory> dict = null;
+                    Dictionary<string, ItemOptionPair> dict = null;
                     if (invTypeOptions.TryGetValue(item.InventoryType, out dict))
                     {
                         _ContextMenu.Items.Add("-");
                         foreach (var pair in dict)
                         {
-                            _ContextMenu.Items.Add(pair.Key, null, (x, y) => pair.Value(item));
+                            var add = _ContextMenu.Items.Add(pair.Key, null, (x, y) => pair.Value.Handle(item));
+                            add.Enabled = pair.Value.Enable?.Invoke(item) ?? true;
                         }
                     }
 
@@ -479,7 +495,8 @@ namespace CoolGUI.Controls
                         _ContextMenu.Items.Add("-");
                         foreach (var pair in dict)
                         {
-                            _ContextMenu.Items.Add(pair.Key, null, (x, y) => pair.Value(item));
+                            var add = _ContextMenu.Items.Add(pair.Key, null, (x, y) => pair.Value.Handle(item));
+                            add.Enabled = pair.Value.Enable?.Invoke(item) ?? true;
                         }
                     }
                 }
@@ -488,7 +505,8 @@ namespace CoolGUI.Controls
                     InventoryFolder folder = entry as InventoryFolder;
                     foreach (var pair in folderOptions)
                     {
-                        _ContextMenu.Items.Add(pair.Key, null, (x, y) => pair.Value(folder));
+                        var item = _ContextMenu.Items.Add(pair.Key, null, (x, y) => pair.Value.Handle(folder));
+                        item.Enabled = pair.Value.Enable?.Invoke(folder) ?? true;
                     }
                 }
                 
@@ -502,30 +520,46 @@ namespace CoolGUI.Controls
             Frame.Inventory.RequestFolderContents(folder.UUID, _Frame.Agent.AgentID, true, true, InventorySortOrder.ByDate | InventorySortOrder.FoldersByName | InventorySortOrder.SystemFoldersToTop);
         }
 
-        internal void AddInventoryItemOption(string label, HandleInventory handle, AssetType assetType)
+        internal void AddInventoryItemOption(string label, HandleInventory handle, AssetType assetType, EnableInventory enable = null)
         {
             if (!assetTypeOptions.ContainsKey(assetType))
-                assetTypeOptions.Add(assetType, new Dictionary<string, HandleInventory>());
+                assetTypeOptions.Add(assetType, new Dictionary<string, ItemOptionPair>());
 
-            assetTypeOptions[assetType].Add(label, handle);
+            assetTypeOptions[assetType].Add(label, new ItemOptionPair()
+            {
+                Handle = handle,
+                Enable = enable
+            });
         }
 
-        internal void AddInventoryItemOption(string label, HandleInventory handle, InventoryType invType)
+        internal void AddInventoryItemOption(string label, HandleInventory handle, InventoryType invType, EnableInventory enable = null)
         {
             if (!invTypeOptions.ContainsKey(invType))
-                invTypeOptions.Add(invType, new Dictionary<string, HandleInventory>());
+                invTypeOptions.Add(invType, new Dictionary<string, ItemOptionPair>());
 
-            invTypeOptions[invType].Add(label, handle);
+            invTypeOptions[invType].Add(label, new ItemOptionPair()
+            {
+                Handle = handle,
+                Enable = enable
+            });
         }
 
-        internal void AddInventoryItemOption(string label, HandleInventory handle)
+        internal void AddInventoryItemOption(string label, HandleInventory handle, EnableInventory enable = null)
         {
-            allTypeOptions.Add(label, handle);
+            allTypeOptions.Add(label, new ItemOptionPair()
+            {
+                Handle = handle,
+                Enable = enable
+            });
         }
 
-        internal void AddInventoryFolderOption(string label, HandleInventoryFolder handle)
+        internal void AddInventoryFolderOption(string label, HandleInventoryFolder handle, EnableInventoryFolder enable = null)
         {
-            folderOptions.Add(label, handle);
+            folderOptions.Add(label, new FolderOptionPair()
+            {
+                Handle = handle,
+                Enable = enable
+            });
         }
     }
 

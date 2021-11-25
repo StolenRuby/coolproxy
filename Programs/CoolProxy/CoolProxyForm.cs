@@ -487,24 +487,24 @@ namespace CoolProxy
         }
 
 
-        internal void AddInventoryItemOption(string label, CoolGUI.Controls.HandleInventory handle)
+        internal void AddInventoryItemOption(string label, CoolGUI.Controls.HandleInventory handle, CoolGUI.Controls.EnableInventory enable = null)
         {
-            inventoryBrowserForm.AddInventoryItemOption(label, handle);
+            inventoryBrowserForm.AddInventoryItemOption(label, handle, enable);
         }
 
-        internal void AddInventoryFolderOption(string label, CoolGUI.Controls.HandleInventoryFolder handle)
+        internal void AddInventoryFolderOption(string label, CoolGUI.Controls.HandleInventoryFolder handle, CoolGUI.Controls.EnableInventoryFolder enable = null)
         {
-            inventoryBrowserForm.AddInventoryFolderOption(label, handle);
+            inventoryBrowserForm.AddInventoryFolderOption(label, handle, enable);
         }
 
-        internal void AddInventoryItemOption(string label, CoolGUI.Controls.HandleInventory handle, AssetType assetType)
+        internal void AddInventoryItemOption(string label, CoolGUI.Controls.HandleInventory handle, AssetType assetType, CoolGUI.Controls.EnableInventory enable = null)
         {
-            inventoryBrowserForm.AddInventoryItemOption(label, handle, assetType);
+            inventoryBrowserForm.AddInventoryItemOption(label, handle, assetType, enable);
         }
 
-        internal void AddInventoryItemOption(string label, CoolGUI.Controls.HandleInventory handle, InventoryType invType)
+        internal void AddInventoryItemOption(string label, CoolGUI.Controls.HandleInventory handle, InventoryType invType, CoolGUI.Controls.EnableInventory enable = null)
         {
-            inventoryBrowserForm.AddInventoryItemOption(label, handle, invType);
+            inventoryBrowserForm.AddInventoryItemOption(label, handle, invType, enable);
         }
 
         public class TrayOption

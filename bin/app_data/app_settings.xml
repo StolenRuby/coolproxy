@@ -43,6 +43,13 @@
 			<key>value</key>
 			<integer>1</integer>
 		</map>
+		<key>MakeKeysInChatSLURLs</key>
+		<map>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
 		<key>EnableChatCommands</key>
 		<map>
 			<key>comment</key>

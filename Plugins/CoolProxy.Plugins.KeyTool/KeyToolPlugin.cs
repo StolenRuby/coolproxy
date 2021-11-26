@@ -1,10 +1,13 @@
 ﻿using CoolProxy.Plugins.NotecardMagic;
+using GridProxy;
 using OpenMetaverse;
+using OpenMetaverse.Packets;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -41,6 +44,9 @@ namespace CoolProxy.Plugins.KeyTool
             AddSettingsTab(gui);
 
             NotecardMagic = Proxy.RequestModuleInterface<INotecardMagic>();
+
+            Proxy.Network.AddDelegate(PacketType.ChatFromViewer, Direction.Outgoing, HandleChatFromViewer);
+            Proxy.Network.AddDelegate(PacketType.ChatFromSimulator, Direction.Incoming, HandleChatFromSimulator);
         }
 
         private void AddSettingsTab(GUIManager gui)
@@ -92,30 +98,95 @@ namespace CoolProxy.Plugins.KeyTool
 
             panel.Controls.Add(combo);
 
+            checkbox = new CoolGUI.Controls.CheckBox();
+            checkbox.AutoSize = true;
+            checkbox.Location = new Point(14, 70);
+            checkbox.Setting = "MakeKeysInChatSLURLs";
+            checkbox.Text = "Make Keys in chat SLURLs";
+
+            panel.Controls.Add(checkbox);
+
             gui.AddSettingsTab("KeyTool", panel);
         }
 
         private void handleKeyToolButton(object sender, EventArgs e)
         {
-            UUID key = UUID.Zero;
-            if (UUID.TryParse(Clipboard.GetText(), out key))
+            if (UUID.TryParse(Clipboard.GetText(), out UUID key))
             {
-                Proxy.SayToUser("KeyTool", "Running KeyTool on " + key.ToString());
-
-                Thread keytoolGUIThread = null;
-                keytoolGUIThread = new Thread(new ThreadStart(() =>
-                {
-                    var keytoolGUI = new KeyToolForm(Proxy, key);
-                    //keytoolGUI.FormClosed += (x, y) => { keytoolGUIThread = null; keytoolGUI = null; };
-                    //Application.Run(keytoolGUI);
-                    keytoolGUI.ShowDialog();
-                    keytoolGUIThread = null;
-                    keytoolGUI = null;
-                }));
-                keytoolGUIThread.SetApartmentState(ApartmentState.STA);
-                keytoolGUIThread.Start();
+                RunKeyTool(key);
             }
             else Proxy.SayToUser("KeyTool", "Invalid UUID");
+        }
+
+        private void RunKeyTool(UUID key)
+        {
+            Proxy.SayToUser("KeyTool", "Running KeyTool on " + key.ToString());
+
+            Thread keytoolGUIThread = null;
+            keytoolGUIThread = new Thread(new ThreadStart(() =>
+            {
+                var keytoolGUI = new KeyToolForm(Proxy, key);
+                keytoolGUI.ShowDialog();
+                keytoolGUIThread = null;
+                keytoolGUI = null;
+            }));
+            keytoolGUIThread.SetApartmentState(ApartmentState.STA);
+            keytoolGUIThread.Start();
+        }
+
+        private Packet HandleChatFromSimulator(Packet packet, RegionManager.RegionProxy sim)
+        {
+            if (!Settings.getBool("MakeKeysInChatSLURLs")) return packet;
+
+            ChatFromSimulatorPacket chat = (ChatFromSimulatorPacket)packet;
+
+            string message = Utils.BytesToString(chat.ChatData.Message);
+
+            var matches = Regex.Matches(message, "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}");
+
+            if (matches.Count > 0)
+            {
+                string new_string = string.Empty;
+                int last_index = 0;
+
+                foreach (Match match in matches)
+                {
+                    string sub_str = message.Substring(last_index, match.Index - last_index);
+
+                    new_string += sub_str + "[secondlife:///app/chat/1337/" + match.Value + " " + match.Value + "]";
+
+                    last_index = match.Index + 36;
+                }
+
+                if (last_index != message.Length)
+                {
+                    new_string += message.Substring(last_index);
+                }
+
+                chat.ChatData.Message = Utils.StringToBytes(new_string);
+
+                return chat;
+            }
+
+            return packet;
+        }
+
+        private Packet HandleChatFromViewer(Packet packet, RegionManager.RegionProxy sim)
+        {
+            ChatFromViewerPacket chat = (ChatFromViewerPacket)packet;
+
+            if (chat.ChatData.Channel == 1337)
+            {
+                string message = Utils.BytesToString(chat.ChatData.Message);
+
+                if (UUID.TryParse(message, out UUID key))
+                {
+                    RunKeyTool(key);
+                    return null;
+                }
+            }
+
+            return packet;
         }
     }
 }

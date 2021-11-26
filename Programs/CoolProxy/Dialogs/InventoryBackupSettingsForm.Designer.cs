@@ -28,16 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
-            this.checkBox7 = new System.Windows.Forms.CheckBox();
-            this.checkBox8 = new System.Windows.Forms.CheckBox();
-            this.checkBox9 = new System.Windows.Forms.CheckBox();
-            this.checkBox10 = new System.Windows.Forms.CheckBox();
+            this.texturesCheckbox = new System.Windows.Forms.CheckBox();
+            this.soundsCheckbox = new System.Windows.Forms.CheckBox();
+            this.callingCardsCheckbox = new System.Windows.Forms.CheckBox();
+            this.landmarksCheckbox = new System.Windows.Forms.CheckBox();
+            this.scriptsCheckbox = new System.Windows.Forms.CheckBox();
+            this.clothingCheckbox = new System.Windows.Forms.CheckBox();
+            this.objectsCheckbox = new System.Windows.Forms.CheckBox();
+            this.notecardsCheckbox = new System.Windows.Forms.CheckBox();
+            this.animationsCheckbox = new System.Windows.Forms.CheckBox();
+            this.gesturesCheckbox = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.pictureBox9 = new System.Windows.Forms.PictureBox();
@@ -50,9 +50,9 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
-            this.checkBox11 = new System.Windows.Forms.CheckBox();
+            this.settingsCheckbox = new System.Windows.Forms.CheckBox();
             this.pictureBox12 = new System.Windows.Forms.PictureBox();
-            this.checkBox12 = new System.Windows.Forms.CheckBox();
+            this.bodypartsCheckbox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
@@ -67,133 +67,133 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
             this.SuspendLayout();
             // 
-            // checkBox1
+            // texturesCheckbox
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.checkBox1.Location = new System.Drawing.Point(33, 12);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(67, 17);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Textures";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.texturesCheckbox.AutoSize = true;
+            this.texturesCheckbox.Checked = true;
+            this.texturesCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.texturesCheckbox.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.texturesCheckbox.Location = new System.Drawing.Point(33, 12);
+            this.texturesCheckbox.Name = "texturesCheckbox";
+            this.texturesCheckbox.Size = new System.Drawing.Size(67, 17);
+            this.texturesCheckbox.TabIndex = 0;
+            this.texturesCheckbox.Text = "Textures";
+            this.texturesCheckbox.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // soundsCheckbox
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.checkBox2.Location = new System.Drawing.Point(33, 35);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(62, 17);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Sounds";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.soundsCheckbox.AutoSize = true;
+            this.soundsCheckbox.Checked = true;
+            this.soundsCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.soundsCheckbox.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.soundsCheckbox.Location = new System.Drawing.Point(33, 35);
+            this.soundsCheckbox.Name = "soundsCheckbox";
+            this.soundsCheckbox.Size = new System.Drawing.Size(62, 17);
+            this.soundsCheckbox.TabIndex = 1;
+            this.soundsCheckbox.Text = "Sounds";
+            this.soundsCheckbox.UseVisualStyleBackColor = true;
             // 
-            // checkBox3
+            // callingCardsCheckbox
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.checkBox3.Location = new System.Drawing.Point(33, 58);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(87, 17);
-            this.checkBox3.TabIndex = 2;
-            this.checkBox3.Text = "Calling Cards";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.callingCardsCheckbox.AutoSize = true;
+            this.callingCardsCheckbox.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.callingCardsCheckbox.Location = new System.Drawing.Point(33, 58);
+            this.callingCardsCheckbox.Name = "callingCardsCheckbox";
+            this.callingCardsCheckbox.Size = new System.Drawing.Size(87, 17);
+            this.callingCardsCheckbox.TabIndex = 2;
+            this.callingCardsCheckbox.Text = "Calling Cards";
+            this.callingCardsCheckbox.UseVisualStyleBackColor = true;
             // 
-            // checkBox4
+            // landmarksCheckbox
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Checked = true;
-            this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox4.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.checkBox4.Location = new System.Drawing.Point(33, 81);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(78, 17);
-            this.checkBox4.TabIndex = 3;
-            this.checkBox4.Text = "Landmarks";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.landmarksCheckbox.AutoSize = true;
+            this.landmarksCheckbox.Checked = true;
+            this.landmarksCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.landmarksCheckbox.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.landmarksCheckbox.Location = new System.Drawing.Point(33, 81);
+            this.landmarksCheckbox.Name = "landmarksCheckbox";
+            this.landmarksCheckbox.Size = new System.Drawing.Size(78, 17);
+            this.landmarksCheckbox.TabIndex = 3;
+            this.landmarksCheckbox.Text = "Landmarks";
+            this.landmarksCheckbox.UseVisualStyleBackColor = true;
             // 
-            // checkBox5
+            // scriptsCheckbox
             // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Checked = true;
-            this.checkBox5.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox5.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.checkBox5.Location = new System.Drawing.Point(33, 104);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(58, 17);
-            this.checkBox5.TabIndex = 4;
-            this.checkBox5.Text = "Scripts";
-            this.checkBox5.UseVisualStyleBackColor = true;
+            this.scriptsCheckbox.AutoSize = true;
+            this.scriptsCheckbox.Checked = true;
+            this.scriptsCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.scriptsCheckbox.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.scriptsCheckbox.Location = new System.Drawing.Point(33, 104);
+            this.scriptsCheckbox.Name = "scriptsCheckbox";
+            this.scriptsCheckbox.Size = new System.Drawing.Size(58, 17);
+            this.scriptsCheckbox.TabIndex = 4;
+            this.scriptsCheckbox.Text = "Scripts";
+            this.scriptsCheckbox.UseVisualStyleBackColor = true;
             // 
-            // checkBox6
+            // clothingCheckbox
             // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Checked = true;
-            this.checkBox6.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox6.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.checkBox6.Location = new System.Drawing.Point(33, 127);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(77, 17);
-            this.checkBox6.TabIndex = 5;
-            this.checkBox6.Text = "Wearables";
-            this.checkBox6.UseVisualStyleBackColor = true;
+            this.clothingCheckbox.AutoSize = true;
+            this.clothingCheckbox.Checked = true;
+            this.clothingCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.clothingCheckbox.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.clothingCheckbox.Location = new System.Drawing.Point(33, 127);
+            this.clothingCheckbox.Name = "clothingCheckbox";
+            this.clothingCheckbox.Size = new System.Drawing.Size(64, 17);
+            this.clothingCheckbox.TabIndex = 5;
+            this.clothingCheckbox.Text = "Clothing";
+            this.clothingCheckbox.UseVisualStyleBackColor = true;
             // 
-            // checkBox7
+            // objectsCheckbox
             // 
-            this.checkBox7.AutoSize = true;
-            this.checkBox7.Checked = true;
-            this.checkBox7.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox7.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.checkBox7.Location = new System.Drawing.Point(32, 150);
-            this.checkBox7.Name = "checkBox7";
-            this.checkBox7.Size = new System.Drawing.Size(62, 17);
-            this.checkBox7.TabIndex = 6;
-            this.checkBox7.Text = "Objects";
-            this.checkBox7.UseVisualStyleBackColor = true;
+            this.objectsCheckbox.AutoSize = true;
+            this.objectsCheckbox.Checked = true;
+            this.objectsCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.objectsCheckbox.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.objectsCheckbox.Location = new System.Drawing.Point(32, 150);
+            this.objectsCheckbox.Name = "objectsCheckbox";
+            this.objectsCheckbox.Size = new System.Drawing.Size(62, 17);
+            this.objectsCheckbox.TabIndex = 6;
+            this.objectsCheckbox.Text = "Objects";
+            this.objectsCheckbox.UseVisualStyleBackColor = true;
             // 
-            // checkBox8
+            // notecardsCheckbox
             // 
-            this.checkBox8.AutoSize = true;
-            this.checkBox8.Checked = true;
-            this.checkBox8.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox8.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.checkBox8.Location = new System.Drawing.Point(33, 173);
-            this.checkBox8.Name = "checkBox8";
-            this.checkBox8.Size = new System.Drawing.Size(75, 17);
-            this.checkBox8.TabIndex = 7;
-            this.checkBox8.Text = "Notecards";
-            this.checkBox8.UseVisualStyleBackColor = true;
+            this.notecardsCheckbox.AutoSize = true;
+            this.notecardsCheckbox.Checked = true;
+            this.notecardsCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.notecardsCheckbox.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.notecardsCheckbox.Location = new System.Drawing.Point(33, 173);
+            this.notecardsCheckbox.Name = "notecardsCheckbox";
+            this.notecardsCheckbox.Size = new System.Drawing.Size(75, 17);
+            this.notecardsCheckbox.TabIndex = 7;
+            this.notecardsCheckbox.Text = "Notecards";
+            this.notecardsCheckbox.UseVisualStyleBackColor = true;
             // 
-            // checkBox9
+            // animationsCheckbox
             // 
-            this.checkBox9.AutoSize = true;
-            this.checkBox9.Checked = true;
-            this.checkBox9.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox9.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.checkBox9.Location = new System.Drawing.Point(33, 196);
-            this.checkBox9.Name = "checkBox9";
-            this.checkBox9.Size = new System.Drawing.Size(77, 17);
-            this.checkBox9.TabIndex = 8;
-            this.checkBox9.Text = "Animations";
-            this.checkBox9.UseVisualStyleBackColor = true;
+            this.animationsCheckbox.AutoSize = true;
+            this.animationsCheckbox.Checked = true;
+            this.animationsCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.animationsCheckbox.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.animationsCheckbox.Location = new System.Drawing.Point(33, 196);
+            this.animationsCheckbox.Name = "animationsCheckbox";
+            this.animationsCheckbox.Size = new System.Drawing.Size(77, 17);
+            this.animationsCheckbox.TabIndex = 8;
+            this.animationsCheckbox.Text = "Animations";
+            this.animationsCheckbox.UseVisualStyleBackColor = true;
             // 
-            // checkBox10
+            // gesturesCheckbox
             // 
-            this.checkBox10.AutoSize = true;
-            this.checkBox10.Checked = true;
-            this.checkBox10.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox10.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.checkBox10.Location = new System.Drawing.Point(32, 219);
-            this.checkBox10.Name = "checkBox10";
-            this.checkBox10.Size = new System.Drawing.Size(68, 17);
-            this.checkBox10.TabIndex = 9;
-            this.checkBox10.Text = "Gestures";
-            this.checkBox10.UseVisualStyleBackColor = true;
+            this.gesturesCheckbox.AutoSize = true;
+            this.gesturesCheckbox.Checked = true;
+            this.gesturesCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.gesturesCheckbox.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.gesturesCheckbox.Location = new System.Drawing.Point(32, 219);
+            this.gesturesCheckbox.Name = "gesturesCheckbox";
+            this.gesturesCheckbox.Size = new System.Drawing.Size(68, 17);
+            this.gesturesCheckbox.TabIndex = 9;
+            this.gesturesCheckbox.Text = "Gestures";
+            this.gesturesCheckbox.UseVisualStyleBackColor = true;
             // 
             // button1
             // 
@@ -306,40 +306,40 @@
             this.pictureBox11.TabIndex = 22;
             this.pictureBox11.TabStop = false;
             // 
-            // checkBox11
+            // settingsCheckbox
             // 
-            this.checkBox11.AutoSize = true;
-            this.checkBox11.Checked = true;
-            this.checkBox11.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox11.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.checkBox11.Location = new System.Drawing.Point(32, 242);
-            this.checkBox11.Name = "checkBox11";
-            this.checkBox11.Size = new System.Drawing.Size(64, 17);
-            this.checkBox11.TabIndex = 21;
-            this.checkBox11.Text = "Settings";
-            this.checkBox11.UseVisualStyleBackColor = true;
+            this.settingsCheckbox.AutoSize = true;
+            this.settingsCheckbox.Checked = true;
+            this.settingsCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.settingsCheckbox.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.settingsCheckbox.Location = new System.Drawing.Point(32, 242);
+            this.settingsCheckbox.Name = "settingsCheckbox";
+            this.settingsCheckbox.Size = new System.Drawing.Size(64, 17);
+            this.settingsCheckbox.TabIndex = 21;
+            this.settingsCheckbox.Text = "Settings";
+            this.settingsCheckbox.UseVisualStyleBackColor = true;
             // 
             // pictureBox12
             // 
-            this.pictureBox12.Image = global::CoolProxy.Properties.Resources.Inv_Physics;
+            this.pictureBox12.Image = global::CoolProxy.Properties.Resources.Inv_Skin;
             this.pictureBox12.Location = new System.Drawing.Point(12, 265);
             this.pictureBox12.Name = "pictureBox12";
             this.pictureBox12.Size = new System.Drawing.Size(15, 15);
             this.pictureBox12.TabIndex = 24;
             this.pictureBox12.TabStop = false;
             // 
-            // checkBox12
+            // bodypartsCheckbox
             // 
-            this.checkBox12.AutoSize = true;
-            this.checkBox12.Checked = true;
-            this.checkBox12.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox12.ForeColor = System.Drawing.SystemColors.ScrollBar;
-            this.checkBox12.Location = new System.Drawing.Point(32, 265);
-            this.checkBox12.Name = "checkBox12";
-            this.checkBox12.Size = new System.Drawing.Size(62, 17);
-            this.checkBox12.TabIndex = 23;
-            this.checkBox12.Text = "Physics";
-            this.checkBox12.UseVisualStyleBackColor = true;
+            this.bodypartsCheckbox.AutoSize = true;
+            this.bodypartsCheckbox.Checked = true;
+            this.bodypartsCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.bodypartsCheckbox.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.bodypartsCheckbox.Location = new System.Drawing.Point(32, 265);
+            this.bodypartsCheckbox.Name = "bodypartsCheckbox";
+            this.bodypartsCheckbox.Size = new System.Drawing.Size(77, 17);
+            this.bodypartsCheckbox.TabIndex = 23;
+            this.bodypartsCheckbox.Text = "Body Parts";
+            this.bodypartsCheckbox.UseVisualStyleBackColor = true;
             // 
             // InventoryBackupSettingsForm
             // 
@@ -348,9 +348,9 @@
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(144, 321);
             this.Controls.Add(this.pictureBox12);
-            this.Controls.Add(this.checkBox12);
+            this.Controls.Add(this.bodypartsCheckbox);
             this.Controls.Add(this.pictureBox11);
-            this.Controls.Add(this.checkBox11);
+            this.Controls.Add(this.settingsCheckbox);
             this.Controls.Add(this.pictureBox10);
             this.Controls.Add(this.pictureBox9);
             this.Controls.Add(this.pictureBox8);
@@ -362,16 +362,16 @@
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.checkBox10);
-            this.Controls.Add(this.checkBox9);
-            this.Controls.Add(this.checkBox8);
-            this.Controls.Add(this.checkBox7);
-            this.Controls.Add(this.checkBox6);
-            this.Controls.Add(this.checkBox5);
-            this.Controls.Add(this.checkBox4);
-            this.Controls.Add(this.checkBox3);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.gesturesCheckbox);
+            this.Controls.Add(this.animationsCheckbox);
+            this.Controls.Add(this.notecardsCheckbox);
+            this.Controls.Add(this.objectsCheckbox);
+            this.Controls.Add(this.clothingCheckbox);
+            this.Controls.Add(this.scriptsCheckbox);
+            this.Controls.Add(this.landmarksCheckbox);
+            this.Controls.Add(this.callingCardsCheckbox);
+            this.Controls.Add(this.soundsCheckbox);
+            this.Controls.Add(this.texturesCheckbox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -397,16 +397,16 @@
 
         #endregion
 
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.CheckBox checkBox6;
-        private System.Windows.Forms.CheckBox checkBox7;
-        private System.Windows.Forms.CheckBox checkBox8;
-        private System.Windows.Forms.CheckBox checkBox9;
-        private System.Windows.Forms.CheckBox checkBox10;
+        private System.Windows.Forms.CheckBox texturesCheckbox;
+        private System.Windows.Forms.CheckBox soundsCheckbox;
+        private System.Windows.Forms.CheckBox callingCardsCheckbox;
+        private System.Windows.Forms.CheckBox landmarksCheckbox;
+        private System.Windows.Forms.CheckBox scriptsCheckbox;
+        private System.Windows.Forms.CheckBox clothingCheckbox;
+        private System.Windows.Forms.CheckBox objectsCheckbox;
+        private System.Windows.Forms.CheckBox notecardsCheckbox;
+        private System.Windows.Forms.CheckBox animationsCheckbox;
+        private System.Windows.Forms.CheckBox gesturesCheckbox;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
@@ -419,8 +419,8 @@
         private System.Windows.Forms.PictureBox pictureBox9;
         private System.Windows.Forms.PictureBox pictureBox10;
         private System.Windows.Forms.PictureBox pictureBox11;
-        private System.Windows.Forms.CheckBox checkBox11;
+        private System.Windows.Forms.CheckBox settingsCheckbox;
         private System.Windows.Forms.PictureBox pictureBox12;
-        private System.Windows.Forms.CheckBox checkBox12;
+        private System.Windows.Forms.CheckBox bodypartsCheckbox;
     }
 }

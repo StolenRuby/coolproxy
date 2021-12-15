@@ -40,9 +40,30 @@
             this.copyItemIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyAssetIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.inventoryImageList = new System.Windows.Forms.ImageList(this.components);
-            this.inventoryTree1 = new CoolGUI.Controls.InventoryTree();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.expandAllFoldersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.collapseAllFoldersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.emptyTrashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newNotecardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newGestureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.filterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.inventoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.inventoryBrowser = new CoolGUI.Controls.InventoryBrowser();
             this.folderContextMenuStrip.SuspendLayout();
             this.assetContextMenuStrip.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // folderContextMenuStrip
@@ -162,32 +183,208 @@
             this.inventoryImageList.Images.SetKeyName(50, "Inv_SettingsSky.png");
             this.inventoryImageList.Images.SetKeyName(51, "Inv_SettingsWater.png");
             // 
-            // inventoryTree1
+            // menuStrip1
             // 
-            this.inventoryTree1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.inventoryTree1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.inventoryTree1.Frame = null;
-            this.inventoryTree1.ImageIndex = 0;
-            this.inventoryTree1.ImageList = this.inventoryImageList;
-            this.inventoryTree1.Location = new System.Drawing.Point(0, 0);
-            this.inventoryTree1.Name = "inventoryTree1";
-            this.inventoryTree1.SelectedImageIndex = 0;
-            this.inventoryTree1.Size = new System.Drawing.Size(274, 492);
-            this.inventoryTree1.TabIndex = 2;
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.createToolStripMenuItem,
+            this.filterToolStripMenuItem,
+            this.inventoryToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.menuStrip1.Size = new System.Drawing.Size(274, 24);
+            this.menuStrip1.TabIndex = 3;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.expandAllFoldersToolStripMenuItem,
+            this.collapseAllFoldersToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.emptyTrashToolStripMenuItem});
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(69, 20);
+            this.toolStripMenuItem1.Text = "Inventory";
+            // 
+            // expandAllFoldersToolStripMenuItem
+            // 
+            this.expandAllFoldersToolStripMenuItem.Name = "expandAllFoldersToolStripMenuItem";
+            this.expandAllFoldersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.expandAllFoldersToolStripMenuItem.Text = "Expand All Folders";
+            this.expandAllFoldersToolStripMenuItem.Click += new System.EventHandler(this.expandAllFoldersToolStripMenuItem_Click);
+            // 
+            // collapseAllFoldersToolStripMenuItem
+            // 
+            this.collapseAllFoldersToolStripMenuItem.Name = "collapseAllFoldersToolStripMenuItem";
+            this.collapseAllFoldersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.collapseAllFoldersToolStripMenuItem.Text = "Collapse All Folders";
+            this.collapseAllFoldersToolStripMenuItem.Click += new System.EventHandler(this.collapseAllFoldersToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            // 
+            // emptyTrashToolStripMenuItem
+            // 
+            this.emptyTrashToolStripMenuItem.Enabled = false;
+            this.emptyTrashToolStripMenuItem.Name = "emptyTrashToolStripMenuItem";
+            this.emptyTrashToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.emptyTrashToolStripMenuItem.Text = "Empty Trash";
+            this.emptyTrashToolStripMenuItem.Click += new System.EventHandler(this.emptyTrashToolStripMenuItem_Click);
+            // 
+            // createToolStripMenuItem
+            // 
+            this.createToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newFolderToolStripMenuItem,
+            this.newScriptToolStripMenuItem,
+            this.newNotecardToolStripMenuItem,
+            this.newGestureToolStripMenuItem});
+            this.createToolStripMenuItem.Name = "createToolStripMenuItem";
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+            this.createToolStripMenuItem.Text = "Create";
+            // 
+            // newFolderToolStripMenuItem
+            // 
+            this.newFolderToolStripMenuItem.Name = "newFolderToolStripMenuItem";
+            this.newFolderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newFolderToolStripMenuItem.Text = "New Folder";
+            this.newFolderToolStripMenuItem.Click += new System.EventHandler(this.newFolderToolStripMenuItem_Click);
+            // 
+            // newScriptToolStripMenuItem
+            // 
+            this.newScriptToolStripMenuItem.Name = "newScriptToolStripMenuItem";
+            this.newScriptToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newScriptToolStripMenuItem.Text = "New Script";
+            this.newScriptToolStripMenuItem.Click += new System.EventHandler(this.newScriptToolStripMenuItem_Click);
+            // 
+            // newNotecardToolStripMenuItem
+            // 
+            this.newNotecardToolStripMenuItem.Name = "newNotecardToolStripMenuItem";
+            this.newNotecardToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newNotecardToolStripMenuItem.Text = "New Note";
+            this.newNotecardToolStripMenuItem.Click += new System.EventHandler(this.newNotecardToolStripMenuItem_Click);
+            // 
+            // newGestureToolStripMenuItem
+            // 
+            this.newGestureToolStripMenuItem.Name = "newGestureToolStripMenuItem";
+            this.newGestureToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newGestureToolStripMenuItem.Text = "New Gesture";
+            this.newGestureToolStripMenuItem.Click += new System.EventHandler(this.newGestureToolStripMenuItem_Click);
+            // 
+            // filterToolStripMenuItem
+            // 
+            this.filterToolStripMenuItem.Name = "filterToolStripMenuItem";
+            this.filterToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            this.filterToolStripMenuItem.Text = "Filter";
+            // 
+            // inventoryToolStripMenuItem
+            // 
+            this.inventoryToolStripMenuItem.Name = "inventoryToolStripMenuItem";
+            this.inventoryToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.inventoryToolStripMenuItem.Text = "Search";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.textBox1.Location = new System.Drawing.Point(0, 0);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(274, 20);
+            this.textBox1.TabIndex = 0;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.comboBox1);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 24);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(274, 49);
+            this.panel1.TabIndex = 4;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(149, 24);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(114, 27);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(32, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Filter:";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(30, 22);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(26, 23);
+            this.button2.TabIndex = 2;
+            this.button2.Text = "+";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.expandAllFoldersToolStripMenuItem_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(3, 22);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(26, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "-";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.collapseAllFoldersToolStripMenuItem_Click);
+            // 
+            // inventoryBrowser
+            // 
+            this.inventoryBrowser.AutoScroll = true;
+            this.inventoryBrowser.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
+            this.inventoryBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.inventoryBrowser.ImageList = this.inventoryImageList;
+            this.inventoryBrowser.Location = new System.Drawing.Point(0, 73);
+            this.inventoryBrowser.Name = "inventoryBrowser";
+            this.inventoryBrowser.Proxy = null;
+            this.inventoryBrowser.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(119)))), ((int)(((byte)(164)))));
+            this.inventoryBrowser.Size = new System.Drawing.Size(274, 419);
+            this.inventoryBrowser.TabIndex = 5;
             // 
             // InventoryBrowserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(274, 492);
-            this.Controls.Add(this.inventoryTree1);
+            this.Controls.Add(this.inventoryBrowser);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(275, 400);
             this.Name = "InventoryBrowserForm";
             this.Text = "Inventory";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.InventoryBrowserForm_FormClosing);
             this.folderContextMenuStrip.ResumeLayout(false);
             this.assetContextMenuStrip.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -202,6 +399,25 @@
         private System.Windows.Forms.ToolStripMenuItem copyAssetIDToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem uploadItemHereToolStripMenuItem;
-        private CoolGUI.Controls.InventoryTree inventoryTree1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem inventoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem filterToolStripMenuItem;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ToolStripMenuItem newFolderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newScriptToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newNotecardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem expandAllFoldersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem collapseAllFoldersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem emptyTrashToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newGestureToolStripMenuItem;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private CoolGUI.Controls.InventoryBrowser inventoryBrowser;
     }
 }

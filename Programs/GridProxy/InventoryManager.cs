@@ -40,6 +40,7 @@ using Nwc.XmlRpc;
 using GridProxy;
 using static GridProxy.RegionManager;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace GridProxy
 {
@@ -408,6 +409,11 @@ namespace GridProxy
             Frame.Network.AddDelegate(PacketType.InventoryDescendents, Direction.Incoming, new PacketDelegate(onInventoryDescendents));
             Frame.Network.AddDelegate(PacketType.FetchInventoryReply, Direction.Incoming, new PacketDelegate(onFetchInventoryReply));
             Frame.Network.AddDelegate(PacketType.ReplyTaskInventory, Direction.Incoming, new PacketDelegate(onReplyTaskInventory));
+
+            Frame.Network.AddDelegate(PacketType.CreateInventoryFolder, Direction.Outgoing, HandleCreateInventoryFolder);
+            Frame.Network.AddDelegate(PacketType.UpdateInventoryFolder, Direction.Outgoing, HandleUpdateInventoryFolder);
+            Frame.Network.AddDelegate(PacketType.MoveInventoryFolder, Direction.Outgoing, HandleMoveInventoryFolder);
+            Frame.Network.AddDelegate(PacketType.UpdateInventoryItem, Direction.Outgoing, HandleUpdateInventoryItem);
             
             Frame.Network.AddEventDelegate("BulkUpdateInventory", new EventQueueDelegate(BulkUpdateInventoryCapHandler));
             //Client.Network.RegisterEventCallback("ScriptRunningReply", new Caps.EventQueueCallback(ScriptRunningReplyMessageHandler));
@@ -416,6 +422,29 @@ namespace GridProxy
             //Client.Self.IM += Self_IM;
 
             Frame.Login.AddLoginResponseDelegate(new XmlRpcResponseDelegate(onLoginResponse));
+
+            bool has_fetched = false;
+            Frame.Network.OnCaps += () =>
+            {
+                if (!has_fetched)
+                {
+                    has_fetched = true;
+                    new Task(() =>
+                    {
+                        LoadInv(Frame.Inventory.InventoryRoot);
+                        OpenMetaverse.Logger.Log("Finished loading inventory!", Helpers.LogLevel.Info);
+                    }).Start();
+                }
+            };
+        }
+
+        ~InventoryManager()
+        {
+            if(Store != null)
+            {
+                string inv_cache_file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CoolProxy\\inv_cache\\" + Store.RootFolder.UUID.ToString());
+                Store.SaveToDisk(inv_cache_file);
+            }
         }
 
         private void onLoginResponse(XmlRpcResponse response)
@@ -447,7 +476,41 @@ namespace GridProxy
 
             for (int i = 0; i < replyData.LibrarySkeleton.Length; i++)
                 _Store.UpdateNodeFor(replyData.LibrarySkeleton[i]);
+
+
+            string inv_cache_dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CoolProxy\\inv_cache\\");
+
+            if (!Directory.Exists(inv_cache_dir))
+            {
+                Directory.CreateDirectory(inv_cache_dir);
+            }
+            else
+            {
+                string inv_cache_file = inv_cache_dir + rootFolder.UUID.ToString();
+                if(File.Exists(inv_cache_file))
+                {
+                    OpenMetaverse.Logger.DebugLog("Loading inv cache from disk");
+                    _Store.RestoreFromDisk(inv_cache_file);
+                }
+            }
         }
+
+        private void LoadInv(UUID folder_id)
+        {
+            var content = FolderContents(folder_id, Frame.Agent.AgentID, true, true, InventorySortOrder.ByDate, 10000);
+            if(content != null)
+            {
+                foreach (var b in content)
+                {
+                    if (b is InventoryFolder)
+                    {
+                        LoadInv(b.UUID);
+                    }
+                }
+            }
+        }
+
+        // Incoming Packets 
 
         private Packet onUpdateCreateInventoryItem(Packet packet, RegionProxy region)
         {
@@ -875,6 +938,84 @@ namespace GridProxy
             return packet;
         }
 
+        // Outgoing Packets
+
+        private Packet HandleCreateInventoryFolder(Packet packet, RegionProxy sim)
+        {
+            CreateInventoryFolderPacket createInventoryFolder = (CreateInventoryFolderPacket)packet;
+
+            if (!_Store.Contains(createInventoryFolder.FolderData.FolderID))
+            {
+                InventoryFolder folder = new InventoryFolder(createInventoryFolder.FolderData.FolderID);
+                folder.ParentUUID = createInventoryFolder.FolderData.ParentID;
+                folder.Name = Utils.BytesToString(createInventoryFolder.FolderData.Name);
+                folder.PreferredType = (FolderType)createInventoryFolder.FolderData.Type;
+                folder.OwnerID = createInventoryFolder.AgentData.AgentID;
+
+                _Store[folder.UUID] = folder;
+            }
+
+            OnFolderUpdated(new FolderUpdatedEventArgs(createInventoryFolder.FolderData.FolderID, true));
+
+            return packet;
+        }
+
+        private Packet HandleUpdateInventoryFolder(Packet packet, RegionProxy sim)
+        {
+            UpdateInventoryFolderPacket updateInventoryFolder = (UpdateInventoryFolderPacket)packet;
+
+            foreach(var block in updateInventoryFolder.FolderData)
+            {
+                if(Store.Contains(block.FolderID))
+                {
+                    var item = Store[block.FolderID];
+                    item.Name = Utils.BytesToString(block.Name);
+                    item.ParentUUID = block.ParentID;
+                }
+
+                OnFolderUpdated(new FolderUpdatedEventArgs(block.FolderID, true));
+            }
+
+            return packet;
+        }
+
+        private Packet HandleMoveInventoryFolder(Packet packet, RegionProxy sim)
+        {
+            MoveInventoryFolderPacket moveInventoryFolder = (MoveInventoryFolderPacket)packet;
+
+            foreach (var block in moveInventoryFolder.InventoryData)
+            {
+                if(Store.Items.TryGetValue(block.FolderID, out var node))
+                {
+                    InventoryFolder folder = (InventoryFolder)node.Data;
+                    folder.ParentUUID = block.ParentID;
+
+                    _Store.UpdateNodeFor(folder);
+                }
+            }
+
+            return packet;
+        }
+
+        private Packet HandleUpdateInventoryItem(Packet packet, RegionProxy sim)
+        {
+            UpdateInventoryItemPacket updateInventoryItemPacket = (UpdateInventoryItemPacket)packet;
+
+            foreach(var block in updateInventoryItemPacket.InventoryData)
+            {
+                if (Store.Items.TryGetValue(block.ItemID, out var node))
+                {
+                    var item = node.Data as InventoryItem;
+                    item.Name = Utils.BytesToString(block.Name);
+                    item.Description = Utils.BytesToString(block.Description);
+                    item.ParentUUID = block.FolderID;
+
+                    _Store.UpdateNodeFor(item);
+                }
+            }
+
+            return packet;
+        }
 
         #region Fetch
 

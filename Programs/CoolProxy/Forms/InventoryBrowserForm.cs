@@ -17,15 +17,38 @@ namespace CoolProxy
         public InventoryBrowserForm()
         {
             InitializeComponent();
-            inventoryTree1.Frame = CoolProxy.Frame;
+            inventoryBrowser.Proxy = CoolProxy.Frame;
 
             this.TopMost = CoolProxy.Settings.getBool("KeepCoolProxyOnTop");
             CoolProxy.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
+
+            comboBox1.Items.Add("All Types");
+            var types = Enum.GetValues(typeof(InventoryType)).Cast<InventoryType>().Select(x => x.ToString()).Distinct().ToList();
+            types.Remove("Unknown");
+            types.Remove("Folder");
+            types.Remove("RootCategory");
+            types.Remove("Attachment");
+            comboBox1.Items.AddRange(types.ToArray());
+            comboBox1.SelectedIndex = 0;
+
+            comboBox1.SelectedIndexChanged += ComboBox1_SelectedIndexChanged;
+
+            inventoryBrowser.NodeAdded += InventoryBrowser_NodeAdded;
         }
 
-        internal void InitOptions()
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //CoolProxy.GUI.AddInventoryFolderOption("Save As...", handleSaveFolderAs);
+            string type = comboBox1.SelectedItem.ToString();
+            if (!Enum.TryParse(type, out InventoryType etype))
+            {
+                etype = InventoryType.Unknown;
+            }
+            inventoryBrowser.SetTypeFilter(etype);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            inventoryBrowser.SetNameFilter(textBox1.Text);
         }
 
         private void InventoryBrowserForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -36,34 +59,83 @@ namespace CoolProxy
 
         internal void AddInventoryItemOption(string label, HandleInventory handle, InventoryType invType, EnableInventory enable = null)
         {
-            inventoryTree1.AddInventoryItemOption(label, handle, invType, enable);
+            inventoryBrowser.AddInventoryItemOption(label, handle, invType, enable);
         }
 
         internal void AddInventoryItemOption(string label, HandleInventory handle, AssetType assetType, EnableInventory enable = null)
         {
-            inventoryTree1.AddInventoryItemOption(label, handle, assetType, enable);
+            inventoryBrowser.AddInventoryItemOption(label, handle, assetType, enable);
         }
 
         internal void AddInventoryItemOption(string label, HandleInventory handle, EnableInventory enable = null)
         {
-            inventoryTree1.AddInventoryItemOption(label, handle, enable);
+            inventoryBrowser.AddInventoryItemOption(label, handle, enable);
         }
 
         internal void AddInventoryFolderOption(string label, HandleInventoryFolder handle, EnableInventoryFolder enable = null)
         {
-            inventoryTree1.AddInventoryFolderOption(label, handle, enable);
+            inventoryBrowser.AddInventoryFolderOption(label, handle, enable);
         }
 
-        private void handleSaveFolderAs(InventoryFolder inventoryFolder)
+        private UUID ExpectedUUIDForSelection = UUID.Zero;
+
+        private void InventoryBrowser_NodeAdded(FakeInvNode node)
         {
-            InventoryBackupSettingsForm inventoryBackupSettingsForm = new InventoryBackupSettingsForm();
-
-            inventoryBackupSettingsForm.StartPosition = FormStartPosition.Manual;
-            inventoryBackupSettingsForm.Location = new Point(this.Location.X + this.Width, this.Location.Y);
-
-            if (inventoryBackupSettingsForm.ShowDialog() == DialogResult.OK)
+            if (node.ID == ExpectedUUIDForSelection)
             {
+                inventoryBrowser.SelectByUUID(node.ID);
+                ExpectedUUIDForSelection = UUID.Zero;
             }
+        }
+
+        private void newFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            inventoryBrowser.SelectByUUID(CoolProxy.Frame.Inventory.CreateFolder(CoolProxy.Frame.Inventory.InventoryRoot, "New Folder"));
+        }
+
+        private void CreateNewItem(string name, AssetType asset_type, InventoryType inventory_type)
+        {
+            UUID folder_id = CoolProxy.Frame.Inventory.FindFolderForType(asset_type);
+            CoolProxy.Frame.Inventory.RequestCreateItem(folder_id, name, string.Empty, asset_type, UUID.Zero, inventory_type, PermissionMask.All, SelectNewItem);
+        }
+
+        private void newScriptToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateNewItem("New Script", AssetType.LSLText, InventoryType.LSL);
+        }
+
+        private void newNotecardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateNewItem("New Note", AssetType.Notecard, InventoryType.Notecard);
+        }
+
+        private void newGestureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateNewItem("New Gesture", AssetType.Gesture, InventoryType.Gesture);
+        }
+
+        private void SelectNewItem(bool success, InventoryItem item)
+        {
+            if(success)
+            {
+                ExpectedUUIDForSelection = item.UUID;
+                CoolProxy.Frame.Inventory.InjectFetchInventoryReply(item);
+            }
+        }
+
+        private void expandAllFoldersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            inventoryBrowser.ExpandAll();
+        }
+
+        private void collapseAllFoldersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            inventoryBrowser.CollapseAll();
+        }
+
+        private void emptyTrashToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CoolProxy.Frame.Inventory.EmptyTrash();
         }
     }
 }

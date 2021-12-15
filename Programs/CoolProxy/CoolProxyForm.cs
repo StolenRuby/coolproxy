@@ -1231,10 +1231,6 @@ namespace CoolProxy
 
         private void CoolProxyForm_Load(object sender, EventArgs e)
         {
-            inventoryBrowserForm.InitOptions();
-
-            //AddToggleFormQuick("Inventory", "Inventory Browser", inventoryBrowserForm);
-
             LoadPlugins();
 
             for(int i = 0; i < tabControl1.TabPages.Count; i++)

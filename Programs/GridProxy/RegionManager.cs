@@ -920,6 +920,9 @@ namespace GridProxy
             return;
         }
 
+        public delegate void ReceivedCaps();
+        public event ReceivedCaps OnCaps;
+
         private bool FixupSeedCapsResponse(CapsRequest capReq, CapsStage stage)
         {
             if (stage != CapsStage.Response) return false;
@@ -966,6 +969,8 @@ namespace GridProxy
                     }
                 }
             }
+
+            OnCaps?.Invoke();
 
             capReq.Response = nm;
             return false;

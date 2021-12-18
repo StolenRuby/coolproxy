@@ -657,17 +657,22 @@ namespace CoolGUI.Controls
 
             private void InventoryBrowserControl_DoubleClick(object sender, EventArgs e)
             {
-                if (this.SelectedNodes.Count < 1) return;
-
-                if (this.SelectedNodes[0] is FakeInvFolder)
+                if(OverIndex != -1)
                 {
-                    var folder = this.SelectedNodes[0] as FakeInvFolder;
-                    folder.Expanded = !folder.Expanded;
-                    Refresh();
+                    var node = GetClicked(OverIndex);
+                    if(node != null && node is FakeInvFolder)
+                    {
+                        var folder = node as FakeInvFolder;
+                        folder.Expanded = !folder.Expanded;
+                        Refresh();
+                    }
                 }
             }
 
             private int NodeHeight = 20;
+
+            private readonly Bitmap ArrowClosed = CoolProxy.Properties.Resources.Accordion_ArrowClosed_Off;
+            private readonly Bitmap ArrowOpened = CoolProxy.Properties.Resources.Accordion_ArrowOpened_Off;
 
             public List<FakeInvNode> SelectedNodes { get; } = new List<FakeInvNode>();
 
@@ -724,7 +729,32 @@ namespace CoolGUI.Controls
                     }
                     else
                     {
-                        replace_selection = true;
+                        if(node is FakeInvFolder)
+                        {
+                            int depth = 0;
+                            var parent = node.Parent;
+                            while (parent != null)
+                            {
+                                depth++;
+                                parent = parent.Parent;
+                            }
+
+                            int m = 10 * depth;
+                            if (e.X > m && e.X < m + 15)
+                            {
+                                var folder = node as FakeInvFolder;
+                                folder.Expanded = !folder.Expanded;
+
+                                if(!folder.Expanded)
+                                {
+                                    DeselectChildren(folder);
+                                }
+
+                                replace_selection = !folder.Expanded ? (SelectedNodes.Count == 0) : false;
+                            }
+                            else replace_selection = true;
+                        }
+                        else replace_selection = true;
                     }
                 }
                 else if (e.Button == MouseButtons.Right)
@@ -751,6 +781,25 @@ namespace CoolGUI.Controls
                 {
                     var items = SelectedNodes.Select(x => x.Item).ToList();
                     OnMenu?.Invoke(items);
+                }
+            }
+
+            private void DeselectChildren(FakeInvFolder folder)
+            {
+                for(int i = SelectedNodes.Count - 1; i >= 0; i--)
+                {
+                    var selected = SelectedNodes[i];
+                    var parent = selected.Parent;
+                    while(parent != null)
+                    {
+                        if(parent == folder)
+                        {
+                            selected.Selected = false;
+                            SelectedNodes.RemoveAt(i);
+                        }
+
+                        parent = parent.Parent;
+                    }
                 }
             }
 
@@ -838,19 +887,27 @@ namespace CoolGUI.Controls
                         if (node is FakeInvFolder)
                         {
                             var folder = node as FakeInvFolder;
-                            graphics.DrawImage(ImageList.Images[folder.Expanded ? folder.OpenIconIndex : folder.IconIndex], x + 1, y + 1, NodeHeight - 2, NodeHeight - 2);
+
+                            if(folder.Children.Count > 0)
+                            {
+                                var arrow = folder.Expanded ? ArrowOpened : ArrowClosed;
+
+                                graphics.DrawImage(arrow, x + 5, y + 2, 10, 10);
+                            }
+
+                            graphics.DrawImage(ImageList.Images[folder.Expanded ? folder.OpenIconIndex : folder.IconIndex], x + 20, y + 1, NodeHeight - 2, NodeHeight - 2);
                         }
                         else
                         {
-                            graphics.DrawImage(ImageList.Images[node.IconIndex], x + 1, y + 1, NodeHeight - 2, NodeHeight - 2);
+                            graphics.DrawImage(ImageList.Images[node.IconIndex], x + 20, y + 1, NodeHeight - 2, NodeHeight - 2);
                         }
                     }
 
-                    graphics.DrawString(node.Name, Font, Brushes.LightGray, x + 15, y + 1);
+                    graphics.DrawString(node.Name, Font, Brushes.LightGray, x + 15 + NodeHeight + 5, y + 1);
                 }
 
                 var size = graphics.MeasureString(node.Name, Font);
-                var t = x + 15 + size.Width;
+                var t = x + 30 + size.Width;
                 if (t > max_x)
                 {
                     max_x = t;
@@ -885,7 +942,7 @@ namespace CoolGUI.Controls
                         var perm_string = (node as FakeInvItem).PermString;
 
                         //size = graphics.MeasureString(node.Name, Font);
-                        float n = x + 10 + size.Width;
+                        float n = x + 35 + size.Width;
                         graphics.DrawString(perm_string, Font, Brushes.DarkGray, n, y + 1);
 
                         size = graphics.MeasureString(perm_string, Font);

@@ -63,6 +63,26 @@ namespace CoolProxy.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Accordion_ArrowClosed_Off {
+            get {
+                object obj = ResourceManager.GetObject("Accordion_ArrowClosed_Off", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Accordion_ArrowOpened_Off {
+            get {
+                object obj = ResourceManager.GetObject("Accordion_ArrowOpened_Off", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Inv_Alpha {
             get {
                 object obj = ResourceManager.GetObject("Inv_Alpha", resourceCulture);

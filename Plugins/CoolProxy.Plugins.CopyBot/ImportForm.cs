@@ -119,32 +119,66 @@ namespace CoolProxy.Plugins.CopyBot
 
         private void selectAllButton_Click(object sender, EventArgs e)
         {
-            updateSelection(true, true);
+            if (dataGridView.Rows.Count < 1) return;
+
+            bool enable = false;
+
+            for (int i = 0; i < dataGridView.Rows.Count; i++)
+            {
+                enable = !(bool)dataGridView.Rows[i].Cells[0].Value;
+                break;
+            }
+
+            for (int i = 0; i < dataGridView.Rows.Count; i++)
+            {
+                dataGridView.Rows[i].Cells[0].Value = enable;
+            }
         }
 
         private void selectObjectsButton_Click(object sender, EventArgs e)
         {
-            updateSelection(true, false);
+            if (dataGridView.Rows.Count < 1) return;
+
+            bool enable = false;
+
+            for (int i = 0; i < dataGridView.Rows.Count; i++)
+            {
+                if ((int)dataGridView.Rows[i].Cells[3].Value != 0)
+                {
+                    enable = !(bool)dataGridView.Rows[i].Cells[0].Value;
+                    break;
+                }
+            }
+
+            for (int i = 0; i < dataGridView.Rows.Count; i++)
+            {
+                if ((int)dataGridView.Rows[i].Cells[3].Value != 0)
+                {
+                    dataGridView.Rows[i].Cells[0].Value = enable;
+                }
+            }
         }
 
         private void selectWearablesButton_Click(object sender, EventArgs e)
         {
-            updateSelection(false, true);
-        }
+            if (dataGridView.Rows.Count < 1) return;
 
-        void updateSelection(bool objects, bool wearables)
-        {
+            bool enable = false;
+
             for (int i = 0; i < dataGridView.Rows.Count; i++)
             {
-                int type = (int)dataGridView.Rows[i].Cells[3].Value;
-
-                if (type == 0)
+                if ((int)dataGridView.Rows[i].Cells[3].Value == 0)
                 {
-                    dataGridView.Rows[i].Cells[0].Value = wearables;
+                    enable = !(bool)dataGridView.Rows[i].Cells[0].Value;
+                    break;
                 }
-                else
+            }
+
+            for (int i = 0; i < dataGridView.Rows.Count; i++)
+            {
+                if ((int)dataGridView.Rows[i].Cells[3].Value == 0)
                 {
-                    dataGridView.Rows[i].Cells[0].Value = objects;
+                    dataGridView.Rows[i].Cells[0].Value = enable;
                 }
             }
         }

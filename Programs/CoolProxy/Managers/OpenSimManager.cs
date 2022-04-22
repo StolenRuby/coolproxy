@@ -461,6 +461,11 @@ namespace CoolProxy
 
     public delegate void GenericSuccessResult(bool result);
     public delegate void HandleGetItem(InventoryItem item);
+    public delegate void HandleGetSkeleton(InventoryFolder[] folders);
+    public delegate void HandleGetFolder(InventoryFolder folder);
+    public delegate void HandleFolderContents(InventoryFolder[] folders, InventoryItem[] items);
+
+    delegate void HandleResponse(Dictionary<string, object> reply_data);
 
     public class XInventoryServie
     {
@@ -540,15 +545,9 @@ namespace CoolProxy
 
         void MakeBoolRequest(Dictionary<string, object> request, GenericSuccessResult handler)
         {
-            string request_str = ServerUtils.BuildQueryString(request);
-
-            WebClient webClient = new WebClient();
-            webClient.UploadStringCompleted += (x, y) =>
+            MakeRequest(request, (reply_data) =>
             {
-                Dictionary<string, object> replyData = ServerUtils.ParseXmlResponse(y.Result);
-
-                object res;
-                if (replyData.TryGetValue("RESULT", out res))
+                if (reply_data.TryGetValue("RESULT", out object res))
                 {
                     if ((string)res == "True")
                     {
@@ -558,6 +557,19 @@ namespace CoolProxy
                 }
 
                 handler?.Invoke(false);
+            });
+        }
+
+        void MakeRequest(Dictionary<string, object> send_data, HandleResponse handle)
+        {
+            string request_str = ServerUtils.BuildQueryString(send_data);
+
+            WebClient webClient = new WebClient();
+            webClient.UploadStringCompleted += (x, y) =>
+            {
+                Dictionary<string, object> replyData = ServerUtils.ParseXmlResponse(y.Result);
+
+                handle?.Invoke(replyData);
             };
 
             string target_uri = coolProxy.Network.CurrentSim.InvetoryServerURI;
@@ -578,31 +590,111 @@ namespace CoolProxy
                 {"PRINCIPAL", agent_id.ToString() }
             };
 
-            string request_str = ServerUtils.BuildQueryString(sendData);
-
-            WebClient webClient = new WebClient();
-            webClient.UploadStringCompleted += (x, y) =>
+            MakeRequest(sendData, (reply_data) =>
             {
-                Dictionary<string, object> replyData = ServerUtils.ParseXmlResponse(y.Result);
-
                 InventoryItem item = null;
 
-                if(replyData.ContainsKey("item"))
+                if (reply_data.ContainsKey("item"))
                 {
-                    item = BuildItem((Dictionary<string, object>)replyData["item"]);
+                    item = BuildItem((Dictionary<string, object>)reply_data["item"]);
                 }
 
                 handler?.Invoke(item);
+            });
+        }
+
+        public void GetSkeleton(UUID agent_id, HandleGetSkeleton handler)
+        {
+            Dictionary<string, object> sendData = new Dictionary<string, object> {
+                { "METHOD", "GETINVENTORYSKELETON"},
+                {"PRINCIPAL", agent_id.ToString() }
             };
 
-            string target_uri = coolProxy.Network.CurrentSim.InvetoryServerURI;
+            MakeRequest(sendData, (reply_data) =>
+            {
+                Dictionary<string, object> folders = (Dictionary<string, object>)reply_data["FOLDERS"];
 
-            if (target_uri == string.Empty)
-                target_uri = coolProxy.Network.CurrentSim.GridURI;
+                List<InventoryFolder> fldrs = new List<InventoryFolder>();
 
-            target_uri += "xinventory";
+                try
+                {
+                    foreach (object o in folders.Values)
+                        fldrs.Add(BuildFolder((Dictionary<string, object>)o));
+                }
+                catch (Exception e)
+                {
+                }
 
-            webClient.UploadStringAsync(new Uri(target_uri), "POST", request_str);
+                handler?.Invoke(fldrs.ToArray());
+            });
+        }
+
+        public void GetRootFolder(UUID agent_id, HandleGetFolder handler)
+        {
+            Dictionary<string, object> sendData = new Dictionary<string, object> {
+                { "METHOD", "GETROOTFOLDER"},
+                {"PRINCIPAL", agent_id.ToString() }
+            };
+
+            MakeRequest(sendData, (reply_data) =>
+            {
+                InventoryFolder folder = BuildFolder((Dictionary<string, object>)reply_data["folder"]);
+
+                handler?.Invoke(folder);
+            });
+        }
+
+        public void GetFolderContent(UUID agent_id, UUID folder_id, HandleFolderContents handler)
+        {
+            Dictionary<string, object> sendData = new Dictionary<string, object> {
+                { "METHOD", "GETFOLDERCONTENT"},
+                {"PRINCIPAL", agent_id.ToString() },
+                {"FOLDER", folder_id.ToString() }
+            };
+
+            MakeRequest(sendData, (reply_data) =>
+            {
+                Dictionary<string, object> folders = reply_data.ContainsKey("FOLDERS") ?
+                    (Dictionary<string, object>)reply_data["FOLDERS"] : null;
+                Dictionary<string, object> items = reply_data.ContainsKey("ITEMS") ?
+                    (Dictionary<string, object>)reply_data["ITEMS"] : null;
+
+
+                List<InventoryFolder> inv_folders = new List<InventoryFolder>();
+                List<InventoryItem> inv_items = new List<InventoryItem>();
+
+                if (folders != null)
+                    foreach (object o in folders.Values)
+                        inv_folders.Add(BuildFolder((Dictionary<string, object>)o));
+                if (items != null)
+                    foreach (object o in items.Values)
+                        inv_items.Add(BuildItem((Dictionary<string, object>)o));
+
+                handler?.Invoke(inv_folders.ToArray(), inv_items.ToArray());
+            });
+        }
+
+        private InventoryFolder BuildFolder(Dictionary<string, object> data)
+        {
+            InventoryFolder folder = null;
+
+            try
+            {
+                UUID id = new UUID(data["ID"].ToString());
+
+                folder = new InventoryFolder(id);
+                folder.ParentUUID = new UUID(data["ParentID"].ToString());
+                folder.PreferredType = (FolderType)short.Parse(data["Type"].ToString());
+                folder.Version = ushort.Parse(data["Version"].ToString());
+                folder.Name = data["Name"].ToString();
+                folder.OwnerID = new UUID(data["Owner"].ToString());
+            }
+            catch (Exception e)
+            {
+                //m_log.Error("[XINVENTORY SERVICES CONNECTOR]: Exception building folder: ", e);
+            }
+
+            return folder;
         }
 
         private InventoryItem BuildItem(Dictionary<string, object> data)

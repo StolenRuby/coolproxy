@@ -306,9 +306,6 @@ namespace CoolGUI.Controls
 
         private int GetFolderIcon(InventoryFolder folder, bool open)
         {
-            if (folder.Name == "#Firestorm" && folder.ParentUUID == Proxy.Inventory.InventoryRoot) return open ? 9 : 8;
-            if (folder.Name == "Animation Overrides" && folder.ParentUUID == Proxy.Inventory.InventoryRoot) return open ? 40 : 39;
-
             switch (folder.PreferredType)
             {
                 case FolderType.None:
@@ -337,6 +334,7 @@ namespace CoolGUI.Controls
                 case FolderType.Suitcase:
                 case FolderType.Texture:
                 case FolderType.Settings:
+                case FolderType.MarketplaceListings:
                     return open ? 40 : 39;
                 default:
                     return open ? 7 : 6;
@@ -345,6 +343,11 @@ namespace CoolGUI.Controls
 
         private int GetItemIcon(InventoryBase inv)
         {
+            var item = inv as InventoryItem;
+
+            if (item.AssetType == AssetType.LinkFolder)
+                return 6;
+
             if (inv is InventoryAnimation)
                 return 2;
             else if (inv is InventoryGesture)
@@ -431,7 +434,7 @@ namespace CoolGUI.Controls
                 }
             }
 
-            return 1337;
+            return -1;
         }
 
         private string PermStringQuick(InventoryItem item)
@@ -673,6 +676,7 @@ namespace CoolGUI.Controls
 
             private readonly Bitmap ArrowClosed = CoolProxy.Properties.Resources.Accordion_ArrowClosed_Off;
             private readonly Bitmap ArrowOpened = CoolProxy.Properties.Resources.Accordion_ArrowOpened_Off;
+            private readonly Bitmap LinkArrow = CoolProxy.Properties.Resources.Inv_Link;
 
             public List<FakeInvNode> SelectedNodes { get; } = new List<FakeInvNode>();
 
@@ -899,7 +903,15 @@ namespace CoolGUI.Controls
                         }
                         else
                         {
+                            var item = node.Item as InventoryItem;
+
                             graphics.DrawImage(ImageList.Images[node.IconIndex], x + 20, y + 1, NodeHeight - 2, NodeHeight - 2);
+
+                            if (item.AssetType == AssetType.Link || item.AssetType == AssetType.LinkFolder)
+                            {
+                                int div = NodeHeight / 2;
+                                graphics.DrawImage(LinkArrow, x + 18, y + 1 + NodeHeight - 2 - div, div, div);
+                            }
                         }
                     }
 

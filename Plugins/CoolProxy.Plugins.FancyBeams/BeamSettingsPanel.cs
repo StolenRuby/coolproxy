@@ -29,7 +29,7 @@ namespace CoolProxy.Plugins.FancyBeams
             comboBox.Items.Clear();
 
             comboBox.Items.Add("=== Off ===");
-            string[] files = Directory.GetFiles(FancyBeamsPlugin.BeamsFolderDir);
+            string[] files = Directory.GetFiles(FancyBeamsPlugin.BeamsFolderDir, "*.xml");
             foreach (string file in files)
             {
                 string name = Path.GetFileNameWithoutExtension(file);

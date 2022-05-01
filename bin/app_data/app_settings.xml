@@ -521,5 +521,12 @@
 			<key>value</key>
 			<boolean>1</boolean>
 		</map>
+		<key>DynamicTitle</key>
+		<map>
+			<key>type</key>
+			<string>osd</string>
+			<key>value</key>
+			<array/>
+		</map>
 	</map>
 </llsd>

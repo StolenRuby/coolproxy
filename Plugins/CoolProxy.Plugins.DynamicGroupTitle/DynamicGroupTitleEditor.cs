@@ -1,4 +1,5 @@
 ﻿using OpenMetaverse;
+using OpenMetaverse.StructuredData;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,7 @@ namespace CoolProxy
     public partial class DynamicGroupTitleEditor : Form
     {
         private CoolProxyFrame Proxy;
+        private SettingsManager Settings;
 
         public UUID GroupID = UUID.Zero;
 
@@ -26,15 +28,43 @@ namespace CoolProxy
 
         Timer TitleTimer;
 
-        public DynamicGroupTitleEditor(CoolProxyFrame frame)
+        public DynamicGroupTitleEditor(CoolProxyFrame frame, SettingsManager settings)
         {
             Proxy = frame;
+            Settings = settings;
             InitializeComponent();
 
             Proxy.Groups.GroupRoleDataReply += Groups_GroupRoleDataReply;
 
+            var osd = settings.getOSD("DynamicTitle");
+
+            listBox1.Items.Clear();
+
+            var array = osd as OSDArray;
+            if(array.Count > 0)
+            {
+                foreach (var item in array)
+                {
+                    listBox1.Items.Add(item.AsString());
+                }
+            }
+
             TitleTimer = new Timer();
             TitleTimer.Tick += UpdateTitle;
+        }
+
+        void SaveTitle()
+        {
+            OSDArray array = new OSDArray();
+
+            var titles = listBox1.Items.Cast<string>().ToArray();
+
+            foreach(var title in titles)
+            {
+                array.Add(title);
+            }
+
+            Settings.setOSD("DynamicTitle", array);
         }
 
         private void UpdateTitle(object sender, EventArgs e)
@@ -92,11 +122,13 @@ namespace CoolProxy
             listBox1.Items.Add(textBox19.Text);
             listBox1.SelectedIndex = listBox1.Items.Count - 1;
             textBox19.Text = "";
+            SaveTitle();
         }
 
         private void button38_Click(object sender, EventArgs e)
         {
             listBox1.Items.RemoveAt(listBox1.SelectedIndex);
+            SaveTitle();
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)

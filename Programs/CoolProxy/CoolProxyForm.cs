@@ -142,6 +142,14 @@ namespace CoolProxy
             AddTrayOption("Asset Transfers", tabNameToolStripMenuItem_Click, null, "Asset Transfers");
             AddTrayOption("-", null, null, "");
             AddTrayOption("Inventory Browser", inventoryBrowserToolStripMenuItem_Click, null, "");
+
+            if(!CoolProxy.IsDebugMode)
+            {
+                showDebugSettingsButton.Visible = false;
+                loadPluginTestButton.Visible = false;
+                tabControl5.TabPages.Remove(tabPage20);
+                tabControl5.TabPages.Remove(tabPage5);
+            }
         }
 
         ////// Chat Commands

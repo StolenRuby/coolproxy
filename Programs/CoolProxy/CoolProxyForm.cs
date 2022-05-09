@@ -1214,6 +1214,14 @@ namespace CoolProxy
 
         private void CoolProxyForm_Load(object sender, EventArgs e)
         {
+            if(CoolProxy.Frame.Settings.getBool("FirstRun"))
+            {
+                OSDArray plugins = new OSDArray();
+                var files = Directory.GetFiles(".", "CoolProxy.Plugins.*.dll");
+                foreach (string file in files) plugins.Add(file);
+                CoolProxy.Frame.Settings.setOSD("PluginList", plugins);
+            }
+
             LoadPlugins();
 
             for(int i = 0; i < tabControl1.TabPages.Count; i++)
@@ -1230,6 +1238,8 @@ namespace CoolProxy
                     PopTab(t, !CoolProxy.Frame.Settings.getBool(open_setting));
                 }
             }
+
+            CoolProxy.Frame.Settings.setBool("FirstRun", false);
 
             if (TrayOptions.Last().Label != "-")
                 AddTrayOption("-", null, null, "");

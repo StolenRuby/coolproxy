@@ -9,6 +9,15 @@
 			<key>value</key>
 			<boolean>1</boolean>
 		</map>
+		<key>FirstRun</key>
+		<map>
+			<key>comment</key>
+			<string>Is this the first time the user has ran coolproxy</string>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
 		<key>EnableGridInfo</key>
 		<map>
 			<key>comment</key>

@@ -136,7 +136,6 @@
             this.checkBox1 = new CoolGUI.Controls.CheckBox();
             this.checkBox9 = new CoolGUI.Controls.CheckBox();
             this.checkBox2 = new CoolGUI.Controls.CheckBox();
-            this.button4 = new System.Windows.Forms.Button();
             this.checkBox6 = new CoolGUI.Controls.CheckBox();
             this.checkBox3 = new CoolGUI.Controls.CheckBox();
             this.numericUpDown5 = new L33T.GUI.NumericUpDown();
@@ -1144,7 +1143,6 @@
             this.tabPage9.Controls.Add(this.checkBox1);
             this.tabPage9.Controls.Add(this.checkBox9);
             this.tabPage9.Controls.Add(this.checkBox2);
-            this.tabPage9.Controls.Add(this.button4);
             this.tabPage9.Controls.Add(this.checkBox6);
             this.tabPage9.Controls.Add(this.checkBox3);
             this.tabPage9.Controls.Add(this.numericUpDown5);
@@ -1194,17 +1192,6 @@
             this.checkBox2.TabIndex = 43;
             this.checkBox2.Text = "Start Proxy when Launched";
             this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Location = new System.Drawing.Point(311, 209);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(135, 23);
-            this.button4.TabIndex = 42;
-            this.button4.Text = "Login Params";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // checkBox6
             // 
@@ -1978,7 +1965,6 @@
         private L33T.GUI.TextBox textBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button4;
         private CoolGUI.Controls.CheckBox checkBox9;
         private CoolGUI.Controls.CheckBox checkBox2;
         private CoolGUI.Controls.CheckBox checkBox1;

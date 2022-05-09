@@ -1,32 +1,21 @@
-﻿
-namespace CoolProxy
-{
-    partial class LoginMaskingForm
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+﻿using OpenMetaverse;
+using System;
+using System.Windows.Forms;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
+namespace CoolProxy.Plugins.Masking
+{
+    partial class MaskingSettingsPanel : Panel
+    {
+        private CoolProxyFrame Proxy;
+
+        public MaskingSettingsPanel(CoolProxyFrame frame)
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
+            Proxy = frame;
+            InitializeComponent();
+
+            checkBox5.Checked = frame.Settings.getBool("SpoofVersion");
         }
 
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             this.checkBox5 = new CoolGUI.Controls.CheckBox();
@@ -41,7 +30,6 @@ namespace CoolProxy
             this.replaceID0Checkbox = new CoolGUI.Controls.CheckBox();
             this.versionMajor = new L33T.GUI.NumericUpDown();
             this.replaceMacCheckbox = new CoolGUI.Controls.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.versionPatch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.versionMinor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.versionBuild)).BeginInit();
@@ -208,23 +196,9 @@ namespace CoolProxy
             this.replaceMacCheckbox.UseVisualStyleBackColor = true;
             this.replaceMacCheckbox.CheckedChanged += new System.EventHandler(this.replaceMacCheckbox_CheckedChanged);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(151, 149);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(123, 23);
-            this.button1.TabIndex = 75;
-            this.button1.Text = "Okay";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // LoginMaskingForm
             // 
-            this.AcceptButton = this.button1;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(415, 190);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.checkBox5);
             this.Controls.Add(this.macHashTextbox);
             this.Controls.Add(this.randomMacHashButton);
@@ -237,11 +211,7 @@ namespace CoolProxy
             this.Controls.Add(this.replaceID0Checkbox);
             this.Controls.Add(this.versionMajor);
             this.Controls.Add(this.replaceMacCheckbox);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "LoginMaskingForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login Masking";
             ((System.ComponentModel.ISupportInitialize)(this.versionPatch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.versionMinor)).EndInit();
@@ -251,8 +221,6 @@ namespace CoolProxy
             this.PerformLayout();
 
         }
-
-        #endregion
 
         private CoolGUI.Controls.CheckBox checkBox5;
         private System.Windows.Forms.TextBox macHashTextbox;
@@ -266,6 +234,92 @@ namespace CoolProxy
         private CoolGUI.Controls.CheckBox replaceID0Checkbox;
         private L33T.GUI.NumericUpDown versionMajor;
         private CoolGUI.Controls.CheckBox replaceMacCheckbox;
-        private System.Windows.Forms.Button button1;
+
+
+
+
+        private void replaceMacCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            bool is_checked = replaceMacCheckbox.Checked;
+            macHashTextbox.Enabled = is_checked;
+            randomMacHashButton.Enabled = is_checked;
+
+            macHashTextbox.TextChanged -= macHashTextbox_TextChanged;
+
+            macHashTextbox.Text = is_checked ? Proxy.Settings.getString("SpecifiedMacAddress") : "00000000000000000000000000000000";
+
+            macHashTextbox.TextChanged += macHashTextbox_TextChanged;
+        }
+
+        private void replaceID0Checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            bool is_checked = replaceID0Checkbox.Checked;
+            id0HashTextbox.Enabled = is_checked;
+            randomID0HashButton.Enabled = is_checked;
+
+            id0HashTextbox.TextChanged -= id0HashTextbox_TextChanged;
+
+            id0HashTextbox.Text = is_checked ? Proxy.Settings.getString("SpecifiedId0Address") : "00000000000000000000000000000000";
+
+            id0HashTextbox.TextChanged += id0HashTextbox_TextChanged;
+        }
+        private void randomMacHashButton_OnClick(object sender, EventArgs e)
+        {
+            Random random = new Random();
+            macHashTextbox.Text = Utils.MD5String(random.Next(9001, 10000000).ToString());
+        }
+
+        private void randomID0HashButton_OnClick(object sender, EventArgs e)
+        {
+            Random random = new Random();
+            id0HashTextbox.Text = Utils.MD5String(random.Next(9001, 10000000).ToString());
+        }
+
+        private void macHashTextbox_TextChanged(object sender, EventArgs e)
+        {
+            Proxy.Settings.setString("SpecifiedMacAddress", macHashTextbox.Text);
+        }
+
+        private void id0HashTextbox_TextChanged(object sender, EventArgs e)
+        {
+            Proxy.Settings.setString("SpecifiedId0Address", id0HashTextbox.Text);
+        }
+
+        private void channelTextbox_TextChanged(object sender, EventArgs e)
+        {
+            if (channelTextbox.Enabled)
+                Proxy.Settings.setString("SpecifiedVersionChannel", channelTextbox.Text);
+        }
+
+        private void checkBox5_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+
+            bool spoof_version = checkBox.Checked;
+
+            if (!spoof_version)
+                versionMajor.Enabled = versionMinor.Enabled = versionPatch.Enabled = versionBuild.Enabled = spoof_version;
+
+            versionMajor.Value = spoof_version ? Proxy.Settings.getInteger("SpecifiedVersionMajor") : 0;
+            versionMinor.Value = spoof_version ? Proxy.Settings.getInteger("SpecifiedVersionMinor") : 0;
+            versionPatch.Value = spoof_version ? Proxy.Settings.getInteger("SpecifiedVersionPatch") : 0;
+            versionBuild.Value = spoof_version ? Proxy.Settings.getInteger("SpecifiedVersionBuild") : 0;
+
+            if (spoof_version)
+                versionMajor.Enabled = versionMinor.Enabled = versionPatch.Enabled = versionBuild.Enabled = spoof_version;
+
+            channelTextbox.Enabled = spoof_version;
+            channelTextbox.Text = spoof_version ? Proxy.Settings.getString("SpecifiedVersionChannel") : "Unchanged";
+
+            Proxy.Settings.setBool("SpoofVersion", spoof_version);
+        }
+
+        private void versionMajor_ValueChanged(object sender, EventArgs e)
+        {
+            L33T.GUI.NumericUpDown spinner = sender as L33T.GUI.NumericUpDown;
+
+            if (spinner.Enabled)
+                Proxy.Settings.setInteger((string)spinner.Tag, (int)spinner.Value);
+        }
     }
 }

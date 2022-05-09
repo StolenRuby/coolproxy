@@ -131,7 +131,6 @@ namespace CoolProxy
             CoolProxy.Frame.OnNewChatCommand += ChatCommandAdded;
 
             // Login masking
-            CoolProxy.Frame.Login.AddLoginRequestDelegate(handleLoginRequest);
             CoolProxy.Frame.Login.AddLoginResponseDelegate(handleLoginResponse);
 
             firstTimeMinimized = CoolProxy.Frame.Settings.getBool("AlertStillRunning");
@@ -611,33 +610,6 @@ namespace CoolProxy
             }
 
             SavePlugins(true);
-        }
-
-        private void handleLoginRequest(object sender, XmlRpcRequestEventArgs e)
-        {
-            Hashtable requestData;
-            try
-            {
-                requestData = (Hashtable)e.m_Request.Params[0];
-            }
-            catch (Exception ex)
-            {
-                OpenMetaverse.Logger.Log(ex.Message, Helpers.LogLevel.Error);
-                return;
-            }
-
-            bool spoof_mac = CoolProxy.Frame.Settings.getBool("SpoofMac");
-            bool spoof_id0 = CoolProxy.Frame.Settings.getBool("SpoofId0");
-
-            if (requestData.ContainsKey("mac") && spoof_mac)
-            {
-                requestData["mac"] = CoolProxy.Frame.Settings.getSetting("SpecifiedMacAddress");
-            }
-
-            if (requestData.ContainsKey("id0") && spoof_id0)
-            {
-                requestData["id0"] = CoolProxy.Frame.Settings.getSetting("SpecifiedId0Address");
-            }
         }
 
         private void OnGridAdded(GridInfo gridInfo)
@@ -1513,11 +1485,6 @@ namespace CoolProxy
                 e.Cancel = true;
                 return;
             }
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            new LoginMaskingForm().ShowDialog();
         }
 
         private void clearCacheButton_Click(object sender, EventArgs e)

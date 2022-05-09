@@ -30,7 +30,7 @@ namespace CoolProxy
 
             Vector3 my_pos = Proxy.Agent.SimPosition;
 
-            Proxy.Network.CurrentSim.ObjectsAvatars.ForEach(av =>
+            Proxy.Network.CurrentSim?.ObjectsAvatars.ForEach(av =>
             {
                 float dist = Vector3.Distance(av.Position, my_pos);
 
@@ -52,6 +52,8 @@ namespace CoolProxy
 
         void Search(string search)
         {
+            if (!Proxy.LoggedIn) return;
+
             if (string.IsNullOrWhiteSpace(search))
                 return;
 

@@ -31,7 +31,9 @@ namespace CoolProxy.Plugins.Textures
         {
             var selection = Proxy.Agent.Selection.ToList();
 
-            var objects = Proxy.Network.CurrentSim.ObjectsPrimitives.FindAll(x => selection.Contains(x.LocalID));
+            var objects = Proxy.Network.CurrentSim?.ObjectsPrimitives.FindAll(x => selection.Contains(x.LocalID));
+
+            if (objects == null) return;
 
             List<UUID> textures_ids = new List<UUID>();
             List<UUID> material_ids = new List<UUID>();

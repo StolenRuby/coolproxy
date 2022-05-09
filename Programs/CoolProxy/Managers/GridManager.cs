@@ -31,7 +31,26 @@ namespace CoolProxy
                 saveGrids();
             }
 
-            CoolProxy.Frame.HTTP.AddHttpHandler("/get_grid_info", HandleGetGridInfo);
+            var openSimGridInfo = CoolProxy.Frame.Settings.getSetting("EnableGridInfo");
+            openSimGridInfo.OnChanged += (x, y) =>
+            {
+                bool enabled = (bool)y.Value;
+
+                if(enabled)
+                {
+                    CoolProxy.Frame.HTTP.AddHttpHandler("/get_grid_info", HandleGetGridInfo);
+                }
+                else
+                {
+                    CoolProxy.Frame.HTTP.RemoveHttpHandler("/get_grid_info");
+                }
+            };
+
+            if((bool)openSimGridInfo.Value)
+            {
+                CoolProxy.Frame.HTTP.AddHttpHandler("/get_grid_info", HandleGetGridInfo);
+            }
+
             CoolProxy.Frame.HTTP.AddHttpHandler("/splash", HandleSplashScreen);
         }
 

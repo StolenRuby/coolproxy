@@ -52,7 +52,7 @@ namespace CoolProxy
             bool createdNew;
             var appMutex = new Mutex(true, "CoolProxyApp", out createdNew);
 
-            if (!createdNew && !CoolProxy.Settings.getBool("AllowMultipleInstances"))
+            if (!createdNew && !CoolProxy.Frame.Settings.getBool("AllowMultipleInstances"))
             {
                 MessageBox.Show("Cool Proxy is already running!");
                 this.Load += (x, y) => Close();
@@ -75,6 +75,8 @@ namespace CoolProxy
 
             guiManager = new GUIManager(this);
             gridManager = new GridListManager();
+
+            CoolProxy.Frame.RegisterModuleInterface<IGUI>(guiManager);
 
             InitializeComponent();
 
@@ -117,10 +119,10 @@ namespace CoolProxy
             LoadGrids();
 
             gridManager.OnGridAdded += OnGridAdded;
-            gridsComboBox.SelectedItem = CoolProxy.Settings.getString("LastGridUsed");
+            gridsComboBox.SelectedItem = CoolProxy.Frame.Settings.getString("LastGridUsed");
 
-            this.TopMost = CoolProxy.Settings.getBool("KeepCoolProxyOnTop");
-            CoolProxy.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
+            this.TopMost = CoolProxy.Frame.Settings.getBool("KeepCoolProxyOnTop");
+            CoolProxy.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
 
             avatarTracker = new AvTrackerTest(avatarTrackerGridView, CoolProxy.Frame);
 
@@ -132,7 +134,7 @@ namespace CoolProxy
             CoolProxy.Frame.Login.AddLoginRequestDelegate(handleLoginRequest);
             CoolProxy.Frame.Login.AddLoginResponseDelegate(handleLoginResponse);
 
-            firstTimeMinimized = CoolProxy.Settings.getBool("AlertStillRunning");
+            firstTimeMinimized = CoolProxy.Frame.Settings.getBool("AlertStillRunning");
 
             AddTrayOption("Avatar Tracker", tabNameToolStripMenuItem_Click, null, "Avatar Tracker");
             AddTrayOption("Regions", tabNameToolStripMenuItem_Click, null, "Regions");
@@ -570,7 +572,7 @@ namespace CoolProxy
 
         private void LoadPlugins()
         {
-            OSD osd = CoolProxy.Settings.getOSD("PluginList");
+            OSD osd = CoolProxy.Frame.Settings.getOSD("PluginList");
             OSDArray arr = (OSDArray)osd;
             foreach (string str in arr)
             {
@@ -624,17 +626,17 @@ namespace CoolProxy
                 return;
             }
 
-            bool spoof_mac = CoolProxy.Settings.getBool("SpoofMac");
-            bool spoof_id0 = CoolProxy.Settings.getBool("SpoofId0");
+            bool spoof_mac = CoolProxy.Frame.Settings.getBool("SpoofMac");
+            bool spoof_id0 = CoolProxy.Frame.Settings.getBool("SpoofId0");
 
             if (requestData.ContainsKey("mac") && spoof_mac)
             {
-                requestData["mac"] = CoolProxy.Settings.getSetting("SpecifiedMacAddress");
+                requestData["mac"] = CoolProxy.Frame.Settings.getSetting("SpecifiedMacAddress");
             }
 
             if (requestData.ContainsKey("id0") && spoof_id0)
             {
-                requestData["id0"] = CoolProxy.Settings.getSetting("SpecifiedId0Address");
+                requestData["id0"] = CoolProxy.Frame.Settings.getSetting("SpecifiedId0Address");
             }
         }
 
@@ -691,7 +693,7 @@ namespace CoolProxy
                 }
             }
 
-            CoolProxy.Frame.IsLindenGrid = CoolProxy.Frame.Config.is_linden_grid;
+            CoolProxy.Frame.IsLindenGrid = CoolProxy.Frame.Settings.getBool("LindenGridSelected");
 
             string first_name = (string)responseData["first_name"];
             string last_name = (string)responseData["last_name"];
@@ -706,7 +708,7 @@ namespace CoolProxy
                 trayIcon.Text = this.Text;
             }));
 
-            CoolProxy.Settings.setString("LastAccountUsed", full_name);
+            CoolProxy.Frame.Settings.setString("LastAccountUsed", full_name);
         }
 
 
@@ -1037,7 +1039,7 @@ namespace CoolProxy
 
         private void Form1_Resize(object sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Minimized && CoolProxy.Settings.getBool("MinimizeCoolProxyToTray"))
+            if (this.WindowState == FormWindowState.Minimized && CoolProxy.Frame.Settings.getBool("MinimizeCoolProxyToTray"))
             {
                 this.Hide();
                 //trayIcon.Visible = true;
@@ -1061,7 +1063,7 @@ namespace CoolProxy
                     this.Show();
                     this.WindowState = FormWindowState.Normal;
 
-                    CoolProxy.Settings.setBool("AlertStillRunning", false);
+                    CoolProxy.Frame.Settings.setBool("AlertStillRunning", false);
                 }
                 else
                 {
@@ -1144,7 +1146,8 @@ namespace CoolProxy
                 {
                     if (t.IsSubclassOf(typeof(CoolProxyPlugin)))
                     {
-                        Activator.CreateInstance(t, CoolProxy.Settings, guiManager, CoolProxy.Frame);
+                        //Activator.CreateInstance(t, CoolProxy.Settings, guiManager, CoolProxy.Frame);
+                        Activator.CreateInstance(t, CoolProxy.Frame);
                         count++;
 
                         //ConstructorInfo info = t.GetConstructor(new Type[] { typeof(SettingsManager), typeof(GUIManager), typeof(CoolProxyFrame) });
@@ -1156,7 +1159,7 @@ namespace CoolProxy
                     }
                     else if (t.IsSubclassOf(typeof(Command)))
                     {
-                        Command command = (Command)Activator.CreateInstance(t, CoolProxy.Settings, CoolProxy.Frame);
+                        Command command = (Command)Activator.CreateInstance(t, CoolProxy.Frame);
                         CoolProxy.Frame.AddChatCommand(command);
                         count++;
 
@@ -1225,8 +1228,8 @@ namespace CoolProxy
             };
 
 
-            form.TopMost = CoolProxy.Settings.getBool("KeepCoolProxyOnTop");
-            CoolProxy.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { form.TopMost = (bool)y.Value; };
+            form.TopMost = CoolProxy.Frame.Settings.getBool("KeepCoolProxyOnTop");
+            CoolProxy.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { form.TopMost = (bool)y.Value; };
         }
 
         private void CoolProxyForm_Load(object sender, EventArgs e)
@@ -1242,9 +1245,9 @@ namespace CoolProxy
                 string popped_setting = "Tab" + tab_name + "Popped";
                 string open_setting = "Tab" + tab_name + "Open";
 
-                if (CoolProxy.Settings.getBool(popped_setting))
+                if (CoolProxy.Frame.Settings.getBool(popped_setting))
                 {
-                    PopTab(t, !CoolProxy.Settings.getBool(open_setting));
+                    PopTab(t, !CoolProxy.Frame.Settings.getBool(open_setting));
                 }
             }
 
@@ -1286,9 +1289,9 @@ namespace CoolProxy
             testForm.Size = new Size(400, 300);
             testForm.Text = page.Text;
             testForm.Tag = page;
-            testForm.TopMost = CoolProxy.Settings.getBool("KeepCoolProxyOnTop");
+            testForm.TopMost = CoolProxy.Frame.Settings.getBool("KeepCoolProxyOnTop");
             testForm.ShowIcon = false;
-            CoolProxy.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { testForm.TopMost = (bool)y.Value; };
+            CoolProxy.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { testForm.TopMost = (bool)y.Value; };
 
             openTabs.Add(page.Text, testForm);
 
@@ -1300,9 +1303,9 @@ namespace CoolProxy
             string pos_settings = "Tab" + tab_name + "Pos";
 
 
-            CoolProxy.Settings.setBool(popped_setting, true);
+            CoolProxy.Frame.Settings.setBool(popped_setting, true);
 
-            Vector3 form_pos = CoolProxy.Settings.getVector(pos_settings);
+            Vector3 form_pos = CoolProxy.Frame.Settings.getVector(pos_settings);
             if (form_pos != Vector3.Zero)
             {
                 testForm.StartPosition = FormStartPosition.Manual;
@@ -1360,27 +1363,27 @@ namespace CoolProxy
 
                 openTabs.Remove(returning_page.Text);
 
-                CoolProxy.Settings.setBool(popped_setting, false);
+                CoolProxy.Frame.Settings.setBool(popped_setting, false);
             };
 
 
             testForm.FormClosing += (x, y) =>
             {
-                CoolProxy.Settings.setBool(open_setting, false);
+                CoolProxy.Frame.Settings.setBool(open_setting, false);
                 y.Cancel = true;
                 testForm.Hide();
             };
 
             testForm.Move += (x, y) =>
             {
-                CoolProxy.Settings.setVector(pos_settings, new Vector3(testForm.Location.X, testForm.Location.Y, 0.0f));
+                CoolProxy.Frame.Settings.setVector(pos_settings, new Vector3(testForm.Location.X, testForm.Location.Y, 0.0f));
             };
 
             testForm.VisibleChanged += (x, y) =>
             {
                 if(testForm.Visible)
                 {
-                    CoolProxy.Settings.setBool(open_setting, true);
+                    CoolProxy.Frame.Settings.setBool(open_setting, true);
                 }
             };
 
@@ -1521,7 +1524,7 @@ namespace CoolProxy
         {
             if(MessageBox.Show("Clear asset cache now?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                string dir = CoolProxy.Frame.Config.ASSET_CACHE_DIR;
+                string dir = CoolProxy.Frame.Settings.getString("AssetCacheDir");
                 foreach (var file in Directory.GetFiles(dir))
                 {
                     File.Delete(file);
@@ -1606,7 +1609,7 @@ namespace CoolProxy
                 osd_array.Add(str);
             }
 
-            CoolProxy.Settings.setOSD("PluginList", osd_array);
+            CoolProxy.Frame.Settings.setOSD("PluginList", osd_array);
 
             if(!HasBeenToldToRestart && !is_startup)
             {
@@ -1756,8 +1759,8 @@ namespace CoolProxy
             AgentDisplayName name = (AgentDisplayName)row.Tag;
             var form = new AvatarAnimationsForm(name, AvatarAnimations[agent_id].Item2);
 
-            form.TopMost = CoolProxy.Settings.getBool("KeepCoolProxyOnTop");
-            CoolProxy.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { form.TopMost = (bool)y.Value; };
+            form.TopMost = CoolProxy.Frame.Settings.getBool("KeepCoolProxyOnTop");
+            CoolProxy.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { form.TopMost = (bool)y.Value; };
 
             form.Show();
         }
@@ -1784,9 +1787,12 @@ namespace CoolProxy
 
             if(!grids_map.ContainsKey("cool.proxy"))
             {
+                string address = CoolProxy.Frame.Settings.getString("GridProxyListenAddress");
+                int port = CoolProxy.Frame.Settings.getInteger("GridProxyListenPort");
+
                 OSDMap grid = new OSDMap();
-                grid["label"] = "Cool Proxy";
-                grid["keyname"] = "cool.proxy";
+                grid["label"] = "Cool Proxy" + (port != 8080 ? " (" + port.ToString() + ")" : string.Empty);
+                grid["keyname"] = "cool.proxy" + (port != 8080 ? "." + port.ToString() : string.Empty);
                 grid["system_grid"] = false;
 
                 OSDArray identifiers = new OSDArray();
@@ -1794,12 +1800,12 @@ namespace CoolProxy
                 identifiers.Add("account");
                 grid["login_identifier_types"] = identifiers;
 
-                grid["login_page"] = string.Format("http://{0}:{1}/splash", CoolProxy.Frame.Config.clientFacingAddress, CoolProxy.Frame.Config.loginPort);
-                grid["login_uri"] = string.Format("http://{0}:{1}/login", CoolProxy.Frame.Config.clientFacingAddress, CoolProxy.Frame.Config.loginPort);
-                grid["slurl_base"] = string.Format("http://{0}:{1}/slurl", CoolProxy.Frame.Config.clientFacingAddress, CoolProxy.Frame.Config.loginPort);
-                grid["web_profile_url"] = string.Format("http://{0}:{1}/profile", CoolProxy.Frame.Config.clientFacingAddress, CoolProxy.Frame.Config.loginPort);
+                grid["login_page"] = string.Format("http://{0}:{1}/splash", address, port);
+                grid["login_uri"] = string.Format("http://{0}:{1}/login", address, port);
+                grid["slurl_base"] = string.Format("http://{0}:{1}/slurl", address, port);
+                grid["web_profile_url"] = string.Format("http://{0}:{1}/profile", address, port);
 
-                grids_map["cool.proxy"] = grid;
+                grids_map["cool.proxy" + (port != 8080 ? "." + port.ToString() : string.Empty)] = grid;
 
                 byte[] data = OSDParser.SerializeLLSDXmlBytes(grids_map);
                 File.WriteAllBytes(settings_path, data);
@@ -1814,11 +1820,11 @@ namespace CoolProxy
 
         private void CoolProxyForm_Shown(object sender, EventArgs e)
         {
-            if (CoolProxy.Settings.getBool("StartProxyAtLaunch"))
+            if (CoolProxy.Frame.Settings.getBool("StartProxyAtLaunch"))
             {
                 ToggleProxy();
 
-                if (CoolProxy.Settings.getBool("HideProxyAtLaunch"))
+                if (CoolProxy.Frame.Settings.getBool("HideProxyAtLaunch"))
                 {
                     this.WindowState = FormWindowState.Minimized;
                 }

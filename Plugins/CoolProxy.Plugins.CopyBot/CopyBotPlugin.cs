@@ -22,8 +22,6 @@ namespace CoolProxy.Plugins.CopyBot
     {
         internal static CopyBotPlugin Instance;
 
-        private SettingsManager Settings;
-        private GUIManager GUI;
         private CoolProxyFrame Proxy;
 
         ImportProgressForm importProgressForm;
@@ -55,37 +53,37 @@ namespace CoolProxy.Plugins.CopyBot
         Primitive SeedPrim = null;
         InventoryItem InvSeedItem = null;
 
-        public CopyBotPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
+        public CopyBotPlugin(CoolProxyFrame frame)
         {
-            Settings = settings;
-            GUI = gui;
+            IGUI gui = frame.RequestModuleInterface<IGUI>();
+
             Proxy = frame;
             Instance = this;
 
             //GUI.AddToolButton("CopyBot", "Export Selected Objects", exportSelectedObjects);
             //GUI.AddToolButton("CopyBot", "Import Object from File", importXML);
-            GUI.AddToolButton("Objects", "Import with Selected Object", importXMLWithSeed);
+            gui.AddToolButton("Objects", "Import with Selected Object", importXMLWithSeed);
 
-            GUI.AddSingleMenuItem("Save As...", exportAvatar);
+            gui.AddSingleMenuItem("Save As...", exportAvatar);
 
-            GUI.AddInventoryItemOption("Import With...", importWithInv, AssetType.Object);
+            gui.AddInventoryItemOption("Import With...", importWithInv, AssetType.Object);
 
             gui.AddTrayOption("-", null);
-            GUI.AddTrayOption("Import Object from File...", importXML);
-            GUI.AddTrayOption("Export Selected Objects...", exportSelectedObjects);
+            gui.AddTrayOption("Import Object from File...", importXML);
+            gui.AddTrayOption("Export Selected Objects...", exportSelectedObjects);
 
             Proxy.Objects.ObjectUpdate += Objects_ObjectUpdate;
 
 
-            AddSettingsTab(gui, settings);
+            AddSettingsTab(gui);
         }
 
-        private void AddSettingsTab(GUIManager gui, SettingsManager settings)
+        private void AddSettingsTab(IGUI gui)
         {
             Panel panel = new Panel();
             panel.Dock = DockStyle.Fill;
 
-            Vector3 import_offset = settings.getVector("ImportOffset");
+            Vector3 import_offset = Proxy.Settings.getVector("ImportOffset");
 
             var offset_x = new NumericUpDown();
             var offset_y = new NumericUpDown();
@@ -94,7 +92,7 @@ namespace CoolProxy.Plugins.CopyBot
             EventHandler handle_change = (x, y) =>
             {
                 Vector3 offset = new Vector3((float)offset_x.Value, (float)offset_y.Value, (float)offset_z.Value);
-                settings.setVector("ImportOffset", offset);
+                Proxy.Settings.setVector("ImportOffset", offset);
             };
 
             var label_x = new Label();
@@ -207,8 +205,8 @@ namespace CoolProxy.Plugins.CopyBot
         {
             var form = new ExportForm(Proxy, avatar);
 
-            form.TopMost = Settings.getBool("KeepCoolProxyOnTop");
-            Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { form.TopMost = (bool)y.Value; };
+            form.TopMost = Proxy.Settings.getBool("KeepCoolProxyOnTop");
+            Proxy.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { form.TopMost = (bool)y.Value; };
 
             form.Show();
         }
@@ -318,7 +316,7 @@ namespace CoolProxy.Plugins.CopyBot
 
             ImporterBusy = true;
 
-            ImportOffset = Settings.getVector("ImportOffset");
+            ImportOffset = Proxy.Settings.getVector("ImportOffset");
 
             Zip = options.Archive;
 

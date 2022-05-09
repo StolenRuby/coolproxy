@@ -39,8 +39,8 @@ namespace CoolProxy
                 dataGridView2.Rows.Add(av.Name, dist_str, av.ID);
             });
 
-            this.TopMost = CoolProxy.Settings.getBool("KeepCoolProxyOnTop");
-            CoolProxy.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
+            this.TopMost = CoolProxy.Frame.Settings.getBool("KeepCoolProxyOnTop");
+            CoolProxy.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
 
             dataGridView2.Sort(dataGridView2.Columns[1], ListSortDirection.Descending);
         }

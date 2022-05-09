@@ -19,8 +19,8 @@ namespace CoolProxy
             InitializeComponent();
             inventoryBrowser.Proxy = CoolProxy.Frame;
 
-            this.TopMost = CoolProxy.Settings.getBool("KeepCoolProxyOnTop");
-            CoolProxy.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
+            this.TopMost = CoolProxy.Frame.Settings.getBool("KeepCoolProxyOnTop");
+            CoolProxy.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
 
             comboBox1.Items.Add("All Types");
             var types = Enum.GetValues(typeof(InventoryType)).Cast<InventoryType>().Select(x => x.ToString()).Distinct().ToList();

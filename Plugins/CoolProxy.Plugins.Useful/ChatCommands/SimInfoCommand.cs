@@ -10,7 +10,7 @@ namespace CoolProxy.Plugins.ChatCommands
 {
     class SimInfoCommand : Command
     {
-        public SimInfoCommand(SettingsManager settings, CoolProxyFrame frame)
+        public SimInfoCommand(CoolProxyFrame frame)
         {
             Proxy = frame;
             CMD = ".siminfo";

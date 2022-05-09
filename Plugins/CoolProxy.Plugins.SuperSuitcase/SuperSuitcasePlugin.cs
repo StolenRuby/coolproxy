@@ -8,8 +8,9 @@ namespace CoolProxy.Plugins.SuperSuitcase
 {
     public class SuperSuitcasePlugin : CoolProxyPlugin
     {
-        public SuperSuitcasePlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
+        public SuperSuitcasePlugin(CoolProxyFrame frame)
         {
+            IGUI gui = frame.RequestModuleInterface<IGUI>();
             gui.AddToolButton("Hacks", "Browse Target Suitcase", (x, y) =>
             {
                 AvatarPickerSearchForm avatarPickerSearchForm = new AvatarPickerSearchForm();
@@ -22,8 +23,8 @@ namespace CoolProxy.Plugins.SuperSuitcase
                         {
                             var form = new SuperSuitcaseForm(frame, root);
 
-                            form.TopMost = settings.getBool("KeepCoolProxyOnTop");
-                            settings.getSetting("KeepCoolProxyOnTop").OnChanged += (s, a) => { form.TopMost = (bool)a.Value; };
+                            form.TopMost = frame.Settings.getBool("KeepCoolProxyOnTop");
+                            frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (s, a) => { form.TopMost = (bool)a.Value; };
 
                             form.Show();
                         }

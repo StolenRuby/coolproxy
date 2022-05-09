@@ -36,29 +36,29 @@ namespace L33T.GUI
             {
                 if (this.Setting != string.Empty && this.Setting != null)
                 {
-                    base.Value = CoolProxy.CoolProxy.Settings != null ? CoolProxy.CoolProxy.Settings.getInteger(Setting) : 0;
+                    base.Value = CoolProxy.CoolProxy.Frame?.Settings != null ? CoolProxy.CoolProxy.Frame.Settings.getInteger(Setting) : 0;
                     base.ValueChanged += NumericUpDown_ValueChanged;
                 }
 
                 if (this.EnabledSetting != string.Empty && this.EnabledSetting != null)
                 {
-                    if (CoolProxy.CoolProxy.Settings != null)
+                    if (CoolProxy.CoolProxy.Frame?.Settings != null)
                     {
-                        CoolProxy.CoolProxy.Settings.getSetting(EnabledSetting).OnChanged += EnabledSetting_OnChanged;
+                        CoolProxy.CoolProxy.Frame.Settings.getSetting(EnabledSetting).OnChanged += EnabledSetting_OnChanged;
                     }
-                    base.Enabled = CoolProxy.CoolProxy.Settings != null ? CoolProxy.CoolProxy.Settings.getBool(EnabledSetting) : false;
+                    base.Enabled = CoolProxy.CoolProxy.Frame?.Settings != null ? CoolProxy.CoolProxy.Frame.Settings.getBool(EnabledSetting) : false;
                 }
             }
         }
 
-        private void Setting_OnChanged(object source, CoolProxy.SettingChangedEventArgs e)
+        private void Setting_OnChanged(object source, GridProxy.SettingChangedEventArgs e)
         {
             base.ValueChanged -= NumericUpDown_ValueChanged;
             this.Value = (int)e.Value;
             base.ValueChanged += NumericUpDown_ValueChanged;
         }
 
-        private void EnabledSetting_OnChanged(object source, CoolProxy.SettingChangedEventArgs e)
+        private void EnabledSetting_OnChanged(object source, GridProxy.SettingChangedEventArgs e)
         {
             //base.ValueChanged -= NumericUpDown_ValueChanged;
             this.Enabled = (bool)e.Value;
@@ -71,7 +71,7 @@ namespace L33T.GUI
             {
                 if (this.Setting != string.Empty)
                 {
-                    CoolProxy.CoolProxy.Settings.setInteger(Setting, (int)base.Value);
+                    CoolProxy.CoolProxy.Frame.Settings.setInteger(Setting, (int)base.Value);
                 }
             }
         }

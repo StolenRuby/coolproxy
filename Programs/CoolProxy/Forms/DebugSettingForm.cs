@@ -1,4 +1,5 @@
-﻿using OpenMetaverse;
+﻿using GridProxy;
+using OpenMetaverse;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,15 +18,15 @@ namespace CoolProxy
         {
             InitializeComponent();
 
-            foreach(Setting s in CoolProxy.Settings.getSettings())
+            foreach(Setting s in CoolProxy.Frame.Settings.getSettings())
             {
                 this.comboBox1.Items.Add(s.Name);
             }
 
             this.comboBox1.SelectedIndex = 0;
 
-            this.TopMost = CoolProxy.Settings.getBool("KeepCoolProxyOnTop");
-            CoolProxy.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
+            this.TopMost = CoolProxy.Frame.Settings.getBool("KeepCoolProxyOnTop");
+            CoolProxy.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
         }
 
         private void label6_Click(object sender, EventArgs e)
@@ -35,7 +36,7 @@ namespace CoolProxy
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Setting s = CoolProxy.Settings.getSetting(this.comboBox1.Text);
+            Setting s = CoolProxy.Frame.Settings.getSetting(this.comboBox1.Text);
             if(s != null)
             {
                 this.textBox1.Text = s.Comment;

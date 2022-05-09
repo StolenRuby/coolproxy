@@ -24,6 +24,7 @@ namespace GridProxy
         public GridManager Grid { get; private set; }
         public AssetManager Assets { get; private set; }
         public GroupManager Groups { get; private set; } 
+        public SettingsManager Settings { get; private set; }
 
         public string[] Args { get; private set; }
 
@@ -54,6 +55,7 @@ namespace GridProxy
             }
 
             Config = proxyConfig;
+            Settings = new SettingsManager();
             HTTP = new HttpManager(this);
             Login = new LoginProxy(this);
             Network = new RegionManager(this);

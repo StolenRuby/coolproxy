@@ -35,22 +35,22 @@ namespace L33T.GUI
             {
                 if (this.Setting != string.Empty && this.Setting != null)
                 {
-                    base.Text = CoolProxy.CoolProxy.Settings != null ? CoolProxy.CoolProxy.Settings.getString(Setting) : "";
+                    base.Text = CoolProxy.CoolProxy.Frame?.Settings != null ? CoolProxy.CoolProxy.Frame.Settings.getString(Setting) : "";
                     base.TextChanged += TextBox_TextChanged;
                 }
 
                 if (this.EnabledSetting != string.Empty && this.EnabledSetting != null)
                 {
-                    if (CoolProxy.CoolProxy.Settings != null)
+                    if (CoolProxy.CoolProxy.Frame?.Settings != null)
                     {
-                        CoolProxy.CoolProxy.Settings.getSetting(EnabledSetting).OnChanged += Setting_OnChanged;
+                        CoolProxy.CoolProxy.Frame.Settings.getSetting(EnabledSetting).OnChanged += Setting_OnChanged;
                     }
-                    base.Enabled = CoolProxy.CoolProxy.Settings != null ? CoolProxy.CoolProxy.Settings.getBool(EnabledSetting) : false;
+                    base.Enabled = CoolProxy.CoolProxy.Frame?.Settings != null ? CoolProxy.CoolProxy.Frame.Settings.getBool(EnabledSetting) : false;
                 }
             }
         }
 
-        private void Setting_OnChanged(object source, CoolProxy.SettingChangedEventArgs e)
+        private void Setting_OnChanged(object source, GridProxy.SettingChangedEventArgs e)
         {
             //base.changed -= TextBox_TextChanged;
             this.Enabled = (bool)e.Value;
@@ -63,7 +63,7 @@ namespace L33T.GUI
             {
                 if (this.Setting != string.Empty)
                 {
-                    CoolProxy.CoolProxy.Settings.setString(Setting, base.Text);
+                    CoolProxy.CoolProxy.Frame.Settings.setString(Setting, base.Text);
                 }
             }
         }

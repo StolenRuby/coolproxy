@@ -11,7 +11,7 @@ namespace CoolProxy.Plugins.ChatCommands
 {
     class ZTeleportCommand : Command
     {
-        public ZTeleportCommand(SettingsManager settings, CoolProxyFrame frame)
+        public ZTeleportCommand(CoolProxyFrame frame)
         {
             Proxy = frame;
             CMD = ".gth";

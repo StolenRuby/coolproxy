@@ -37,8 +37,8 @@ namespace CoolProxy
             InitializeComponent();
             Proxy = CoolProxy.Frame;
 
-            this.TopMost = CoolProxy.Settings.getBool("KeepCoolProxyOnTop");
-            CoolProxy.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
+            this.TopMost = CoolProxy.Frame.Settings.getBool("KeepCoolProxyOnTop");
+            CoolProxy.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
 
             Proxy.Network.AddDelegate(PacketType.MapBlockReply, Direction.Incoming, OnMapBlockReply);
         }

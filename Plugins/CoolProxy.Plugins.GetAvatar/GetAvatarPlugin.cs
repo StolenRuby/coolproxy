@@ -12,9 +12,12 @@ namespace CoolProxy.Plugins.GetAvatar
     public class GetAvatarPlugin : CoolProxyPlugin
     {
         private CoolProxyFrame Proxy;
-        public GetAvatarPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
+        public GetAvatarPlugin(CoolProxyFrame frame)
         {
             Proxy = frame;
+
+            IGUI gui = frame.RequestModuleInterface<IGUI>();
+
             gui.AddToolButton("Hacks", "Retrieve Stored Avatar", retrieveStoredAvatar);
         }
 

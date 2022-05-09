@@ -113,24 +113,26 @@ namespace CoolProxy.Plugins.ClientAO
 
         internal Dictionary<string, AOState> Overrides = new Dictionary<string, AOState>();
 
-        public ClientAOPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
+        public ClientAOPlugin(CoolProxyFrame frame)
         {
             Proxy = frame;
             Instance = this;
+
+            IGUI gui = frame.RequestModuleInterface<IGUI>();
 
             EditorForm = new ClientAOEditor(this);
             gui.AddToggleFormQuick("Avatar", "Animation Override", EditorForm);
 
             frame.Avatars.AvatarAnimation += Avatars_AvatarAnimation;
 
-            settings.getSetting("EnableAO").OnChanged += (x, y) =>
+            frame.Settings.getSetting("EnableAO").OnChanged += (x, y) =>
             {
                 Enabled = (bool)y.Value;
                 Proxy.SayToUser("AO " + (Enabled ? "enabled" : "disabled"));
             };
-            Enabled = settings.getBool("EnableAO");
+            Enabled = frame.Settings.getBool("EnableAO");
 
-            settings.getSetting("OverrideSits").OnChanged += (x, y) =>
+            frame.Settings.getSetting("OverrideSits").OnChanged += (x, y) =>
             {
                 OverrideSits = (bool)y.Value;
 
@@ -149,7 +151,7 @@ namespace CoolProxy.Plugins.ClientAO
                     }
                 }
             };
-            OverrideSits = settings.getBool("OverrideSits");
+            OverrideSits = frame.Settings.getBool("OverrideSits");
 
             gui.AddInventoryItemOption("Load as AO", x =>
             {
@@ -158,7 +160,7 @@ namespace CoolProxy.Plugins.ClientAO
 
             gui.AddTrayOption("-", null);
             gui.AddTrayOption("Animation Override", (x, y) => EditorForm.Show());
-            gui.AddTrayCheck("Enable Client AO", (x, y) => settings.setBool("EnableAO", !(x as ToolStripMenuItem).Checked), () => Enabled);
+            gui.AddTrayCheck("Enable Client AO", (x, y) => frame.Settings.setBool("EnableAO", !(x as ToolStripMenuItem).Checked), () => Enabled);
         }
 
         public List<AOState> Current = new List<AOState>();

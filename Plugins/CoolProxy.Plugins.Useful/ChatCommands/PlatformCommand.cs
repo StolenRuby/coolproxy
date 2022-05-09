@@ -9,7 +9,7 @@ namespace CoolProxy.Plugins.ChatCommands
 {
     class PlatformCommand : Command
     {
-        public PlatformCommand(SettingsManager settings, CoolProxyFrame frame)
+        public PlatformCommand(CoolProxyFrame frame)
         {
             Proxy = frame;
             CMD = ".plat";

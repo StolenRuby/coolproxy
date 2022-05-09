@@ -11,7 +11,7 @@ namespace CoolProxy.Plugins.ChatCommands
 {
     class GotoCommand : Command
     {
-        public GotoCommand(SettingsManager settings, CoolProxyFrame frame)
+        public GotoCommand(CoolProxyFrame frame)
         {
             Proxy = frame;
             CMD = ".goto";

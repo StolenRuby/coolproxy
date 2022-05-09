@@ -136,7 +136,7 @@ namespace CoolProxy.Plugins.FancyBeams
 
                     string name = Path.GetFileNameWithoutExtension(dialog.FileName);
                     FancyBeamsPlugin.BeamSettingsPanel.ReloadBeams();
-                    FancyBeamsPlugin.Settings.setString("BeamShape", name);
+                    FancyBeamsPlugin.Proxy.Settings.setString("BeamShape", name);
                 }
             }
         }

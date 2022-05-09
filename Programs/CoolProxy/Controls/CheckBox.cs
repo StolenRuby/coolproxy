@@ -29,33 +29,33 @@ namespace CoolGUI.Controls
                 if (this.Setting != string.Empty && this.Setting != null)
                 {
 
-                    if (CoolProxy.CoolProxy.Settings != null)
+                    if (CoolProxy.CoolProxy.Frame?.Settings != null)
                     {
-                        CoolProxy.CoolProxy.Settings.getSetting(Setting).OnChanged += Setting_OnChanged;
+                        CoolProxy.CoolProxy.Frame.Settings.getSetting(Setting).OnChanged += Setting_OnChanged;
                     }
 
-                    base.Checked = CoolProxy.CoolProxy.Settings != null ? CoolProxy.CoolProxy.Settings.getBool(Setting) : false;
+                    base.Checked = CoolProxy.CoolProxy.Frame?.Settings != null ? CoolProxy.CoolProxy.Frame.Settings.getBool(Setting) : false;
                     base.CheckedChanged += CPCheckbox_CheckedChanged;
                 }
 
                 if (this.EnabledSetting != string.Empty && this.EnabledSetting != null)
                 {
-                    if(CoolProxy.CoolProxy.Settings != null)
+                    if(CoolProxy.CoolProxy.Frame?.Settings != null)
                     {
-                        CoolProxy.CoolProxy.Settings.getSetting(EnabledSetting).OnChanged += Enabled_OnChanged;
+                        CoolProxy.CoolProxy.Frame.Settings.getSetting(EnabledSetting).OnChanged += Enabled_OnChanged;
                     }
-                    base.Enabled = CoolProxy.CoolProxy.Settings != null ? CoolProxy.CoolProxy.Settings.getBool(EnabledSetting) : false;
+                    base.Enabled = CoolProxy.CoolProxy.Frame?.Settings != null ? CoolProxy.CoolProxy.Frame.Settings.getBool(EnabledSetting) : false;
                 }
             }
         }
-        private void Setting_OnChanged(object source, CoolProxy.SettingChangedEventArgs e)
+        private void Setting_OnChanged(object source, GridProxy.SettingChangedEventArgs e)
         {
             this.CheckedChanged -= CPCheckbox_CheckedChanged;
             base.Checked = (bool)e.Value;
             this.CheckedChanged += CPCheckbox_CheckedChanged;
         }
 
-        private void Enabled_OnChanged(object source, CoolProxy.SettingChangedEventArgs e)
+        private void Enabled_OnChanged(object source, GridProxy.SettingChangedEventArgs e)
         {
             base.Enabled = (bool)e.Value;
         }
@@ -66,7 +66,7 @@ namespace CoolGUI.Controls
             {
                 if (this.Setting != string.Empty)
                 {
-                    CoolProxy.CoolProxy.Settings.setBool(Setting, base.Checked);
+                    CoolProxy.CoolProxy.Frame.Settings.setBool(Setting, base.Checked);
                 }
             }
         }

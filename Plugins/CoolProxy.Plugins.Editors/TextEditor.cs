@@ -17,10 +17,10 @@ namespace CoolProxy.Plugins.Editors
 
         private CoolProxyFrame Proxy;
 
-        public TextEditor(InventoryItem item, EditorsPlugin plugin)
+        public TextEditor(InventoryItem item, CoolProxyFrame frame)
         {
             mItem = item;
-            Proxy = plugin.Proxy;
+            Proxy = frame;
 
             InitializeComponent();
 
@@ -35,8 +35,8 @@ namespace CoolProxy.Plugins.Editors
                 else MessageBox.Show("Failed to download asset!");
             });
 
-            this.TopMost = plugin.Settings.getBool("KeepCoolProxyOnTop");
-            plugin.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
+            this.TopMost = frame.Settings.getBool("KeepCoolProxyOnTop");
+            frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
         }
 
         private void button1_Click(object sender, EventArgs e)

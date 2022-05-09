@@ -125,7 +125,7 @@ namespace CoolProxy
         public void selectGrid(string name)
         {
             var info = getInfoFromName(name);
-            CoolProxy.Settings.setString("LastGridUsed", name);
+            CoolProxy.Frame.Settings.setString("LastGridUsed", name);
             SelectedGrid = info;
             OnGridChanged?.Invoke(SelectedGrid);
         }
@@ -190,11 +190,14 @@ namespace CoolProxy
             {
                 StringBuilder sb = new StringBuilder();
 
+                string address = CoolProxy.Frame.Settings.getString("GridProxyListenAddress");
+                int port = CoolProxy.Frame.Settings.getInteger("GridProxyListenPort");
+
                 sb.Append("<gridinfo>\n");
-                sb.AppendFormat("<{0}>{1}</{0}>\n", "gridname", "Cool Proxy");
+                sb.AppendFormat("<{0}>{1}</{0}>\n", "gridname", "Cool Proxy" + (port != 8080 ? " (" + port.ToString() + ")" : string.Empty));
                 sb.AppendFormat("<{0}>{1}</{0}>\n", "platform", "Cool Proxy");
-                sb.AppendFormat("<{0}>{1}</{0}>\n", "login", string.Format("http://{0}:{1}/login", CoolProxy.Frame.Config.clientFacingAddress, CoolProxy.Frame.Config.loginPort));
-                sb.AppendFormat("<{0}>{1}</{0}>\n", "welcome", string.Format("http://{0}:{1}/splash", CoolProxy.Frame.Config.clientFacingAddress, CoolProxy.Frame.Config.loginPort));
+                sb.AppendFormat("<{0}>{1}</{0}>\n", "login", string.Format("http://{0}:{1}/login", address, port.ToString()));
+                sb.AppendFormat("<{0}>{1}</{0}>\n", "welcome", string.Format("http://{0}:{1}/splash", address, port.ToString()));
                 sb.Append("</gridinfo>\n");
 
                 StreamWriter writer = new StreamWriter(netStream);

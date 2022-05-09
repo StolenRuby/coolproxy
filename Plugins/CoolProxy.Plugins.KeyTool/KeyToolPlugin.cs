@@ -24,22 +24,22 @@ namespace CoolProxy.Plugins.KeyTool
 
     public class KeyToolPlugin : CoolProxyPlugin
     {
-        public static SettingsManager Settings { get; private set; }
         public static CoolProxyFrame Proxy { get; private set; }
 
         internal static INotecardMagic NotecardMagic = null;
 
         internal static OpenAssetMode Mode = OpenAssetMode.Nothing;
 
-        public KeyToolPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
+        public KeyToolPlugin(CoolProxyFrame frame)
         {
-            Settings = settings;
             Proxy = frame;
+
+            IGUI gui = frame.RequestModuleInterface<IGUI>();
 
             gui.AddToolButton("UUID", "KeyTool from Clipboard", handleKeyToolButton);
             gui.AddTrayOption("KeyTool from Clipboard", handleKeyToolButton);
 
-            Mode = (OpenAssetMode)settings.getInteger("KeyToolOpenAssetMode");
+            Mode = (OpenAssetMode)Proxy.Settings.getInteger("KeyToolOpenAssetMode");
 
             AddSettingsTab(gui);
 
@@ -49,7 +49,7 @@ namespace CoolProxy.Plugins.KeyTool
             Proxy.Network.AddDelegate(PacketType.ChatFromSimulator, Direction.Incoming, HandleChatFromSimulator);
         }
 
-        private void AddSettingsTab(GUIManager gui)
+        private void AddSettingsTab(IGUI gui)
         {
             Panel panel = new Panel();
             panel.Dock = DockStyle.Fill;
@@ -93,7 +93,7 @@ namespace CoolProxy.Plugins.KeyTool
             combo.SelectedIndexChanged += (x, y) =>
             {
                 Mode = (OpenAssetMode)combo.SelectedIndex;
-                Settings.setInteger("KeyToolOpenAssetMode", (int)Mode);
+                Proxy.Settings.setInteger("KeyToolOpenAssetMode", (int)Mode);
             };
 
             panel.Controls.Add(combo);
@@ -136,7 +136,7 @@ namespace CoolProxy.Plugins.KeyTool
 
         private Packet HandleChatFromSimulator(Packet packet, RegionManager.RegionProxy sim)
         {
-            if (!Settings.getBool("MakeKeysInChatSLURLs")) return packet;
+            if (!Proxy.Settings.getBool("MakeKeysInChatSLURLs")) return packet;
 
             ChatFromSimulatorPacket chat = (ChatFromSimulatorPacket)packet;
 

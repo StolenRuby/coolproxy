@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GridProxy;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -11,11 +12,11 @@ namespace CoolProxy.Plugins.FancyBeams
 {
     public class BeamSettingsPanel : Panel
     {
-        private SettingsManager Settings;
+        private CoolProxyFrame Proxy;
 
-        public BeamSettingsPanel(SettingsManager settings) : base()
+        public BeamSettingsPanel(CoolProxyFrame frame) : base()
         {
-            Settings = settings;
+            Proxy = frame;
 
             InitGUI();
 
@@ -36,7 +37,7 @@ namespace CoolProxy.Plugins.FancyBeams
                 comboBox.Items.Add(name);
             }
 
-            string selected = Settings.getString("BeamShape");
+            string selected = Proxy.Settings.getString("BeamShape");
 
             if (selected == string.Empty)
                 comboBox.SelectedIndex = 0;
@@ -56,7 +57,7 @@ namespace CoolProxy.Plugins.FancyBeams
             string save = string.Empty;
             if (comboBox.SelectedIndex != 0)
                 save = (string)comboBox.SelectedItem;
-            Settings.setString("BeamShape", save);
+            Proxy.Settings.setString("BeamShape", save);
 
             delete_button.Enabled = comboBox.SelectedIndex > 0;
         }
@@ -73,7 +74,7 @@ namespace CoolProxy.Plugins.FancyBeams
             comboBox.Size = new Size(150, 22);
             comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            Settings.getSetting("BeamShape").OnChanged += (x, y) =>
+            Proxy.Settings.getSetting("BeamShape").OnChanged += (x, y) =>
             {
                 string change = (string)y.Value;
                 if (change == string.Empty)
@@ -101,8 +102,8 @@ namespace CoolProxy.Plugins.FancyBeams
             editor_button.Click += (s, e) =>
             {
                 var editor = new BeamEditor();
-                editor.TopMost = Settings.getBool("KeepCoolProxyOnTop");
-                Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { editor.TopMost = (bool)y.Value; };
+                editor.TopMost = Proxy.Settings.getBool("KeepCoolProxyOnTop");
+                Proxy.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { editor.TopMost = (bool)y.Value; };
                 editor.Show();
             };
 
@@ -141,11 +142,11 @@ namespace CoolProxy.Plugins.FancyBeams
             trackBar.ValueChanged += (x, y) =>
             {
                 double val = (0.1 * trackBar.Value);
-                Settings.setDouble("BeamScale", val);
+                Proxy.Settings.setDouble("BeamScale", val);
                 scale.Text = (val).ToString() + "x";
             };
 
-            trackBar.Value = (int)(10.0f * Settings.getDouble("BeamScale"));
+            trackBar.Value = (int)(10.0f * Proxy.Settings.getDouble("BeamScale"));
 
             var checkbox = new CoolGUI.Controls.CheckBox();
             checkbox.AutoSize = true;
@@ -171,7 +172,7 @@ namespace CoolProxy.Plugins.FancyBeams
             {
                 File.Delete(file);
                 ReloadBeams();
-                Settings.setString("BeamShape", string.Empty);
+                Proxy.Settings.setString("BeamShape", string.Empty);
             }
         }
 

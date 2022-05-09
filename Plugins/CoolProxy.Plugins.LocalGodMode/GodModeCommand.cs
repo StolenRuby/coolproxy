@@ -11,7 +11,7 @@ namespace CoolProxy.Plugins.LocalGodMode
 {
     class GodModeCommand : Command
     {
-        public GodModeCommand(SettingsManager settings, CoolProxyFrame frame)
+        public GodModeCommand(CoolProxyFrame frame)
         {
             Proxy = frame;
             CMD = ".gm";

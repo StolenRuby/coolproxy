@@ -17,11 +17,11 @@ namespace CoolProxy
         {
             InitializeComponent();
 
-            this.TopMost = CoolProxy.Settings.getBool("KeepCoolProxyOnTop");
-            CoolProxy.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
+            this.TopMost = CoolProxy.Frame.Settings.getBool("KeepCoolProxyOnTop");
+            CoolProxy.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
 
 
-            checkBox5.Checked = CoolProxy.Settings.getBool("SpoofVersion");
+            checkBox5.Checked = CoolProxy.Frame.Settings.getBool("SpoofVersion");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -38,7 +38,7 @@ namespace CoolProxy
 
             macHashTextbox.TextChanged -= macHashTextbox_TextChanged;
 
-            macHashTextbox.Text = is_checked ? CoolProxy.Settings.getString("SpecifiedMacAddress") : "00000000000000000000000000000000";
+            macHashTextbox.Text = is_checked ? CoolProxy.Frame.Settings.getString("SpecifiedMacAddress") : "00000000000000000000000000000000";
 
             macHashTextbox.TextChanged += macHashTextbox_TextChanged;
         }
@@ -51,7 +51,7 @@ namespace CoolProxy
 
             id0HashTextbox.TextChanged -= id0HashTextbox_TextChanged;
 
-            id0HashTextbox.Text = is_checked ? CoolProxy.Settings.getString("SpecifiedId0Address") : "00000000000000000000000000000000";
+            id0HashTextbox.Text = is_checked ? CoolProxy.Frame.Settings.getString("SpecifiedId0Address") : "00000000000000000000000000000000";
 
             id0HashTextbox.TextChanged += id0HashTextbox_TextChanged;
         }
@@ -69,18 +69,18 @@ namespace CoolProxy
 
         private void macHashTextbox_TextChanged(object sender, EventArgs e)
         {
-            CoolProxy.Settings.setString("SpecifiedMacAddress", macHashTextbox.Text);
+            CoolProxy.Frame.Settings.setString("SpecifiedMacAddress", macHashTextbox.Text);
         }
 
         private void id0HashTextbox_TextChanged(object sender, EventArgs e)
         {
-            CoolProxy.Settings.setString("SpecifiedId0Address", id0HashTextbox.Text);
+            CoolProxy.Frame.Settings.setString("SpecifiedId0Address", id0HashTextbox.Text);
         }
 
         private void channelTextbox_TextChanged(object sender, EventArgs e)
         {
             if (channelTextbox.Enabled)
-                CoolProxy.Settings.setString("SpecifiedVersionChannel", channelTextbox.Text);
+                CoolProxy.Frame.Settings.setString("SpecifiedVersionChannel", channelTextbox.Text);
         }
 
         private void checkBox5_CheckedChanged(object sender, EventArgs e)
@@ -92,18 +92,18 @@ namespace CoolProxy
             if (!spoof_version)
                 versionMajor.Enabled = versionMinor.Enabled = versionPatch.Enabled = versionBuild.Enabled = spoof_version;
 
-            versionMajor.Value = spoof_version ? CoolProxy.Settings.getInteger("SpecifiedVersionMajor") : 0;
-            versionMinor.Value = spoof_version ? CoolProxy.Settings.getInteger("SpecifiedVersionMinor") : 0;
-            versionPatch.Value = spoof_version ? CoolProxy.Settings.getInteger("SpecifiedVersionPatch") : 0;
-            versionBuild.Value = spoof_version ? CoolProxy.Settings.getInteger("SpecifiedVersionBuild") : 0;
+            versionMajor.Value = spoof_version ? CoolProxy.Frame.Settings.getInteger("SpecifiedVersionMajor") : 0;
+            versionMinor.Value = spoof_version ? CoolProxy.Frame.Settings.getInteger("SpecifiedVersionMinor") : 0;
+            versionPatch.Value = spoof_version ? CoolProxy.Frame.Settings.getInteger("SpecifiedVersionPatch") : 0;
+            versionBuild.Value = spoof_version ? CoolProxy.Frame.Settings.getInteger("SpecifiedVersionBuild") : 0;
 
             if (spoof_version)
                 versionMajor.Enabled = versionMinor.Enabled = versionPatch.Enabled = versionBuild.Enabled = spoof_version;
 
             channelTextbox.Enabled = spoof_version;
-            channelTextbox.Text = spoof_version ? CoolProxy.Settings.getString("SpecifiedVersionChannel") : "Unchanged";
+            channelTextbox.Text = spoof_version ? CoolProxy.Frame.Settings.getString("SpecifiedVersionChannel") : "Unchanged";
 
-            CoolProxy.Settings.setBool("SpoofVersion", spoof_version);
+            CoolProxy.Frame.Settings.setBool("SpoofVersion", spoof_version);
         }
 
         private void versionMajor_ValueChanged(object sender, EventArgs e)
@@ -111,7 +111,7 @@ namespace CoolProxy
             L33T.GUI.NumericUpDown spinner = sender as L33T.GUI.NumericUpDown;
 
             if (spinner.Enabled)
-                CoolProxy.Settings.setInteger((string)spinner.Tag, (int)spinner.Value);
+                CoolProxy.Frame.Settings.setInteger((string)spinner.Tag, (int)spinner.Value);
         }
     }
 }

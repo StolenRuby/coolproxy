@@ -16,17 +16,14 @@ namespace CoolProxy.Plugins.Useful
 {
     public class UsefulPlugin : CoolProxyPlugin
     {
-        private SettingsManager Settings;
-        private GUIManager GUI;
         private CoolProxyFrame Proxy;
 
-        public UsefulPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
+        public UsefulPlugin(CoolProxyFrame frame)
         {
-            Settings = settings;
-            GUI = gui;
             Proxy = frame;
 
-            GUI.AddSingleMenuItem("Teleport To", (avatar_id) =>
+            IGUI gui = frame.RequestModuleInterface<IGUI>();
+            gui.AddSingleMenuItem("Teleport To", (avatar_id) =>
             {
                 var avatars = Proxy.Network.CurrentSim.ObjectsAvatars;
                 Avatar avatar = avatars.Find(x => x.ID == avatar_id);
@@ -37,12 +34,12 @@ namespace CoolProxy.Plugins.Useful
                 }
             });
 
-            GUI.AddSingleMenuItem("Offer Teleport", (avatar_id) =>
+            gui.AddSingleMenuItem("Offer Teleport", (avatar_id) =>
             {
                 Proxy.Agent.SendTeleportLure(avatar_id);
             });
 
-            GUI.AddMultipleMenuItem("Offer Teleport", (avatars) =>
+            gui.AddMultipleMenuItem("Offer Teleport", (avatars) =>
             {
                 foreach (UUID avatar in avatars)
                 {
@@ -50,18 +47,18 @@ namespace CoolProxy.Plugins.Useful
                 }
             });
 
-            GUI.AddSingleMenuItem("Copy Key", copyAvatarKey);
-            GUI.AddMultipleMenuItem("Copy Keys", copyAvatarKeys);
+            gui.AddSingleMenuItem("Copy Key", copyAvatarKey);
+            gui.AddMultipleMenuItem("Copy Keys", copyAvatarKeys);
 
-            GUI.AddToolButton("UUID", "Avatar Picker to Clipboard", avatarPickerToClipboard);
-            GUI.AddToolButton("UUID", "Group Picker to Clipboard", groupPickerToClipboard);
+            gui.AddToolButton("UUID", "Avatar Picker to Clipboard", avatarPickerToClipboard);
+            gui.AddToolButton("UUID", "Group Picker to Clipboard", groupPickerToClipboard);
 
             var uploader_form = new UploaderForm();
 
             if(Util.IsDebugMode)
             {
-                GUI.AddToggleFormQuick("Assets", "Upload Asset", uploader_form);
-                GUI.AddTrayOption("Upload Asset...", (x, y) =>
+                gui.AddToggleFormQuick("Assets", "Upload Asset", uploader_form);
+                gui.AddTrayOption("Upload Asset...", (x, y) =>
                 {
                     OpenFileDialog openFileDialog = new OpenFileDialog();
                     openFileDialog.Filter = Util.GetCombinedFilter();
@@ -73,16 +70,16 @@ namespace CoolProxy.Plugins.Useful
                 });
             }
 
-            GUI.AddInventoryItemOption("Copy Item ID", x => Clipboard.SetText(x.UUID.ToString()));
-            GUI.AddInventoryItemOption("Copy Asset ID", x => Clipboard.SetText(x.AssetUUID.ToString()), x => x.AssetUUID != UUID.Zero);
+            gui.AddInventoryItemOption("Copy Item ID", x => Clipboard.SetText(x.UUID.ToString()));
+            gui.AddInventoryItemOption("Copy Asset ID", x => Clipboard.SetText(x.AssetUUID.ToString()), x => x.AssetUUID != UUID.Zero);
 
-            GUI.AddInventoryFolderOption("Copy Folder ID", x => Clipboard.SetText(x.UUID.ToString()));
+            gui.AddInventoryFolderOption("Copy Folder ID", x => Clipboard.SetText(x.UUID.ToString()));
 
-            GUI.AddInventoryItemOption("Save As...", handleSaveItemAs, x => x.AssetUUID != UUID.Zero);
-            GUI.AddInventoryFolderOption("Save As...", handleSaveFolderAs);
+            gui.AddInventoryItemOption("Save As...", handleSaveItemAs, x => x.AssetUUID != UUID.Zero);
+            gui.AddInventoryFolderOption("Save As...", handleSaveFolderAs);
 
-            GUI.AddInventoryItemOption("Play Locally", handlePlaySoundLocally, AssetType.Sound);
-            GUI.AddInventoryItemOption("Play Inworld", handlePlaySoundInworld, AssetType.Sound);
+            gui.AddInventoryItemOption("Play Locally", handlePlaySoundLocally, AssetType.Sound);
+            gui.AddInventoryItemOption("Play Inworld", handlePlaySoundInworld, AssetType.Sound);
         }
 
         private void groupPickerToClipboard(object sender, EventArgs e)

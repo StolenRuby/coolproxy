@@ -11,7 +11,7 @@ namespace CoolProxy.Plugins.ChatCommands
 {
     class TeleportToUserCommand : Command
     {
-        public TeleportToUserCommand(SettingsManager settings, CoolProxyFrame frame)
+        public TeleportToUserCommand(CoolProxyFrame frame)
         {
             Proxy = frame;
             CMD = ".tpto";

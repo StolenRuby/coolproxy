@@ -19,12 +19,12 @@ namespace CoolProxy.Plugins.ServiceTools
         private InventoryItem currentItem;
         private bool IsUpdating = false;
 
-        public XInventoryServiceForm(CoolProxyFrame frame, SettingsManager settings, InventoryFolder folder) : this(frame, settings)
+        public XInventoryServiceForm(CoolProxyFrame frame, InventoryFolder folder) : this(frame)
         {
             folderIDTextBox.Text = folder.UUID.ToString();
         }
 
-        public XInventoryServiceForm(CoolProxyFrame frame, SettingsManager settings) : this(frame, settings, default(InventoryItem))
+        public XInventoryServiceForm(CoolProxyFrame frame) : this(frame, default(InventoryItem))
         {
             this.Text = "New Inventory Item...";
             button1.Text = "Add Item";
@@ -34,7 +34,7 @@ namespace CoolProxy.Plugins.ServiceTools
             assetTypeCombo.Enabled = true;
         }
 
-        public XInventoryServiceForm(CoolProxyFrame frame, SettingsManager settings, InventoryItem item)
+        public XInventoryServiceForm(CoolProxyFrame frame, InventoryItem item)
         {
             if (item is default(InventoryItem))
             {
@@ -58,8 +58,8 @@ namespace CoolProxy.Plugins.ServiceTools
             Proxy = frame;
             InitializeComponent();
 
-            this.TopMost = settings.getBool("KeepCoolProxyOnTop");
-            settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
+            this.TopMost = frame.Settings.getBool("KeepCoolProxyOnTop");
+            frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
 
             assetTypeCombo.DataSource = Enum.GetNames(typeof(AssetType));
             assetTypeCombo.SelectedIndex = 0;

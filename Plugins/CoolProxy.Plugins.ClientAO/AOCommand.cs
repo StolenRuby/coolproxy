@@ -9,11 +9,8 @@ namespace CoolProxy.Plugins.ClientAO
 {
     class AOCommand : Command
     {
-        SettingsManager Settings;
-
-        public AOCommand(SettingsManager settings, CoolProxyFrame frame)
+        public AOCommand(CoolProxyFrame frame)
         {
-            Settings = settings;
             Proxy = frame;
             CMD = ".ao";
             Name = "Controls for Client AO";
@@ -51,11 +48,11 @@ namespace CoolProxy.Plugins.ClientAO
             }
             else if ("on" == cmd)
             {
-                Settings.setBool("EnableAO", true);
+                Proxy.Settings.setBool("EnableAO", true);
             }
             else if ("off" == cmd)
             {
-                Settings.setBool("EnableAO", false);
+                Proxy.Settings.setBool("EnableAO", false);
             }
 
             return string.Empty;

@@ -62,8 +62,8 @@ namespace CoolProxy.Plugins.KeyTool
             this.BringToFront();
 
 
-            this.TopMost = KeyToolPlugin.Settings.getBool("KeepCoolProxyOnTop");
-            KeyToolPlugin.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
+            this.TopMost = Frame.Settings.getBool("KeepCoolProxyOnTop");
+            Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
         }
 
         ~KeyToolForm()
@@ -105,11 +105,11 @@ namespace CoolProxy.Plugins.KeyTool
                 case RESULT.YES:
                     //Frame.SayToUser("KeyTool", mKey.ToString() + " is a " + type);
                     label.ForeColor = Color.Green;
-                    if (KeyToolPlugin.Settings.getBool("AutomaticallyOpenKeyTool"))
+                    if (Frame.Settings.getBool("AutomaticallyOpenKeyTool"))
                     {
                         new Task(() => KeyTool.openKey(ktype, atype, mKey)).Start();
 
-                        if (KeyToolPlugin.Settings.getBool("AutomaticallyCloseKeyTool"))
+                        if (Frame.Settings.getBool("AutomaticallyCloseKeyTool"))
                         {
                             //this.Invoke(new MethodInvoker(() => { this.Dispose(); this.Close(); }));
                             this.Close();

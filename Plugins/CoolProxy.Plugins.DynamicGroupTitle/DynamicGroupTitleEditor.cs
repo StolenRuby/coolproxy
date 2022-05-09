@@ -15,7 +15,6 @@ namespace CoolProxy
     public partial class DynamicGroupTitleEditor : Form
     {
         private CoolProxyFrame Proxy;
-        private SettingsManager Settings;
 
         public UUID GroupID = UUID.Zero;
 
@@ -28,15 +27,14 @@ namespace CoolProxy
 
         Timer TitleTimer;
 
-        public DynamicGroupTitleEditor(CoolProxyFrame frame, SettingsManager settings)
+        public DynamicGroupTitleEditor(CoolProxyFrame frame)
         {
             Proxy = frame;
-            Settings = settings;
             InitializeComponent();
 
             Proxy.Groups.GroupRoleDataReply += Groups_GroupRoleDataReply;
 
-            var osd = settings.getOSD("DynamicTitle");
+            var osd = Proxy.Settings.getOSD("DynamicTitle");
 
             listBox1.Items.Clear();
 
@@ -64,7 +62,7 @@ namespace CoolProxy
                 array.Add(title);
             }
 
-            Settings.setOSD("DynamicTitle", array);
+            Proxy.Settings.setOSD("DynamicTitle", array);
         }
 
         private void UpdateTitle(object sender, EventArgs e)

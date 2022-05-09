@@ -15,9 +15,11 @@ namespace CoolProxy.Plugins.Movement
 
         private bool DisableDelays = false;
 
-        public MovementPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
+        public MovementPlugin(CoolProxyFrame frame)
         {
             Proxy = frame;
+
+            IGUI gui = frame.RequestModuleInterface<IGUI>();
             gui.AddToolCheckbox("Avatar", "Disable Pre-jump/Landing Delay", handleCheckbox);
 
             Proxy.Network.AddDelegate(PacketType.AgentUpdate, Direction.Outgoing, HandleAgentUpdate);

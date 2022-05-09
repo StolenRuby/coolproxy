@@ -9,21 +9,19 @@ namespace CoolProxy.Plugins.ServiceTools
 {
     public class ServiceToolsPlugin : CoolProxyPlugin
     {
-        //private SettingsManager Settings;
-        //private GUIManager GUI;
         private CoolProxyFrame Proxy;
 
-        public ServiceToolsPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
+        public ServiceToolsPlugin(CoolProxyFrame frame)
         {
             Proxy = frame;
 
-            // todo: maybe pass the forms all 3?
+            IGUI gui = frame.RequestModuleInterface<IGUI>();
 
             gui.AddToggleFormQuick("Assets", "Asset Service Upload", new AssetServiceTool(frame));
             gui.AddToggleFormQuick("Avatar", "Grid Instant Message Tool", new GridIMTool(frame));
 
-            gui.AddInventoryItemOption("Edit Item...", (x) => new XInventoryServiceForm(frame, settings, x).Show(), IsItemWithinSuitcase);
-            gui.AddInventoryFolderOption("Add Item...", (x) => new XInventoryServiceForm(frame, settings, x).Show(), IsWithinSuitcase);
+            gui.AddInventoryItemOption("Edit Item...", (x) => new XInventoryServiceForm(frame, x).Show(), IsItemWithinSuitcase);
+            gui.AddInventoryFolderOption("Add Item...", (x) => new XInventoryServiceForm(frame, x).Show(), IsWithinSuitcase);
         }
 
         private bool IsWithinSuitcase(InventoryFolder folder)

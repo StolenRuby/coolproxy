@@ -8,9 +8,10 @@ namespace CoolProxy.Plugins.DynamicGroupTitle
 {
     class DynamicGroupTitlePlugin : CoolProxyPlugin
     {
-        public DynamicGroupTitlePlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
+        public DynamicGroupTitlePlugin(CoolProxyFrame frame)
         {
-            gui.AddToggleFormQuick("Avatar", "Dynamic Group Title", new DynamicGroupTitleEditor(frame, settings));
+            IGUI gui = frame.RequestModuleInterface<IGUI>();
+            gui.AddToggleFormQuick("Avatar", "Dynamic Group Title", new DynamicGroupTitleEditor(frame));
         }
     }
 }

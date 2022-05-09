@@ -4,16 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace CoolProxy
+namespace GridProxy
 {
     public delegate void SettingChangedEventHandler(object source, SettingChangedEventArgs e);
 
-    //This is a class which describes the event to the class that recieves it.
-    //An EventArgs class must always derive from System.EventArgs.
     public class SettingChangedEventArgs : EventArgs
     {
         public string Setting;
@@ -32,14 +27,14 @@ namespace CoolProxy
     {
         public event SettingChangedEventHandler OnChanged;
 
-        internal string Name
-        { get; }
+        public string Name
+        { get; internal set; }
 
-        internal string Comment
-        { get; }
+        public string Comment
+        { get; internal set; }
 
-        internal string Type
-        { get; }
+        public string Type
+        { get; private set; }
 
         private object mObject;
 

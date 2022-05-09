@@ -8,8 +8,9 @@ namespace CoolProxy.Plugins.MimicTool
 {
     public class MimicToolPlugin : CoolProxyPlugin
     {
-        public MimicToolPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
+        public MimicToolPlugin(CoolProxyFrame frame)
         {
+            IGUI gui = frame.RequestModuleInterface<IGUI>();
             gui.AddToggleFormQuick("Avatar", "Avatar Mimicry Tool", new MimicToolForm(frame));
         }
     }

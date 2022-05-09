@@ -13,13 +13,13 @@ namespace CoolProxy
 {
     static class CoolProxy
     {
-        static public SettingsManager Settings = null;
+        //static public SettingsManager Settings = null;
 
         static public CoolProxyFrame Frame = null;
 
         private static CoolProxyForm coolProxyForm;
 
-        internal static GUIManager GUI { get { return coolProxyForm.GUI; } }
+        //internal static GUIManager GUI { get { return coolProxyForm.GUI; } }
 
         /// <summary>
         /// The main entry point for the application.
@@ -39,7 +39,7 @@ namespace CoolProxy
             Control.CheckForIllegalCrossThreadCalls = false;
 
             // Have to load this first to check if we're allowed multiple instances
-            Settings = new SettingsManager();
+            //Settings = new SettingsManager();
 
             // ToDo: Add support for settings
             Frame = new CoolProxyFrame(new string[] { });

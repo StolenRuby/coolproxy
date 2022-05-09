@@ -9,7 +9,7 @@ namespace CoolProxy.Plugins.Textures
 {
     class TexturesCommand : Command
     {
-        public TexturesCommand(SettingsManager settings, CoolProxyFrame frame)
+        public TexturesCommand(CoolProxyFrame frame)
         {
             Proxy = frame;
             CMD = ".textures";

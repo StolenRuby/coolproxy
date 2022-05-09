@@ -16,12 +16,13 @@ namespace CoolProxy.Plugins.MagicRez
     {
         private CoolProxyFrame Proxy;
 
-        public MagicRezPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
+        public MagicRezPlugin(CoolProxyFrame frame)
         {
             Proxy = frame;
 
             Proxy.RegisterModuleInterface<IMagicRez>(this);
 
+            IGUI gui = frame.RequestModuleInterface<IGUI>();
             gui.AddToggleFormQuick("Hacks", "Magic Rez", new MagicRezForm(frame, this));
         }
 

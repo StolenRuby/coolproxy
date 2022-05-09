@@ -9,19 +9,12 @@ namespace CoolProxy.Plugins.Editors
 {
     public class EditorsPlugin : CoolProxyPlugin
     {
-        internal SettingsManager Settings;
-        internal GUIManager GUI;
-        internal CoolProxyFrame Proxy;
-
-        public EditorsPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
+        public EditorsPlugin(CoolProxyFrame frame)
         {
-            Settings = settings;
-            GUI = gui;
-            Proxy = frame;
+            IGUI gui = frame.RequestModuleInterface<IGUI>();
 
-
-            GUI.AddInventoryItemOption("Hex Edit", x => new HexEditor(x, this).Show(), x => x.AssetUUID != UUID.Zero);
-            GUI.AddInventoryItemOption("Text Edit", x => new TextEditor(x, this).Show(), x => x.AssetUUID != UUID.Zero);
+            gui.AddInventoryItemOption("Hex Edit", x => new HexEditor(x, frame).Show(), x => x.AssetUUID != UUID.Zero);
+            gui.AddInventoryItemOption("Text Edit", x => new TextEditor(x, frame).Show(), x => x.AssetUUID != UUID.Zero);
         }
     }
 }

@@ -8,17 +8,11 @@ namespace CoolProxy.Plugin.MegaPrimMaker
 {
     public class MegaPrimPlugin : CoolProxyPlugin
     {
-        private SettingsManager Settings;
-        private GUIManager GUI;
-        private CoolProxyFrame Proxy;
-
-        public MegaPrimPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
+        public MegaPrimPlugin(CoolProxyFrame frame)
         {
-            Settings = settings;
-            GUI = gui;
-            Proxy = frame;
+            IGUI gui = frame.RequestModuleInterface<IGUI>();
 
-            GUI.AddToggleFormQuick("Objects", "New MegaPrim", new Plugins.MegaPrimMaker.NewMegaprimForm(Proxy));
+            gui.AddToggleFormQuick("Objects", "New MegaPrim", new Plugins.MegaPrimMaker.NewMegaprimForm(frame));
         }
     }
 }

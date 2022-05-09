@@ -11,7 +11,7 @@ namespace CoolProxy
 {
     public delegate bool TrayIconEnable();
 
-    public class GUIManager
+    public class GUIManager : IGUI
     {
         private CoolProxyForm coolForm;
 

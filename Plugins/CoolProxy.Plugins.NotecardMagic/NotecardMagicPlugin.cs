@@ -13,7 +13,7 @@ namespace CoolProxy.Plugins.NotecardMagic
     {
         private CoolProxyFrame Proxy;
 
-        public NotecardMagicPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
+        public NotecardMagicPlugin(CoolProxyFrame frame)
         {
             Proxy = frame;
             Proxy.RegisterModuleInterface<INotecardMagic>(this);

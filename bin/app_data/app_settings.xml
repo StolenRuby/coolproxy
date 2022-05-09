@@ -528,5 +528,19 @@
 			<key>value</key>
 			<array/>
 		</map>
+		<key>LindenGridSelected</key>
+		<map>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>1</boolean>
+		</map>
+		<key>AssetCacheDir</key>
+		<map>
+			<key>type</key>
+			<string>string</string>
+			<key>value</key>
+			<string>asset_cache</string>
+		</map>
 	</map>
 </llsd>

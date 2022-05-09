@@ -10,7 +10,7 @@ namespace CoolProxy.Plugins.KeyTool
 {
     class KeyToolCommand : Command
     {
-        public KeyToolCommand(SettingsManager settings, CoolProxyFrame frame)
+        public KeyToolCommand(CoolProxyFrame frame)
         {
             Proxy = frame;
             CMD = ".keytool";

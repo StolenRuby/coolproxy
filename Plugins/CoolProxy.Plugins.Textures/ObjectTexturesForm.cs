@@ -16,13 +16,13 @@ namespace CoolProxy.Plugins.Textures
     {
         private CoolProxyFrame Proxy;
 
-        public ObjectTexturesForm(CoolProxyFrame frame, SettingsManager settings)
+        public ObjectTexturesForm(CoolProxyFrame frame)
         {
             Proxy = frame;
             InitializeComponent();
 
-            this.TopMost = settings.getBool("KeepCoolProxyOnTop");
-            settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
+            this.TopMost = frame.Settings.getBool("KeepCoolProxyOnTop");
+            frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
 
             this.Shown += ObjectTexturesForm_Shown;
         }

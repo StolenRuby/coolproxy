@@ -25,28 +25,25 @@ namespace CoolProxy.Plugins.FancyBeams
         bool RotateBeamShape = true;
         float RainbowProgress = 0.0f;
 
-        CoolProxyFrame Proxy;
+        public static CoolProxyFrame Proxy;
 
         public static string BeamsFolderDir { get; private set; }
 
-        internal static SettingsManager Settings { get; set; }
-
         internal static BeamSettingsPanel BeamSettingsPanel { get; set; }
 
-        public FancyBeamsPlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
+        public FancyBeamsPlugin(CoolProxyFrame frame)
         {
             Proxy = frame;
-            Settings = settings;
 
             frame.Network.AddDelegate(PacketType.ViewerEffect, Direction.Outgoing, HandleViewerEffect);
 
-            settings.getSetting("RainbowSelectionBeam").OnChanged += (x, y) => EnableRainbowBeam = (bool)y.Value;
-            EnableRainbowBeam = settings.getBool("RainbowSelectionBeam");
+            Proxy.Settings.getSetting("RainbowSelectionBeam").OnChanged += (x, y) => EnableRainbowBeam = (bool)y.Value;
+            EnableRainbowBeam = Proxy.Settings.getBool("RainbowSelectionBeam");
 
-            settings.getSetting("RotateShapedBeam").OnChanged += (x, y) => RotateBeamShape = (bool)y.Value;
-            RotateBeamShape = settings.getBool("RotateShapedBeam");
+            Proxy.Settings.getSetting("RotateShapedBeam").OnChanged += (x, y) => RotateBeamShape = (bool)y.Value;
+            RotateBeamShape = Proxy.Settings.getBool("RotateShapedBeam");
 
-            settings.getSetting("BeamScale").OnChanged += (x, y) => BeamScale = (float)(double)y.Value;
+            Proxy.Settings.getSetting("BeamScale").OnChanged += (x, y) => BeamScale = (float)(double)y.Value;
 
             BeamsFolderDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CoolProxy\\beams\\");
 
@@ -65,10 +62,12 @@ namespace CoolProxy.Plugins.FancyBeams
                 }
             }
 
-            settings.getSetting("BeamShape").OnChanged += OnBeamChanged;
-            settings.setString("BeamShape", settings.getString("BeamShape")); // hack: re-apply the settings to trigger the load
+            Proxy.Settings.getSetting("BeamShape").OnChanged += OnBeamChanged;
+            Proxy.Settings.setString("BeamShape", Proxy.Settings.getString("BeamShape")); // hack: re-apply the settings to trigger the load
 
-            BeamSettingsPanel = new BeamSettingsPanel(settings);
+            IGUI gui = frame.RequestModuleInterface<IGUI>();
+
+            BeamSettingsPanel = new BeamSettingsPanel(Proxy);
             gui.AddSettingsTab("Tractor Beam", BeamSettingsPanel);
         }
 
@@ -89,7 +88,7 @@ namespace CoolProxy.Plugins.FancyBeams
 
             if(!File.Exists(filename))
             {
-                Settings.setString("BeamShape", string.Empty);
+                Proxy.Settings.setString("BeamShape", string.Empty);
                 return;
             }
 

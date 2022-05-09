@@ -22,19 +22,17 @@ namespace CoolProxy.Plugins.LocalGodMode
 
     public class LocalGodModePlugin : CoolProxyPlugin
     {
-        private SettingsManager Settings;
-        private GUIManager GUI;
         private CoolProxyFrame Proxy;
 
-        public LocalGodModePlugin(SettingsManager settings, GUIManager gui, CoolProxyFrame frame)
+        public LocalGodModePlugin(CoolProxyFrame frame)
         {
             Proxy = frame;
-            Settings = settings;
-            GUI = gui;
+
+            IGUI gui = frame.RequestModuleInterface<IGUI>();
 
             var blarg = Enum.GetValues(typeof(GodModeLevel)).Cast<object>().ToArray();
-            GUI.AddToolLabel("Avatar", "Local GodMode Level:");
-            GUI.AddToolComboBox("Avatar", changeGodModeLevel, blarg, GodModeLevel.GOD_NOT);
+            gui.AddToolLabel("Avatar", "Local GodMode Level:");
+            gui.AddToolComboBox("Avatar", changeGodModeLevel, blarg, GodModeLevel.GOD_NOT);
         }
 
         private void changeGodModeLevel(object sender, EventArgs e)

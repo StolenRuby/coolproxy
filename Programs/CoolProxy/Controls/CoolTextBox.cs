@@ -35,22 +35,22 @@ namespace CoolProxy
             {
                 if (this.Setting != string.Empty && this.Setting != null)
                 {
-                    base.Text = CoolProxy.Settings != null ? CoolProxy.Settings.getString(Setting) : "";
+                    base.Text = CoolProxy.Frame.Settings != null ? CoolProxy.Frame.Settings.getString(Setting) : "";
                     base.TextChanged += TextBox_TextChanged;
                 }
 
                 if (this.EnabledSetting != string.Empty && this.EnabledSetting != null)
                 {
-                    if (CoolProxy.Settings != null)
+                    if (CoolProxy.Frame.Settings != null)
                     {
-                        CoolProxy.Settings.getSetting(EnabledSetting).OnChanged += Setting_OnChanged;
+                        CoolProxy.Frame.Settings.getSetting(EnabledSetting).OnChanged += Setting_OnChanged;
                     }
-                    base.Enabled = CoolProxy.Settings != null ? CoolProxy.Settings.getBool(EnabledSetting) : false;
+                    base.Enabled = CoolProxy.Frame.Settings != null ? CoolProxy.Frame.Settings.getBool(EnabledSetting) : false;
                 }
             }
         }
 
-        private void Setting_OnChanged(object source, SettingChangedEventArgs e)
+        private void Setting_OnChanged(object source, GridProxy.SettingChangedEventArgs e)
         {
             base.TextChanged -= TextBox_TextChanged;
             this.Text = (string)e.Value;
@@ -63,7 +63,7 @@ namespace CoolProxy
             {
                 if (this.Setting != string.Empty)
                 {
-                    CoolProxy.Settings.setString(Setting, base.Text);
+                    CoolProxy.Frame.Settings.setString(Setting, base.Text);
                 }
             }
         }

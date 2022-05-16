@@ -368,6 +368,7 @@ namespace CoolProxy.Plugins.CopyBot
             OSDMap ExportMap;
 
             Dictionary<UUID, AssetType> AssetsToExport = new Dictionary<UUID, AssetType>();
+            Dictionary<InventoryItem, uint> TaskAssetsToExport = new Dictionary<InventoryItem, uint>();
 
             ZipArchive Archive;
 
@@ -466,7 +467,9 @@ namespace CoolProxy.Plugins.CopyBot
                         if(item is InventoryItem)
                         {
                             InventoryItem inv_item = (InventoryItem)item;
-                            if(inv_item.AssetUUID != UUID.Zero)
+                            if (inv_item.AssetType == AssetType.Notecard || inv_item.AssetType == AssetType.LSLText)
+                                TaskAssetsToExport[inv_item] = object_id;
+                            else if (inv_item.AssetUUID != UUID.Zero)
                             {
                                 inv_items.Add(item.GetOSD());
 
@@ -527,6 +530,44 @@ namespace CoolProxy.Plugins.CopyBot
                         Proxy.OpenSim.Assets.DownloadAsset(first.Key, (x, y) => HandleAsset(first.Key, first.Value, x, y));
                     else
                         Proxy.Assets.EasyDownloadAsset(first.Key, first.Value, (x, y) => HandleAsset(first.Key, first.Value, x, y));
+                }
+                else if(TaskAssetsToExport.Count > 0)
+                {
+                    var first = TaskAssetsToExport.First();
+                    TaskAssetsToExport.Remove(first.Key);
+
+                    var item = first.Key;
+
+                    Proxy.Assets.RequestInventoryAsset(UUID.Zero, item.UUID, item.ParentUUID, item.OwnerID, item.AssetType, true, (x, y) =>
+                    {
+                        if(x.Success)
+                        {
+                            AddToArchive(y.AssetID.ToString() + "." + y.AssetType.ToString(), y.AssetData);
+
+                            item.AssetUUID = y.AssetID;
+                            uint object_id = first.Value;
+
+                            OSDMap obj = (OSDMap)ExportMap[object_id.ToString()];
+
+                            OSD val;
+                            OSDArray items;
+
+                            if (obj.TryGetValue("inventory", out val))
+                                items = (OSDArray)val;
+                            else
+                                items = new OSDArray();
+
+                            items.Add(item.GetOSD());
+
+                            obj["inventory"] = items;
+                        }
+                        else
+                        {
+                            Logger.Log("[EXPORTER] Failed to download " + item.Name + " (" + item.UUID.ToString() + ")", Helpers.LogLevel.Info);
+                        }
+
+                        NextAsset();
+                    });
                 }
                 else
                 {

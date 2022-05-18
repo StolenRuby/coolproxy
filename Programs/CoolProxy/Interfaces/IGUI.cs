@@ -9,6 +9,26 @@ using System.Windows.Forms;
 
 namespace CoolProxy
 {
+    public class TrayOption
+    {
+        public string Label { get; set; }
+        public EventHandler Option { get; set; }
+        public TrayIconEnable Enable { get; set; }
+        public TrayIconEnable Checked { get; set; }
+        public object Tag { get; set; }
+
+        public List<TrayOption> SubMenu { get; set; }
+
+        public TrayOption(string label, EventHandler option, TrayIconEnable enabled, TrayIconEnable check, object tag)
+        {
+            Label = label;
+            Option = option;
+            Enable = enabled;
+            Checked = check;
+            Tag = tag;
+        }
+    }
+
     public interface IGUI
     {
         ////////// Settings //////////
@@ -35,5 +55,6 @@ namespace CoolProxy
         ////////// Tray //////////
         void AddTrayOption(string label, EventHandler option, TrayIconEnable opening = null, object tag = null);
         void AddTrayCheck(string label, EventHandler option, TrayIconEnable check, object tag = null);
+        void AddTrayOption(TrayOption option);
     }
 }

@@ -31,14 +31,29 @@ namespace CoolProxy.Plugins.LocalGodMode
             IGUI gui = frame.RequestModuleInterface<IGUI>();
 
             var blarg = Enum.GetValues(typeof(GodModeLevel)).Cast<object>().ToArray();
-            gui.AddToolLabel("Avatar", "Local GodMode Level:");
-            gui.AddToolComboBox("Avatar", changeGodModeLevel, blarg, GodModeLevel.GOD_NOT);
+
+            TrayOption opt = new TrayOption("Local GodMode Level", null, null, null, null);
+            var levels = new List<TrayOption>();
+
+            foreach(var l in blarg)
+            {
+                TrayOption lopt = new TrayOption(l.ToString(), handleChangeGodLevel, null, handleCheckGodLevel, l);
+                levels.Add(lopt);
+            }
+
+            opt.SubMenu = levels;
+            gui.AddTrayOption(opt);
         }
 
-        private void changeGodModeLevel(object sender, EventArgs e)
+
+        int LocalGodLevel = 0;
+
+        private void handleChangeGodLevel(object sender, EventArgs e)
         {
-            ComboBox comboBox = sender as ComboBox;
-            GodModeLevel level = (GodModeLevel)comboBox.SelectedItem;
+            ToolStripMenuItem opt = (ToolStripMenuItem)sender;
+            LocalGodLevel = (int)opt.Tag;
+
+            GodModeLevel level = (GodModeLevel)LocalGodLevel;
 
             GrantGodlikePowersPacket grantGodlikePowersPacket = new GrantGodlikePowersPacket();
             grantGodlikePowersPacket.AgentData = new GrantGodlikePowersPacket.AgentDataBlock();
@@ -49,6 +64,11 @@ namespace CoolProxy.Plugins.LocalGodMode
             grantGodlikePowersPacket.GrantData.Token = UUID.Zero;
 
             Proxy.Network.InjectPacket(grantGodlikePowersPacket, Direction.Incoming);
+        }
+
+        private bool handleCheckGodLevel(ToolStripMenuItem item)
+        {
+            return (int)item.Tag == LocalGodLevel;
         }
     }
 }

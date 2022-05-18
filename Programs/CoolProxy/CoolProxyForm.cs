@@ -516,24 +516,6 @@ namespace CoolProxy
             inventoryBrowserForm.AddInventoryItemOption(label, handle, invType, enable);
         }
 
-        public class TrayOption
-        {
-            public string Label { get; set; }
-            public EventHandler Option { get; set; }
-            public TrayIconEnable Enable { get; set; }
-            public TrayIconEnable Checked { get; set; }
-            public object Tag { get; set; }
-
-            public TrayOption(string label, EventHandler option, TrayIconEnable enabled, TrayIconEnable check, object tag)
-            {
-                Label = label;
-                Option = option;
-                Enable = enabled;
-                Checked = check;
-                Tag = tag;
-            }
-        }
-
         List<TrayOption> TrayOptions = new List<TrayOption>();
 
         internal void AddTrayOption(string label, EventHandler option, TrayIconEnable opening = null, object tag = null)
@@ -544,6 +526,11 @@ namespace CoolProxy
         internal void AddTrayCheck(string label, EventHandler option, TrayIconEnable check, object tag = null)
         {
             TrayOptions.Add(new TrayOption(label, option, null, check, tag));
+        }
+
+        internal void AddTrayOption(TrayOption option)
+        {
+            TrayOptions.Add(option);
         }
 
         private void trayContextMenu_Opening(object sender, CancelEventArgs e)
@@ -559,12 +546,35 @@ namespace CoolProxy
                     menu_item.Tag = option.Tag;
 
                     if (option.Enable != null)
-                        menu_item.Enabled = option.Enable();
+                        menu_item.Enabled = option.Enable(menu_item);
 
                     if (option.Checked != null)
-                        menu_item.Checked = option.Checked();
+                        menu_item.Checked = option.Checked(menu_item);
 
                     menu_item.Click += option.Option;
+
+                    if (option.SubMenu != null)
+                    {
+                        menu_item.DropDownItems.Clear();
+
+                        foreach (var opt in option.SubMenu)
+                        {
+                            var sub = menu_item.DropDownItems.Add(opt.Label);
+                            if(sub is ToolStripMenuItem)
+                            {
+                                ToolStripMenuItem sub_item = (ToolStripMenuItem)sub;
+                                sub_item.Tag = opt.Tag;
+
+                                if (opt.Enable != null)
+                                    sub_item.Enabled = opt.Enable(sub_item);
+
+                                if (opt.Checked != null)
+                                    sub_item.Checked = opt.Checked(sub_item);
+
+                                sub_item.Click += opt.Option;
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace CoolProxy
 {
-    public delegate bool TrayIconEnable();
+    public delegate bool TrayIconEnable(ToolStripMenuItem item);
 
     public class GUIManager : IGUI
     {
@@ -100,6 +100,11 @@ namespace CoolProxy
         public void AddTrayCheck(string label, EventHandler option, TrayIconEnable check, object tag = null)
         {
             coolForm.AddTrayCheck(label, option, check, tag);
+        }
+
+        public void AddTrayOption(TrayOption option)
+        {
+            coolForm.AddTrayOption(option);
         }
 
 

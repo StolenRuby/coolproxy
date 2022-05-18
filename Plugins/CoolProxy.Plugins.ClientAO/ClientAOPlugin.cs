@@ -160,7 +160,7 @@ namespace CoolProxy.Plugins.ClientAO
 
             gui.AddTrayOption("-", null);
             gui.AddTrayOption("Animation Override", (x, y) => EditorForm.Show());
-            gui.AddTrayCheck("Enable Client AO", (x, y) => frame.Settings.setBool("EnableAO", !(x as ToolStripMenuItem).Checked), () => Enabled);
+            gui.AddTrayCheck("Enable Client AO", (x, y) => frame.Settings.setBool("EnableAO", !(x as ToolStripMenuItem).Checked), (x) => Enabled);
         }
 
         public List<AOState> Current = new List<AOState>();

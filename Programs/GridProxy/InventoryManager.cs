@@ -1540,7 +1540,36 @@ namespace GridProxy
             return SuitcaseID;
         }
 
+        public UUID FindSuitcaseFolderForType(AssetType type)
+        {
+            if (_Store == null)
+            {
+                OpenMetaverse.Logger.Log("Inventory is null, FindFolderForType() lookup cannot continue",
+                    Helpers.LogLevel.Error);
+                return UUID.Zero;
+            }
 
+            // Folders go in the root
+            if (type == AssetType.Folder)
+                return SuitcaseID;
+
+            // Loop through each top-level directory and check if PreferredType
+            // matches the requested type
+            List<InventoryBase> contents = _Store.GetContents(SuitcaseID);
+            foreach (InventoryBase inv in contents)
+            {
+                if (inv is InventoryFolder)
+                {
+                    InventoryFolder folder = inv as InventoryFolder;
+
+                    if (folder.PreferredType == (FolderType)type)
+                        return folder.UUID;
+                }
+            }
+
+            // No match found, return Root Folder ID
+            return SuitcaseID;
+        }
 
         /// <summary>
         /// Find an object in inventory using a specific path to search
@@ -3947,8 +3976,8 @@ namespace GridProxy
 
                 if (contents.ContainsKey("new_inventory_item") && contents.ContainsKey("new_asset"))
                 {
-                    // Request full update on the item in order to update the local store
-                    RequestFetchInventory(contents["new_inventory_item"].AsUUID(), Frame.Agent.AgentID);
+                    // Request full update on the item in order to update the local store and the client
+                    RequestFetchInventory(contents["new_inventory_item"].AsUUID(), Frame.Agent.AgentID, false);
 
                     try { callback(true, String.Empty, contents["new_inventory_item"].AsUUID(), contents["new_asset"].AsUUID()); }
                     catch (Exception e) { OpenMetaverse.Logger.Log(e.Message, Helpers.LogLevel.Error, null, e); }
@@ -4001,8 +4030,8 @@ namespace GridProxy
                 {
                     if (contents.ContainsKey("new_asset"))
                     {
-                        // Request full item update so we keep store in sync
-                        RequestFetchInventory((UUID)(((object[])client.UserData)[1]), contents["new_asset"].AsUUID());
+                        // Request full item update so we keep store in sync. use udp so the client gets the update too
+                        RequestFetchInventory((UUID)(((object[])client.UserData)[1]), contents["new_asset"].AsUUID(), false);
 
                         try { callback(true, String.Empty, (UUID)(((object[])client.UserData)[1]), contents["new_asset"].AsUUID()); }
                         catch (Exception e) { OpenMetaverse.Logger.Log(e.Message, Helpers.LogLevel.Error, null, e); }

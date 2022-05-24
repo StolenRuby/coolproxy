@@ -53,22 +53,19 @@ namespace CoolProxy.Plugins.Useful
             gui.AddToolButton("UUID", "Avatar Picker to Clipboard", avatarPickerToClipboard);
             gui.AddToolButton("UUID", "Group Picker to Clipboard", groupPickerToClipboard);
 
-            var uploader_form = new UploaderForm();
+            var uploader_form = new UploaderForm(frame);
 
-            if(Util.IsDebugMode)
+            gui.AddToggleFormQuick("Assets", "Upload Asset", uploader_form);
+            gui.AddTrayOption("Upload Asset...", (x, y) =>
             {
-                gui.AddToggleFormQuick("Assets", "Upload Asset", uploader_form);
-                gui.AddTrayOption("Upload Asset...", (x, y) =>
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = Util.GetCombinedFilter();
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    OpenFileDialog openFileDialog = new OpenFileDialog();
-                    openFileDialog.Filter = Util.GetCombinedFilter();
-                    if (openFileDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        uploader_form.SetFile(openFileDialog.FileName);
-                        uploader_form.Show();
-                    }
-                });
-            }
+                    uploader_form.SetFile(openFileDialog.FileName);
+                    uploader_form.Show();
+                }
+            });
 
             gui.AddInventoryItemOption("Copy Item ID", x => Clipboard.SetText(x.UUID.ToString()));
             gui.AddInventoryItemOption("Copy Asset ID", x => Clipboard.SetText(x.AssetUUID.ToString()), x => x.AssetUUID != UUID.Zero);

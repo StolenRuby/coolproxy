@@ -145,6 +145,7 @@ namespace CoolProxy
         {
             var info = getInfoFromName(name);
             CoolProxy.Frame.Settings.setString("LastGridUsed", name);
+            CoolProxy.Frame.Settings.setBool("LindenGridSelected", info.IsLindenGrid);
             SelectedGrid = info;
             OnGridChanged?.Invoke(SelectedGrid);
         }

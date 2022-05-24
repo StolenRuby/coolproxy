@@ -375,7 +375,7 @@ namespace GridProxy
             {AssetType.Animation, "animatn_id" },
             {AssetType.Gesture, "gesture_id" },
             {AssetType.Mesh, "mesh_id" },
-            //{AssetType.Settings, "settings_id" },
+            {AssetType.Settings, "settings_id" },
         };
 
 
@@ -520,7 +520,7 @@ namespace GridProxy
             string str_type = assetRequestStrings[asset_type];
 
             DownloadRequest req = new DownloadRequest(
-                new Uri(string.Format("{0}/?{1}={2}", url.ToString(), str_type, assetID.ToString())),
+                new Uri(string.Format("{0}?{1}={2}", url.ToString(), str_type, assetID.ToString())),
                 Frame.Config.CAPS_TIMEOUT,
                 "", // todo: this! //"image/x-j2c",
                 progressHandler,

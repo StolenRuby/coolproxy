@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.uploadButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.assetTypeCombo = new System.Windows.Forms.ComboBox();
@@ -43,6 +44,7 @@
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.label5 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // uploadButton
@@ -53,6 +55,7 @@
             this.uploadButton.TabIndex = 1;
             this.uploadButton.Text = "Upload Asset";
             this.uploadButton.UseVisualStyleBackColor = true;
+            this.uploadButton.Click += new System.EventHandler(this.uploadButton_Click);
             // 
             // label2
             // 
@@ -151,6 +154,7 @@
             this.radioButton1.TabIndex = 21;
             this.radioButton1.Text = "UDP";
             this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.MouseHover += new System.EventHandler(this.radioButton_MouseHover);
             // 
             // radioButton2
             // 
@@ -161,6 +165,7 @@
             this.radioButton2.TabIndex = 22;
             this.radioButton2.Text = "Caps";
             this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.MouseHover += new System.EventHandler(this.radioButton_MouseHover);
             // 
             // radioButton3
             // 
@@ -173,6 +178,7 @@
             this.radioButton3.TabStop = true;
             this.radioButton3.Text = "ROBUST";
             this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.MouseHover += new System.EventHandler(this.radioButton_MouseHover);
             // 
             // label5
             // 
@@ -205,9 +211,12 @@
             this.Controls.Add(this.inventoryTypeCombo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "UploaderForm";
             this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Text = "Asset Upload Utility";
+            this.Activated += new System.EventHandler(this.UploaderForm_Activated);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -229,5 +238,6 @@
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

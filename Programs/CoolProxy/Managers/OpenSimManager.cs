@@ -212,6 +212,7 @@ namespace CoolProxy
                         if (extras_map.ContainsKey("GridURL"))
                         {
                             req.Info.Sim.GridURI = extras_map["GridURL"].AsString();
+                            if (!req.Info.Sim.GridURI.EndsWith("/")) req.Info.Sim.GridURI += "/";
                             //CoolProxy.Frame.SayToUser(string.Format("Current Region's GridURI: {0}", CurrentGridURI));
                         }
                     }

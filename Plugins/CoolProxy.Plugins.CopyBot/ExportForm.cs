@@ -239,6 +239,7 @@ namespace CoolProxy.Plugins.CopyBot
                     }
 
                     dialog.Filter = "Object Backup|*.sog";
+                    dialog.InitialDirectory = Path.GetFullPath(Frame.Settings.getString("SOGExportDir"));
                     dialog.FileName = filename;
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {

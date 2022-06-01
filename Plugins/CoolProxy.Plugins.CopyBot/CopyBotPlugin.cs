@@ -53,6 +53,8 @@ namespace CoolProxy.Plugins.CopyBot
         Primitive SeedPrim = null;
         InventoryItem InvSeedItem = null;
 
+        string ExportDir = "./copybot";
+
         public CopyBotPlugin(CoolProxyFrame frame)
         {
             IGUI gui = frame.RequestModuleInterface<IGUI>();
@@ -76,6 +78,17 @@ namespace CoolProxy.Plugins.CopyBot
 
 
             AddSettingsTab(gui);
+
+
+            ExportDir = Proxy.Settings.getString("SOGExportDir");
+            if (ExportDir.EndsWith("/") == false) ExportDir += "/";
+            ExportDir = Path.GetFullPath(ExportDir);
+
+            if(!Directory.Exists(ExportDir))
+            {
+                Directory.CreateDirectory(ExportDir);
+                File.Create(ExportDir + "exported_objects_go_here").Close();
+            }
         }
 
         private void AddSettingsTab(IGUI gui)
@@ -141,6 +154,41 @@ namespace CoolProxy.Plugins.CopyBot
 
             panel.Controls.Add(group_box);
 
+            var path_label = new Label();
+            var path_box = new L33T.GUI.TextBox();
+            var path_btn = new Button();
+
+            panel.Controls.Add(path_label);
+            panel.Controls.Add(path_box);
+            panel.Controls.Add(path_btn);
+
+            path_label.Location = new Point(140, 15);
+            path_label.Size = new Size(100, 13);
+            path_label.Text = "Export Directory:";
+
+            path_box.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
+            path_box.Location = new Point(140, 35);
+            path_box.Size = new Size(-10, 20);
+            path_box.Setting = "SOGExportDir";
+            path_box.Margin = new Padding(10);
+            path_box.Enabled = false;
+
+            path_btn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            path_btn.Location = new Point(140, 35);
+            path_btn.Size = new Size(50, 20);
+            path_btn.Text = "...";
+            path_btn.Click += (s, e) =>
+            {
+                using (FolderBrowserDialog browser = new FolderBrowserDialog())
+                {
+                    if (browser.ShowDialog() == DialogResult.OK)
+                    {
+                        path_box.Text = browser.SelectedPath;
+                        ExportDir = browser.SelectedPath;
+                    }
+                }
+            };
+
             gui.AddSettingsTab("CopyBot", panel);
         }
 
@@ -151,6 +199,7 @@ namespace CoolProxy.Plugins.CopyBot
             using (OpenFileDialog dialog = new OpenFileDialog())
             {
                 dialog.Filter = "Object Backup|*.sog";
+                dialog.InitialDirectory = ExportDir;
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     var options = new ImportOptions(dialog.FileName);
@@ -172,6 +221,7 @@ namespace CoolProxy.Plugins.CopyBot
                 using (OpenFileDialog dialog = new OpenFileDialog())
                 {
                     dialog.Filter = "Object Backup|*.sog";
+                    dialog.InitialDirectory = ExportDir;
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
                         var options = new ImportOptions(dialog.FileName);
@@ -193,6 +243,7 @@ namespace CoolProxy.Plugins.CopyBot
                 using (OpenFileDialog dialog = new OpenFileDialog())
                 {
                     dialog.Filter = "Object Backup|*.sog";
+                    dialog.InitialDirectory = ExportDir;
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
                         new ImportForm(Proxy, new ImportOptions(dialog.FileName), this).ShowDialog();

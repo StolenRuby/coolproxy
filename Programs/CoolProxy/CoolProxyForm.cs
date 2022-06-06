@@ -145,7 +145,6 @@ namespace CoolProxy
 
             if(!CoolProxy.IsDebugMode)
             {
-                showDebugSettingsButton.Visible = false;
                 loadPluginTestButton.Visible = false;
                 tabControl5.TabPages.Remove(tabPage20);
                 tabControl5.TabPages.Remove(tabPage5);

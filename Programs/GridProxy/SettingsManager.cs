@@ -38,6 +38,8 @@ namespace GridProxy
 
         private object mObject;
 
+        public object Default { get; private set; }
+
         public object Value
         {
             get { return mObject; }
@@ -56,6 +58,7 @@ namespace GridProxy
             this.Name = name;
             this.Type = type;
             this.Value = value;
+            this.Default = value;
             this.Comment = comment;
         }
     }

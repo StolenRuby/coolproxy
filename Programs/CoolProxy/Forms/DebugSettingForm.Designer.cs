@@ -28,52 +28,52 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.settingsComboBox = new System.Windows.Forms.ComboBox();
+            this.descTextbox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.stringTextbox = new System.Windows.Forms.TextBox();
+            this.colourPicker = new System.Windows.Forms.PictureBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.xUpDown = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.zUpDown = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
-            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
+            this.wUpDown = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.button1 = new System.Windows.Forms.Button();
+            this.resetButton = new System.Windows.Forms.Button();
             this.colorLabel = new System.Windows.Forms.Label();
-            this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
+            this.yUpDown = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.colourPicker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yUpDown)).BeginInit();
             this.SuspendLayout();
             // 
-            // comboBox1
+            // settingsComboBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(12, 12);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(301, 21);
-            this.comboBox1.TabIndex = 0;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.settingsComboBox.FormattingEnabled = true;
+            this.settingsComboBox.Location = new System.Drawing.Point(12, 12);
+            this.settingsComboBox.Name = "settingsComboBox";
+            this.settingsComboBox.Size = new System.Drawing.Size(301, 21);
+            this.settingsComboBox.TabIndex = 0;
+            this.settingsComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
-            // textBox1
+            // descTextbox
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 39);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(301, 82);
-            this.textBox1.TabIndex = 1;
+            this.descTextbox.Location = new System.Drawing.Point(12, 39);
+            this.descTextbox.Multiline = true;
+            this.descTextbox.Name = "descTextbox";
+            this.descTextbox.ReadOnly = true;
+            this.descTextbox.Size = new System.Drawing.Size(301, 82);
+            this.descTextbox.TabIndex = 1;
             // 
             // label1
             // 
@@ -85,49 +85,62 @@
             this.label1.Text = "Value:";
             this.label1.Visible = false;
             // 
-            // textBox2
+            // stringTextbox
             // 
-            this.textBox2.Location = new System.Drawing.Point(12, 129);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(301, 20);
-            this.textBox2.TabIndex = 10;
-            this.textBox2.Visible = false;
+            this.stringTextbox.Location = new System.Drawing.Point(12, 129);
+            this.stringTextbox.Name = "stringTextbox";
+            this.stringTextbox.Size = new System.Drawing.Size(301, 20);
+            this.stringTextbox.TabIndex = 10;
+            this.stringTextbox.Visible = false;
+            this.stringTextbox.TextChanged += new System.EventHandler(this.stringTextbox_TextChanged);
             // 
-            // pictureBox1
+            // colourPicker
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Maroon;
-            this.pictureBox1.Location = new System.Drawing.Point(61, 125);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(25, 25);
-            this.pictureBox1.TabIndex = 11;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Visible = false;
+            this.colourPicker.BackColor = System.Drawing.Color.Maroon;
+            this.colourPicker.Location = new System.Drawing.Point(61, 125);
+            this.colourPicker.Name = "colourPicker";
+            this.colourPicker.Size = new System.Drawing.Size(25, 25);
+            this.colourPicker.TabIndex = 11;
+            this.colourPicker.TabStop = false;
+            this.colourPicker.Visible = false;
             // 
             // numericUpDown1
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(52, 127);
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            -1530494977,
-            232830,
+            2147483647,
+            0,
             0,
             0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(113, 20);
             this.numericUpDown1.TabIndex = 12;
             this.numericUpDown1.Visible = false;
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
-            // numericUpDown2
+            // xUpDown
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(52, 129);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            -1530494977,
-            232830,
+            this.xUpDown.Location = new System.Drawing.Point(52, 129);
+            this.xUpDown.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
             0,
             0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown2.TabIndex = 14;
-            this.numericUpDown2.Visible = false;
+            this.xUpDown.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.xUpDown.Name = "xUpDown";
+            this.xUpDown.Size = new System.Drawing.Size(74, 20);
+            this.xUpDown.TabIndex = 14;
+            this.xUpDown.Visible = false;
+            this.xUpDown.ValueChanged += new System.EventHandler(this.vectorOrQuat_ValueChanged);
             // 
             // label2
             // 
@@ -139,18 +152,24 @@
             this.label2.Text = "X:";
             this.label2.Visible = false;
             // 
-            // numericUpDown3
+            // zUpDown
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(52, 155);
-            this.numericUpDown3.Maximum = new decimal(new int[] {
-            -1530494977,
-            232830,
+            this.zUpDown.Location = new System.Drawing.Point(52, 155);
+            this.zUpDown.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
             0,
             0});
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown3.TabIndex = 16;
-            this.numericUpDown3.Visible = false;
+            this.zUpDown.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.zUpDown.Name = "zUpDown";
+            this.zUpDown.Size = new System.Drawing.Size(74, 20);
+            this.zUpDown.TabIndex = 16;
+            this.zUpDown.Visible = false;
+            this.zUpDown.ValueChanged += new System.EventHandler(this.vectorOrQuat_ValueChanged);
             // 
             // label3
             // 
@@ -162,18 +181,24 @@
             this.label3.Text = "Z:";
             this.label3.Visible = false;
             // 
-            // numericUpDown4
+            // wUpDown
             // 
-            this.numericUpDown4.Location = new System.Drawing.Point(167, 155);
-            this.numericUpDown4.Maximum = new decimal(new int[] {
-            -1530494977,
-            232830,
+            this.wUpDown.Location = new System.Drawing.Point(167, 155);
+            this.wUpDown.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
             0,
             0});
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown4.TabIndex = 20;
-            this.numericUpDown4.Visible = false;
+            this.wUpDown.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.wUpDown.Name = "wUpDown";
+            this.wUpDown.Size = new System.Drawing.Size(74, 20);
+            this.wUpDown.TabIndex = 20;
+            this.wUpDown.Visible = false;
+            this.wUpDown.ValueChanged += new System.EventHandler(this.vectorOrQuat_ValueChanged);
             // 
             // label4
             // 
@@ -188,6 +213,16 @@
             // numericUpDown5
             // 
             this.numericUpDown5.Location = new System.Drawing.Point(167, 129);
+            this.numericUpDown5.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.numericUpDown5.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
             this.numericUpDown5.Name = "numericUpDown5";
             this.numericUpDown5.Size = new System.Drawing.Size(74, 20);
             this.numericUpDown5.TabIndex = 18;
@@ -214,6 +249,7 @@
             this.radioButton1.Text = "True";
             this.radioButton1.UseVisualStyleBackColor = true;
             this.radioButton1.Visible = false;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.bool_CheckedChanged);
             // 
             // radioButton2
             // 
@@ -226,15 +262,17 @@
             this.radioButton2.Text = "False";
             this.radioButton2.UseVisualStyleBackColor = true;
             this.radioButton2.Visible = false;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.bool_CheckedChanged);
             // 
-            // button1
+            // resetButton
             // 
-            this.button1.Location = new System.Drawing.Point(12, 181);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(149, 23);
-            this.button1.TabIndex = 23;
-            this.button1.Text = "Reset to default";
-            this.button1.UseVisualStyleBackColor = true;
+            this.resetButton.Location = new System.Drawing.Point(12, 181);
+            this.resetButton.Name = "resetButton";
+            this.resetButton.Size = new System.Drawing.Size(149, 23);
+            this.resetButton.TabIndex = 23;
+            this.resetButton.Text = "Reset to default";
+            this.resetButton.UseVisualStyleBackColor = true;
+            this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
             // colorLabel
             // 
@@ -245,20 +283,25 @@
             this.colorLabel.TabIndex = 24;
             this.colorLabel.Text = "Colour:";
             this.colorLabel.Visible = false;
-            this.colorLabel.Click += new System.EventHandler(this.label6_Click);
             // 
-            // numericUpDown6
+            // yUpDown
             // 
-            this.numericUpDown6.Location = new System.Drawing.Point(167, 129);
-            this.numericUpDown6.Maximum = new decimal(new int[] {
-            -1530494977,
-            232830,
+            this.yUpDown.Location = new System.Drawing.Point(167, 129);
+            this.yUpDown.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
             0,
             0});
-            this.numericUpDown6.Name = "numericUpDown6";
-            this.numericUpDown6.Size = new System.Drawing.Size(74, 20);
-            this.numericUpDown6.TabIndex = 26;
-            this.numericUpDown6.Visible = false;
+            this.yUpDown.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.yUpDown.Name = "yUpDown";
+            this.yUpDown.Size = new System.Drawing.Size(74, 20);
+            this.yUpDown.TabIndex = 26;
+            this.yUpDown.Visible = false;
+            this.yUpDown.ValueChanged += new System.EventHandler(this.vectorOrQuat_ValueChanged);
             // 
             // label7
             // 
@@ -275,36 +318,36 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(325, 212);
-            this.Controls.Add(this.numericUpDown6);
+            this.Controls.Add(this.yUpDown);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.colorLabel);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.resetButton);
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.radioButton1);
-            this.Controls.Add(this.numericUpDown4);
+            this.Controls.Add(this.wUpDown);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.numericUpDown5);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.numericUpDown3);
+            this.Controls.Add(this.zUpDown);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.numericUpDown2);
+            this.Controls.Add(this.xUpDown);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.colourPicker);
+            this.Controls.Add(this.stringTextbox);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.descTextbox);
+            this.Controls.Add(this.settingsComboBox);
             this.Name = "DebugSettingForm";
             this.Text = "Debug Setting";
             this.TopMost = true;
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.colourPicker)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -312,25 +355,25 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ComboBox settingsComboBox;
+        private System.Windows.Forms.TextBox descTextbox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TextBox stringTextbox;
+        private System.Windows.Forms.PictureBox colourPicker;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.NumericUpDown xUpDown;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
+        private System.Windows.Forms.NumericUpDown zUpDown;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.NumericUpDown numericUpDown4;
+        private System.Windows.Forms.NumericUpDown wUpDown;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown numericUpDown5;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button resetButton;
         private System.Windows.Forms.Label colorLabel;
-        private System.Windows.Forms.NumericUpDown numericUpDown6;
+        private System.Windows.Forms.NumericUpDown yUpDown;
         private System.Windows.Forms.Label label7;
     }
 }

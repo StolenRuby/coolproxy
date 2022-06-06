@@ -20,37 +20,41 @@ namespace CoolProxy
 
             foreach(Setting s in CoolProxy.Frame.Settings.getSettings())
             {
-                this.comboBox1.Items.Add(s.Name);
+                this.settingsComboBox.Items.Add(s.Name);
             }
 
-            this.comboBox1.SelectedIndex = 0;
+            this.settingsComboBox.SelectedIndex = 0;
 
             this.TopMost = CoolProxy.Frame.Settings.getBool("KeepCoolProxyOnTop");
             CoolProxy.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
         }
 
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
+        Setting SelectedSetting = null;
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Setting s = CoolProxy.Frame.Settings.getSetting(this.comboBox1.Text);
-            if(s != null)
-            {
-                this.textBox1.Text = s.Comment;
+            UpdateUI();
+        }
 
-                string type = s.Type;
+        public void UpdateUI()
+        {
+            SelectedSetting = null; // null so events dont trigger while changing
+            Setting setting = CoolProxy.Frame.Settings.getSetting(this.settingsComboBox.Text);
+
+            if(setting != null)
+            {
+                this.descTextbox.Text = setting.Comment;
+
+                string type = setting.Type;
 
                 if(type == "string")
                 {
-                    this.textBox2.Visible = true;
-                    this.textBox2.Text = s.Value.ToString();
+                    this.stringTextbox.Visible = true;
+                    this.stringTextbox.Text = setting.Value.ToString();
                 }
                 else
                 {
-                    this.textBox2.Visible = false;
+                    this.stringTextbox.Visible = false;
                 }
                 
                 if (type == "bool")
@@ -58,7 +62,7 @@ namespace CoolProxy
                     this.radioButton1.Visible = true;
                     this.radioButton2.Visible = true;
 
-                    bool b = (bool)s.Value;
+                    bool b = (bool)setting.Value;
 
                     this.radioButton1.Checked = b;
                     this.radioButton2.Checked = !b;
@@ -72,18 +76,18 @@ namespace CoolProxy
                 if (type == "color")
                 {
                     this.colorLabel.Visible = true;
-                    this.pictureBox1.Visible = true;
-                    this.numericUpDown6.Visible = true;
+                    this.colourPicker.Visible = true;
+                    this.yUpDown.Visible = true;
 
-                    Color4 color = (Color4)s.Value;
+                    Color4 color = (Color4)setting.Value;
 
-                    this.numericUpDown6.Value = (decimal)color.A;
+                    this.yUpDown.Value = (decimal)color.A;
                 }
                 else
                 {
-                    this.numericUpDown6.Visible = false;
+                    this.yUpDown.Visible = false;
                     this.colorLabel.Visible = false;
-                    this.pictureBox1.Visible = false;
+                    this.colourPicker.Visible = false;
                 }
                 
                 if (type == "integer")
@@ -91,14 +95,14 @@ namespace CoolProxy
                     this.numericUpDown1.Visible = true;
                     this.label1.Visible = true;
                     this.numericUpDown1.DecimalPlaces = 0;
-                    this.numericUpDown1.Value = (int)s.Value;
+                    this.numericUpDown1.Value = (int)setting.Value;
                 }
                 else if(type == "double")
                 {
                     this.numericUpDown1.Visible = true;
                     this.label1.Visible = true;
                     this.numericUpDown1.DecimalPlaces = 7;
-                    this.numericUpDown1.Value = (decimal)(double)s.Value;
+                    this.numericUpDown1.Value = (decimal)(double)setting.Value;
                 }
                 else
                 {
@@ -108,27 +112,27 @@ namespace CoolProxy
                 
                 if (type == "vector")
                 {
-                    this.numericUpDown2.Visible = true;
-                    this.numericUpDown3.Visible = true;
+                    this.xUpDown.Visible = true;
+                    this.zUpDown.Visible = true;
                     this.numericUpDown5.Visible = true;
-                    this.numericUpDown4.Visible = false;
+                    this.wUpDown.Visible = false;
 
                     this.label2.Visible = true;
                     this.label5.Visible = true;
                     this.label3.Visible = true;
                     this.label4.Visible = false;
 
-                    Vector3 vector = (Vector3)s.Value;
+                    Vector3 vector = (Vector3)setting.Value;
 
-                    this.numericUpDown2.Value = (decimal)vector.X;
+                    this.xUpDown.Value = (decimal)vector.X;
                     this.numericUpDown5.Value = (decimal)vector.Y;
-                    this.numericUpDown3.Value = (decimal)vector.Z;
+                    this.zUpDown.Value = (decimal)vector.Z;
                 }
                 else if (type == "quaternion")
                 {
-                    this.numericUpDown2.Visible = true;
-                    this.numericUpDown3.Visible = true;
-                    this.numericUpDown4.Visible = true;
+                    this.xUpDown.Visible = true;
+                    this.zUpDown.Visible = true;
+                    this.wUpDown.Visible = true;
                     this.numericUpDown5.Visible = true;
 
                     this.label2.Visible = true;
@@ -136,18 +140,18 @@ namespace CoolProxy
                     this.label4.Visible = true;
                     this.label5.Visible = true;
 
-                    Quaternion quaternion = (Quaternion)s.Value;
+                    Quaternion quaternion = (Quaternion)setting.Value;
 
-                    this.numericUpDown2.Value = (decimal)quaternion.X;
+                    this.xUpDown.Value = (decimal)quaternion.X;
                     this.numericUpDown5.Value = (decimal)quaternion.Y;
-                    this.numericUpDown3.Value = (decimal)quaternion.Z;
-                    this.numericUpDown4.Value = (decimal)quaternion.W;
+                    this.zUpDown.Value = (decimal)quaternion.Z;
+                    this.wUpDown.Value = (decimal)quaternion.W;
                 }
                 else
                 {
-                    this.numericUpDown2.Visible = false;
-                    this.numericUpDown3.Visible = false;
-                    this.numericUpDown4.Visible = false;
+                    this.xUpDown.Visible = false;
+                    this.zUpDown.Visible = false;
+                    this.wUpDown.Visible = false;
                     this.numericUpDown5.Visible = false;
 
                     this.label2.Visible = false;
@@ -155,6 +159,70 @@ namespace CoolProxy
                     this.label4.Visible = false;
                     this.label5.Visible = false;
                 }
+
+                SelectedSetting = setting;
+            }
+        }
+
+        private void stringTextbox_TextChanged(object sender, EventArgs e)
+        {
+            if (SelectedSetting?.Type == "string")
+            {
+                SelectedSetting.Value = stringTextbox.Text;
+            }
+        }
+
+        private void vectorOrQuat_ValueChanged(object sender, EventArgs e)
+        {
+            if (SelectedSetting?.Type == "vector")
+            {
+                Vector3 current = (Vector3)SelectedSetting.Value;
+
+                current.X = (float)xUpDown.Value;
+                current.Y = (float)yUpDown.Value;
+                current.Z = (float)zUpDown.Value;
+
+                SelectedSetting.Value = current;
+            }
+            else if (SelectedSetting?.Type == "quaternion")
+            {
+                Quaternion current = (Quaternion)SelectedSetting.Value;
+
+                current.X = (float)xUpDown.Value;
+                current.Y = (float)yUpDown.Value;
+                current.Z = (float)zUpDown.Value;
+                current.W = (float)wUpDown.Value;
+
+                SelectedSetting.Value = current;
+            }
+        }
+
+        private void bool_CheckedChanged(object sender, EventArgs e)
+        {
+            if (SelectedSetting?.Type == "bool")
+            {
+                SelectedSetting.Value = radioButton1.Checked;
+            }
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            if (SelectedSetting?.Type == "integer")
+            {
+                SelectedSetting.Value = (int)numericUpDown1.Value;
+            }
+            else if (SelectedSetting?.Type == "double")
+            {
+                SelectedSetting.Value = (double)numericUpDown1.Value;
+            }
+        }
+
+        private void resetButton_Click(object sender, EventArgs e)
+        {
+            if(SelectedSetting != null)
+            {
+                SelectedSetting.Value = SelectedSetting.Default;
+                UpdateUI();
             }
         }
     }

@@ -20,6 +20,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -59,18 +60,6 @@ namespace CoolProxy
                 return;
             }
 
-            // log4net
-            if (FireEventAppender.Instance != null)
-            {
-                FireEventAppender.Instance.MessageLoggedEvent += (x, y) => {
-
-                    string s = String.Format("{0} [{1}] {2} {3}", y.LoggingEvent.TimeStamp, y.LoggingEvent.Level,
-                        y.LoggingEvent.RenderedMessage, y.LoggingEvent.ExceptionObject);
-                    Console.WriteLine(s);
-                };
-            }
-
-
             inventoryBrowserForm = new InventoryBrowserForm();
 
             guiManager = new GUIManager(this);
@@ -79,6 +68,14 @@ namespace CoolProxy
             CoolProxy.Frame.RegisterModuleInterface<IGUI>(guiManager);
 
             InitializeComponent();
+
+            // log4net
+            if (FireEventAppender.Instance != null)
+            {
+                FireEventAppender.Instance.MessageLoggedEvent += Instance_MessageLoggedEvent;
+            }
+
+            OpenMetaverse.Logger.Log("CoolProxy GUI launched!", Helpers.LogLevel.Info);
 
             // Regions
             CoolProxy.Frame.Network.OnNewRegion += onNewRegion;
@@ -148,6 +145,48 @@ namespace CoolProxy
                 loadPluginTestButton.Visible = false;
                 tabControl5.TabPages.Remove(tabPage20);
                 tabControl5.TabPages.Remove(tabPage5);
+            }
+        }
+
+        void Instance_MessageLoggedEvent(object sender, MessageLoggedEventArgs e)
+        {
+            if (this.IsDisposed || this.Disposing)
+                return;
+
+            if (InvokeRequired)
+            {
+                BeginInvoke(new MethodInvoker(() => Instance_MessageLoggedEvent(sender, e)));
+            }
+            else
+            {
+                //string s = String.Format(/*"{0}*/ "[{1}] {2} {3}", e.LoggingEvent.TimeStamp, e.LoggingEvent.Level,
+                //    e.LoggingEvent.RenderedMessage, e.LoggingEvent.ExceptionObject);
+
+                string s = e.LoggingEvent.RenderedMessage;
+
+                Regex reg = new Regex(@"\[.*\]");
+                Match match = reg.Match(s);
+
+                debugRTB.AppendText(string.Format("[{0}] ", e.LoggingEvent.Level));
+
+                if (match.Success)
+                {
+                    int a = debugRTB.TextLength;
+                    debugRTB.AppendText(s.Substring(match.Index, match.Length));
+                    int b = debugRTB.TextLength;
+                    debugRTB.AppendText(s.Substring(match.Index + match.Length));
+
+                    debugRTB.Select(a, b - a);
+                    debugRTB.SelectionColor = Color.Cyan;
+
+                    debugRTB.DeselectAll();
+
+                    debugRTB.AppendText("\n");
+                }
+                else
+                {
+                    debugRTB.AppendText(s + "\n");
+                }
             }
         }
 

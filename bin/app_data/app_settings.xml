@@ -372,6 +372,31 @@
 				<real>0</real>
 			</array>
 		</map>
+		<key>TabConsolePopped</key>
+		<map>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>TabConsoleOpen</key>
+		<map>
+			<key>type</key>
+			<string>bool</string>
+			<key>value</key>
+			<boolean>0</boolean>
+		</map>
+		<key>TabConsolePos</key>
+		<map>
+			<key>type</key>
+			<string>vector</string>
+			<key>value</key>
+			<array>
+				<real>0</real>
+				<real>0</real>
+				<real>0</real>
+			</array>
+		</map>
 		<key>SpoofMac</key>
 		<map>
 			<key>type</key>

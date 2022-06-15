@@ -431,6 +431,7 @@ namespace GridProxy
 
             // Avatar appearance callback
             Proxy.Network.AddDelegate(PacketType.AvatarAppearance, Direction.Incoming, AvatarAppearanceHandler);
+            Proxy.Network.AddDelegate(PacketType.AgentSetAppearance, Direction.Outgoing, AgentSetAppearanceHandler);
 
             // Avatar profile callbacks
             Proxy.Network.AddDelegate(PacketType.AvatarPropertiesReply, Direction.Incoming, AvatarPropertiesHandler);
@@ -806,6 +807,49 @@ namespace GridProxy
                 OnAvatarAppearance(new AvatarAppearanceEventArgs(simulator, appearance.Sender.ID, appearance.Sender.IsTrial,
                     defaultTexture, faceTextures, visualParams, appearanceVersion, COFVersion, appearanceFlags));
             }
+
+            return packet;
+        }
+
+        protected Packet AgentSetAppearanceHandler(Packet packet, RegionProxy simulator)
+        {
+            AgentSetAppearancePacket appearance = (AgentSetAppearancePacket)packet;
+
+            List<byte> visualParams = new List<byte>();
+            foreach (AgentSetAppearancePacket.VisualParamBlock block in appearance.VisualParam)
+            {
+                visualParams.Add(block.ParamValue);
+            }
+
+            Primitive.TextureEntry textureEntry = new Primitive.TextureEntry(appearance.ObjectData.TextureEntry, 0,
+                    appearance.ObjectData.TextureEntry.Length);
+
+            Primitive.TextureEntryFace defaultTexture = textureEntry.DefaultTexture;
+            Primitive.TextureEntryFace[] faceTextures = textureEntry.FaceTextures;
+
+            byte appearanceVersion = 0;
+            int COFVersion = 0;
+            AppearanceFlags appearanceFlags = 0;
+
+            //if (appearance.AppearanceData != null && appearance.AppearanceData.Length > 0)
+            //{
+            //    appearanceVersion = appearance.AppearanceData[0].AppearanceVersion;
+            //    COFVersion = appearance.AppearanceData[0].CofVersion;
+            //    appearanceFlags = (AppearanceFlags)appearance.AppearanceData[0].Flags;
+            //}
+
+            Avatar av = simulator.ObjectsAvatars.Find((Avatar a) => { return a.ID == appearance.AgentData.AgentID; });
+            if (av != null)
+            {
+                av.Textures = textureEntry;
+                av.VisualParameters = visualParams.ToArray();
+                av.AppearanceVersion = appearanceVersion;
+                av.COFVersion = COFVersion;
+                av.AppearanceFlags = appearanceFlags;
+            }
+
+            OnAvatarAppearance(new AvatarAppearanceEventArgs(simulator, appearance.AgentData.AgentID, false,
+                defaultTexture, faceTextures, visualParams, appearanceVersion, COFVersion, appearanceFlags));
 
             return packet;
         }

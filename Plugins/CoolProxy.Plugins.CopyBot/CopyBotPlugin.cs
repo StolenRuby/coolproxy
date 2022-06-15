@@ -551,7 +551,10 @@ namespace CoolProxy.Plugins.CopyBot
                     wearable.Params.Add(pair.Key, pair.Value);
                 }
 
-                // todo: textures...
+                foreach(var pair in item.Textures)
+                {
+                    wearable.Textures[pair.Key] = pair.Value;
+                }
 
                 wearable.Encode();
 
@@ -858,9 +861,9 @@ namespace CoolProxy.Plugins.CopyBot
         public string Name;
         public WearableType Type;
         public Dictionary<int, int> VisualParams;
-        public List<UUID> Textures;
+        public Dictionary<AvatarTextureIndex, UUID> Textures;
 
-        public ImportableWearable(string name, WearableType type, Dictionary<int, int> param, List<UUID> textures)
+        public ImportableWearable(string name, WearableType type, Dictionary<int, int> param, Dictionary<AvatarTextureIndex, UUID> textures)
         {
             Name = name;
             Type = type;
@@ -950,8 +953,14 @@ namespace CoolProxy.Plugins.CopyBot
                         paramvalues[param_id] = value;
                     }
 
-                    // todo... textures
-                    List<UUID> textures = new List<UUID>();
+                    Dictionary<AvatarTextureIndex, UUID> textures = new Dictionary<AvatarTextureIndex, UUID>();
+
+                    OSDMap texture_map = (OSDMap)entry["textures"];
+                    foreach (KeyValuePair<string, OSD> pair in texture_map)
+                    {
+                        int index = Convert.ToInt32(pair.Key);
+                        textures[(AvatarTextureIndex)index] = pair.Value.AsUUID();
+                    }
 
                     Wearables.Add(new ImportableWearable(name, type, paramvalues, textures));
                 }

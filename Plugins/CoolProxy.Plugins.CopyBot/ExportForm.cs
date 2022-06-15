@@ -111,12 +111,10 @@ namespace CoolProxy.Plugins.CopyBot
             {
                 if(TargetAvatar.VisualParameters != null)
                 {
-                    dataGridView.Rows.Add(true, CopyBot.Properties.Resources.Skin, TargetAvatar.Name + "'s Skin", 0, (int)WearableType.Skin, UUID.Zero);
-                    dataGridView.Rows.Add(true, CopyBot.Properties.Resources.BodyShape, TargetAvatar.Name + "'s Shape", 0, (int)WearableType.Shape, UUID.Zero);
-                    dataGridView.Rows.Add(true, CopyBot.Properties.Resources.Hair, TargetAvatar.Name + "'s Hair", 0, (int)WearableType.Hair, UUID.Zero);
-                    dataGridView.Rows.Add(true, CopyBot.Properties.Resources.Inv_Eye, TargetAvatar.Name + "'s Eyes", 0, (int)WearableType.Eyes, UUID.Zero);
-
-                    // todo: programatically determine what other wearables the avatar is wearing...
+                    dataGridView.Rows.Add(true, CopyBot.Properties.Resources.Skin, TargetAvatar.Name + "'s Baked Skin", 0, (int)WearableType.Skin, UUID.Zero);
+                    dataGridView.Rows.Add(true, CopyBot.Properties.Resources.BodyShape, TargetAvatar.Name + "'s Baked Shape", 0, (int)WearableType.Shape, UUID.Zero);
+                    dataGridView.Rows.Add(true, CopyBot.Properties.Resources.Hair, TargetAvatar.Name + "'s Baked Hair", 0, (int)WearableType.Hair, UUID.Zero);
+                    dataGridView.Rows.Add(true, CopyBot.Properties.Resources.Inv_Eye, TargetAvatar.Name + "'s Baked Eyes", 0, (int)WearableType.Eyes, UUID.Zero);
                 }
 
                 selectedRoots = Frame.Network.CurrentSim.ObjectsPrimitives.FindAll((x) => { return x.ParentID == TargetAvatar.LocalID; }).ToList();
@@ -156,7 +154,7 @@ namespace CoolProxy.Plugins.CopyBot
         private void saveButton_Click(object sender, EventArgs e)
         {
             List<uint> selected = new List<uint>();
-            List<WearableType> wearables = new List<WearableType>();
+            Dictionary<WearableType, string> wearables = new Dictionary<WearableType, string>();
 
             for (int i = 0; i < dataGridView.Rows.Count; i++)
             {
@@ -167,7 +165,7 @@ namespace CoolProxy.Plugins.CopyBot
                     if (type == 0) // wearable
                     {
                         WearableType wearable = (WearableType)(int)dataGridView.Rows[i].Cells[4].Value;
-                        wearables.Add(wearable);
+                        wearables[wearable] = (string)dataGridView.Rows[i].Cells[2].Value;
                     }
                     else
                     {
@@ -186,10 +184,21 @@ namespace CoolProxy.Plugins.CopyBot
 
             if (TargetAvatar?.VisualParameters != null)
             {
+                var textures = (Primitive.TextureEntryFace[])TargetAvatar.Textures.FaceTextures.Clone();
+
+                // swap in the baked textures...
+                if(TargetAvatar.ID != Frame.Agent.AgentID)
+                {
+                    textures[0] = textures[8];   // head
+                    textures[5] = textures[9];   // upper
+                    textures[6] = textures[10];  // lower
+                    textures[3] = textures[11];  // eyes
+                }
+
                 var visual_params = TargetAvatar.VisualParameters;
                 foreach (var type in wearables)
                 {
-                    string str_type = type.ToString().ToLower();
+                    string str_type = type.Key.ToString().ToLower();
                     Dictionary<int, int> paramvalues = new Dictionary<int, int>();
                     int pcount = 0;
                     OSDMap visuals_osd = new OSDMap();
@@ -203,31 +212,48 @@ namespace CoolProxy.Plugins.CopyBot
                         }
                     }
 
-                    // todo: textures...
+                    OSDMap texture_map = new OSDMap();
+
+                    for(int te = 0; te < (int)AvatarTextureIndex.NumberOfEntries; te++)
+                    {
+                        if (AppearanceDictionary.getWearbleType((AvatarTextureIndex)te) == type.Key)
+                        {
+                            var tef = textures[te];
+                            if (tef != null)
+                            {
+                                texture_map[string.Format("{0}", te)] = tef.TextureID;
+                            }
+                        }
+                    }
 
                     OSDMap wearable = new OSDMap();
                     wearable["type"] = "wearable";
                     wearable["params"] = visuals_osd;
-                    wearable["name"] = TargetAvatar.Name + "'s " + type.ToString();
-                    wearable["flag"] = (int)type;
+                    wearable["textures"] = texture_map;
+                    wearable["name"] = type.Value;
+                    wearable["flag"] = (int)type.Key;
 
                     export[UUID.Random().ToString()] = wearable;
                 }
             }
 
-            string filename = string.Empty;
+            string filename = "untitled";
 
             if (Mode == OutputMode.Save)
             {
                 using (SaveFileDialog dialog = new SaveFileDialog())
                 {
-                    if (selected.Count == 1)
+                    if (selected.Count == 1 && wearables.Count == 0)
                     {
                         var prim = Frame.Network.CurrentSim.ObjectsPrimitives[selected[0]];
                         if (prim.Properties != null)
                         {
                             filename = prim.Properties.Name;
                         }
+                    }
+                    else if (selected.Count == 0 && wearables.Count == 1)
+                    {
+                        filename = wearables.First().Value;
                     }
                     else if (TargetAvatar != null)
                     {
@@ -420,15 +446,22 @@ namespace CoolProxy.Plugins.CopyBot
                             foreach (var texture in prim.Textures.FaceTextures)
                                 LogTextureEntry(texture);
                         }
-                    }
 
-                    if (ExportContents)
-                    {
-                        NextTaskInv();
-                    }
-                    else
-                    {
-                        NextAsset();
+                        // todo: maybe merge these?
+                        foreach(OSD entry in map.Values)
+                        {
+                            OSDMap item = (OSDMap)entry;
+
+                            if(item["type"] == "wearable")
+                            {
+                                OSDMap textures = (OSDMap)item["textures"];
+
+                                foreach(OSD t in textures.Values)
+                                {
+                                    AssetsToExport[t.AsUUID()] = AssetType.Texture;
+                                }
+                            }
+                        }
                     }
 
                     string nouns = string.Empty;
@@ -440,6 +473,15 @@ namespace CoolProxy.Plugins.CopyBot
                         nouns = "inventory";
 
                     Proxy.AlertMessage("Starting export of " + nouns + "...", false);
+
+                    if (ExportContents)
+                    {
+                        NextTaskInv();
+                    }
+                    else
+                    {
+                        NextAsset();
+                    }
                 }
             }
 

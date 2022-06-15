@@ -371,7 +371,7 @@ namespace OpenMetaverse
         {
             get
             {
-                if (!String.IsNullOrEmpty(name))
+                if (!string.IsNullOrEmpty(name))
                 {
                     return name;
                 }
@@ -379,8 +379,8 @@ namespace OpenMetaverse
                 {
                     lock (NameValues)
                     {
-                        string firstName = String.Empty;
-                        string lastName = String.Empty;
+                        string firstName = string.Empty;
+                        string lastName = string.Empty;
 
                         for (int i = 0; i < NameValues.Length; i++)
                         {
@@ -390,20 +390,20 @@ namespace OpenMetaverse
                                 lastName = (string)NameValues[i].Value;
                         }
 
-                        if (firstName != String.Empty && lastName != String.Empty)
+                        if (firstName != string.Empty && lastName != string.Empty)
                         {
-                            name = String.Format("{0} {1}", firstName, lastName);
+                            name = lastName.ToLower() == "resident" ? firstName : string.Format("{0} {1}", firstName, lastName);
                             return name;
                         }
                         else
                         {
-                            return String.Empty;
+                            return string.Empty;
                         }
                     }
                 }
                 else
                 {
-                    return String.Empty;
+                    return string.Empty;
                 }
             }
         }

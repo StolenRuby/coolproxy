@@ -128,6 +128,8 @@
             this.label25 = new System.Windows.Forms.Label();
             this.button31 = new System.Windows.Forms.Button();
             this.textBox18 = new System.Windows.Forms.TextBox();
+            this.tabPage11 = new System.Windows.Forms.TabPage();
+            this.debugRTB = new System.Windows.Forms.RichTextBox();
             this.settingsTabPage = new System.Windows.Forms.TabPage();
             this.settingsTabControl = new System.Windows.Forms.TabControl();
             this.tabPage9 = new System.Windows.Forms.TabPage();
@@ -176,8 +178,8 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.saveXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabPage11 = new System.Windows.Forms.TabPage();
-            this.debugRTB = new System.Windows.Forms.RichTextBox();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.numericUpDown2 = new L33T.GUI.NumericUpDown();
             this.textBox1 = new L33T.GUI.TextBox();
             this.checkBox1 = new CoolGUI.Controls.CheckBox();
@@ -216,6 +218,7 @@
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.blacklistDataGridView)).BeginInit();
             this.panel3.SuspendLayout();
+            this.tabPage11.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
             this.settingsTabControl.SuspendLayout();
             this.tabPage9.SuspendLayout();
@@ -228,7 +231,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pluginsDataGridView)).BeginInit();
             this.tabPage10.SuspendLayout();
             this.blacklistContextMenuStrip.SuspendLayout();
-            this.tabPage11.SuspendLayout();
+            this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
@@ -1089,6 +1092,30 @@
             this.textBox18.TabIndex = 10;
             this.textBox18.Text = "00000000-0000-0000-0000-000000000000";
             // 
+            // tabPage11
+            // 
+            this.tabPage11.Controls.Add(this.panel4);
+            this.tabPage11.Location = new System.Drawing.Point(104, 4);
+            this.tabPage11.Name = "tabPage11";
+            this.tabPage11.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage11.Size = new System.Drawing.Size(466, 272);
+            this.tabPage11.TabIndex = 12;
+            this.tabPage11.Text = "Console";
+            this.tabPage11.UseVisualStyleBackColor = true;
+            // 
+            // debugRTB
+            // 
+            this.debugRTB.BackColor = System.Drawing.Color.Black;
+            this.debugRTB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.debugRTB.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.debugRTB.ForeColor = System.Drawing.Color.Lime;
+            this.debugRTB.Location = new System.Drawing.Point(0, 0);
+            this.debugRTB.Name = "debugRTB";
+            this.debugRTB.ReadOnly = true;
+            this.debugRTB.Size = new System.Drawing.Size(460, 246);
+            this.debugRTB.TabIndex = 0;
+            this.debugRTB.Text = "";
+            // 
             // settingsTabPage
             // 
             this.settingsTabPage.Controls.Add(this.settingsTabControl);
@@ -1644,28 +1671,26 @@
             this.loadXMLToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.loadXMLToolStripMenuItem.Text = "Load XML";
             // 
-            // tabPage11
+            // panel4
             // 
-            this.tabPage11.Controls.Add(this.debugRTB);
-            this.tabPage11.Location = new System.Drawing.Point(104, 4);
-            this.tabPage11.Name = "tabPage11";
-            this.tabPage11.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage11.Size = new System.Drawing.Size(466, 272);
-            this.tabPage11.TabIndex = 12;
-            this.tabPage11.Text = "Console";
-            this.tabPage11.UseVisualStyleBackColor = true;
+            this.panel4.Controls.Add(this.debugRTB);
+            this.panel4.Controls.Add(this.textBox2);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(3, 3);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(460, 266);
+            this.panel4.TabIndex = 1;
             // 
-            // debugRTB
+            // textBox2
             // 
-            this.debugRTB.BackColor = System.Drawing.Color.Black;
-            this.debugRTB.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.debugRTB.ForeColor = System.Drawing.Color.Lime;
-            this.debugRTB.Location = new System.Drawing.Point(3, 3);
-            this.debugRTB.Name = "debugRTB";
-            this.debugRTB.ReadOnly = true;
-            this.debugRTB.Size = new System.Drawing.Size(460, 266);
-            this.debugRTB.TabIndex = 0;
-            this.debugRTB.Text = "";
+            this.textBox2.BackColor = System.Drawing.Color.Black;
+            this.textBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.textBox2.ForeColor = System.Drawing.Color.LimeGreen;
+            this.textBox2.Location = new System.Drawing.Point(0, 246);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(460, 20);
+            this.textBox2.TabIndex = 0;
+            this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown);
             // 
             // numericUpDown2
             // 
@@ -1857,6 +1882,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.blacklistDataGridView)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.tabPage11.ResumeLayout(false);
             this.settingsTabPage.ResumeLayout(false);
             this.settingsTabControl.ResumeLayout(false);
             this.tabPage9.ResumeLayout(false);
@@ -1873,7 +1899,8 @@
             this.tabPage10.ResumeLayout(false);
             this.tabPage10.PerformLayout();
             this.blacklistContextMenuStrip.ResumeLayout(false);
-            this.tabPage11.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
@@ -2019,6 +2046,8 @@
         private System.Windows.Forms.LinkLabel githubLinkLabel;
         private System.Windows.Forms.TabPage tabPage11;
         private System.Windows.Forms.RichTextBox debugRTB;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }
 

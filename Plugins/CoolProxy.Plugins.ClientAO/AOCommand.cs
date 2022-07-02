@@ -12,9 +12,9 @@ namespace CoolProxy.Plugins.ClientAO
         public AOCommand(CoolProxyFrame frame)
         {
             Proxy = frame;
-            CMD = ".ao";
+            CMD = "ao";
             Name = "Controls for Client AO";
-            Description = "Usage: .ao <on/off>\n.ao load <path/to/notecard>";
+            Description = "Usage: ao <on/off>\nao load <path/to/notecard>";
             Category = CommandCategory.Other;
 
 

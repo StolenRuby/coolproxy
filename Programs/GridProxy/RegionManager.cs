@@ -94,7 +94,7 @@ namespace GridProxy
 
         private void RegionAdded(RegionProxy region)
         {
-            OpenMetaverse.Logger.Log("Creating proxy for " + region.RemoteEndPoint + " at " + region.LocalEndPoint, Helpers.LogLevel.Info);
+            //OpenMetaverse.Logger.Log("Creating proxy for " + region.RemoteEndPoint + " at " + region.LocalEndPoint, Helpers.LogLevel.Info);
             //OpenMetaverse.Logger.Log(string.Format("Region added: {0}", region.RemoteEndPoint), Helpers.LogLevel.Info);
         }
 
@@ -136,7 +136,7 @@ namespace GridProxy
                 return;
             }
 
-            OpenMetaverse.Logger.Log("Fixup login for simproxy", Helpers.LogLevel.Info);
+            OpenMetaverse.Logger.Log("[REGIONS] Fixup login for simproxy", Helpers.LogLevel.Debug);
 
             if (responseData.Contains("sim_ip") && responseData.Contains("sim_port"))
             {
@@ -160,7 +160,7 @@ namespace GridProxy
                     info.AddDelegate(new CapsDelegate(KnownCapDelegate));
                     KnownCaps[(string)responseData["seed_capability"]] = info;
                     responseData["seed_capability"] = CapProxyURL + responseData["seed_capability"];
-                    OpenMetaverse.Logger.Log("Seed cap URL replaced with: " + responseData["seed_capability"], Helpers.LogLevel.Info);
+                    OpenMetaverse.Logger.Log("[REGIONS] Seed cap URL replaced with: " + responseData["seed_capability"], Helpers.LogLevel.Debug);
                 }
             }
         }
@@ -388,9 +388,9 @@ namespace GridProxy
                 RegionProxy simProxy = new RegionProxy(Frame, simEndPoint);
                 IPEndPoint fakeSim = simProxy.LocalEndPoint;
 
-                OpenMetaverse.Logger.Log("====================================================", Helpers.LogLevel.Info);
-                OpenMetaverse.Logger.Log("Created proxy for " + simEndPoint + " at " + fakeSim, Helpers.LogLevel.Info);
-                OpenMetaverse.Logger.Log("====================================================", Helpers.LogLevel.Info);
+                //OpenMetaverse.Logger.Log("====================================================", Helpers.LogLevel.Info);
+                OpenMetaverse.Logger.Log("[REGIONS] Created proxy for " + simEndPoint + " at " + fakeSim, Helpers.LogLevel.Info);
+                //OpenMetaverse.Logger.Log("====================================================", Helpers.LogLevel.Info);
 
                 OnNewRegion?.Invoke(simProxy);
 
@@ -953,7 +953,7 @@ namespace GridProxy
                             }
                             nm[key] = OSD.FromString(CapProxyURL + val);
 
-                            OpenMetaverse.Logger.Log(string.Format("{0} replaced with {1}", key, nm[key]), Helpers.LogLevel.Info);
+                            OpenMetaverse.Logger.Log(string.Format("[REGIONS] {0} replaced with {1}", key, nm[key]), Helpers.LogLevel.Debug);
                         }
                         else
                         {

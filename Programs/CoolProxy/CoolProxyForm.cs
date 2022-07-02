@@ -60,13 +60,6 @@ namespace CoolProxy
                 return;
             }
 
-            inventoryBrowserForm = new InventoryBrowserForm();
-
-            guiManager = new GUIManager(this);
-            gridManager = new GridListManager();
-
-            CoolProxy.Frame.RegisterModuleInterface<IGUI>(guiManager);
-
             InitializeComponent();
 
             // log4net
@@ -75,7 +68,14 @@ namespace CoolProxy
                 FireEventAppender.Instance.MessageLoggedEvent += Instance_MessageLoggedEvent;
             }
 
-            OpenMetaverse.Logger.Log("CoolProxy GUI launched!", Helpers.LogLevel.Info);
+            OpenMetaverse.Logger.Log("[GUI] CoolProxy GUI launched!", Helpers.LogLevel.Info);
+
+            inventoryBrowserForm = new InventoryBrowserForm();
+
+            guiManager = new GUIManager(this);
+            gridManager = new GridListManager();
+
+            CoolProxy.Frame.RegisterModuleInterface<IGUI>(guiManager);
 
             // Regions
             CoolProxy.Frame.Network.OnNewRegion += onNewRegion;
@@ -1304,7 +1304,8 @@ namespace CoolProxy
             { "FormAssetLoggingSize", new Size(462, 510) },
             { "FormAssetTransfersSize", new Size(400, 280) },
             { "FormPacketCreatorSize", new Size(400, 280) },
-            { "FormSettingsSize", new Size(477, 305) }
+            { "FormSettingsSize", new Size(477, 305) },
+            { "FormConsoleSize", new Size(650, 400) }
         };
 
         Dictionary<string, Form> openTabs = new Dictionary<string, Form>();
@@ -1867,6 +1868,27 @@ namespace CoolProxy
         private void githubLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://github.com/StolenRuby/coolproxy");
+        }
+
+        private void textBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Return)
+            {
+                string cmd = textBox2.Text;
+
+                if(!string.IsNullOrWhiteSpace(cmd))
+                {
+                    debugRTB.AppendText(">" + cmd + "\n");
+                    debugRTB.ScrollToCaret();
+                }
+
+                textBox2.Text = "";
+
+                string output = CoolProxy.Frame.RunCommand(cmd);
+
+                debugRTB.AppendText(output + "\n");
+                debugRTB.ScrollToCaret();
+            }
         }
     }
 }

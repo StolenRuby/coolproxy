@@ -14,16 +14,16 @@ namespace CoolProxy.Plugins.ChatCommands
         public ZTeleportCommand(CoolProxyFrame frame)
         {
             Proxy = frame;
-            CMD = ".gth";
+            CMD = "gth";
             Name = "Teleport to Height";
-            Description = "Teleport to a specified height.\n\nUsage: .gth <height>";
+            Description = "Teleport to a specified height.\n\nUsage: gth <height>";
             Category = CommandCategory.Movement;
         }
 
         public override string Execute(string[] args)
         {
             if (args.Length < 2)
-                return "Usage: .gth <height>";
+                return "Usage: gth <height>";
 
             float height;
 

@@ -14,16 +14,16 @@ namespace CoolProxy.Plugins.ChatCommands
         public GotoCommand(CoolProxyFrame frame)
         {
             Proxy = frame;
-            CMD = ".goto";
+            CMD = "goto";
             Name = "Teleport to Region";
-            Description = "Teleport to another region by name.\n\nUsage: .goto <region name>";
+            Description = "Teleport to another region by name.\n\nUsage: goto <region name>";
             Category = CommandCategory.Movement;
         }
 
         public override string Execute(string[] args)
         {
             if (args.Length < 2)
-                return "Usage: .goto <region name>";
+                return "Usage: goto <region name>";
 
             string name = args[1];
             for(int i = 2; i < args.Length; i++)

@@ -13,7 +13,7 @@ namespace CoolProxy.Plugins.ChatCommands
         public SimInfoCommand(CoolProxyFrame frame)
         {
             Proxy = frame;
-            CMD = ".siminfo";
+            CMD = "siminfo";
             Name = "Display Sim Info";
             Description = "A command to print information about the region to chat.";
             Category = CommandCategory.Simulator;
@@ -22,6 +22,8 @@ namespace CoolProxy.Plugins.ChatCommands
         public override string Execute(string[] args)
         {
             var sim = Proxy.Network.CurrentSim;
+
+            if (sim == null) return "You're not in a sim!";
 
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("Region Name: " + sim.Name);

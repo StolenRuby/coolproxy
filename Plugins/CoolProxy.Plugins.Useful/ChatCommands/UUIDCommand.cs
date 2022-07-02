@@ -12,7 +12,7 @@ namespace CoolProxy.Plugins.Useful.ChatCommands
         public UUIDCommand(CoolProxyFrame frame)
         {
             Proxy = frame;
-            CMD = ".uuid";
+            CMD = "uuid";
             Name = "Generate UUID";
             Description = "Generates a random UUID.";
             Category = CommandCategory.Other;

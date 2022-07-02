@@ -12,10 +12,10 @@ namespace CoolProxy.Plugins.ChatCommands
         public PlatformCommand(CoolProxyFrame frame)
         {
             Proxy = frame;
-            CMD = ".plat";
+            CMD = "plat";
             Name = "Rez a Platform";
             Description = "Create a platform beneath your feet.";
-            Category = CommandCategory.Movement;
+            Category = CommandCategory.Objects;
         }
 
         public override string Execute(string[] args)

@@ -62,7 +62,7 @@ namespace CoolProxy
         void FetchURLS(RegionManager.RegionProxy region)
         {
             //proxyFrame.SayToUser("Attempting to get service urls...");
-            OpenMetaverse.Logger.Log("Attempting to get service urls...", Helpers.LogLevel.Info);
+            OpenMetaverse.Logger.Log("[OPENSIM] Attempting to get service urls...", Helpers.LogLevel.Info);
 
             MadeRequest = true;
 
@@ -84,7 +84,7 @@ namespace CoolProxy
                     data["userID"] = id.ToString();
 
                     //proxyFrame.SayToUser("Trying " + id.ToString() + "...");
-                    OpenMetaverse.Logger.Log("Trying " + id.ToString() + "...", Helpers.LogLevel.Info);
+                    OpenMetaverse.Logger.Log("[OPENSIM] Trying " + id.ToString() + "...", Helpers.LogLevel.Debug);
 
                     ArrayList SendParams = new ArrayList();
                     SendParams.Add(data);
@@ -149,7 +149,7 @@ namespace CoolProxy
                         }
 
                         //proxyFrame.SayToUser("Successfully got service URLs!");
-                        OpenMetaverse.Logger.Log("Successfully got service URLs!", Helpers.LogLevel.Info);
+                        OpenMetaverse.Logger.Log("[OPENSIM] Successfully got service URLs!", Helpers.LogLevel.Info);
 
                         success = true;
                         break;
@@ -171,7 +171,7 @@ namespace CoolProxy
                         Uri imguri = new Uri(image_url);
                         region.HostUri = string.Format("{0}://{1}", imguri.Scheme, imguri.Authority);
 
-                        OpenMetaverse.Logger.Log("Successfully got host URI!", Helpers.LogLevel.Info);
+                        OpenMetaverse.Logger.Log("[OPENSIM] Successfully got host URI!", Helpers.LogLevel.Info);
                     }
 
                     OnURLsRetrieved?.Invoke(region);

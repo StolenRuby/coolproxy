@@ -432,7 +432,7 @@ namespace GridProxy
                     new Task(() =>
                     {
                         LoadInv(Frame.Inventory.InventoryRoot);
-                        OpenMetaverse.Logger.Log("Finished loading inventory!", Helpers.LogLevel.Info);
+                        OpenMetaverse.Logger.Log("[INVENTORY] Finished loading!", Helpers.LogLevel.Info);
                     }).Start();
                 }
             };

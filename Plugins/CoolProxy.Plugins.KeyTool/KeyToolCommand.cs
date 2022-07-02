@@ -13,16 +13,16 @@ namespace CoolProxy.Plugins.KeyTool
         public KeyToolCommand(CoolProxyFrame frame)
         {
             Proxy = frame;
-            CMD = ".keytool";
+            CMD = "keytool";
             Name = "KeyTool a UUID";
-            Description = "Run a keytool on a give UUID.\n\nUsage: .keytool <uuid>";
+            Description = "Run a keytool on a give UUID.\n\nUsage: keytool <uuid>";
             Category = CommandCategory.CoolProxy;
         }
 
         public override string Execute(string[] args)
         {
             if (args.Length < 2)
-                return "Usage: .keytool <uuid>";
+                return "Usage: keytool <uuid>";
 
             UUID key = UUID.Zero;
 

@@ -14,16 +14,16 @@ namespace CoolProxy.Plugins.LocalGodMode
         public GodModeCommand(CoolProxyFrame frame)
         {
             Proxy = frame;
-            CMD = ".gm";
+            CMD = "gm";
             Name = "Set Local GodMode Level";
-            Description = "Set your local GodMode level.\n\nUsage: .gm <level>";
+            Description = "Set your local GodMode level.\n\nUsage: gm <level>";
             Category = CommandCategory.Other;
         }
 
         public override string Execute(string[] args)
         {
             if (args.Length < 2)
-                return "Usage: .gm <level>";
+                return "Usage: gm <level>";
 
             int level;
             if(int.TryParse(args[1], out level))

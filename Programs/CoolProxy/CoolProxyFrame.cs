@@ -19,7 +19,9 @@ namespace CoolProxy
 
         internal event NewChatCommandAdded OnNewChatCommand;
 
-        Dictionary<string, Command> newChatcommands = new Dictionary<string, Command>();
+        public Dictionary<string, Command> Commands = new Dictionary<string, Command>();
+
+        private char ChatCmdPrefix = (char)0;
 
         public CoolProxyFrame(string[] args, ProxyConfig proxyConfig) : base(args, proxyConfig)
         {
@@ -36,6 +38,12 @@ namespace CoolProxy
             base.Start();
 
             this.Network.AddDelegate(PacketType.ChatFromViewer, Direction.Outgoing, ChatFromViewerOut);
+
+            string prefix = Settings.getString("ChatCommandPrefix");
+            if(prefix.Length > 0)
+            {
+                ChatCmdPrefix = prefix[0];
+            }
         }
 
         public new void Stop()
@@ -46,14 +54,17 @@ namespace CoolProxy
         private Packet ChatFromViewerOut(Packet packet, RegionProxy sim)
         {
             ChatFromViewerPacket cpacket = (ChatFromViewerPacket)packet;
+
+            if (cpacket.ChatData.Type != 1) return packet;
+
             string message = Encoding.UTF8.GetString(cpacket.ChatData.Message).Replace("\0", "");
 
-            if (message.Length > 1 && message[0] == '.')
+            if ((ChatCmdPrefix != 0 && message.Length > 1 && message[0] == ChatCmdPrefix) || ChatCmdPrefix == (char)0)
             {
-                string[] words = message.Split(' ');
-                if (newChatcommands.ContainsKey(words[0]))
+                string[] words = message.Substring(ChatCmdPrefix == (char)0 ? 0 : 1).Split(' ');
+                if (Commands.ContainsKey(words[0]))
                 {
-                    string result = (newChatcommands[words[0]]).Execute(words);
+                    string result = (Commands[words[0]]).Execute(words);
 
                     if(result != string.Empty)
                     {
@@ -67,9 +78,19 @@ namespace CoolProxy
             return packet;
         }
 
+        public string RunCommand(string cmd)
+        {
+            string[] words = cmd.Split(' ');
+            if (CoolProxy.Frame.Commands.TryGetValue(words[0], out Command command))
+            {
+                return command.Execute(words);
+            }
+            else return "Command not found";
+        }
+
         internal void AddChatCommand(Command command)
         {
-            newChatcommands[command.CMD] = command;
+            Commands[command.CMD] = command;
             OnNewChatCommand.Invoke(command.CMD, command.Name, command.Description);
         }
 

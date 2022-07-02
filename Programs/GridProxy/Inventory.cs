@@ -406,11 +406,11 @@ namespace GridProxy
             }
             catch (Exception e)
             {
-                Logger.Log("Error accessing inventory cache file :" + e.Message, Helpers.LogLevel.Error);
+                Logger.Log("[INVENTORY] Error accessing inventory cache file :" + e.Message, Helpers.LogLevel.Error);
                 return -1;
             }
 
-            Logger.Log("Read " + item_count.ToString() + " items from inventory cache file", Helpers.LogLevel.Info);
+            Logger.Log("[INVENTORY] Read " + item_count.ToString() + " items from inventory cache file", Helpers.LogLevel.Info);
 
             item_count = 0;
             List<InventoryNode> del_nodes = new List<InventoryNode>(); //nodes that we have processed and will delete
@@ -493,7 +493,7 @@ namespace GridProxy
                 del_nodes.Clear();
             }
 
-            Logger.Log("Reassembled " + item_count.ToString() + " items from inventory cache file", Helpers.LogLevel.Info);
+            Logger.Log("[INVENTORY] Reassembled " + item_count.ToString() + " items from inventory cache file", Helpers.LogLevel.Info);
             return item_count;
         }
 

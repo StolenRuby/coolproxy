@@ -12,9 +12,9 @@ namespace CoolProxy.Plugins.Useful.ChatCommands
         public MD5Command(CoolProxyFrame frame)
         {
             Proxy = frame;
-            CMD = ".md5";
+            CMD = "md5";
             Name = "MD5 String";
-            Description = "MD5 a given string.\n\nUsage: .md5 <string>";
+            Description = "MD5 a given string.\n\nUsage: md5 <string>";
             Category = CommandCategory.Other;
         }
 
@@ -22,7 +22,7 @@ namespace CoolProxy.Plugins.Useful.ChatCommands
         {
             if(args .Length < 2)
             {
-                return "Usage: .md5 <string>";
+                return "Usage: md5 <string>";
             }
 
             args = args.Skip(1).ToArray();

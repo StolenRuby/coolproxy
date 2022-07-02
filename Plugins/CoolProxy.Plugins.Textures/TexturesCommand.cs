@@ -12,7 +12,7 @@ namespace CoolProxy.Plugins.Textures
         public TexturesCommand(CoolProxyFrame frame)
         {
             Proxy = frame;
-            CMD = ".textures";
+            CMD = "textures";
             Name = "List Object Textures";
             Description = "List the textures of your currect selection.";
             Category = CommandCategory.Objects;

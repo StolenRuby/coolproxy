@@ -68,6 +68,15 @@
 			<key>value</key>
 			<boolean>1</boolean>
 		</map>
+		<key>ChatCommandPrefix</key>
+		<map>
+			<key>comment</key>
+			<string>Prefix for inworld chat commands</string>
+			<key>type</key>
+			<string>string</string>
+			<key>value</key>
+			<string>.</string>
+		</map>
 		<key>ShowConsole</key>
 		<map>
 			<key>comment</key>

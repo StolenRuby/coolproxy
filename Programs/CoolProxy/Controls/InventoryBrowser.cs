@@ -480,7 +480,7 @@ namespace CoolGUI.Controls
                 var parent = RootFolder.Find(item.ParentUUID, true);
                 if (parent == null)
                 {
-                    OpenMetaverse.Logger.Log("Received update for unknown TreeView node " + item.ParentUUID, Helpers.LogLevel.Warning);
+                    OpenMetaverse.Logger.Log("[INV BROWSER] Received update for unknown TreeView node " + item.ParentUUID, Helpers.LogLevel.Warning);
                     return;
                 }
 
@@ -516,7 +516,7 @@ namespace CoolGUI.Controls
                 var node = RootFolder.Find(item.UUID, true);
                 if (node == null)
                 {
-                    OpenMetaverse.Logger.Log("Received update for unknown TreeView node " + item.ParentUUID, Helpers.LogLevel.Warning);
+                    OpenMetaverse.Logger.Log("[INV BROWSER] Received update for unknown TreeView node " + item.ParentUUID, Helpers.LogLevel.Warning);
                     return;
                 }
 
@@ -554,7 +554,7 @@ namespace CoolGUI.Controls
                 var found = RootFolder.Find(item.UUID, true);
                 if (found == null)
                 {
-                    OpenMetaverse.Logger.Log("Received update for unknown TreeView node " + item.ParentUUID, Helpers.LogLevel.Warning);
+                    OpenMetaverse.Logger.Log("[INV BROWSER] Received update for unknown TreeView node " + item.ParentUUID, Helpers.LogLevel.Warning);
                     return;
                 }
 

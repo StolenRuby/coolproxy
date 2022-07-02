@@ -14,16 +14,16 @@ namespace CoolProxy.Plugins.ChatCommands
         public TeleportToUserCommand(CoolProxyFrame frame)
         {
             Proxy = frame;
-            CMD = ".tpto";
+            CMD = "tpto";
             Name = "Teleport to User";
-            Description = "Teleport to a specified user.\n\nUsage: .tpto <username>";
+            Description = "Teleport to a specified user.\n\nUsage: tpto <username>";
             Category = CommandCategory.Movement;
         }
 
         public override string Execute(string[] args)
         {
             if (args.Length < 2)
-                return "Usage: .tpto <username>";
+                return "Usage: tpto <username>";
 
             string find = args[1];
 

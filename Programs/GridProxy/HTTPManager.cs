@@ -59,7 +59,7 @@ namespace GridProxy
                     displayAddress = endPoint.Address;
                 ProxyURI = "http://" + displayAddress + ":" + endPoint.Port + "/";
 
-                OpenMetaverse.Logger.Log("Proxy ready at " + ProxyURI, Helpers.LogLevel.Info);
+                OpenMetaverse.Logger.Log("[HTTP] Proxy ready at " + ProxyURI, Helpers.LogLevel.Info);
             }
         }
 
@@ -344,7 +344,7 @@ namespace GridProxy
                 HttpHandlers.Add(url, handler);
 
 
-                OpenMetaverse.Logger.Log("Added HTTP handler at: " + url, Helpers.LogLevel.Info);
+                OpenMetaverse.Logger.Log("[HTTP] Added HTTP handler at: " + url, Helpers.LogLevel.Info);
             }
             else throw new Exception("URL already has a handler");
         }
@@ -355,7 +355,7 @@ namespace GridProxy
             {
                 HttpHandlers.Remove(url);
 
-                OpenMetaverse.Logger.Log("Removed HTTP handler at: " + url, Helpers.LogLevel.Info);
+                OpenMetaverse.Logger.Log("[HTTP] Removed HTTP handler at: " + url, Helpers.LogLevel.Info);
             }
         }
     }

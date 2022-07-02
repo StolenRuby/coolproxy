@@ -14,16 +14,16 @@ namespace CoolProxy.Plugins.ChatCommands
         public TeleportCommand(CoolProxyFrame frame)
         {
             Proxy = frame;
-            CMD = ".tp";
+            CMD = "tp";
             Name = "Teleport to Position";
-            Description = "Teleport to a specified position.\n\nUsage: .tp <x> <y> <z>";
-            Category = CommandCategory.CoolProxy;
+            Description = "Teleport to a specified position.\n\nUsage: tp <x> <y> <z>";
+            Category = CommandCategory.Movement;
         }
 
         public override string Execute(string[] args)
         {
             if (args.Length < 4)
-                return "Usage: .tp <x> <y> <z>";
+                return "Usage: tp <x> <y> <z>";
 
             float x, y, z;
             if (float.TryParse(args[1], out x) && float.TryParse(args[2], out y) && float.TryParse(args[3], out z))

@@ -129,7 +129,9 @@
             this.button31 = new System.Windows.Forms.Button();
             this.textBox18 = new System.Windows.Forms.TextBox();
             this.tabPage11 = new System.Windows.Forms.TabPage();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.debugRTB = new System.Windows.Forms.RichTextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.settingsTabPage = new System.Windows.Forms.TabPage();
             this.settingsTabControl = new System.Windows.Forms.TabControl();
             this.tabPage9 = new System.Windows.Forms.TabPage();
@@ -178,8 +180,8 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.saveXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.cmdPrefixCombo = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.numericUpDown2 = new L33T.GUI.NumericUpDown();
             this.textBox1 = new L33T.GUI.TextBox();
             this.checkBox1 = new CoolGUI.Controls.CheckBox();
@@ -219,6 +221,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.blacklistDataGridView)).BeginInit();
             this.panel3.SuspendLayout();
             this.tabPage11.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
             this.settingsTabControl.SuspendLayout();
             this.tabPage9.SuspendLayout();
@@ -231,7 +234,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pluginsDataGridView)).BeginInit();
             this.tabPage10.SuspendLayout();
             this.blacklistContextMenuStrip.SuspendLayout();
-            this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
@@ -1103,6 +1105,16 @@
             this.tabPage11.Text = "Console";
             this.tabPage11.UseVisualStyleBackColor = true;
             // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.debugRTB);
+            this.panel4.Controls.Add(this.textBox2);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(3, 3);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(460, 266);
+            this.panel4.TabIndex = 1;
+            // 
             // debugRTB
             // 
             this.debugRTB.BackColor = System.Drawing.Color.Black;
@@ -1115,6 +1127,17 @@
             this.debugRTB.Size = new System.Drawing.Size(460, 246);
             this.debugRTB.TabIndex = 0;
             this.debugRTB.Text = "";
+            // 
+            // textBox2
+            // 
+            this.textBox2.BackColor = System.Drawing.Color.Black;
+            this.textBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.textBox2.ForeColor = System.Drawing.Color.LimeGreen;
+            this.textBox2.Location = new System.Drawing.Point(0, 246);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(460, 20);
+            this.textBox2.TabIndex = 0;
+            this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown);
             // 
             // settingsTabPage
             // 
@@ -1207,9 +1230,10 @@
             // 
             // chatCommandsPanel
             // 
+            this.chatCommandsPanel.Controls.Add(this.label5);
+            this.chatCommandsPanel.Controls.Add(this.cmdPrefixCombo);
             this.chatCommandsPanel.Controls.Add(this.checkBox4);
             this.chatCommandsPanel.Controls.Add(this.label38);
-            this.chatCommandsPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.chatCommandsPanel.Location = new System.Drawing.Point(3, 3);
             this.chatCommandsPanel.Name = "chatCommandsPanel";
             this.chatCommandsPanel.Size = new System.Drawing.Size(446, 234);
@@ -1671,26 +1695,29 @@
             this.loadXMLToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.loadXMLToolStripMenuItem.Text = "Load XML";
             // 
-            // panel4
+            // cmdPrefixCombo
             // 
-            this.panel4.Controls.Add(this.debugRTB);
-            this.panel4.Controls.Add(this.textBox2);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(3, 3);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(460, 266);
-            this.panel4.TabIndex = 1;
+            this.cmdPrefixCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmdPrefixCombo.FormattingEnabled = true;
+            this.cmdPrefixCombo.Items.AddRange(new object[] {
+            "",
+            ".",
+            ",",
+            "/"});
+            this.cmdPrefixCombo.Location = new System.Drawing.Point(327, 7);
+            this.cmdPrefixCombo.Name = "cmdPrefixCombo";
+            this.cmdPrefixCombo.Size = new System.Drawing.Size(86, 21);
+            this.cmdPrefixCombo.TabIndex = 65;
+            this.cmdPrefixCombo.SelectedIndexChanged += new System.EventHandler(this.cmdPrefixCombo_SelectedIndexChanged);
             // 
-            // textBox2
+            // label5
             // 
-            this.textBox2.BackColor = System.Drawing.Color.Black;
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBox2.ForeColor = System.Drawing.Color.LimeGreen;
-            this.textBox2.Location = new System.Drawing.Point(0, 246);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(460, 20);
-            this.textBox2.TabIndex = 0;
-            this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown);
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(260, 10);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(61, 13);
+            this.label5.TabIndex = 66;
+            this.label5.Text = "Chat Prefix:";
             // 
             // numericUpDown2
             // 
@@ -1883,6 +1910,8 @@
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.tabPage11.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.settingsTabPage.ResumeLayout(false);
             this.settingsTabControl.ResumeLayout(false);
             this.tabPage9.ResumeLayout(false);
@@ -1899,8 +1928,6 @@
             this.tabPage10.ResumeLayout(false);
             this.tabPage10.PerformLayout();
             this.blacklistContextMenuStrip.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
@@ -2048,6 +2075,8 @@
         private System.Windows.Forms.RichTextBox debugRTB;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cmdPrefixCombo;
     }
 }
 

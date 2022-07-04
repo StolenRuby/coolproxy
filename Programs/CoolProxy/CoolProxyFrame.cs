@@ -31,6 +31,18 @@ namespace CoolProxy
         private void Init(string[] args, ProxyConfig proxyConfig)
         {
             OpenSim = new OpenSimManager(this);
+
+            string prefix = Settings.getString("ChatCommandPrefix");
+            if (prefix.Length > 0)
+            {
+                ChatCmdPrefix = prefix[0];
+            }
+
+            Settings.getSetting("ChatCommandPrefix").OnChanged += (x, y) =>
+            {
+                string new_prefix = (string)y.Value;
+                ChatCmdPrefix = new_prefix.Length > 0 ? new_prefix[0] : (char)0;
+            };
         }
 
         public new void Start()
@@ -38,12 +50,6 @@ namespace CoolProxy
             base.Start();
 
             this.Network.AddDelegate(PacketType.ChatFromViewer, Direction.Outgoing, ChatFromViewerOut);
-
-            string prefix = Settings.getString("ChatCommandPrefix");
-            if(prefix.Length > 0)
-            {
-                ChatCmdPrefix = prefix[0];
-            }
         }
 
         public new void Stop()

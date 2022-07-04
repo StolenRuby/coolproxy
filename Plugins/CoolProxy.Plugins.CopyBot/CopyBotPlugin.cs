@@ -171,7 +171,7 @@ namespace CoolProxy.Plugins.CopyBot
             path_box.Size = new Size(-10, 20);
             path_box.Setting = "SOGExportDir";
             path_box.Margin = new Padding(10);
-            path_box.Enabled = false;
+            path_box.ReadOnly = true;
 
             path_btn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             path_btn.Location = new Point(140, 35);

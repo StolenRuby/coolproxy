@@ -140,6 +140,9 @@ namespace CoolProxy
             AddTrayOption("-", null, null, "");
             AddTrayOption("Inventory Browser", inventoryBrowserToolStripMenuItem_Click, null, "");
 
+            string cmd_prefix = CoolProxy.Frame.Settings.getString("ChatCommandPrefix");
+            cmdPrefixCombo.SelectedItem = cmd_prefix;
+
             if(!CoolProxy.IsDebugMode)
             {
                 loadPluginTestButton.Visible = false;
@@ -1889,6 +1892,12 @@ namespace CoolProxy
                 debugRTB.AppendText(output + "\n");
                 debugRTB.ScrollToCaret();
             }
+        }
+
+        private void cmdPrefixCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string prefix = cmdPrefixCombo.SelectedItem.ToString();
+            CoolProxy.Frame.Settings.setString("ChatCommandPrefix", prefix);
         }
     }
 }

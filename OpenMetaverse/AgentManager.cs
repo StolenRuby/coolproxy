@@ -178,7 +178,9 @@ namespace OpenMetaverse
         /// <summary>Indicates that a user has started typing</summary>
         StartTyping = 41,
         /// <summary>Indicates that a user has stopped typing</summary>
-        StopTyping = 42
+        StopTyping = 42,
+        /// <summary>Used for kicking an agent when another login is detected</summary>
+        OpenSimKickUser = 250
     }
 
     /// <summary>

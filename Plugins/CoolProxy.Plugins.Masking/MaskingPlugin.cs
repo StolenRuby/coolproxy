@@ -2,6 +2,7 @@
 using OpenMetaverse;
 using System;
 using System.Collections;
+using System.Net;
 
 namespace CoolProxy.Plugins.Masking
 {
@@ -37,12 +38,12 @@ namespace CoolProxy.Plugins.Masking
 
             if (requestData.ContainsKey("mac") && spoof_mac)
             {
-                requestData["mac"] = Proxy.Settings.getSetting("SpecifiedMacAddress");
+                requestData["mac"] = Proxy.Settings.getString("SpecifiedMacAddress");
             }
 
             if (requestData.ContainsKey("id0") && spoof_id0)
             {
-                requestData["id0"] = Proxy.Settings.getSetting("SpecifiedId0Address");
+                requestData["id0"] = Proxy.Settings.getString("SpecifiedId0Address");
             }
         }
     }

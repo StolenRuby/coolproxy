@@ -515,6 +515,8 @@ namespace GridProxy
                     Frame.Network.CurrentSim.Caps.TryGetValue("GetMesh", out cap_url);
             }
 
+            if (!cap_url.StartsWith("http")) cap_url = "http://" + cap_url;
+
             Uri url = new Uri(cap_url);
 
             string str_type = assetRequestStrings[asset_type];

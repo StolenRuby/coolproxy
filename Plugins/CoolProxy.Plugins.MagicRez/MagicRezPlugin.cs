@@ -97,7 +97,7 @@ namespace CoolProxy.Plugins.MagicRez
             }
 
             // change creator
-            if (creator_id != UUID.Zero)
+            // if (creator_id != UUID.Zero)
             {
                 key_replacer_split = object_data.Split(new string[] { "<CreatorID><UUID>", "</UUID></CreatorID>" }, StringSplitOptions.RemoveEmptyEntries);
 

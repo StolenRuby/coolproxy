@@ -157,25 +157,25 @@ namespace CoolProxy.Plugins.CopyBot
             var path_label = new Label();
             var path_box = new L33T.GUI.TextBox();
             var path_btn = new Button();
+            var reset_btn = new Button();
 
             panel.Controls.Add(path_label);
             panel.Controls.Add(path_box);
             panel.Controls.Add(path_btn);
+            panel.Controls.Add(reset_btn);
 
             path_label.Location = new Point(140, 15);
             path_label.Size = new Size(100, 13);
             path_label.Text = "Export Directory:";
 
-            path_box.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
             path_box.Location = new Point(140, 35);
-            path_box.Size = new Size(-10, 20);
+            path_box.Size = new Size(200, 20);
             path_box.Setting = "SOGExportDir";
             path_box.Margin = new Padding(10);
             path_box.ReadOnly = true;
 
-            path_btn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            path_btn.Location = new Point(140, 35);
-            path_btn.Size = new Size(50, 20);
+            path_btn.Location = new Point(345, 35);
+            path_btn.Size = new Size(30, 20);
             path_btn.Text = "...";
             path_btn.Click += (s, e) =>
             {
@@ -188,6 +188,33 @@ namespace CoolProxy.Plugins.CopyBot
                     }
                 }
             };
+
+
+            reset_btn.Location = new Point(380, 35);
+            reset_btn.Size = new Size(55, 20);
+            reset_btn.Text = "Default";
+            reset_btn.Click += (s, e) =>
+            {
+                path_box.Text = "./copybot";
+                ExportDir = "./copybot";
+            };
+
+
+            CoolGUI.Controls.CheckBox use_robust_exp_checkbox = new CoolGUI.Controls.CheckBox();
+            use_robust_exp_checkbox.Location = new Point(145, 65);
+            use_robust_exp_checkbox.AutoSize = true;
+            use_robust_exp_checkbox.Text = "Expost assets using the ROBUST";
+            use_robust_exp_checkbox.Enabled = false;
+
+            panel.Controls.Add(use_robust_exp_checkbox);
+
+            CoolGUI.Controls.CheckBox use_robust_imp_checkbox = new CoolGUI.Controls.CheckBox();
+            use_robust_imp_checkbox.Location = new Point(145, 85);
+            use_robust_imp_checkbox.AutoSize = true;
+            use_robust_imp_checkbox.Text = "Import assets using the ROBUST";
+            use_robust_imp_checkbox.Enabled = false;
+
+            panel.Controls.Add(use_robust_imp_checkbox);
 
             gui.AddSettingsTab("CopyBot", panel);
         }

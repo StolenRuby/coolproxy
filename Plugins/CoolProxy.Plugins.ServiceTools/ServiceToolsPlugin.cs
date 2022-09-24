@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CoolProxy.Plugins.ServiceTools
 {
@@ -22,6 +23,26 @@ namespace CoolProxy.Plugins.ServiceTools
 
             gui.AddInventoryItemOption("Edit Item...", (x) => new XInventoryServiceForm(frame, x).Show(), IsItemWithinSuitcase);
             gui.AddInventoryFolderOption("Add Item...", (x) => new XInventoryServiceForm(frame, x).Show(), IsWithinSuitcase);
+
+            gui.AddInventoryItemOption("Fetch Asset ID", x =>
+            {
+                Proxy.OpenSim.XInventory.GetItem(x.UUID, x.OwnerID, item =>
+                {
+                    if (item != null)
+                    {
+                        Clipboard.SetText(item.AssetUUID.ToString());
+                    }
+                    else Clipboard.SetText(UUID.Zero.ToString());
+                });
+            }, e =>
+            {
+                if(e.AssetUUID == UUID.Zero)
+                {
+                    return IsItemWithinSuitcase(e);
+                }
+
+                return false;
+            });
         }
 
         private bool IsWithinSuitcase(InventoryFolder folder)

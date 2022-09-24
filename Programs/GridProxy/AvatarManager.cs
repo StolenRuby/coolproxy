@@ -548,6 +548,7 @@ namespace GridProxy
             if (!DisplayNamesAvailable() || ids.Count == 0)
             {
                 callback(false, null, null);
+                return;
             }
 
             StringBuilder query = new StringBuilder();

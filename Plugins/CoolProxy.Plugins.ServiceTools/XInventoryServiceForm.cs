@@ -1,4 +1,5 @@
-﻿using OpenMetaverse;
+﻿using CoolProxy.Plugins.OpenSim;
+using OpenMetaverse;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -111,9 +112,9 @@ namespace CoolProxy.Plugins.ServiceTools
             };
 
             if(IsUpdating)
-                Proxy.OpenSim.XInventory.UpdateItem(currentItem, handle);
+                ServiceToolsPlugin.ROBUST.Inventory.UpdateItem(currentItem, handle);
             else
-                Proxy.OpenSim.XInventory.AddItem(currentItem, handle);
+                ServiceToolsPlugin.ROBUST.Inventory.AddItem(currentItem, handle);
         }
 
         private void button2_Click(object sender, EventArgs e)

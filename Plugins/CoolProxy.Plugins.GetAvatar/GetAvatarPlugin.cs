@@ -1,4 +1,5 @@
-﻿using OpenMetaverse;
+﻿using CoolProxy.Plugins.OpenSim;
+using OpenMetaverse;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,13 @@ namespace CoolProxy.Plugins.GetAvatar
     public class GetAvatarPlugin : CoolProxyPlugin
     {
         private CoolProxyFrame Proxy;
+        private IROBUST ROBUST;
+
         public GetAvatarPlugin(CoolProxyFrame frame)
         {
             Proxy = frame;
 
+            ROBUST = frame.RequestModuleInterface<IROBUST>();
             IGUI gui = frame.RequestModuleInterface<IGUI>();
 
             gui.AddToolButton("Hacks", "Retrieve Stored Avatar", retrieveStoredAvatar);
@@ -30,11 +34,22 @@ namespace CoolProxy.Plugins.GetAvatar
             if (avatarPickerSearchForm.ShowDialog() == DialogResult.OK)
             {
                 Proxy.SayToUser("Retrieving the stored appearance of " + avatarPickerSearchForm.SelectedName);
-                GetAvatar(avatarPickerSearchForm.SelectedID, avatarPickerSearchForm.SelectedName);
+
+                string name = avatarPickerSearchForm.SelectedName;
+                string[] split = name.Split(' ');
+
+                string grid_uri = Proxy.Network.CurrentSim.GridURI;
+
+                if (split[1].StartsWith("@"))
+                {
+                    grid_uri = "http://" + split[1].Substring(1);
+                }
+
+                GetAvatar(avatarPickerSearchForm.SelectedID, grid_uri, avatarPickerSearchForm.SelectedName);
             }
         }
 
-        public void GetAvatar(UUID avatar, string folder_name)
+        public void GetAvatar(UUID avatar, string grid_uri, string folder_name)
         {
             try
             {
@@ -82,7 +97,7 @@ namespace CoolProxy.Plugins.GetAvatar
 
                         UUID folder_id = UUID.Random();
 
-                        Proxy.OpenSim.XInventory.AddFolder(folder_name, folder_id, parent_id, Proxy.Agent.AgentID, FolderType.None, 0, (folder_added) =>
+                        ROBUST.Inventory.AddFolder(folder_name, folder_id, parent_id, Proxy.Agent.AgentID, FolderType.None, 0, (folder_added) =>
                         {
                             if (folder_added)
                             {
@@ -90,7 +105,7 @@ namespace CoolProxy.Plugins.GetAvatar
 
                                 foreach (UUID id in attachment_ids)
                                 {
-                                    Proxy.OpenSim.XInventory.GetItem(id, avatar, (item) =>
+                                    ROBUST.Inventory.GetItem(id, avatar, (item) =>
                                     {
                                         if (item == null)
                                         {
@@ -104,7 +119,7 @@ namespace CoolProxy.Plugins.GetAvatar
                                         item.OwnerID = Proxy.Agent.AgentID;
                                         item.ParentUUID = folder_id;
 
-                                        Proxy.OpenSim.XInventory.AddItem(item, (success) =>
+                                        ROBUST.Inventory.AddItem(item, (success) =>
                                         {
                                             if (++count == attachment_ids.Count)
                                             {
@@ -119,8 +134,8 @@ namespace CoolProxy.Plugins.GetAvatar
                     }
                 };
 
-                string target_uri = Proxy.Network.CurrentSim.GridURI;
-                target_uri += "/avatar";
+                string target_uri = grid_uri;
+                target_uri += "avatar";
 
                 Uri uri = new Uri(target_uri);
 

@@ -1,4 +1,5 @@
-﻿using GridProxy;
+﻿using CoolProxy.Plugins.OpenSim;
+using GridProxy;
 using OpenMetaverse;
 using OpenMetaverse.Assets;
 using OpenMetaverse.Packets;
@@ -23,6 +24,8 @@ namespace CoolProxy.Plugins.CopyBot
         internal static CopyBotPlugin Instance;
 
         private CoolProxyFrame Proxy;
+
+        public static IROBUST ROBUST;
 
         ImportProgressForm importProgressForm;
 
@@ -62,13 +65,17 @@ namespace CoolProxy.Plugins.CopyBot
             Proxy = frame;
             Instance = this;
 
+            ROBUST = frame.RequestModuleInterface<IROBUST>();
+
             //GUI.AddToolButton("CopyBot", "Export Selected Objects", exportSelectedObjects);
             //GUI.AddToolButton("CopyBot", "Import Object from File", importXML);
-            gui.AddToolButton("Objects", "Import with Selected Object", importXMLWithSeed);
 
-            gui.AddSingleMenuItem("Save As...", exportAvatar);
-
-            gui.AddInventoryItemOption("Import With...", importWithInv, AssetType.Object);
+            if (ROBUST != null) // hack: use the robust to determine if the user has griefer tools enabled
+            {
+                //gui.AddToolButton("Objects", "Import with Selected Object", importXMLWithSeed);
+                gui.AddSingleMenuItem("Save As...", exportAvatar);
+                gui.AddInventoryItemOption("Import With...", importWithInv, AssetType.Object);
+            }
 
             gui.AddTrayOption("-", null);
             gui.AddTrayOption("Import Object from File...", importXML);
@@ -205,6 +212,7 @@ namespace CoolProxy.Plugins.CopyBot
             use_robust_exp_checkbox.AutoSize = true;
             use_robust_exp_checkbox.Text = "Expost assets using the ROBUST";
             use_robust_exp_checkbox.Enabled = false;
+            use_robust_exp_checkbox.Visible = ROBUST != null;
 
             panel.Controls.Add(use_robust_exp_checkbox);
 
@@ -213,6 +221,7 @@ namespace CoolProxy.Plugins.CopyBot
             use_robust_imp_checkbox.AutoSize = true;
             use_robust_imp_checkbox.Text = "Import assets using the ROBUST";
             use_robust_imp_checkbox.Enabled = false;
+            use_robust_imp_checkbox.Visible = ROBUST != null;
 
             panel.Controls.Add(use_robust_imp_checkbox);
 
@@ -363,7 +372,7 @@ namespace CoolProxy.Plugins.CopyBot
 
                 UUID asset_id = UUID.Random();
 
-                Proxy.OpenSim.Assets.UploadAsset(asset_id, AssetType.Object, asset.Parent.Name, asset.Parent.Description, asset.Parent.CreatorID, bytes, (success, new_id) =>
+                ROBUST.Assets.UploadAsset(asset_id, AssetType.Object, asset.Parent.Name, asset.Parent.Description, asset.Parent.CreatorID, bytes, (success, new_id) =>
                 {
                     if(success)
                     {
@@ -373,7 +382,7 @@ namespace CoolProxy.Plugins.CopyBot
 
                         UUID item_id = UUID.Random();
 
-                        Proxy.OpenSim.XInventory.AddItem(
+                        ROBUST.Inventory.AddItem(
                             folder_id, item_id, asset_id, Proxy.Agent.AgentID,
                             AssetType.Object, InventoryType.Object, 0, asset.Parent.Name, asset.Parent.Description, DateTime.UtcNow, s =>
                             {
@@ -458,7 +467,7 @@ namespace CoolProxy.Plugins.CopyBot
                     UUID parent_id = Proxy.Inventory.SuitcaseID == UUID.Zero ? Proxy.Inventory.InventoryRoot : Proxy.Inventory.SuitcaseID;
 
                     FolderID = UUID.Random();
-                    Proxy.OpenSim.XInventory.AddFolder("uploads", FolderID, parent_id, Proxy.Agent.AgentID, FolderType.None, 1, (success) =>
+                    ROBUST.Inventory.AddFolder("uploads", FolderID, parent_id, Proxy.Agent.AgentID, FolderType.None, 1, (success) =>
                     {
                         UploadNextAsset();
                     });
@@ -730,7 +739,7 @@ namespace CoolProxy.Plugins.CopyBot
                             data = mem.ToArray();
                         }
 
-                        Proxy.OpenSim.Assets.UploadAsset(UUID.Random(), at, id.ToString(), "", UUID.Zero, data, (success, new_id) =>
+                        ROBUST.Assets.UploadAsset(UUID.Random(), at, id.ToString(), "", UUID.Zero, data, (success, new_id) =>
                         {
                             AssetReplacements[id] = new_id;
                             importProgressForm?.ReportProgress(EntryIndex - 1, Zip.Entries.Count - 1, false);
@@ -831,7 +840,7 @@ namespace CoolProxy.Plugins.CopyBot
             item.CreatorData = string.Empty;
             item.OwnerID = Proxy.Agent.AgentID;
 
-            Proxy.OpenSim.XInventory.AddItem(item, (success) =>
+            ROBUST.Inventory.AddItem(item, (success) =>
             {
                 if(success)
                 {

@@ -446,7 +446,7 @@
 			<key>type</key>
 			<string>string</string>
 			<key>value</key>
-			<string>Firestorm-Nightly-CI</string>
+			<string>Firestorm-Releasex64</string>
 		</map>
 		<key>SpecifiedVersionMajor</key>
 		<map>
@@ -460,21 +460,21 @@
 			<key>type</key>
 			<string>integer</string>
 			<key>value</key>
-			<integer>4</integer>
+			<integer>5</integer>
 		</map>
 		<key>SpecifiedVersionPatch</key>
 		<map>
 			<key>type</key>
 			<string>integer</string>
 			<key>value</key>
-			<integer>5</integer>
+			<integer>6</integer>
 		</map>
 		<key>SpecifiedVersionBuild</key>
 		<map>
 			<key>type</key>
 			<string>integer</string>
 			<key>value</key>
-			<integer>60737</integer>
+			<integer>66221</integer>
 		</map>
 		<key>StartProxyAtLaunch</key>
 		<map>

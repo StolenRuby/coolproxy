@@ -51,7 +51,7 @@ namespace CoolProxy.Plugins.GridIMHacks
         private void sendMessageButton_Click(object sender, EventArgs e)
         {
             UUID session_id = SenderID ^ RecipientID;
-            Proxy.OpenSim.GridIM.SendGridIM(SenderID, "", RecipientID, InstantMessageDialog.MessageFromAgent, false, textBox1.Text, session_id, false, Vector3.Zero, UUID.Zero, 0, new byte[0], Utils.GetUnixTime());
+            GridIMHacksPlugin.ROBUST.IM.SendGridIM(SenderID, "", RecipientID, InstantMessageDialog.MessageFromAgent, false, textBox1.Text, session_id, false, Vector3.Zero, UUID.Zero, 0, new byte[0], Utils.GetUnixTime());
         }
     }
 }

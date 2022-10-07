@@ -570,7 +570,7 @@ namespace CoolProxy.Plugins.CopyBot
                     AssetsToExport.Remove(first.Key);
 
                     if (UseRobust)
-                        Proxy.OpenSim.Assets.DownloadAsset(first.Key, (x, y) => HandleAsset(first.Key, first.Value, x, y));
+                        CopyBotPlugin.ROBUST.Assets.DownloadAsset(first.Key, (x, y) => HandleAsset(first.Key, first.Value, x, y));
                     else
                         Proxy.Assets.EasyDownloadAsset(first.Key, first.Value, (x, y) => HandleAsset(first.Key, first.Value, x, y));
                 }

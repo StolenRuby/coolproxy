@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace CoolProxy
+namespace CoolProxy.Plugins.OpenSim
 {
     public static class ServerUtils
     {

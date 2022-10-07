@@ -25,6 +25,11 @@ namespace CoolProxy.Plugins.Textures
             frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
 
             this.Shown += ObjectTexturesForm_Shown;
+
+            if(ObjectTexturesPlugin.ROBUST == null)
+            {
+                copyToInvButton.Text += " (Local)";
+            }
         }
 
         private void ObjectTexturesForm_Shown(object sender, EventArgs e)
@@ -102,14 +107,31 @@ namespace CoolProxy.Plugins.Textures
 
                 UUID asset_id = (UUID)texturesDataGridView.SelectedRows[0].Cells[0].Value;
 
-                UUID folder_id = Proxy.Inventory.SuitcaseID != UUID.Zero ?
-                    Proxy.Inventory.FindSuitcaseFolderForType(FolderType.Texture) :
-                    Proxy.Inventory.FindFolderForType(FolderType.Texture);
-
-                Proxy.OpenSim.XInventory.AddItem(folder_id, item_id, asset_id, AssetType.Texture, InventoryType.Texture, 0, asset_id.ToString(), "", DateTime.UtcNow, (success) =>
+                if(ObjectTexturesPlugin.ROBUST != null)
                 {
-                    Proxy.Inventory.RequestFetchInventory(item_id, Proxy.Agent.AgentID, false);
-                });
+                    UUID folder_id = Proxy.Inventory.SuitcaseID != UUID.Zero ?
+                        Proxy.Inventory.FindSuitcaseFolderForType(FolderType.Texture) :
+                        Proxy.Inventory.FindFolderForType(FolderType.Texture);
+
+                    ObjectTexturesPlugin.ROBUST.Inventory.AddItem(folder_id, item_id, asset_id, AssetType.Texture, InventoryType.Texture, 0, asset_id.ToString(), "", DateTime.UtcNow, (success) =>
+                    {
+                        Proxy.Inventory.RequestFetchInventory(item_id, Proxy.Agent.AgentID, false);
+                    });
+                }
+                else
+                {
+                    InventoryItem temp_item = new InventoryItem(UUID.Random());
+                    temp_item.Name = asset_id.ToString();
+                    temp_item.AssetType = AssetType.Texture;
+                    temp_item.AssetUUID = asset_id;
+                    temp_item.CreationDate = DateTime.UtcNow;
+                    temp_item.InventoryType = InventoryType.Texture;
+                    temp_item.OwnerID = Proxy.Agent.AgentID;
+                    temp_item.ParentUUID = Proxy.Inventory.InventoryRoot;
+                    temp_item.Permissions = Permissions.FullPermissions;
+                    
+                    Proxy.Inventory.InjectFetchInventoryReply(temp_item);
+                }
             }
         }
     }

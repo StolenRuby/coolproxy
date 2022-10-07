@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Project name="CoolProxy.Plugins.Movement" path="Plugins/CoolProxy.Plugins.Movement" type="Library" frameworkVersion="v4_6">
+<Project name="CoolProxy.Plugins.HackedProfileEditor" path="Plugins/CoolProxy.Plugins.HackedProfileEditor" type="Library" frameworkVersion="v4_6">
 	<Configuration name="Debug">
 		<Options>
 			<OutputPath>../../bin/</OutputPath>

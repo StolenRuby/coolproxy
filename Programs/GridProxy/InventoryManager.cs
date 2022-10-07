@@ -4283,6 +4283,43 @@ namespace GridProxy
             Frame.Network.CurrentSim.Inject(firp, Direction.Incoming);
         }
         #endregion
+
+        public bool IsWithinSuitcase(InventoryFolder folder)
+        {
+            if (folder.UUID == SuitcaseID)
+            {
+                return true;
+            }
+
+            UUID parent_id = folder.ParentUUID;
+
+            while (parent_id != UUID.Zero)
+            {
+                if (parent_id == SuitcaseID) return true;
+
+                var parent = Store[parent_id] ?? null;
+                if (parent != null)
+                {
+                    parent_id = parent.ParentUUID;
+                }
+            }
+
+            return false;
+        }
+
+        public bool IsItemWithinSuitcase(InventoryItem item)
+        {
+            if (item.ParentUUID == SuitcaseID) return true;
+
+            InventoryFolder parent = (InventoryFolder)Store[item.ParentUUID] ?? null;
+
+            if (parent != null)
+            {
+                return IsWithinSuitcase(parent);
+            }
+
+            return false;
+        }
     }
 
     #region EventArgs

@@ -49,7 +49,7 @@ namespace CoolProxy.Plugins.ServiceTools
                 bucket[i] = hexBoxRequest.ByteProvider.ReadByte(i);
             }
 
-            Proxy.OpenSim.GridIM.SendGridIM(
+            ServiceToolsPlugin.ROBUST.IM.SendGridIM(
                 fromAgentUUID, fromAgentName.Text, toAgentUUID,
                 im_type, fromGroupCheck.Checked, messageTextbox.Text, sessionUUID,
                 offlineCheck.Checked, position, regionUUID,
@@ -136,7 +136,9 @@ namespace CoolProxy.Plugins.ServiceTools
 
             if (regionPickerForm.ShowDialog() == DialogResult.OK)
             {
-                regionID.Text = regionPickerForm.RegionUUID.ToString();
+                ServiceToolsPlugin.ROBUST.Gatekeeper.LinkRegion(regionPickerForm.RegionName, out UUID region_uuid, out string image_url);
+
+                regionID.Text = region_uuid.ToString();
             }
         }
     }

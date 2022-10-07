@@ -44,7 +44,8 @@ namespace CoolProxy.Plugins.GridIMHacks
             {
                 if(picker.ShowDialog() == DialogResult.OK)
                 {
-                    RegionID = picker.RegionUUID;
+                    GridIMHacksPlugin.ROBUST.Gatekeeper.LinkRegion(picker.RegionName, out RegionID, out string image_url);
+
                     targetRegionName.Text = picker.RegionName;
                 }
             }
@@ -53,7 +54,7 @@ namespace CoolProxy.Plugins.GridIMHacks
         private void sendTeleportButton_Click(object sender, EventArgs e)
         {
             Vector3 position = new Vector3((float)numericUpDown1.Value, (float)numericUpDown2.Value, (float)numericUpDown3.Value);
-            Proxy.OpenSim.GridIM.SendGridIM(MrOpenSim, "", TargetID, InstantMessageDialog.GodLikeRequestTeleport, false, "", TargetID, false, position, RegionID, 0, new byte[0], Utils.GetUnixTime());
+            GridIMHacksPlugin.ROBUST.IM.SendGridIM(MrOpenSim, "", TargetID, InstantMessageDialog.GodLikeRequestTeleport, false, "", TargetID, false, position, RegionID, 0, new byte[0], Utils.GetUnixTime());
         }
     }
 }

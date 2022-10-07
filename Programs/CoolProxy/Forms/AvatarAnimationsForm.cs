@@ -36,14 +36,14 @@ namespace CoolProxy
                 UUID anim_id = (UUID)row.Cells[0].Value;
                 UUID item_id = UUID.Random();
 
-                CoolProxy.Frame.OpenSim.XInventory.AddItem(folder_id, item_id, anim_id, AssetType.Animation, InventoryType.Animation, 0, anim_id.ToString(), "", DateTime.UtcNow, (item_succes) =>
-                {
-                    if (item_succes)
-                    {
-                        CoolProxy.Frame.Inventory.RequestFetchInventory(item_id, CoolProxy.Frame.Agent.AgentID, false);
-                    }
-                    else CoolProxy.Frame.SayToUser("Failed to forge!");
-                });
+                //CoolProxy.Frame.OpenSim.XInventory.AddItem(folder_id, item_id, anim_id, AssetType.Animation, InventoryType.Animation, 0, anim_id.ToString(), "", DateTime.UtcNow, (item_succes) =>
+                //{
+                //    if (item_succes)
+                //    {
+                //        CoolProxy.Frame.Inventory.RequestFetchInventory(item_id, CoolProxy.Frame.Agent.AgentID, false);
+                //    }
+                //    else CoolProxy.Frame.SayToUser("Failed to forge!");
+                //});
             }
         }
 

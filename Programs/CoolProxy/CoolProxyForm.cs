@@ -98,6 +98,10 @@ namespace CoolProxy
             downloadsGridView.ShowCellToolTips = false;
             downloadsGridView.CellToolTipTextNeeded += DownloadsGridView_CellToolTipTextNeeded;
 
+            tabPage2.HorizontalScroll.Enabled = false;
+            tabPage2.HorizontalScroll.Visible = false;
+            tabPage2.HorizontalScroll.Maximum = 0;
+            tabPage2.AutoScroll = true;
 
             // Asset Logging
             soundsDataGridView.DoubleBuffered(true);
@@ -125,7 +129,7 @@ namespace CoolProxy
 
             flowLayoutPanel1.DoubleBuffered(true);
 
-            CoolProxy.Frame.OnNewChatCommand += ChatCommandAdded;
+            //CoolProxy.Frame.OnNewChatCommand += ChatCommandAdded;
 
             // Login masking
             CoolProxy.Frame.Login.AddLoginResponseDelegate(handleLoginResponse);
@@ -142,6 +146,12 @@ namespace CoolProxy
 
             string cmd_prefix = CoolProxy.Frame.Settings.getString("ChatCommandPrefix");
             cmdPrefixCombo.SelectedItem = cmd_prefix;
+
+
+            var version = Application.ProductVersion;
+            var split = version.Split('.');
+            label12.Text = "Version " + split[0] + "." + split[1];
+
 
             if(!CoolProxy.IsDebugMode)
             {
@@ -213,7 +223,6 @@ namespace CoolProxy
             // Force the ToolTip text to be displayed whether or not the form is active.
             ShowAlways = true
         };
-
 
         private void ChatCommandAdded(string command, string name, string info)
         {
@@ -729,6 +738,8 @@ namespace CoolProxy
             string first_name = (string)responseData["first_name"];
             string last_name = (string)responseData["last_name"];
 
+            first_name = first_name.Replace("\"", "");
+
             string full_name = first_name;
             if (last_name.ToLower() != "resident")
                 full_name += " " + last_name;
@@ -1223,14 +1234,14 @@ namespace CoolProxy
                 UUID sound_id = UUID.Parse((string)row.Cells[1].Value);
                 UUID item_id = UUID.Random();
 
-                CoolProxy.Frame.OpenSim.XInventory.AddItem(folder_id, item_id, sound_id, AssetType.Sound, InventoryType.Sound, 0, sound_id.ToString(), "", DateTime.UtcNow, (item_succes) =>
-                {
-                    if (item_succes)
-                    {
-                        CoolProxy.Frame.Inventory.RequestFetchInventory(item_id, CoolProxy.Frame.Agent.AgentID, false);
-                    }
-                    else CoolProxy.Frame.SayToUser("Failed to forge!");
-                });
+                //CoolProxy.Frame.OpenSim.XInventory.AddItem(folder_id, item_id, sound_id, AssetType.Sound, InventoryType.Sound, 0, sound_id.ToString(), "", DateTime.UtcNow, (item_succes) =>
+                //{
+                //    if (item_succes)
+                //    {
+                //        CoolProxy.Frame.Inventory.RequestFetchInventory(item_id, CoolProxy.Frame.Agent.AgentID, false);
+                //    }
+                //    else CoolProxy.Frame.SayToUser("Failed to forge!");
+                //});
             }
         }
 
@@ -1268,14 +1279,43 @@ namespace CoolProxy
             if(CoolProxy.Frame.Settings.getBool("FirstRun"))
             {
                 OSDArray plugins = new OSDArray();
-                var files = Directory.GetFiles(".", "CoolProxy.Plugins.*.dll");
-                foreach (string file in files) plugins.Add(file);
+
+                plugins.Add("CoolProxy.Plugins.OpenSim.dll");
+                plugins.Add("CoolProxy.Plugins.NotecardMagic.dll");
+
+                plugins.Add("CoolProxy.Plugins.Useful.dll");
+                plugins.Add("CoolProxy.Plugins.ClientAO.dll");
+                plugins.Add("CoolProxy.Plugins.CopyBot.dll");
+                plugins.Add("CoolProxy.Plugins.DynamicGroupTitle.dll");
+                plugins.Add("CoolProxy.Plugins.FancyBeams.dll");
+                plugins.Add("CoolProxy.Plugins.KeyTool.dll");
+                plugins.Add("CoolProxy.Plugins.LocalGodMode.dll");
+                plugins.Add("CoolProxy.Plugins.MimicTool.dll");
+                plugins.Add("CoolProxy.Plugins.Textures.dll");
+
+                plugins.Add("CoolProxy.Plugins.InventoryBackup.dll");
+                plugins.Add("CoolProxy.Plugins.Masking.dll");
+                plugins.Add("CoolProxy.Plugins.Editors.dll");
+                plugins.Add("CoolProxy.Plugins.GridIMHacks.dll");
+                plugins.Add("CoolProxy.Plugins.HackedProfileEditor.dll");
+                plugins.Add("CoolProxy.Plugins.MagicRez.dll");
+                plugins.Add("CoolProxy.Plugins.MegaPrimMaker.dll");
+                plugins.Add("CoolProxy.Plugins.ServiceTools.dll");
+                plugins.Add("CoolProxy.Plugins.Spammers.dll");
+                plugins.Add("CoolProxy.Plugins.SuperSuitcase.dll");
+                plugins.Add("CoolProxy.Plugins.GetAvatar.dll");
+
                 CoolProxy.Frame.Settings.setOSD("PluginList", plugins);
             }
 
             LoadPlugins();
 
-            for(int i = 0; i < tabControl1.TabPages.Count; i++)
+            foreach (var cmd in CoolProxy.Frame.Commands.Values)
+            {
+                ChatCommandAdded(cmd.CMD, cmd.Name, cmd.Description);
+            }
+
+            for (int i = 0; i < tabControl1.TabPages.Count; i++)
             {
                 TabPage t = tabControl1.TabPages[i];
 

@@ -306,14 +306,14 @@ namespace CoolProxy.Plugins.Useful
             {
                 FolderID = Proxy.Inventory.FindSuitcaseFolderForType(assetType);
 
-                Proxy.OpenSim.Assets.UploadAsset(UUID.Random(), assetType, AssetName, string.Empty, Proxy.Agent.AgentID, data, (success, new_id) =>
+                UsefulPlugin.ROBUST.Assets.UploadAsset(UUID.Random(), assetType, AssetName, string.Empty, Proxy.Agent.AgentID, data, (success, new_id) =>
                 {
                     if (success)
                     {
                         UpdateProgress(90);
 
                         UUID itemID = UUID.Random();
-                        Proxy.OpenSim.XInventory.AddItem(FolderID, itemID, new_id, assetType, InvType, (uint)WearType, AssetName, string.Empty, DateTime.UtcNow, (created) =>
+                        UsefulPlugin.ROBUST.Inventory.AddItem(FolderID, itemID, new_id, assetType, InvType, (uint)WearType, AssetName, string.Empty, DateTime.UtcNow, (created) =>
                         {
                             if(created)
                             {

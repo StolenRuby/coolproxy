@@ -41,6 +41,7 @@ namespace CoolProxy.Plugins.Editors
             // hexBoxRequest
             // 
             this.hexBoxRequest.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hexBoxRequest.Enabled = false;
             this.hexBoxRequest.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.hexBoxRequest.LineInfoForeColor = System.Drawing.Color.Empty;
             this.hexBoxRequest.LineInfoVisible = true;
@@ -121,6 +122,7 @@ namespace CoolProxy.Plugins.Editors
             this.Controls.Add(this.panel1);
             this.Name = "HexEditor";
             this.Text = "HexEditor";
+            this.Load += new System.EventHandler(this.HexEditor_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

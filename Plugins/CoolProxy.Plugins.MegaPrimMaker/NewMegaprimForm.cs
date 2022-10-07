@@ -1,4 +1,5 @@
-﻿using OpenMetaverse;
+﻿using CoolProxy.Plugins.OpenSim;
+using OpenMetaverse;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,9 +15,13 @@ namespace CoolProxy.Plugins.MegaPrimMaker
     public partial class NewMegaprimForm : Form
     {
         private CoolProxyFrame Proxy;
+
+        private IROBUST ROBUST;
+
         public NewMegaprimForm(CoolProxyFrame frame)
         {
             Proxy = frame;
+            ROBUST = frame.RequestModuleInterface<IROBUST>();
             InitializeComponent();
         }
 
@@ -94,7 +99,8 @@ namespace CoolProxy.Plugins.MegaPrimMaker
 
             UUID asset_id = UUID.Random();
 
-            Proxy.OpenSim.Assets.UploadAsset(asset_id, AssetType.Object, name, "", Proxy.Agent.AgentID, data, (success, new_id) =>
+            // todo: make this use xfer if robust is not available
+            ROBUST.Assets.UploadAsset(asset_id, AssetType.Object, name, "", Proxy.Agent.AgentID, data, (success, new_id) =>
             {
                 if (success)
                 {
@@ -102,7 +108,7 @@ namespace CoolProxy.Plugins.MegaPrimMaker
 
                     UUID item_id = UUID.Random();
 
-                    Proxy.OpenSim.XInventory.AddItem(folder_id, item_id, new_id, AssetType.Object, InventoryType.Object, 0, name, "", DateTime.UtcNow, (created) =>
+                    ROBUST.Inventory.AddItem(folder_id, item_id, new_id, AssetType.Object, InventoryType.Object, 0, name, "", DateTime.UtcNow, (created) =>
                     {
                         if (created)
                         {

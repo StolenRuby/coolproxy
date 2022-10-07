@@ -248,7 +248,8 @@ namespace CoolProxy.Plugins.MagicRez
 
         public void Rez(UUID asset_id, Vector3 position, UUID owner_id, UUID creator_id, string description = "", bool grant_perms = false)
         {
-            Proxy.OpenSim.Assets.DownloadAsset(asset_id, (success, data) =>
+            //Proxy.OpenSim.Assets.DownloadAsset(asset_id, (success, data) =>
+            Proxy.Assets.EasyDownloadAsset(asset_id, AssetType.Object, (success, data) => 
             {
                 try
                 {

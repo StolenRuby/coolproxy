@@ -69,22 +69,22 @@ namespace CoolProxy.Plugins.GridIMHacks
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Frame.OpenSim.GridIM.SendGridIM(GodID, string.Empty, TargetID, InstantMessageDialog.OpenSimKickUser, false, "Kicked by an admin", TargetID, false, Frame.Agent.SimPosition, Frame.Network.CurrentSim.ID, 0, new byte[1] { 0 }, Utils.GetUnixTime());
+            GridIMHacksPlugin.ROBUST.IM.SendGridIM(GodID, string.Empty, TargetID, InstantMessageDialog.OpenSimKickUser, false, "Kicked by an admin", TargetID, false, Frame.Agent.SimPosition, Frame.Network.CurrentSim.ID, 0, new byte[1] { 0 }, Utils.GetUnixTime());
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            Frame.OpenSim.GridIM.SendGridIM(GodID, string.Empty, TargetID, InstantMessageDialog.OpenSimKickUser, false, "Frozen by an admin", TargetID, false, Frame.Agent.SimPosition, Frame.Network.CurrentSim.ID, 0, new byte[1] { 1 }, Utils.GetUnixTime());
+            GridIMHacksPlugin.ROBUST.IM.SendGridIM(GodID, string.Empty, TargetID, InstantMessageDialog.OpenSimKickUser, false, "Frozen by an admin", TargetID, false, Frame.Agent.SimPosition, Frame.Network.CurrentSim.ID, 0, new byte[1] { 1 }, Utils.GetUnixTime());
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            Frame.OpenSim.GridIM.SendGridIM(GodID, string.Empty, TargetID, InstantMessageDialog.OpenSimKickUser, false, "Unfrozen by an admin", TargetID, false, Frame.Agent.SimPosition, Frame.Network.CurrentSim.ID, 0, new byte[1] { 2 }, Utils.GetUnixTime());
+            GridIMHacksPlugin.ROBUST.IM.SendGridIM(GodID, string.Empty, TargetID, InstantMessageDialog.OpenSimKickUser, false, "Unfrozen by an admin", TargetID, false, Frame.Agent.SimPosition, Frame.Network.CurrentSim.ID, 0, new byte[1] { 2 }, Utils.GetUnixTime());
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            Frame.OpenSim.GridIM.SendGridIM(GodID, string.Empty, TargetID, InstantMessageDialog.GodLikeRequestTeleport, false, "@" + Frame.Network.CurrentSim.GridURI, TargetID, false, Frame.Agent.SimPosition, Frame.Network.CurrentSim.ID, 0, new byte[0], Utils.GetUnixTime());
+            GridIMHacksPlugin.ROBUST.IM.SendGridIM(GodID, string.Empty, TargetID, InstantMessageDialog.GodLikeRequestTeleport, false, "@" + Frame.Network.CurrentSim.GridURI, TargetID, false, Frame.Agent.SimPosition, Frame.Network.CurrentSim.ID, 0, new byte[0], Utils.GetUnixTime());
         }
     }
 }

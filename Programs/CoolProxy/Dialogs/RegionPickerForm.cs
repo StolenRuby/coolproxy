@@ -29,8 +29,8 @@ namespace CoolProxy
         public byte RegionAccess { get; private set; }
         public ulong RegionHandle { get; private set; } = 0;
 
-        public UUID RegionUUID { get; private set; } = UUID.Zero;
-        public string ImageURL { get; private set; } = string.Empty;
+        //public UUID RegionUUID { get; private set; } = UUID.Zero;
+        //public string ImageURL { get; private set; } = string.Empty;
 
         public RegionPickerForm()
         {
@@ -127,9 +127,9 @@ namespace CoolProxy
             {
                 UUID uuid;
                 string image;
-                Proxy.OpenSim.Hypergrid.LinkRegion(RegionName, out uuid, out image);
-                RegionUUID = uuid;
-                ImageURL = image;
+                //Proxy.OpenSim.Hypergrid.LinkRegion(RegionName, out uuid, out image);
+                //RegionUUID = uuid;
+                //ImageURL = image;
 
 
                 this.DialogResult = DialogResult.OK;

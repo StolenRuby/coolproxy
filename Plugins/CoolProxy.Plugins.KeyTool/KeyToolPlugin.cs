@@ -1,9 +1,11 @@
 ﻿using CoolProxy.Plugins.NotecardMagic;
+using CoolProxy.Plugins.OpenSim;
 using GridProxy;
 using OpenMetaverse;
 using OpenMetaverse.Packets;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -17,14 +19,15 @@ namespace CoolProxy.Plugins.KeyTool
     public enum OpenAssetMode
     {
         Nothing,
-        SuperSuitcase,
+        LocalInventory,
         NotecardMagic,
-        LocalInventory
+        SuperSuitcase
     }
 
     public class KeyToolPlugin : CoolProxyPlugin
     {
         public static CoolProxyFrame Proxy { get; private set; }
+        public static IROBUST ROBUST { get; private set; }
 
         internal static INotecardMagic NotecardMagic = null;
 
@@ -39,15 +42,36 @@ namespace CoolProxy.Plugins.KeyTool
             gui.AddToolButton("UUID", "KeyTool from Clipboard", handleKeyToolButton);
             gui.AddTrayOption("KeyTool from Clipboard", handleKeyToolButton);
 
-            Mode = (OpenAssetMode)Proxy.Settings.getInteger("KeyToolOpenAssetMode");
-
-            AddSettingsTab(gui);
 
             NotecardMagic = Proxy.RequestModuleInterface<INotecardMagic>();
+            ROBUST = Proxy.RequestModuleInterface<IROBUST>();
+
+            if(Proxy.Settings.getBool("FirstRun"))
+            {
+                if (ROBUST != null) Mode = OpenAssetMode.SuperSuitcase;
+                else if (NotecardMagic != null) Mode = OpenAssetMode.NotecardMagic;
+                else Mode = OpenAssetMode.LocalInventory;
+
+                Proxy.Settings.setInteger("KeyToolOpenAssetMode", (int)Mode);
+            }
+            else Mode = (OpenAssetMode)Proxy.Settings.getInteger("KeyToolOpenAssetMode");
+
+            if (Mode == OpenAssetMode.SuperSuitcase && ROBUST == null) Mode = OpenAssetMode.NotecardMagic;
+            if (Mode == OpenAssetMode.NotecardMagic && NotecardMagic == null) Mode = OpenAssetMode.LocalInventory;
+
+            AddSettingsTab(gui);
 
             Proxy.Network.AddDelegate(PacketType.ChatFromViewer, Direction.Outgoing, HandleChatFromViewer);
             Proxy.Network.AddDelegate(PacketType.ChatFromSimulator, Direction.Incoming, HandleChatFromSimulator);
         }
+
+        Dictionary<string, OpenAssetMode> ModeNames = new Dictionary<string, OpenAssetMode>()
+        {
+            {"Nothing", OpenAssetMode.Nothing },
+            {"Notecard Magic", OpenAssetMode.NotecardMagic },
+            {"SuperSuitcase Add", OpenAssetMode.SuperSuitcase },
+            {"Local Inventory Inject", OpenAssetMode.LocalInventory }
+        };
 
         private void AddSettingsTab(IGUI gui)
         {
@@ -83,16 +107,18 @@ namespace CoolProxy.Plugins.KeyTool
             combo.Location = new Point(240, 30);
             combo.DropDownStyle = ComboBoxStyle.DropDownList;
 
+            var first = ModeNames.First(x => x.Value == Mode);
+
             combo.Items.Add("Nothing");
-            combo.Items.Add("Super Suitcase Add");
-            combo.Items.Add("Notecard Magic");
             combo.Items.Add("Local Inventory Inject");
+            if (NotecardMagic != null) combo.Items.Add("Notecard Magic");
+            if (ROBUST != null) combo.Items.Add("SuperSuitcase Add");
 
-            combo.SelectedIndex = (int)Mode;
+            combo.SelectedItem = first.Key;
 
-            combo.SelectedIndexChanged += (x, y) =>
+            combo.SelectedValueChanged += (x, y) =>
             {
-                Mode = (OpenAssetMode)combo.SelectedIndex;
+                Mode = ModeNames[(string)combo.SelectedItem];
                 Proxy.Settings.setInteger("KeyToolOpenAssetMode", (int)Mode);
             };
 

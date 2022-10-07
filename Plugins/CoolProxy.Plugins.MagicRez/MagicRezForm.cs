@@ -69,17 +69,27 @@ namespace CoolProxy.Plugins.MagicRez
 
             RezObjectPacket rezObjectPacket = (RezObjectPacket)packet;
 
-            Proxy.OpenSim.XInventory.GetItem(rezObjectPacket.InventoryData.ItemID, Proxy.Agent.AgentID, (item) =>
+            InventoryItem item = Proxy.Inventory.FetchItem(rezObjectPacket.InventoryData.ItemID, rezObjectPacket.InventoryData.OwnerID, 5000);
+            if(item != null)
             {
-                if (item != null)
-                {
-                    MagicRez.Rez(item.AssetUUID, rezObjectPacket.RezData.RayEnd, targatAgentID, UUID.Zero, string.Empty, changePermsGranter.Checked);
-                }
-                else
-                {
-                    Proxy.AlertMessage("Failed to get inventory item!", false);
-                }
-            });
+                MagicRez.Rez(item.AssetUUID, rezObjectPacket.RezData.RayEnd, targatAgentID, UUID.Zero, string.Empty, changePermsGranter.Checked);
+            }
+            else
+            {
+                Proxy.AlertMessage("Failed to get inventory item!", false);
+            }
+
+            //Proxy.OpenSim.XInventory.GetItem(rezObjectPacket.InventoryData.ItemID, Proxy.Agent.AgentID, (item) =>
+            //{
+            //    if (item != null)
+            //    {
+            //        MagicRez.Rez(item.AssetUUID, rezObjectPacket.RezData.RayEnd, targatAgentID, UUID.Zero, string.Empty, changePermsGranter.Checked);
+            //    }
+            //    else
+            //    {
+            //        Proxy.AlertMessage("Failed to get inventory item!", false);
+            //    }
+            //});
 
             return null;
         }

@@ -82,7 +82,7 @@ namespace CoolProxy.Plugins.KeyTool
 
             if(frame.Network.CurrentSim.GridURI != string.Empty)
             {
-                frame.OpenSim.Assets.GetAssetMetadata(mKey, (x) =>
+                KeyToolPlugin.ROBUST.Assets.GetAssetMetadata(mKey, (x) =>
                 {
                     List<AssetType> assetTypes = new List<AssetType>()
                     {
@@ -657,7 +657,7 @@ namespace CoolProxy.Plugins.KeyTool
 
                     UUID item_id = UUID.Random();
 
-                    KeyToolPlugin.Proxy.OpenSim.XInventory.AddItem(
+                    KeyToolPlugin.ROBUST.Inventory.AddItem(
                         folder_id, item_id, asset_id, KeyToolPlugin.Proxy.Agent.AgentID,
                         asset_type, (InventoryType)asset_type, 0, asset_id.ToString(), "", DateTime.UtcNow, success =>
                         {
@@ -675,6 +675,20 @@ namespace CoolProxy.Plugins.KeyTool
                         UUID folder_id = KeyToolPlugin.Proxy.Inventory.FindFolderForType(asset_type);
                         KeyToolPlugin.NotecardMagic.GetAsset(folder_id, asset_id, asset_type, (InventoryType)asset_type);
                     }
+                }
+                else if(KeyToolPlugin.Mode == OpenAssetMode.LocalInventory)
+                {
+                    InventoryItem temp_item = new InventoryItem(UUID.Random());
+                    temp_item.Name = asset_id.ToString();
+                    temp_item.AssetType = asset_type;
+                    temp_item.AssetUUID = asset_id;
+                    temp_item.CreationDate = DateTime.UtcNow;
+                    temp_item.InventoryType = (InventoryType)asset_type;
+                    temp_item.OwnerID = KeyToolPlugin.Proxy.Agent.AgentID;
+                    temp_item.ParentUUID = KeyToolPlugin.Proxy.Inventory.InventoryRoot;
+                    temp_item.Permissions = Permissions.FullPermissions;
+
+                    KeyToolPlugin.Proxy.Inventory.InjectFetchInventoryReply(temp_item);
                 }
                 else
                 {

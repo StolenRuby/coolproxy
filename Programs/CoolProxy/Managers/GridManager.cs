@@ -26,8 +26,8 @@ namespace CoolProxy
 
             if(mGrids.Count == 0)
             {
-                mGrids.Add(new GridInfo("Second Life", "Agni", "https://login.agni.lindenlab.com/cgi-bin/login.cgi", "https://login.aditi.lindenlab.com/cgi-bin/login.cgi", true));
-                mGrids.Add(new GridInfo("Second Life Beta", "Aditi", "https://login.aditi.lindenlab.com/cgi-bin/login.cgi", "https://login.aditi.lindenlab.com/cgi-bin/login.cgi", true));
+                mGrids.Add(new GridInfo("Second Life", "Agni", "https://login.agni.lindenlab.com/cgi-bin/login.cgi", "https://viewer-splash.secondlife.com", true));
+                mGrids.Add(new GridInfo("Second Life Beta", "Aditi", "https://login.aditi.lindenlab.com/cgi-bin/login.cgi", "https://viewer-splash.secondlife.com", true));
                 saveGrids();
             }
 

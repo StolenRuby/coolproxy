@@ -230,26 +230,25 @@ namespace CoolProxy.Plugins.ClientAO
         {
             Proxy.SayToUser("Loading notecard `" + notecard.Name + "`");
 
-            // todo: download via caps...
-            Proxy.OpenSim.Assets.DownloadAsset(notecard.AssetUUID, (success, data) =>
+            Proxy.Assets.RequestInventoryAsset(notecard, true, (transfer, download) =>
             {
-                if(success)
+                if (transfer.Success)
                 {
                     AOName = notecard.Name;
 
-                    AssetNotecard asset = new AssetNotecard(notecard.AssetUUID, data);
+                    AssetNotecard asset = new AssetNotecard(notecard.AssetUUID, download.AssetData);
                     asset.Decode();
 
                     Dictionary<string, List<string>> states_and_anims = new Dictionary<string, List<string>>();
                     Overrides.Clear();
 
                     string[] lines = asset.BodyText.Split('\n');
-                    foreach(var line in lines)
+                    foreach (var line in lines)
                     {
                         if (string.IsNullOrWhiteSpace(line) || line.StartsWith("#"))
                             continue;
 
-                        if(line.StartsWith("["))
+                        if (line.StartsWith("["))
                         {
                             int index = line.IndexOf("]", 1);
                             string state = line.Substring(1, index - 1);
@@ -277,7 +276,7 @@ namespace CoolProxy.Plugins.ClientAO
 
                     var names_to_items = Proxy.Inventory.Store.GetContents(notecard.ParentUUID).Where(x => x is InventoryAnimation).ToDictionary(x => x.Name, x => x);
 
-                    foreach(var pair in states_and_anims)
+                    foreach (var pair in states_and_anims)
                     {
                         if (!DefaultAnimToState.ContainsValue(pair.Key))
                         {
@@ -287,9 +286,9 @@ namespace CoolProxy.Plugins.ClientAO
 
                         AOState state = new AOState(pair.Key);
 
-                        foreach(var anim_name in pair.Value)
+                        foreach (var anim_name in pair.Value)
                         {
-                            if(names_to_items.TryGetValue(anim_name, out InventoryBase item))
+                            if (names_to_items.TryGetValue(anim_name, out InventoryBase item))
                             {
                                 InventoryAnimation anim = item as InventoryAnimation;
                                 AOAnim entry = new AOAnim(anim.UUID, anim.AssetUUID, anim_name);

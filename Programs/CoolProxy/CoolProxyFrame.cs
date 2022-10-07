@@ -11,13 +11,9 @@ namespace CoolProxy
 {
     public class CoolProxyFrame : ProxyFrame
     {
-        public OpenSimManager OpenSim { get; private set; }
-
         public bool IsLindenGrid { get; internal set; } = false;
 
         public CoolProxyFrame(string[] args) : this(args, null) { }
-
-        internal event NewChatCommandAdded OnNewChatCommand;
 
         public Dictionary<string, Command> Commands = new Dictionary<string, Command>();
 
@@ -30,8 +26,6 @@ namespace CoolProxy
 
         private void Init(string[] args, ProxyConfig proxyConfig)
         {
-            OpenSim = new OpenSimManager(this);
-
             string prefix = Settings.getString("ChatCommandPrefix");
             if (prefix.Length > 0)
             {
@@ -97,7 +91,6 @@ namespace CoolProxy
         internal void AddChatCommand(Command command)
         {
             Commands[command.CMD] = command;
-            OnNewChatCommand.Invoke(command.CMD, command.Name, command.Description);
         }
 
         ////////////////////////////////////////////////////
@@ -138,6 +131,4 @@ namespace CoolProxy
             }
         }
     }
-
-    public delegate void NewChatCommandAdded(string command, string label, string info = "");
 }

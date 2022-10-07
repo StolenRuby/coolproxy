@@ -27,15 +27,6 @@ namespace CoolProxy.Plugins.Editors
 
             this.Text = "Hex Editor - " + item.Name;
 
-            Proxy.OpenSim.Assets.DownloadAsset(item.AssetUUID, (success, data) =>
-            {
-                if (success)
-                {
-                    hexBoxRequest.ByteProvider = new DynamicByteProvider(data);
-                }
-                else MessageBox.Show("Failed to download asset!");
-            });
-
             this.TopMost = frame.Settings.getBool("KeepCoolProxyOnTop");
             frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
         }
@@ -54,7 +45,7 @@ namespace CoolProxy.Plugins.Editors
 
             UUID asset_id = UUID.Random();
 
-            Proxy.OpenSim.Assets.UploadAsset(asset_id, mItem.AssetType, mItem.Name, mItem.Description, creator_id, data, (success, new_id) =>
+            EditorsPlugin.ROBUST.Assets.UploadAsset(asset_id, mItem.AssetType, mItem.Name, mItem.Description, creator_id, data, (success, new_id) =>
             {
                 if (success)
                 {
@@ -72,7 +63,7 @@ namespace CoolProxy.Plugins.Editors
                     uint everyone_mask = full_perm ? (uint)PermissionMask.All : (uint)mItem.Permissions.EveryoneMask;
                     uint base_mask = full_perm ? (uint)PermissionMask.All : (uint)mItem.Permissions.BaseMask;
 
-                    Proxy.OpenSim.XInventory.AddItem(folder_id, item_id, new_id, Proxy.Agent.AgentID, mItem.AssetType, mItem.InventoryType, mItem.Flags, mItem.Name, mItem.Description, creation_date,
+                    EditorsPlugin.ROBUST.Inventory.AddItem(folder_id, item_id, new_id, Proxy.Agent.AgentID, mItem.AssetType, mItem.InventoryType, mItem.Flags, mItem.Name, mItem.Description, creation_date,
                             next_owner_mask, owner_mask, base_mask, everyone_mask, group_mas, mItem.GroupID, mItem.GroupOwned, mItem.SalePrice, mItem.SaleType, UUID.Zero, string.Empty, (created) =>
                             {
                                 if (created)
@@ -84,6 +75,46 @@ namespace CoolProxy.Plugins.Editors
                 }
                 else Proxy.AlertMessage("Failed to upload asset!", false);
             });
+        }
+
+        private void HexEditor_Load(object sender, EventArgs e)
+        {
+            var del = new Action<InventoryItem>((InventoryItem i) =>
+            {
+                EditorsPlugin.ROBUST.Assets.DownloadAsset(i.AssetUUID, (success, data) =>
+                {
+                    if (success)
+                    {
+                        this.Invoke(new Action(() =>
+                        {
+                            hexBoxRequest.ByteProvider = new DynamicByteProvider(data);
+                            hexBoxRequest.Enabled = true;
+                        }));
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to download asset!");
+                        this.Close();
+                    }
+                });
+            });
+
+            if (mItem.AssetUUID == UUID.Zero)
+            {
+                EditorsPlugin.ROBUST.Inventory.GetItem(mItem.UUID, mItem.OwnerID, (fetched_item) =>
+                {
+                    if (fetched_item != null)
+                    {
+                        del(fetched_item);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to fetch item!");
+                        this.Close();
+                    }
+                });
+            }
+            else del(mItem);
         }
     }
 }

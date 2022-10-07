@@ -41,6 +41,7 @@ namespace CoolProxy.Plugins.Editors
             // richTextBox1
             // 
             this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox1.Enabled = false;
             this.richTextBox1.Location = new System.Drawing.Point(0, 46);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(643, 408);
@@ -115,6 +116,7 @@ namespace CoolProxy.Plugins.Editors
             this.Controls.Add(this.panel1);
             this.Name = "TextEditor";
             this.Text = "Text Editor";
+            this.Load += new System.EventHandler(this.TextEditor_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

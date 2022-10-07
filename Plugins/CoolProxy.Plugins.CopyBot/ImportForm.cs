@@ -14,11 +14,19 @@ using System.Windows.Forms;
 
 namespace CoolProxy.Plugins.CopyBot
 {
+    enum ImportMode
+    {
+        Import,
+        Forge,
+        Upload
+    }
+
     public partial class ImportForm : Form
     {
         CopyBotPlugin ThePlugin;
+        CoolProxyFrame Proxy;
 
-        bool ViaCopybot = true;
+        ImportMode Mode = ImportMode.Import;
 
         ImportOptions Options;
 
@@ -29,6 +37,7 @@ namespace CoolProxy.Plugins.CopyBot
             InitializeComponent();
 
             ThePlugin = plugin;
+            Proxy = frame;
             Focus();
         }
 
@@ -63,18 +72,41 @@ namespace CoolProxy.Plugins.CopyBot
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ViaCopybot = true;
+            Mode = ImportMode.Import;
             splitButton1.Text = "Import";
         }
 
         private void forgeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ViaCopybot = false;
+            Mode = ImportMode.Forge;
             splitButton1.Text = "Forge";
+        }
+
+        private void uploadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Mode = ImportMode.Upload;
+            splitButton1.Text = "Upload";
         }
 
         private void splitButton1_Click(object sender, EventArgs e)
         {
+            if (Mode == ImportMode.Forge)
+            {
+                if(Options.InvItem == null)
+                {
+                    if (Proxy.Agent.Selection.Length == 1)
+                    {
+                        uint local_id = Proxy.Agent.Selection[0];
+                        Options.SeedPrim = Proxy.Network.CurrentSim.ObjectsPrimitives.Find(x => x.LocalID == local_id);
+                    }
+                    else
+                    {
+                        MessageBox.Show("You need to be selecting exactly one prim to forge an object!\n(Or select an object via the inventory)");
+                        return;
+                    }
+                }
+            }
+
             ImportOptions importOptions = new ImportOptions();
 
             importOptions.KeepPositions = checkBox1.Checked;
@@ -107,7 +139,7 @@ namespace CoolProxy.Plugins.CopyBot
                 }
             }
 
-            if (ViaCopybot)
+            if (Mode == ImportMode.Forge || Mode == ImportMode.Import)
                 ThePlugin.ImportLinkset(importOptions);
             else
                 ThePlugin.ForgeLinkset(importOptions);

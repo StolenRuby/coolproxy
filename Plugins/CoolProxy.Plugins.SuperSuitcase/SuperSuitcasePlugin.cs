@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoolProxy.Plugins.OpenSim;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,11 @@ namespace CoolProxy.Plugins.SuperSuitcase
 {
     public class SuperSuitcasePlugin : CoolProxyPlugin
     {
+        internal static IROBUST ROBUST;
+
         public SuperSuitcasePlugin(CoolProxyFrame frame)
         {
+            ROBUST = frame.RequestModuleInterface<IROBUST>();
             IGUI gui = frame.RequestModuleInterface<IGUI>();
             gui.AddToolButton("Hacks", "Browse Target Suitcase", (x, y) =>
             {
@@ -17,11 +21,11 @@ namespace CoolProxy.Plugins.SuperSuitcase
 
                 if(avatarPickerSearchForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    frame.OpenSim.XInventory.GetRootFolder(avatarPickerSearchForm.SelectedID, (root) =>
+                    ROBUST.Inventory.GetRootFolder(avatarPickerSearchForm.SelectedID, (root) =>
                     {
                         if(root != null)
                         {
-                            var form = new SuperSuitcaseForm(frame, root);
+                            var form = new SuperSuitcaseForm(frame, root, avatarPickerSearchForm.SelectedName);
 
                             form.TopMost = frame.Settings.getBool("KeepCoolProxyOnTop");
                             frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (s, a) => { form.TopMost = (bool)a.Value; };

@@ -21,30 +21,19 @@ namespace CoolProxy.Plugins.SuperSuitcase
 
         private List<InventoryFolder> Path = new List<InventoryFolder>();
 
-        public SuperSuitcaseForm(CoolProxyFrame frame, InventoryFolder folder)
+        public SuperSuitcaseForm(CoolProxyFrame frame, InventoryFolder folder, string name)
         {
             Frame = frame;
             Root = folder;
             InitializeComponent();
 
-            frame.Avatars.GetDisplayNames(new List<UUID> { folder.OwnerID }, (success, good, bad) =>
-            {
-                string name = folder.OwnerID.ToString();
+            if (name.EndsWith("s")) name += "' ";
+            else name += "'s ";
 
-                if(success)
-                {
-                    var avatar = good.FirstOrDefault(adn => adn.ID == folder.OwnerID);
-                    if(avatar != default)
-                    {
-                        name = avatar.UserName;
-                    }
-                }
-
-                this.Invoke(new Action(() =>
-                {
-                    this.Text = "Super Suitcase - " + name;
-                }));
-            });
+            if (folder.Name == "My Suitcase") name += "Suitcase";
+            else name += "Inventory";
+            
+            this.Text = name;
 
             LoadFolder(Root);
         }
@@ -54,7 +43,7 @@ namespace CoolProxy.Plugins.SuperSuitcase
             Current = folder;
             invDGV.Rows.Clear();
 
-            Frame.OpenSim.XInventory.GetFolderContent(folder.OwnerID, folder.UUID, (folders, items) =>
+            SuperSuitcasePlugin.ROBUST.Inventory.GetFolderContent(folder.OwnerID, folder.UUID, (folders, items) =>
             {
                 invDGV.Invoke(new Action(() =>
                 {

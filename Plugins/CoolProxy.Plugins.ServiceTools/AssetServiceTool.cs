@@ -68,7 +68,7 @@ namespace CoolProxy.Plugins.ServiceTools
 
             UUID creator_id = UUID.Parse(textBox4.Text);
 
-            Proxy.OpenSim.Assets.UploadAsset(asset_id, asset_type, name, desc, creator_id, data, (success, new_id) =>
+            ServiceToolsPlugin.ROBUST.Assets.UploadAsset(asset_id, asset_type, name, desc, creator_id, data, (success, new_id) =>
             {
                 if (success)
                 {

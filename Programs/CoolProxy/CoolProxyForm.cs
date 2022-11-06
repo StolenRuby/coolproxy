@@ -45,6 +45,7 @@ namespace CoolProxy
 
         private AvTrackerTest avatarTracker;
 
+        private Dictionary<UUID, DateTime> AssetBlacklist = new Dictionary<UUID, DateTime>();
 
 
         public CoolProxyForm()
@@ -90,10 +91,7 @@ namespace CoolProxy
             comboBox2.DataSource = Enum.GetValues(typeof(AssetType));
             comboBox2.SelectedItem = AssetType.Unknown;
 
-            blacklistDataGridView.Rows.Add(UUID.Random(), DateTime.UtcNow);
-            blacklistDataGridView.Rows.Add(UUID.Random(), DateTime.UtcNow);
-            blacklistDataGridView.Rows.Add(UUID.Random(), DateTime.UtcNow);
-            blacklistDataGridView.Rows.Add(UUID.Random(), DateTime.UtcNow);
+            LoadBlacklist();
 
             downloadsGridView.ShowCellToolTips = false;
             downloadsGridView.CellToolTipTextNeeded += DownloadsGridView_CellToolTipTextNeeded;
@@ -111,9 +109,9 @@ namespace CoolProxy
             CoolProxy.Frame.Network.AddDelegate(PacketType.AttachedSound, Direction.Incoming, onAttachedSound);
             CoolProxy.Frame.Network.AddDelegate(PacketType.PreloadSound, Direction.Incoming, onPreloadSound);
 
-            CoolProxy.Frame.Avatars.AvatarAnimation += Avatars_AvatarAnimation;
+            CoolProxy.Frame.Objects.ObjectDataBlockUpdate += Objects_ObjectDataBlockUpdate;
 
-            CoolProxy.Frame.Objects.ObjectUpdate += Objects_ObjectUpdate;
+            CoolProxy.Frame.Avatars.AvatarAnimation += Avatars_AvatarAnimation;
 
 
             // Settings
@@ -157,7 +155,59 @@ namespace CoolProxy
             {
                 loadPluginTestButton.Visible = false;
                 tabControl5.TabPages.Remove(tabPage20);
-                tabControl5.TabPages.Remove(tabPage5);
+                tabControl4.TabPages.Remove(blacklistTab);
+            }
+        }
+
+        private void LoadBlacklist()
+        {
+            string app_settings_dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CoolProxy\\");
+            string filename = Path.Combine(app_settings_dir, "blacklist.xml");
+
+            if(File.Exists(filename))
+            {
+                byte[] xml = File.ReadAllBytes(filename);
+                OSD osd = OSDParser.DeserializeLLSDXml(xml);
+                OSDMap map = (OSDMap)osd;
+
+                foreach(KeyValuePair<string, OSD> pair in map)
+                {
+                    UUID asset_id = UUID.Parse(pair.Key);
+                    DateTime date = ((OSDDate)pair.Value).AsDate();
+                    blacklistDataGridView.Rows.Add(asset_id, date.ToString());
+                    AssetBlacklist.Add(asset_id, date);
+                }
+            }
+
+            //AssetBlacklist.Add(UUID.Parse("89556747-24cb-43ed-920b-47caed15465f"), DateTime.Now);
+        }
+
+        private void SaveBlacklist()
+        {
+            OSDMap blacklist = new OSDMap();
+
+            foreach(var pair in AssetBlacklist)
+            {
+                blacklist.Add(pair.Key.ToString(), pair.Value);
+            }
+
+
+            string app_settings_dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CoolProxy\\");
+            string filename = Path.Combine(app_settings_dir, "blacklist.xml");
+
+            byte[] xml = OSDParser.SerializeLLSDXmlToBytes((OSD)blacklist);
+            File.WriteAllBytes(filename, xml);
+        }
+
+        private void BlacklistAsset(UUID asset_id)
+        {
+            if(!AssetBlacklist.ContainsKey(asset_id))
+            {
+                var now = DateTime.Now;
+                AssetBlacklist.Add(asset_id, now);
+                blacklistDataGridView.Rows.Add(asset_id, now.ToString());
+
+                SaveBlacklist();
             }
         }
 
@@ -377,24 +427,31 @@ namespace CoolProxy
             }
         }
 
-        private void Objects_ObjectUpdate(object sender, GridProxy.PrimEventArgs e)
-        {
-            if (e.Prim.Sound != UUID.Zero)
-                LogSound("Loop", e.Prim.Sound, e.Prim.OwnerID);
-        }
-
         List<UUID> loggedSounds = new List<UUID>();
 
-        private void LogSound(string type, UUID id, UUID owner)
+        Font boldFont = null;
+        Font BoldFont
         {
-            if (soundsDataGridView.InvokeRequired) soundsDataGridView.BeginInvoke(new Action(() => LogSound(type, id, owner)));
+            get
+            {
+                if (boldFont == null)
+                    boldFont = new Font(soundsDataGridView.DefaultCellStyle.Font, FontStyle.Bold);
+                return boldFont;
+            }
+        }
+
+        private void LogSound(string type, UUID id, UUID owner, bool blacklisted)
+        {
+            if (soundsDataGridView.InvokeRequired) soundsDataGridView.BeginInvoke(new Action(() => LogSound(type, id, owner, blacklisted)));
             else
             {
                 lock(loggedSounds)
                 {
                     if(!loggedSounds.Contains(id))
                     {
-                        soundsDataGridView.Rows.Add(type, id.ToString(), DateTime.Now.ToString());
+                        int row = soundsDataGridView.Rows.Add(type, id.ToString(), DateTime.Now.ToString());
+                        if(blacklisted)
+                            soundsDataGridView.Rows[row].Cells[1].Style.Font = BoldFont;
                         loggedSounds.Add(id);
                     }
                 }
@@ -404,15 +461,17 @@ namespace CoolProxy
         private Packet onSoundTrigger(Packet packet, RegionManager.RegionProxy sim)
         {
             SoundTriggerPacket soundTriggerPacket = (SoundTriggerPacket)packet;
-            LogSound("Trigger", soundTriggerPacket.SoundData.SoundID, soundTriggerPacket.SoundData.OwnerID);
-            return packet;
+            bool blacklisted = AssetBlacklist.ContainsKey(soundTriggerPacket.SoundData.SoundID);
+            LogSound("Trigger", soundTriggerPacket.SoundData.SoundID, soundTriggerPacket.SoundData.OwnerID, blacklisted);
+            return blacklisted ? null : packet;
         }
 
         private Packet onAttachedSound(Packet packet, RegionManager.RegionProxy sim)
         {
             AttachedSoundPacket attachedSoundPacket = (AttachedSoundPacket)packet;
-            LogSound("Attached", attachedSoundPacket.DataBlock.SoundID, attachedSoundPacket.DataBlock.OwnerID);
-            return packet;
+            bool blacklisted = AssetBlacklist.ContainsKey(attachedSoundPacket.DataBlock.SoundID);
+            LogSound("Attached", attachedSoundPacket.DataBlock.SoundID, attachedSoundPacket.DataBlock.OwnerID, blacklisted);
+            return blacklisted ? null : packet;
         }
 
         private Packet onPreloadSound(Packet packet, RegionManager.RegionProxy sim)
@@ -421,12 +480,52 @@ namespace CoolProxy
 
             foreach(var block in preloadSoundPacket.DataBlock)
             {
-                LogSound("Preload", block.SoundID, block.OwnerID);
+                bool blacklisted = AssetBlacklist.ContainsKey(block.SoundID);
+                LogSound("Preload", block.SoundID, block.OwnerID, blacklisted);
+
+                if(blacklisted)
+                {
+                    block.SoundID = UUID.Zero;
+                }
             }
 
-            return packet;
+            return preloadSoundPacket;
         }
 
+        private void Objects_ObjectDataBlockUpdate(object sender, ObjectDataBlockUpdateEventArgs e)
+        {
+            bool blacklisted_sound = AssetBlacklist.ContainsKey(e.Block.Sound);
+            LogSound("Loop", e.Block.Sound, e.Prim.OwnerID, blacklisted_sound);
+
+            if (blacklisted_sound)
+            {
+                e.Block.Sound = UUID.Zero;
+            }
+
+            bool blacklisted_textures = false;
+
+            // todo: materials etc
+            if(AssetBlacklist.ContainsKey(e.Update.Textures.DefaultTexture?.TextureID ?? UUID.Zero))
+            {
+                e.Update.Textures.DefaultTexture.TextureID = UUID.Zero;
+                blacklisted_textures = true;
+            }
+
+            foreach(var face in e.Update.Textures.FaceTextures)
+            {
+                if (face == null) continue;
+                if (AssetBlacklist.ContainsKey(face.TextureID))
+                {
+                    face.TextureID = UUID.Zero;
+                    blacklisted_textures = true;
+                }
+            }
+
+            if(blacklisted_textures)
+            {
+                e.Block.TextureEntry = e.Update.Textures.GetBytes();
+            }
+        }
 
         private void DownloadsGridView_CellToolTipTextNeeded(object sender, DataGridViewCellToolTipTextNeededEventArgs e)
         {
@@ -1938,6 +2037,15 @@ namespace CoolProxy
         {
             string prefix = cmdPrefixCombo.SelectedItem.ToString();
             CoolProxy.Frame.Settings.setString("ChatCommandPrefix", prefix);
+        }
+
+        private void blacklistToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in soundsDataGridView.SelectedRows)
+            {
+                UUID asset_id = UUID.Parse((string)row.Cells[1].Value);
+                BlacklistAsset(asset_id);
+            }
         }
     }
 }

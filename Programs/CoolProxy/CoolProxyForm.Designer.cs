@@ -38,9 +38,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -53,13 +50,14 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CoolProxyForm));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.githubLinkLabel = new System.Windows.Forms.LinkLabel();
             this.label3 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new L33T.GUI.NumericUpDown();
-            this.textBox1 = new L33T.GUI.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.gridsComboBox = new System.Windows.Forms.ComboBox();
@@ -121,15 +119,6 @@
             this.fileTypeColumn = new System.Windows.Forms.DataGridViewImageColumn();
             this.fileNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.uploadStatusColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.blacklistDataGridView = new System.Windows.Forms.DataGridView();
-            this.blacklistKeyColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.blacklistDateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.button37 = new System.Windows.Forms.Button();
-            this.label25 = new System.Windows.Forms.Label();
-            this.button31 = new System.Windows.Forms.Button();
-            this.textBox18 = new System.Windows.Forms.TextBox();
             this.tabPage11 = new System.Windows.Forms.TabPage();
             this.panel4 = new System.Windows.Forms.Panel();
             this.debugRTB = new System.Windows.Forms.RichTextBox();
@@ -137,13 +126,6 @@
             this.settingsTabPage = new System.Windows.Forms.TabPage();
             this.settingsTabControl = new System.Windows.Forms.TabControl();
             this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.checkBox1 = new CoolGUI.Controls.CheckBox();
-            this.checkBox9 = new CoolGUI.Controls.CheckBox();
-            this.checkBox2 = new CoolGUI.Controls.CheckBox();
-            this.checkBox6 = new CoolGUI.Controls.CheckBox();
-            this.checkBox3 = new CoolGUI.Controls.CheckBox();
-            this.numericUpDown5 = new L33T.GUI.NumericUpDown();
-            this.numericUpDown4 = new L33T.GUI.NumericUpDown();
             this.clearCacheButton = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -151,7 +133,6 @@
             this.chatCommandsPanel = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.cmdPrefixCombo = new System.Windows.Forms.ComboBox();
-            this.checkBox4 = new CoolGUI.Controls.CheckBox();
             this.label38 = new System.Windows.Forms.Label();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.miscPluginsTabControl = new System.Windows.Forms.TabControl();
@@ -185,8 +166,6 @@
             this.showDebugSettingsButton = new System.Windows.Forms.Button();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.button3 = new System.Windows.Forms.Button();
-            this.checkBox19 = new CoolGUI.Controls.CheckBox();
-            this.checkBox18 = new CoolGUI.Controls.CheckBox();
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.trayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.blacklistContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -194,10 +173,31 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.saveXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.blacklistTab = new System.Windows.Forms.TabPage();
+            this.blacklistDataGridView = new System.Windows.Forms.DataGridView();
+            this.blacklistKeyColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.blacklistDateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.button37 = new System.Windows.Forms.Button();
+            this.label25 = new System.Windows.Forms.Label();
+            this.button31 = new System.Windows.Forms.Button();
+            this.textBox18 = new System.Windows.Forms.TextBox();
+            this.numericUpDown2 = new L33T.GUI.NumericUpDown();
+            this.textBox1 = new L33T.GUI.TextBox();
+            this.checkBox1 = new CoolGUI.Controls.CheckBox();
+            this.checkBox9 = new CoolGUI.Controls.CheckBox();
+            this.checkBox2 = new CoolGUI.Controls.CheckBox();
+            this.checkBox6 = new CoolGUI.Controls.CheckBox();
+            this.checkBox3 = new CoolGUI.Controls.CheckBox();
+            this.numericUpDown5 = new L33T.GUI.NumericUpDown();
+            this.numericUpDown4 = new L33T.GUI.NumericUpDown();
+            this.checkBox4 = new CoolGUI.Controls.CheckBox();
+            this.checkBox19 = new CoolGUI.Controls.CheckBox();
+            this.checkBox18 = new CoolGUI.Controls.CheckBox();
+            this.blacklistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.avatarTrackerGridView)).BeginInit();
             this.tabPage3.SuspendLayout();
@@ -218,16 +218,11 @@
             this.panel2.SuspendLayout();
             this.tabPage20.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uploadsGridView)).BeginInit();
-            this.tabPage5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.blacklistDataGridView)).BeginInit();
-            this.panel3.SuspendLayout();
             this.tabPage11.SuspendLayout();
             this.panel4.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
             this.settingsTabControl.SuspendLayout();
             this.tabPage9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.chatCommandsPanel.SuspendLayout();
             this.tabPage8.SuspendLayout();
@@ -237,6 +232,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.pluginsDataGridView)).BeginInit();
             this.tabPage10.SuspendLayout();
             this.blacklistContextMenuStrip.SuspendLayout();
+            this.blacklistTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.blacklistDataGridView)).BeginInit();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -315,32 +316,6 @@
             this.label3.TabIndex = 40;
             this.label3.Text = ".: COOL PROXY IS COOL :.";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // numericUpDown2
-            // 
-            this.numericUpDown2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown2.EnabledSetting = null;
-            this.numericUpDown2.Location = new System.Drawing.Point(260, 131);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            12000,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Setting = "GridProxyListenPort";
-            this.numericUpDown2.Size = new System.Drawing.Size(83, 20);
-            this.numericUpDown2.TabIndex = 37;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.EnabledSetting = null;
-            this.textBox1.Location = new System.Drawing.Point(131, 131);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Setting = "GridProxyListenAddress";
-            this.textBox1.Size = new System.Drawing.Size(123, 20);
-            this.textBox1.TabIndex = 36;
             // 
             // label2
             // 
@@ -609,6 +584,7 @@
             // 
             this.tabControl4.Controls.Add(this.tabPage18);
             this.tabControl4.Controls.Add(this.tabPage19);
+            this.tabControl4.Controls.Add(this.blacklistTab);
             this.tabControl4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl4.Location = new System.Drawing.Point(3, 3);
             this.tabControl4.Name = "tabControl4";
@@ -758,42 +734,43 @@
             this.playInworldToolStripMenuItem,
             this.toolStripSeparator9,
             this.forgeToolStripMenuItem1,
-            this.saveAsToolStripMenuItem1});
+            this.saveAsToolStripMenuItem1,
+            this.blacklistToolStripMenuItem});
             this.soundsListContextMenu.Name = "soundsListContextMenu";
             this.soundsListContextMenu.ShowImageMargin = false;
-            this.soundsListContextMenu.Size = new System.Drawing.Size(145, 98);
+            this.soundsListContextMenu.Size = new System.Drawing.Size(156, 142);
             this.soundsListContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.soundsListContextMenu_Opening);
             // 
             // playLocallyToolStripMenuItem
             // 
             this.playLocallyToolStripMenuItem.Name = "playLocallyToolStripMenuItem";
-            this.playLocallyToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.playLocallyToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.playLocallyToolStripMenuItem.Text = "Play Locally";
             this.playLocallyToolStripMenuItem.Click += new System.EventHandler(this.playLocallyToolStripMenuItem_Click);
             // 
             // playInworldToolStripMenuItem
             // 
             this.playInworldToolStripMenuItem.Name = "playInworldToolStripMenuItem";
-            this.playInworldToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.playInworldToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.playInworldToolStripMenuItem.Text = "Play Inworld";
             this.playInworldToolStripMenuItem.Click += new System.EventHandler(this.playInworldToolStripMenuItem_Click);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(141, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(152, 6);
             // 
             // forgeToolStripMenuItem1
             // 
             this.forgeToolStripMenuItem1.Name = "forgeToolStripMenuItem1";
-            this.forgeToolStripMenuItem1.Size = new System.Drawing.Size(144, 22);
+            this.forgeToolStripMenuItem1.Size = new System.Drawing.Size(155, 22);
             this.forgeToolStripMenuItem1.Text = "Copy to Inventory";
             this.forgeToolStripMenuItem1.Click += new System.EventHandler(this.forgeToolStripMenuItem1_Click);
             // 
             // saveAsToolStripMenuItem1
             // 
             this.saveAsToolStripMenuItem1.Name = "saveAsToolStripMenuItem1";
-            this.saveAsToolStripMenuItem1.Size = new System.Drawing.Size(144, 22);
+            this.saveAsToolStripMenuItem1.Size = new System.Drawing.Size(155, 22);
             this.saveAsToolStripMenuItem1.Text = "Save As...";
             this.saveAsToolStripMenuItem1.Visible = false;
             // 
@@ -812,7 +789,6 @@
             // 
             this.tabControl5.Controls.Add(this.tabPage21);
             this.tabControl5.Controls.Add(this.tabPage20);
-            this.tabControl5.Controls.Add(this.tabPage5);
             this.tabControl5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl5.Location = new System.Drawing.Point(3, 3);
             this.tabControl5.Name = "tabControl5";
@@ -837,29 +813,29 @@
             this.downloadsGridView.AllowUserToAddRows = false;
             this.downloadsGridView.AllowUserToDeleteRows = false;
             this.downloadsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.Silver;
-            this.downloadsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.Silver;
+            this.downloadsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
             this.downloadsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.downloadsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.assetIconColumn,
             this.AssetTypeColumn,
             this.assetKeyColumn,
             this.StatusColumn});
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.ControlDark;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.downloadsGridView.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.ControlDark;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.downloadsGridView.DefaultCellStyle = dataGridViewCellStyle14;
             this.downloadsGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.downloadsGridView.Location = new System.Drawing.Point(3, 3);
             this.downloadsGridView.Name = "downloadsGridView";
             this.downloadsGridView.ReadOnly = true;
             this.downloadsGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.downloadsGridView.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.downloadsGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
             this.downloadsGridView.RowTemplate.Height = 18;
             this.downloadsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.downloadsGridView.Size = new System.Drawing.Size(446, 191);
@@ -966,28 +942,28 @@
             this.uploadsGridView.AllowUserToAddRows = false;
             this.uploadsGridView.AllowUserToDeleteRows = false;
             this.uploadsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle13.BackColor = System.Drawing.Color.Silver;
-            this.uploadsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle16.BackColor = System.Drawing.Color.Silver;
+            this.uploadsGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle16;
             this.uploadsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.uploadsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.fileTypeColumn,
             this.fileNameColumn,
             this.uploadStatusColumn});
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.ControlDark;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.uploadsGridView.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.ControlDark;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.uploadsGridView.DefaultCellStyle = dataGridViewCellStyle17;
             this.uploadsGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.uploadsGridView.Location = new System.Drawing.Point(3, 3);
             this.uploadsGridView.Name = "uploadsGridView";
             this.uploadsGridView.ReadOnly = true;
             this.uploadsGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.uploadsGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.uploadsGridView.RowsDefaultCellStyle = dataGridViewCellStyle18;
             this.uploadsGridView.RowTemplate.Height = 18;
             this.uploadsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.uploadsGridView.Size = new System.Drawing.Size(446, 234);
@@ -1014,111 +990,6 @@
             this.uploadStatusColumn.HeaderText = "Status";
             this.uploadStatusColumn.Name = "uploadStatusColumn";
             this.uploadStatusColumn.ReadOnly = true;
-            // 
-            // tabPage5
-            // 
-            this.tabPage5.Controls.Add(this.blacklistDataGridView);
-            this.tabPage5.Controls.Add(this.panel3);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(452, 240);
-            this.tabPage5.TabIndex = 2;
-            this.tabPage5.Text = "Blacklist";
-            this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // blacklistDataGridView
-            // 
-            this.blacklistDataGridView.AllowUserToAddRows = false;
-            this.blacklistDataGridView.AllowUserToDeleteRows = false;
-            this.blacklistDataGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle16.BackColor = System.Drawing.Color.Silver;
-            this.blacklistDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle16;
-            this.blacklistDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.blacklistDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.blacklistKeyColumn,
-            this.blacklistDateColumn});
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.ControlDark;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.blacklistDataGridView.DefaultCellStyle = dataGridViewCellStyle17;
-            this.blacklistDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.blacklistDataGridView.Location = new System.Drawing.Point(3, 3);
-            this.blacklistDataGridView.Name = "blacklistDataGridView";
-            this.blacklistDataGridView.ReadOnly = true;
-            this.blacklistDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.blacklistDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle18;
-            this.blacklistDataGridView.RowTemplate.Height = 18;
-            this.blacklistDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.blacklistDataGridView.Size = new System.Drawing.Size(446, 205);
-            this.blacklistDataGridView.TabIndex = 5;
-            // 
-            // blacklistKeyColumn
-            // 
-            this.blacklistKeyColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.blacklistKeyColumn.HeaderText = "Asset ID";
-            this.blacklistKeyColumn.Name = "blacklistKeyColumn";
-            this.blacklistKeyColumn.ReadOnly = true;
-            // 
-            // blacklistDateColumn
-            // 
-            this.blacklistDateColumn.HeaderText = "Date Added";
-            this.blacklistDateColumn.Name = "blacklistDateColumn";
-            this.blacklistDateColumn.ReadOnly = true;
-            this.blacklistDateColumn.Width = 175;
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.button37);
-            this.panel3.Controls.Add(this.label25);
-            this.panel3.Controls.Add(this.button31);
-            this.panel3.Controls.Add(this.textBox18);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(3, 208);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(446, 29);
-            this.panel3.TabIndex = 6;
-            // 
-            // button37
-            // 
-            this.button37.Location = new System.Drawing.Point(413, 6);
-            this.button37.Name = "button37";
-            this.button37.Size = new System.Drawing.Size(27, 23);
-            this.button37.TabIndex = 15;
-            this.button37.Text = "⛭";
-            this.button37.UseVisualStyleBackColor = true;
-            this.button37.Click += new System.EventHandler(this.button37_Click);
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(57, 11);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(50, 13);
-            this.label25.TabIndex = 13;
-            this.label25.Text = "Asset ID:";
-            // 
-            // button31
-            // 
-            this.button31.Location = new System.Drawing.Point(346, 6);
-            this.button31.Name = "button31";
-            this.button31.Size = new System.Drawing.Size(61, 23);
-            this.button31.TabIndex = 11;
-            this.button31.Text = "Add";
-            this.button31.UseVisualStyleBackColor = true;
-            // 
-            // textBox18
-            // 
-            this.textBox18.Location = new System.Drawing.Point(113, 8);
-            this.textBox18.Name = "textBox18";
-            this.textBox18.Size = new System.Drawing.Size(227, 20);
-            this.textBox18.TabIndex = 10;
-            this.textBox18.Text = "00000000-0000-0000-0000-000000000000";
             // 
             // tabPage11
             // 
@@ -1211,87 +1082,6 @@
             this.tabPage9.TabIndex = 0;
             this.tabPage9.Text = "General";
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.EnabledSetting = null;
-            this.checkBox1.Location = new System.Drawing.Point(14, 120);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Setting = "EnableGridInfo";
-            this.checkBox1.Size = new System.Drawing.Size(174, 17);
-            this.checkBox1.TabIndex = 45;
-            this.checkBox1.Text = "Enable OpenSim Style Grid Info";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox9
-            // 
-            this.checkBox9.AutoSize = true;
-            this.checkBox9.EnabledSetting = "StartProxyAtLaunch";
-            this.checkBox9.Location = new System.Drawing.Point(34, 33);
-            this.checkBox9.Name = "checkBox9";
-            this.checkBox9.Setting = "HideProxyAtLaunch";
-            this.checkBox9.Size = new System.Drawing.Size(126, 17);
-            this.checkBox9.TabIndex = 44;
-            this.checkBox9.Text = "Auto Hide Cool Proxy";
-            this.checkBox9.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.EnabledSetting = null;
-            this.checkBox2.Location = new System.Drawing.Point(14, 12);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Setting = "StartProxyAtLaunch";
-            this.checkBox2.Size = new System.Drawing.Size(157, 17);
-            this.checkBox2.TabIndex = 43;
-            this.checkBox2.Text = "Start Proxy when Launched";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox6
-            // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.EnabledSetting = null;
-            this.checkBox6.Location = new System.Drawing.Point(14, 97);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Setting = "MinimizeCoolProxyToTray";
-            this.checkBox6.Size = new System.Drawing.Size(166, 17);
-            this.checkBox6.TabIndex = 24;
-            this.checkBox6.Text = "Minimize CoolProxy to the tray";
-            this.checkBox6.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.EnabledSetting = null;
-            this.checkBox3.Location = new System.Drawing.Point(14, 74);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Setting = "KeepCoolProxyOnTop";
-            this.checkBox3.Size = new System.Drawing.Size(134, 17);
-            this.checkBox3.TabIndex = 23;
-            this.checkBox3.Text = "Keep CoolProxy on top";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDown5
-            // 
-            this.numericUpDown5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown5.EnabledSetting = null;
-            this.numericUpDown5.Location = new System.Drawing.Point(390, 35);
-            this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.Setting = "MaxSimultaneousDownloads";
-            this.numericUpDown5.Size = new System.Drawing.Size(56, 20);
-            this.numericUpDown5.TabIndex = 22;
-            // 
-            // numericUpDown4
-            // 
-            this.numericUpDown4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown4.Enabled = false;
-            this.numericUpDown4.EnabledSetting = null;
-            this.numericUpDown4.Location = new System.Drawing.Point(390, 10);
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Setting = "MaxSimultaneousUploads";
-            this.numericUpDown4.Size = new System.Drawing.Size(56, 20);
-            this.numericUpDown4.TabIndex = 21;
-            // 
             // clearCacheButton
             // 
             this.clearCacheButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -1368,18 +1158,6 @@
             this.cmdPrefixCombo.Size = new System.Drawing.Size(86, 21);
             this.cmdPrefixCombo.TabIndex = 65;
             this.cmdPrefixCombo.SelectedIndexChanged += new System.EventHandler(this.cmdPrefixCombo_SelectedIndexChanged);
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.EnabledSetting = null;
-            this.checkBox4.Location = new System.Drawing.Point(11, 9);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Setting = "EnableChatCommands";
-            this.checkBox4.Size = new System.Drawing.Size(139, 17);
-            this.checkBox4.TabIndex = 64;
-            this.checkBox4.Text = "Enable Chat Commands";
-            this.checkBox4.UseVisualStyleBackColor = true;
             // 
             // label38
             // 
@@ -1787,31 +1565,6 @@
             this.button3.Text = "Check for Update Now";
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // checkBox19
-            // 
-            this.checkBox19.AutoSize = true;
-            this.checkBox19.Enabled = false;
-            this.checkBox19.EnabledSetting = null;
-            this.checkBox19.Location = new System.Drawing.Point(14, 35);
-            this.checkBox19.Name = "checkBox19";
-            this.checkBox19.Setting = "ShowConsole";
-            this.checkBox19.Size = new System.Drawing.Size(94, 17);
-            this.checkBox19.TabIndex = 30;
-            this.checkBox19.Text = "Show Console";
-            this.checkBox19.UseVisualStyleBackColor = true;
-            // 
-            // checkBox18
-            // 
-            this.checkBox18.AutoSize = true;
-            this.checkBox18.EnabledSetting = null;
-            this.checkBox18.Location = new System.Drawing.Point(14, 12);
-            this.checkBox18.Name = "checkBox18";
-            this.checkBox18.Setting = "AllowMultipleInstances";
-            this.checkBox18.Size = new System.Drawing.Size(139, 17);
-            this.checkBox18.TabIndex = 28;
-            this.checkBox18.Text = "Allow Multiple Instances";
-            this.checkBox18.UseVisualStyleBackColor = true;
-            // 
             // trayIcon
             // 
             this.trayIcon.ContextMenuStrip = this.trayContextMenu;
@@ -1862,6 +1615,261 @@
             this.loadXMLToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.loadXMLToolStripMenuItem.Text = "Load XML";
             // 
+            // blacklistTab
+            // 
+            this.blacklistTab.Controls.Add(this.blacklistDataGridView);
+            this.blacklistTab.Controls.Add(this.panel3);
+            this.blacklistTab.Location = new System.Drawing.Point(4, 22);
+            this.blacklistTab.Name = "blacklistTab";
+            this.blacklistTab.Padding = new System.Windows.Forms.Padding(3);
+            this.blacklistTab.Size = new System.Drawing.Size(452, 240);
+            this.blacklistTab.TabIndex = 2;
+            this.blacklistTab.Text = "Blacklist";
+            this.blacklistTab.UseVisualStyleBackColor = true;
+            // 
+            // blacklistDataGridView
+            // 
+            this.blacklistDataGridView.AllowUserToAddRows = false;
+            this.blacklistDataGridView.AllowUserToDeleteRows = false;
+            this.blacklistDataGridView.AllowUserToResizeRows = false;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.Silver;
+            this.blacklistDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
+            this.blacklistDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.blacklistDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.blacklistKeyColumn,
+            this.blacklistDateColumn});
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.ControlDark;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.blacklistDataGridView.DefaultCellStyle = dataGridViewCellStyle11;
+            this.blacklistDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.blacklistDataGridView.Location = new System.Drawing.Point(3, 3);
+            this.blacklistDataGridView.Name = "blacklistDataGridView";
+            this.blacklistDataGridView.ReadOnly = true;
+            this.blacklistDataGridView.RowHeadersVisible = false;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.blacklistDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            this.blacklistDataGridView.RowTemplate.Height = 18;
+            this.blacklistDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.blacklistDataGridView.Size = new System.Drawing.Size(446, 205);
+            this.blacklistDataGridView.TabIndex = 7;
+            // 
+            // blacklistKeyColumn
+            // 
+            this.blacklistKeyColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.blacklistKeyColumn.HeaderText = "Asset ID";
+            this.blacklistKeyColumn.Name = "blacklistKeyColumn";
+            this.blacklistKeyColumn.ReadOnly = true;
+            // 
+            // blacklistDateColumn
+            // 
+            this.blacklistDateColumn.HeaderText = "Date Added";
+            this.blacklistDateColumn.Name = "blacklistDateColumn";
+            this.blacklistDateColumn.ReadOnly = true;
+            this.blacklistDateColumn.Width = 175;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.button37);
+            this.panel3.Controls.Add(this.label25);
+            this.panel3.Controls.Add(this.button31);
+            this.panel3.Controls.Add(this.textBox18);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel3.Location = new System.Drawing.Point(3, 208);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(446, 29);
+            this.panel3.TabIndex = 8;
+            // 
+            // button37
+            // 
+            this.button37.Location = new System.Drawing.Point(413, 6);
+            this.button37.Name = "button37";
+            this.button37.Size = new System.Drawing.Size(27, 23);
+            this.button37.TabIndex = 15;
+            this.button37.Text = "⛭";
+            this.button37.UseVisualStyleBackColor = true;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(57, 11);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(50, 13);
+            this.label25.TabIndex = 13;
+            this.label25.Text = "Asset ID:";
+            // 
+            // button31
+            // 
+            this.button31.Location = new System.Drawing.Point(346, 6);
+            this.button31.Name = "button31";
+            this.button31.Size = new System.Drawing.Size(61, 23);
+            this.button31.TabIndex = 11;
+            this.button31.Text = "Add";
+            this.button31.UseVisualStyleBackColor = true;
+            // 
+            // textBox18
+            // 
+            this.textBox18.Location = new System.Drawing.Point(113, 8);
+            this.textBox18.Name = "textBox18";
+            this.textBox18.Size = new System.Drawing.Size(227, 20);
+            this.textBox18.TabIndex = 10;
+            this.textBox18.Text = "00000000-0000-0000-0000-000000000000";
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown2.EnabledSetting = null;
+            this.numericUpDown2.Location = new System.Drawing.Point(260, 131);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            12000,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Setting = "GridProxyListenPort";
+            this.numericUpDown2.Size = new System.Drawing.Size(83, 20);
+            this.numericUpDown2.TabIndex = 37;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.EnabledSetting = null;
+            this.textBox1.Location = new System.Drawing.Point(131, 131);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Setting = "GridProxyListenAddress";
+            this.textBox1.Size = new System.Drawing.Size(123, 20);
+            this.textBox1.TabIndex = 36;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.EnabledSetting = null;
+            this.checkBox1.Location = new System.Drawing.Point(14, 120);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Setting = "EnableGridInfo";
+            this.checkBox1.Size = new System.Drawing.Size(174, 17);
+            this.checkBox1.TabIndex = 45;
+            this.checkBox1.Text = "Enable OpenSim Style Grid Info";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox9
+            // 
+            this.checkBox9.AutoSize = true;
+            this.checkBox9.EnabledSetting = "StartProxyAtLaunch";
+            this.checkBox9.Location = new System.Drawing.Point(34, 33);
+            this.checkBox9.Name = "checkBox9";
+            this.checkBox9.Setting = "HideProxyAtLaunch";
+            this.checkBox9.Size = new System.Drawing.Size(126, 17);
+            this.checkBox9.TabIndex = 44;
+            this.checkBox9.Text = "Auto Hide Cool Proxy";
+            this.checkBox9.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.EnabledSetting = null;
+            this.checkBox2.Location = new System.Drawing.Point(14, 12);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Setting = "StartProxyAtLaunch";
+            this.checkBox2.Size = new System.Drawing.Size(157, 17);
+            this.checkBox2.TabIndex = 43;
+            this.checkBox2.Text = "Start Proxy when Launched";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox6
+            // 
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.EnabledSetting = null;
+            this.checkBox6.Location = new System.Drawing.Point(14, 97);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Setting = "MinimizeCoolProxyToTray";
+            this.checkBox6.Size = new System.Drawing.Size(166, 17);
+            this.checkBox6.TabIndex = 24;
+            this.checkBox6.Text = "Minimize CoolProxy to the tray";
+            this.checkBox6.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.EnabledSetting = null;
+            this.checkBox3.Location = new System.Drawing.Point(14, 74);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Setting = "KeepCoolProxyOnTop";
+            this.checkBox3.Size = new System.Drawing.Size(134, 17);
+            this.checkBox3.TabIndex = 23;
+            this.checkBox3.Text = "Keep CoolProxy on top";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown5
+            // 
+            this.numericUpDown5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown5.EnabledSetting = null;
+            this.numericUpDown5.Location = new System.Drawing.Point(390, 35);
+            this.numericUpDown5.Name = "numericUpDown5";
+            this.numericUpDown5.Setting = "MaxSimultaneousDownloads";
+            this.numericUpDown5.Size = new System.Drawing.Size(56, 20);
+            this.numericUpDown5.TabIndex = 22;
+            // 
+            // numericUpDown4
+            // 
+            this.numericUpDown4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown4.Enabled = false;
+            this.numericUpDown4.EnabledSetting = null;
+            this.numericUpDown4.Location = new System.Drawing.Point(390, 10);
+            this.numericUpDown4.Name = "numericUpDown4";
+            this.numericUpDown4.Setting = "MaxSimultaneousUploads";
+            this.numericUpDown4.Size = new System.Drawing.Size(56, 20);
+            this.numericUpDown4.TabIndex = 21;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.EnabledSetting = null;
+            this.checkBox4.Location = new System.Drawing.Point(11, 9);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Setting = "EnableChatCommands";
+            this.checkBox4.Size = new System.Drawing.Size(139, 17);
+            this.checkBox4.TabIndex = 64;
+            this.checkBox4.Text = "Enable Chat Commands";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // checkBox19
+            // 
+            this.checkBox19.AutoSize = true;
+            this.checkBox19.Enabled = false;
+            this.checkBox19.EnabledSetting = null;
+            this.checkBox19.Location = new System.Drawing.Point(14, 35);
+            this.checkBox19.Name = "checkBox19";
+            this.checkBox19.Setting = "ShowConsole";
+            this.checkBox19.Size = new System.Drawing.Size(94, 17);
+            this.checkBox19.TabIndex = 30;
+            this.checkBox19.Text = "Show Console";
+            this.checkBox19.UseVisualStyleBackColor = true;
+            // 
+            // checkBox18
+            // 
+            this.checkBox18.AutoSize = true;
+            this.checkBox18.EnabledSetting = null;
+            this.checkBox18.Location = new System.Drawing.Point(14, 12);
+            this.checkBox18.Name = "checkBox18";
+            this.checkBox18.Setting = "AllowMultipleInstances";
+            this.checkBox18.Size = new System.Drawing.Size(139, 17);
+            this.checkBox18.TabIndex = 28;
+            this.checkBox18.Text = "Allow Multiple Instances";
+            this.checkBox18.UseVisualStyleBackColor = true;
+            // 
+            // blacklistToolStripMenuItem
+            // 
+            this.blacklistToolStripMenuItem.Name = "blacklistToolStripMenuItem";
+            this.blacklistToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.blacklistToolStripMenuItem.Text = "Blacklist";
+            this.blacklistToolStripMenuItem.Click += new System.EventHandler(this.blacklistToolStripMenuItem_Click);
+            // 
             // CoolProxyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1883,7 +1891,6 @@
             this.tabPage1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.avatarTrackerGridView)).EndInit();
             this.tabPage3.ResumeLayout(false);
@@ -1905,10 +1912,6 @@
             this.panel2.PerformLayout();
             this.tabPage20.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uploadsGridView)).EndInit();
-            this.tabPage5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.blacklistDataGridView)).EndInit();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.tabPage11.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
@@ -1916,8 +1919,6 @@
             this.settingsTabControl.ResumeLayout(false);
             this.tabPage9.ResumeLayout(false);
             this.tabPage9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.chatCommandsPanel.ResumeLayout(false);
             this.chatCommandsPanel.PerformLayout();
@@ -1930,6 +1931,13 @@
             this.tabPage10.ResumeLayout(false);
             this.tabPage10.PerformLayout();
             this.blacklistContextMenuStrip.ResumeLayout(false);
+            this.blacklistTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.blacklistDataGridView)).EndInit();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1976,15 +1984,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn AssetTypeColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn assetKeyColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn StatusColumn;
-        private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.DataGridView blacklistDataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn blacklistKeyColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn blacklistDateColumn;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Button button37;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Button button31;
-        private System.Windows.Forms.TextBox textBox18;
         private System.Windows.Forms.ContextMenuStrip blacklistContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem clearBlacklistToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
@@ -2076,6 +2075,16 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cmdPrefixCombo;
+        private System.Windows.Forms.TabPage blacklistTab;
+        private System.Windows.Forms.DataGridView blacklistDataGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn blacklistKeyColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn blacklistDateColumn;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button button37;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Button button31;
+        private System.Windows.Forms.TextBox textBox18;
+        private System.Windows.Forms.ToolStripMenuItem blacklistToolStripMenuItem;
     }
 }
 

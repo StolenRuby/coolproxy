@@ -531,7 +531,7 @@ namespace mapgenerator
                                         LowMaps[packetID].ID = (ushort)packetID;
                                         LowMaps[packetID].Frequency = PacketFrequency.Low;
                                         LowMaps[packetID].Name = tokens[0];
-                                        LowMaps[packetID].Trusted = (tokens[2] == "Trusted");
+                                        LowMaps[packetID].Trusted = (tokens[3] == "Trusted");
                                         LowMaps[packetID].Encoded = (tokens[4] == "Zerocoded");
                                         LowMaps[packetID].Blocks = new List<MapBlock>();
 
@@ -544,7 +544,7 @@ namespace mapgenerator
                                         MediumMaps[packetID].ID = (ushort)packetID;
                                         MediumMaps[packetID].Frequency = PacketFrequency.Medium;
                                         MediumMaps[packetID].Name = tokens[0];
-                                        MediumMaps[packetID].Trusted = (tokens[2] == "Trusted");
+                                        MediumMaps[packetID].Trusted = (tokens[3] == "Trusted");
                                         MediumMaps[packetID].Encoded = (tokens[4] == "Zerocoded");
                                         MediumMaps[packetID].Blocks = new List<MapBlock>();
 
@@ -557,7 +557,7 @@ namespace mapgenerator
                                         HighMaps[packetID].ID = (ushort)packetID;
                                         HighMaps[packetID].Frequency = PacketFrequency.High;
                                         HighMaps[packetID].Name = tokens[0];
-                                        HighMaps[packetID].Trusted = (tokens[2] == "Trusted");
+                                        HighMaps[packetID].Trusted = (tokens[3] == "Trusted");
                                         HighMaps[packetID].Encoded = (tokens[4] == "Zerocoded");
                                         HighMaps[packetID].Blocks = new List<MapBlock>();
 

@@ -651,6 +651,7 @@ namespace OpenMetaverse.Packets
         public Header Header;
         public bool HasVariableBlocks;
         public PacketType Type;
+        public bool Trusted;
         public abstract int Length { get; }
         public abstract void FromBytes(byte[] bytes, ref int i, ref int packetEnd, byte[] zeroBuffer);
         public abstract void FromBytes(Header header, byte[] bytes, ref int i, ref int packetEnd);
@@ -1989,6 +1990,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.TestMessage;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 1;
@@ -2124,6 +2126,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.UseCircuitCode;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 3;
@@ -2291,6 +2294,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.TelehubInfo;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 10;
@@ -2436,6 +2440,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.EconomyDataRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 24;
@@ -2590,6 +2595,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.EconomyData;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 25;
@@ -2754,6 +2760,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AvatarPickerRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 26;
@@ -2930,6 +2937,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.AvatarPickerReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 28;
@@ -3220,6 +3228,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.PlacesQuery;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 29;
@@ -3476,6 +3485,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.PlacesReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 30;
@@ -3727,6 +3737,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.DirFindQuery;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 31;
@@ -3912,6 +3923,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.DirPlacesQuery;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 33;
@@ -4170,6 +4182,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.DirPlacesReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 35;
@@ -4544,6 +4557,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.DirPeopleReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 36;
@@ -4884,6 +4898,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.DirEventsReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 37;
@@ -5212,6 +5227,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.DirGroupsReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 38;
@@ -5466,6 +5482,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.DirClassifiedQuery;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 39;
@@ -5726,6 +5743,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.DirClassifiedReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 41;
@@ -6011,6 +6029,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.AvatarClassifiedReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 42;
@@ -6239,6 +6258,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ClassifiedInfoRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 43;
@@ -6457,6 +6477,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ClassifiedInfoReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 44;
@@ -6654,6 +6675,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ClassifiedInfoUpdate;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 45;
@@ -6813,6 +6835,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ClassifiedDelete;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 46;
@@ -6975,6 +6998,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ClassifiedGodDelete;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 47;
@@ -7149,6 +7173,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.DirLandQuery;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 48;
@@ -7368,6 +7393,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.DirLandReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 50;
@@ -7607,6 +7633,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.DirPopularQuery;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 51;
@@ -7817,6 +7844,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.DirPopularReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 53;
@@ -8053,6 +8081,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelInfoRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 54;
@@ -8265,6 +8294,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelInfoReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 55;
@@ -8425,6 +8455,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelObjectOwnersRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 56;
@@ -8551,6 +8582,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ParcelObjectOwnersReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 57;
@@ -8773,6 +8805,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.GroupNoticesListRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 58;
@@ -8960,6 +8993,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.GroupNoticesListReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 59;
@@ -9188,6 +9222,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.GroupNoticeRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 60;
@@ -9353,6 +9388,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.TeleportRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 62;
@@ -9518,6 +9554,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.TeleportLocationRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 63;
@@ -9646,6 +9683,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.TeleportLocal;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 64;
@@ -9763,6 +9801,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.TeleportLandmarkRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 65;
@@ -9924,6 +9963,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.TeleportProgress;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 66;
@@ -10069,6 +10109,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.TeleportFinish;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 69;
@@ -10273,6 +10314,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.StartLure;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 70;
@@ -10474,6 +10516,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.TeleportLureRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 71;
@@ -10588,6 +10631,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.TeleportCancel;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 72;
@@ -10699,6 +10743,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.TeleportStart;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 73;
@@ -10873,6 +10918,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.TeleportFailed;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 74;
@@ -11105,6 +11151,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.Undo;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 75;
@@ -11337,6 +11384,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.Redo;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 76;
@@ -11525,6 +11573,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.UndoLand;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 77;
@@ -11642,6 +11691,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AgentPause;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 78;
@@ -11759,6 +11809,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AgentResume;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 79;
@@ -11926,6 +11977,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ChatFromViewer;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 80;
@@ -12098,6 +12150,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AgentThrottle;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 81;
@@ -12264,6 +12317,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AgentFOV;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 82;
@@ -12432,6 +12486,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AgentHeightWidth;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 83;
@@ -12689,6 +12744,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.AgentSetAppearance;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 84;
@@ -12891,6 +12947,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AgentQuitCopy;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 85;
@@ -13007,6 +13064,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ImageNotInDatabase;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 86;
@@ -13118,6 +13176,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.RebakeAvatarTextures;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 87;
@@ -13235,6 +13294,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.SetAlwaysRun;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 88;
@@ -13393,6 +13453,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectDelete;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 89;
@@ -13669,6 +13730,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectDuplicate;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 90;
@@ -13933,6 +13995,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectDuplicateOnRay;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 91;
@@ -14166,6 +14229,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectScale;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 92;
@@ -14399,6 +14463,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectRotation;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 93;
@@ -14656,6 +14721,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectFlagUpdate;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 94;
@@ -14889,6 +14955,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectClickAction;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 95;
@@ -15136,6 +15203,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectImage;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 96;
@@ -15369,6 +15437,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectMaterial;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 97;
@@ -15653,6 +15722,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectShape;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 98;
@@ -15901,6 +15971,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectExtraParams;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 99;
@@ -16177,6 +16248,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectOwner;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 100;
@@ -16417,6 +16489,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectGroup;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 101;
@@ -16659,6 +16732,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectBuy;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 102;
@@ -16894,6 +16968,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.BuyObjectInventory;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 103;
@@ -17014,6 +17089,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.DerezContainer;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 104;
@@ -17219,6 +17295,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectPermissions;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 105;
@@ -17462,6 +17539,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectSaleInfo;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 106;
@@ -17701,6 +17779,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectName;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 107;
@@ -17940,6 +18019,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectDescription;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 108;
@@ -18173,6 +18253,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectCategory;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 109;
@@ -18403,6 +18484,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectSelect;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 110;
@@ -18633,6 +18715,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectDeselect;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 111;
@@ -18869,6 +18952,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectAttach;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 112;
@@ -19099,6 +19183,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectDetach;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 113;
@@ -19328,6 +19413,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectDrop;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 114;
@@ -19557,6 +19643,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectLink;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 115;
@@ -19786,6 +19873,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectDelink;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 116;
@@ -20073,6 +20161,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectGrab;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 117;
@@ -20374,6 +20463,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectGrabUpdate;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 118;
@@ -20666,6 +20756,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectDeGrab;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 119;
@@ -20901,6 +20992,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ObjectSpinStart;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 120;
@@ -21064,6 +21156,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ObjectSpinUpdate;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 121;
@@ -21224,6 +21317,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ObjectSpinStop;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 122;
@@ -21388,6 +21482,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectExportSelected;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 123;
@@ -21720,6 +21815,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ModifyLand;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 124;
@@ -21955,6 +22051,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.VelocityInterpolateOn;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 125;
@@ -22069,6 +22166,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.VelocityInterpolateOff;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 126;
@@ -22229,6 +22327,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.StateSave;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 127;
@@ -22348,6 +22447,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ReportAutosaveCrash;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 128;
@@ -22505,6 +22605,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.SimWideDeletes;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 129;
@@ -22664,6 +22765,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.TrackAgent;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 130;
@@ -23031,6 +23133,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ViewerStats;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 131;
@@ -23299,6 +23402,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ScriptAnswerYes;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 132;
@@ -23510,6 +23614,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.UserReport;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 133;
@@ -23687,6 +23792,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.AlertMessage;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 134;
@@ -23921,6 +24027,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AgentAlertMessage;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 135;
@@ -24050,6 +24157,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.MeanCollisionAlert;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 136;
@@ -24229,6 +24337,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ViewerFrozenMessage;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 137;
@@ -24340,6 +24449,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.HealthMessage;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 138;
@@ -24484,6 +24594,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ChatFromSimulator;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 139;
@@ -24729,6 +24840,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.SimStats;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 140;
@@ -24890,6 +25002,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.RequestRegionInfo;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 141;
@@ -25198,6 +25311,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.RegionInfo;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 142;
@@ -25509,6 +25623,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.GodUpdateRegionInfo;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 143;
@@ -25927,6 +26042,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.RegionHandshake;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 148;
@@ -26170,6 +26286,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.RegionHandshakeReply;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 149;
@@ -26302,6 +26419,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.SimulatorViewerTimeMessage;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 150;
@@ -26420,6 +26538,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.EnableSimulator;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 151;
@@ -26491,6 +26610,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.DisableSimulator;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 152;
@@ -26616,6 +26736,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.TransferRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 153;
@@ -26750,6 +26871,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.TransferInfo;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 154;
@@ -26865,6 +26987,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.TransferAbort;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 155;
@@ -27001,6 +27124,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.RequestXfer;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 156;
@@ -27116,6 +27240,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AbortXfer;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 157;
@@ -27406,6 +27531,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.AvatarAppearance;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 158;
@@ -27721,6 +27847,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.SetFollowCamProperties;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 159;
@@ -27906,6 +28033,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ClearFollowCamProperties;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 160;
@@ -28017,6 +28145,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.RequestPayPrice;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 161;
@@ -28172,6 +28301,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.PayPriceReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 162;
@@ -28414,6 +28544,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.KickUser;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 163;
@@ -28549,6 +28680,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.GodKickUser;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 165;
@@ -28706,6 +28838,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.EjectUser;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 167;
@@ -28868,6 +29001,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.FreezeUser;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 168;
@@ -28990,6 +29124,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AvatarPropertiesRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 169;
@@ -29191,6 +29326,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AvatarPropertiesReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 171;
@@ -29377,6 +29513,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AvatarInterestsReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 172;
@@ -29603,6 +29740,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.AvatarGroupsReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 173;
@@ -29817,6 +29955,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AvatarPropertiesUpdate;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 174;
@@ -30003,6 +30142,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AvatarInterestsUpdate;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 175;
@@ -30170,6 +30310,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AvatarNotesReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 176;
@@ -30339,6 +30480,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AvatarNotesUpdate;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 177;
@@ -30508,6 +30650,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.AvatarPicksReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 178;
@@ -30736,6 +30879,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.EventInfoRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 179;
@@ -30955,6 +31099,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.EventInfoReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 180;
@@ -31114,6 +31259,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.EventNotificationAddRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 181;
@@ -31273,6 +31419,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.EventNotificationRemoveRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 182;
@@ -31487,6 +31634,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.EventGodDelete;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 183;
@@ -31707,6 +31855,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.PickInfoReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 184;
@@ -31904,6 +32053,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.PickInfoUpdate;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 185;
@@ -32063,6 +32213,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.PickDelete;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 186;
@@ -32225,6 +32376,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.PickGodDelete;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 187;
@@ -32403,6 +32555,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ScriptQuestion;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 188;
@@ -32526,6 +32679,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ScriptControlChange;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 189;
@@ -32829,6 +32983,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ScriptDialog;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 190;
@@ -33112,6 +33267,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ScriptDialogReply;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 191;
@@ -33232,6 +33388,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ForceScriptControlRelease;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 192;
@@ -33389,6 +33546,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.RevokePermissions;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 193;
@@ -33534,6 +33692,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.LoadURL;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 194;
@@ -33664,6 +33823,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ScriptTeleportRequest;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 195;
@@ -33785,6 +33945,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelOverlay;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 196;
@@ -33943,6 +34104,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelPropertiesRequestByID;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 197;
@@ -34175,6 +34337,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelPropertiesUpdate;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 198;
@@ -34420,6 +34583,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ParcelReturnObjects;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 199;
@@ -34698,6 +34862,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelSetOtherCleanTime;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 200;
@@ -34943,6 +35108,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ParcelDisableObjects;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 201;
@@ -35262,6 +35428,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ParcelSelectObjects;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 202;
@@ -35458,6 +35625,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.EstateCovenantRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 203;
@@ -35584,6 +35752,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.EstateCovenantReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 204;
@@ -35736,6 +35905,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ForceObjectSelect;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 205;
@@ -35964,6 +36134,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelBuyPass;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 206;
@@ -36126,6 +36297,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelDeedToGroup;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 207;
@@ -36285,6 +36457,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelReclaim;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 208;
@@ -36500,6 +36673,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ParcelClaim;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 209;
@@ -36745,6 +36919,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelJoin;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 210;
@@ -36913,6 +37088,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelDivide;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 211;
@@ -37072,6 +37248,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelRelease;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 212;
@@ -37286,6 +37463,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelBuy;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 213;
@@ -37454,6 +37632,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelGodForceOwner;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 214;
@@ -37620,6 +37799,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelAccessListRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 215;
@@ -37793,6 +37973,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ParcelAccessListReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 216;
@@ -38081,6 +38262,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ParcelAccessListUpdate;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 217;
@@ -38320,6 +38502,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelDwellRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 218;
@@ -38482,6 +38665,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelDwellReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 219;
@@ -38641,6 +38825,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelGodMarkAsContent;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 227;
@@ -38803,6 +38988,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ViewerStartAuction;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 228;
@@ -38920,6 +39106,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.UUIDNameRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 235;
@@ -39115,6 +39302,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.UUIDNameReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 236;
@@ -39294,6 +39482,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.UUIDGroupNameRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 237;
@@ -39482,6 +39671,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.UUIDGroupNameReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 238;
@@ -39663,6 +39853,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ChildAgentDying;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 240;
@@ -39778,6 +39969,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ChildAgentUnknown;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 241;
@@ -39892,6 +40084,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.GetScriptRunning;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 243;
@@ -40009,6 +40202,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ScriptRunningReply;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 244;
@@ -40169,6 +40363,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.SetScriptRunning;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 245;
@@ -40331,6 +40526,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ScriptReset;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 246;
@@ -40483,6 +40679,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ScriptSensorRequest;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 247;
@@ -40666,6 +40863,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ScriptSensorReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 248;
@@ -40858,6 +41056,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.CompleteAgentMovement;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 249;
@@ -41068,6 +41267,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AgentMovementComplete;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 250;
@@ -41192,6 +41392,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.LogoutRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 252;
@@ -41347,6 +41548,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.LogoutReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 253;
@@ -41625,6 +41827,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ImprovedInstantMessage;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 254;
@@ -41745,6 +41948,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.RetrieveInstantMessages;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 255;
@@ -41906,6 +42110,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.FindAgent;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 256;
@@ -42137,6 +42342,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.RequestGodlikePowers;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 257;
@@ -42299,6 +42505,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.GrantGodlikePowers;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 258;
@@ -42517,6 +42724,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.GodlikeMessage;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 259;
@@ -42812,6 +43020,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.EstateOwnerMessage;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 260;
@@ -43107,6 +43316,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.GenericMessage;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 261;
@@ -43343,6 +43553,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.MuteListRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 262;
@@ -43517,6 +43728,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.UpdateMuteListEntry;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 263;
@@ -43685,6 +43897,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.RemoveMuteListEntry;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 264;
@@ -43891,6 +44104,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.CopyInventoryFromNotecard;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 265;
@@ -44204,6 +44418,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.UpdateInventoryItem;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 266;
@@ -44510,6 +44725,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.UpdateCreateInventoryItem;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 267;
@@ -44755,6 +44971,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.MoveInventoryItem;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 268;
@@ -45003,6 +45220,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.CopyInventoryItem;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 269;
@@ -45233,6 +45451,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.RemoveInventoryItem;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 270;
@@ -45465,6 +45684,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ChangeInventoryItemFlags;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 271;
@@ -45693,6 +45913,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.SaveAssetIntoInventory;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 272;
@@ -45867,6 +46088,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.CreateInventoryFolder;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 273;
@@ -46042,6 +46264,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.UpdateInventoryFolder;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 274;
@@ -46277,6 +46500,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.MoveInventoryFolder;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 275;
@@ -46507,6 +46731,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.RemoveInventoryFolder;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 276;
@@ -46747,6 +46972,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.FetchInventoryDescendents;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 277;
@@ -47043,6 +47269,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.InventoryDescendents;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 278;
@@ -47315,6 +47542,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.FetchInventory;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 279;
@@ -47612,6 +47840,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.FetchInventoryReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 280;
@@ -47971,6 +48200,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.BulkUpdateInventory;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 281;
@@ -48281,6 +48511,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.RemoveInventoryObjects;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 284;
@@ -48548,6 +48779,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.PurgeInventoryDescendents;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 285;
@@ -48821,6 +49053,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.UpdateTaskInventory;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 286;
@@ -48989,6 +49222,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.RemoveTaskInventory;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 287;
@@ -49155,6 +49389,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.MoveTaskInventory;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 288;
@@ -49314,6 +49549,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.RequestTaskInventory;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 289;
@@ -49442,6 +49678,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ReplyTaskInventory;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 290;
@@ -49653,6 +49890,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.DeRezObject;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 291;
@@ -49849,6 +50087,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.DeRezAck;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 292;
@@ -50149,6 +50388,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.RezObject;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 293;
@@ -50434,6 +50674,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.RezObjectFromNotecard;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 294;
@@ -50718,6 +50959,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.AcceptFriendship;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 297;
@@ -50953,6 +51195,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.DeclineFriendship;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 298;
@@ -51112,6 +51355,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.TerminateFriendship;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 300;
@@ -51274,6 +51518,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.OfferCallingCard;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 301;
@@ -51474,6 +51719,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.AcceptCallingCard;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 302;
@@ -51709,6 +51955,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.DeclineCallingCard;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 303;
@@ -51984,6 +52231,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.RezScript;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 304;
@@ -52183,6 +52431,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.CreateInventoryItem;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 305;
@@ -52392,6 +52641,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.CreateLandmarkForEvent;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 306;
@@ -52514,6 +52764,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.RegionHandleRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 309;
@@ -52628,6 +52879,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.RegionIDAndHandleReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 310;
@@ -52809,6 +53061,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.MoneyTransferRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 311;
@@ -52969,6 +53222,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.MoneyBalanceRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 313;
@@ -53174,6 +53428,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.MoneyBalanceReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 314;
@@ -53423,6 +53678,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.RoutedMoneyBalanceReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 315;
@@ -53598,6 +53854,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ActivateGestures;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 316;
@@ -53833,6 +54090,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.DeactivateGestures;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 317;
@@ -54027,6 +54285,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.MuteListUpdate;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 318;
@@ -54138,6 +54397,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.UseCachedMuteList;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 319;
@@ -54296,6 +54556,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.GrantUserRights;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 320;
@@ -54525,6 +54786,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ChangeUserRights;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 321;
@@ -54711,6 +54973,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.OnlineNotification;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 322;
@@ -54890,6 +55153,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.OfflineNotification;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 323;
@@ -55126,6 +55390,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.SetStartLocationRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 324;
@@ -55262,6 +55527,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AssetUploadRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 333;
@@ -55379,6 +55645,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AssetUploadComplete;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 334;
@@ -55565,6 +55832,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.CreateGroupRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 339;
@@ -55734,6 +56002,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.CreateGroupReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 340;
@@ -55921,6 +56190,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.UpdateGroupInfo;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 341;
@@ -56091,6 +56361,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.GroupRoleChanges;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 342;
@@ -56319,6 +56590,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.JoinGroupRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 343;
@@ -56479,6 +56751,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.JoinGroupReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 344;
@@ -56679,6 +56952,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.EjectGroupMemberRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 345;
@@ -56951,6 +57225,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.EjectGroupMemberReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 346;
@@ -57115,6 +57390,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.LeaveGroupRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 347;
@@ -57274,6 +57550,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.LeaveGroupReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 348;
@@ -57477,6 +57754,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.InviteGroupRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 349;
@@ -57712,6 +57990,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.GroupProfileRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 351;
@@ -57928,6 +58207,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.GroupProfileReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 352;
@@ -58097,6 +58377,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.GroupAccountSummaryRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 353;
@@ -58328,6 +58609,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.GroupAccountSummaryReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 354;
@@ -58497,6 +58779,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.GroupAccountDetailsRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 355;
@@ -58722,6 +59005,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.GroupAccountDetailsReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 356;
@@ -58967,6 +59251,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.GroupAccountTransactionsRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 357;
@@ -59209,6 +59494,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.GroupAccountTransactionsReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 358;
@@ -59485,6 +59771,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.GroupActiveProposalsRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 359;
@@ -59742,6 +60029,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.GroupActiveProposalItemReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 360;
@@ -60018,6 +60306,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.GroupVoteHistoryRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 361;
@@ -60332,6 +60621,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.GroupVoteHistoryItemReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 362;
@@ -60593,6 +60883,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.StartGroupProposal;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 363;
@@ -60765,6 +61056,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.GroupProposalBallot;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 364;
@@ -60927,6 +61219,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.GroupMembersRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 366;
@@ -61155,6 +61448,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.GroupMembersReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 367;
@@ -61354,6 +61648,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ActivateGroup;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 368;
@@ -61512,6 +61807,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.SetGroupContribution;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 369;
@@ -61714,6 +62010,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.SetGroupAcceptNotices;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 370;
@@ -61881,6 +62178,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.GroupRoleDataRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 371;
@@ -62113,6 +62411,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.GroupRoleDataReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 372;
@@ -62351,6 +62650,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.GroupRoleMembersRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 373;
@@ -62520,6 +62820,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.GroupRoleMembersReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 374;
@@ -62714,6 +63015,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.GroupTitlesRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 375;
@@ -62884,6 +63186,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.GroupTitlesReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 376;
@@ -63079,6 +63382,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.GroupTitleUpdate;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 377;
@@ -63266,6 +63570,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.GroupRoleUpdate;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 378;
@@ -63454,6 +63759,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.LiveHelpGroupRequest;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 379;
@@ -63577,6 +63883,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.LiveHelpGroupReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 380;
@@ -63691,6 +63998,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AgentWearablesRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 381;
@@ -63855,6 +64163,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.AgentWearablesUpdate;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 382;
@@ -64088,6 +64397,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.AgentIsNowWearing;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 383;
@@ -64324,6 +64634,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.AgentCachedTexture;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 384;
@@ -64568,6 +64879,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.AgentCachedTextureResponse;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 385;
@@ -64756,6 +65068,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AgentDataUpdateRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 386;
@@ -64903,6 +65216,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AgentDataUpdate;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 387;
@@ -65031,6 +65345,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.GroupDataUpdate;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 388;
@@ -65272,6 +65587,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.AgentGroupDataUpdate;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 389;
@@ -65461,6 +65777,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AgentDropGroup;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 390;
@@ -65650,6 +65967,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.RezSingleAttachmentFromInv;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 395;
@@ -65891,6 +66209,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.RezMultipleAttachmentsFromInv;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 396;
@@ -66087,6 +66406,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.DetachAttachmentIntoInv;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 397;
@@ -66285,6 +66605,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.CreateNewOutfitAttachments;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 398;
@@ -66480,6 +66801,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.UserInfoRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 399;
@@ -66648,6 +66970,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.UserInfoReply;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 400;
@@ -66816,6 +67139,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.UpdateUserInfo;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 401;
@@ -66985,6 +67309,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.InitiateDownload;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 403;
@@ -67113,6 +67438,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.MapLayerRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 405;
@@ -67280,6 +67606,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.MapLayerReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 406;
@@ -67526,6 +67853,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.MapBlockRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 407;
@@ -67700,6 +68028,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.MapNameRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 408;
@@ -67931,6 +68260,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.MapBlockReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 409;
@@ -68210,6 +68540,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.MapItemRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 410;
@@ -68431,6 +68762,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.MapItemReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 411;
@@ -68676,6 +69008,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.SendPostcard;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 412;
@@ -68793,6 +69126,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelMediaCommandMessage;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 419;
@@ -68978,6 +69312,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelMediaUpdate;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 420;
@@ -69152,6 +69487,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.LandStatRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 421;
@@ -69346,6 +69682,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.LandStatReply;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 422;
@@ -69606,6 +69943,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.Error;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 423;
@@ -69770,6 +70108,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectIncludeInSearch;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 424;
@@ -70068,6 +70407,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.RezRestoreToWorld;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 425;
@@ -70258,6 +70598,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.LinkInventoryItem;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 426;
@@ -70478,6 +70819,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.LargeGenericMessage;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 430;
@@ -70671,6 +71013,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.PacketAck;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 65531;
@@ -70853,6 +71196,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.OpenCircuit;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 65532;
@@ -70924,6 +71268,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.CloseCircuit;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Low;
             Header.ID = 65533;
@@ -71160,6 +71505,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ObjectAdd;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Medium;
             Header.ID = 1;
@@ -71333,6 +71679,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.MultipleObjectUpdate;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Medium;
             Header.ID = 2;
@@ -71566,6 +71913,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.RequestMultipleObjects;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Medium;
             Header.ID = 3;
@@ -71799,6 +72147,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectPosition;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Medium;
             Header.ID = 4;
@@ -72031,6 +72380,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.RequestObjectPropertiesFamily;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Medium;
             Header.ID = 5;
@@ -72239,6 +72589,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.CoarseLocationUpdate;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Medium;
             Header.ID = 6;
@@ -72495,6 +72846,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.CrossedRegion;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Medium;
             Header.ID = 7;
@@ -72619,6 +72971,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ConfirmEnableSimulator;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Medium;
             Header.ID = 8;
@@ -72831,6 +73184,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectProperties;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Medium;
             Header.ID = 9;
@@ -73065,6 +73419,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ObjectPropertiesFamily;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Medium;
             Header.ID = 10;
@@ -73235,6 +73590,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelPropertiesRequest;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Medium;
             Header.ID = 11;
@@ -73364,6 +73720,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AttachedSound;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Medium;
             Header.ID = 13;
@@ -73478,6 +73835,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AttachedSoundGainChange;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Medium;
             Header.ID = 14;
@@ -73596,6 +73954,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.PreloadSound;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.Medium;
             Header.ID = 15;
@@ -73840,6 +74199,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ViewerEffect;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.Medium;
             Header.ID = 17;
@@ -74029,6 +74389,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.StartPingCheck;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 1;
@@ -74140,6 +74501,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.CompletePingCheck;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 2;
@@ -74284,6 +74646,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AgentUpdate;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 4;
@@ -74490,6 +74853,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.AgentAnimation;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 5;
@@ -74760,6 +75124,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AgentRequestSit;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 6;
@@ -74880,6 +75245,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AgentSit;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 7;
@@ -75047,6 +75413,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.RequestImage;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 8;
@@ -75288,6 +75655,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ImageData;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 9;
@@ -75454,6 +75822,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ImagePacket;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 10;
@@ -75617,6 +75986,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.LayerData;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 11;
@@ -75954,6 +76324,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectUpdate;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 12;
@@ -76194,6 +76565,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectUpdateCompressed;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 13;
@@ -76429,6 +76801,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectUpdateCached;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 14;
@@ -76672,6 +77045,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ImprovedTerseObjectUpdate;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 15;
@@ -76858,6 +77232,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.KillObject;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 16;
@@ -77055,6 +77430,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.TransferPacket;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 17;
@@ -77216,6 +77592,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.SendXferPacket;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 18;
@@ -77335,6 +77712,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ConfirmXferPacket;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 19;
@@ -77578,6 +77956,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.AvatarAnimation;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 20;
@@ -77896,6 +78275,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.AvatarSitResponse;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 21;
@@ -78013,6 +78393,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.CameraConstraint;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 22;
@@ -78415,6 +78796,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ParcelProperties;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 23;
@@ -78934,6 +79316,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ChildAgentUpdate;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 25;
@@ -79363,6 +79746,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ChildAgentAlive;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 26;
@@ -79507,6 +79891,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.ChildAgentPositionUpdate;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 27;
@@ -79636,6 +80021,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = false;
             Type = PacketType.SoundTrigger;
+            Trusted = false;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 29;
@@ -79791,6 +80177,7 @@ namespace OpenMetaverse.Packets
         {
             HasVariableBlocks = true;
             Type = PacketType.ObjectAnimation;
+            Trusted = true;
             Header = new Header();
             Header.Frequency = PacketFrequency.High;
             Header.ID = 30;

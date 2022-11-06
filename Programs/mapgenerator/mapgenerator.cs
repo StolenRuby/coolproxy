@@ -461,6 +461,7 @@ namespace mapgenerator
             writer.WriteLine("        public " + packet.Name + "Packet()" + Environment.NewLine + "        {");
             writer.WriteLine("            HasVariableBlocks = " + hasVariableBlocks.ToString().ToLowerInvariant() + ";");
             writer.WriteLine("            Type = PacketType." + packet.Name + ";");
+            writer.WriteLine("            Trusted = " + (packet.Trusted ? "true;" : "false;"));
             writer.WriteLine("            Header = new Header();");
             writer.WriteLine("            Header.Frequency = PacketFrequency." + packet.Frequency + ";");
             writer.WriteLine("            Header.ID = " + packet.ID + ";");
@@ -993,6 +994,7 @@ namespace mapgenerator
                 "        public Header Header;" + Environment.NewLine +
                 "        public bool HasVariableBlocks;" + Environment.NewLine +
                 "        public PacketType Type;" + Environment.NewLine +
+                "        public bool Trusted;" + Environment.NewLine +
                 "        public abstract int Length { get; }" + Environment.NewLine +
                 "        public abstract void FromBytes(byte[] bytes, ref int i, ref int packetEnd, byte[] zeroBuffer);" + Environment.NewLine +
                 "        public abstract void FromBytes(Header header, byte[] bytes, ref int i, ref int packetEnd);" + Environment.NewLine +

@@ -1358,6 +1358,8 @@ namespace OpenMetaverse
         /// <returns>The decoded string</returns>
         public static string BytesToString(byte[] bytes)
         {
+            if (bytes == null)
+                return string.Empty;
             if(bytes.Length <= 0)
                 return string.Empty;
             if (bytes[bytes.Length - 1] == 0x00)

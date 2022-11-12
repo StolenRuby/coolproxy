@@ -39,8 +39,12 @@ namespace CoolProxy.Plugins.KeyTool
 
             IGUI gui = frame.RequestModuleInterface<IGUI>();
 
-            gui.AddToolButton("UUID", "KeyTool from Clipboard", handleKeyToolButton);
-            gui.AddTrayOption("KeyTool from Clipboard", handleKeyToolButton);
+            gui.AddToolButton("UUID", "KeyTool from Clipboard", (x, y) => handleKeyToolMenuOption(null));
+
+            gui.AddMainMenuOption(new MenuOption("KEYTOOL_FROM_CLIPBOARD", "Keytool from Clipboard", true, "Tools")
+            {
+                Clicked = handleKeyToolMenuOption
+            });
 
 
             NotecardMagic = Proxy.RequestModuleInterface<INotecardMagic>();
@@ -135,7 +139,7 @@ namespace CoolProxy.Plugins.KeyTool
             gui.AddSettingsTab("KeyTool", panel);
         }
 
-        private void handleKeyToolButton(object sender, EventArgs e)
+        private void handleKeyToolMenuOption(object user_data)
         {
             if (UUID.TryParse(Clipboard.GetText(), out UUID key))
             {

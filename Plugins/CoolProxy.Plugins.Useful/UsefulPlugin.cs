@@ -61,14 +61,18 @@ namespace CoolProxy.Plugins.Useful
             var uploader_form = new UploaderForm(frame);
 
             gui.AddToggleFormQuick("Assets", "Upload Asset", uploader_form);
-            gui.AddTrayOption("Upload Asset...", (x, y) =>
+
+            gui.AddMainMenuOption(new MenuOption("UPLOAD_ASSET_TOOL", "Upload Asset...", true, "Tools")
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = Util.GetCombinedFilter();
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                Clicked = (x) =>
                 {
-                    uploader_form.SetFile(openFileDialog.FileName);
-                    uploader_form.Show();
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    openFileDialog.Filter = Util.GetCombinedFilter();
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        uploader_form.SetFile(openFileDialog.FileName);
+                        uploader_form.Show();
+                    }
                 }
             });
 

@@ -77,9 +77,15 @@ namespace CoolProxy.Plugins.CopyBot
                 gui.AddInventoryItemOption("Import With...", importWithInv, AssetType.Object);
             }
 
-            gui.AddTrayOption("-", null);
-            gui.AddTrayOption("Import Object from File...", importXML);
-            gui.AddTrayOption("Export Selected Objects...", exportSelectedObjects);
+            gui.AddMainMenuOption(new MenuOption("COPYBOT_IMPORT_FILE", "Import Object from File...", true, "Copybot")
+            {
+                Clicked = importXML
+            });
+
+            gui.AddMainMenuOption(new MenuOption("COPYBOT_EXPORT_SELECTED", "Export Selected Objects...", true, "Copybot")
+            {
+                Clicked = exportSelectedObjects
+            });
 
             Proxy.Objects.ObjectUpdate += Objects_ObjectUpdate;
 
@@ -272,7 +278,7 @@ namespace CoolProxy.Plugins.CopyBot
             }
         }
 
-        private void importXML(object sender, EventArgs e)
+        private void importXML(object user_data)
         {
             if (!ImporterBusy)
             {
@@ -310,7 +316,7 @@ namespace CoolProxy.Plugins.CopyBot
             OpenExportForm(avatar);
         }
 
-        private void exportSelectedObjects(object sender, EventArgs e)
+        private void exportSelectedObjects(object user_data)
         {
             OpenExportForm(null);
         }

@@ -158,9 +158,23 @@ namespace CoolProxy.Plugins.ClientAO
                 LoadNotecard(x);
             }, AssetType.Notecard);
 
-            gui.AddTrayOption("-", null);
-            gui.AddTrayOption("Animation Override", (x, y) => EditorForm.Show());
-            gui.AddTrayCheck("Enable Client AO", (x, y) => frame.Settings.setBool("EnableAO", !(x as ToolStripMenuItem).Checked), (x) => Enabled);
+            gui.AddMainMenuOption(new MenuOption("TOGGLE_AO_EDITOR", "Animation Override", true)
+            {
+                Clicked = (x) =>
+                {
+                    if (EditorForm.Visible)
+                        EditorForm.Hide();
+                    else
+                        EditorForm.Show();
+                },
+                Checked = (x) => EditorForm.Visible
+            });
+
+            gui.AddMainMenuOption(new MenuOption("TOGGLE_AO", "Enable Client AO", true)
+            {
+                Clicked = (x) => frame.Settings.setBool("EnableAO", !Enabled),
+                Checked = (x) => Enabled
+            });
         }
 
         public List<AOState> Current = new List<AOState>();

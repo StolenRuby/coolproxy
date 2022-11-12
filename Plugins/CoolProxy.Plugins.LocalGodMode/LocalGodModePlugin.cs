@@ -32,26 +32,24 @@ namespace CoolProxy.Plugins.LocalGodMode
 
             var blarg = Enum.GetValues(typeof(GodModeLevel)).Cast<object>().ToArray();
 
-            TrayOption opt = new TrayOption("Local GodMode Level", null, null, null, null);
-            var levels = new List<TrayOption>();
-
             foreach(var l in blarg)
             {
-                TrayOption lopt = new TrayOption(l.ToString(), handleChangeGodLevel, null, handleCheckGodLevel, l);
-                levels.Add(lopt);
+                MenuOption opt = new MenuOption("SET_GM_LEVEL_" + l.ToString(), l.ToString(), true, "Local GodMode Level")
+                {
+                    Clicked = handleChangeGodLevel,
+                    Checked = handleCheckGodLevel,
+                    Tag = l
+                };
+                gui.AddMainMenuOption(opt);
             }
-
-            opt.SubMenu = levels;
-            gui.AddTrayOption(opt);
         }
 
 
         int LocalGodLevel = 0;
 
-        private void handleChangeGodLevel(object sender, EventArgs e)
+        private void handleChangeGodLevel(object user_data)
         {
-            ToolStripMenuItem opt = (ToolStripMenuItem)sender;
-            LocalGodLevel = (int)opt.Tag;
+            LocalGodLevel = (int)user_data;
 
             GodModeLevel level = (GodModeLevel)LocalGodLevel;
 
@@ -66,9 +64,9 @@ namespace CoolProxy.Plugins.LocalGodMode
             Proxy.Network.InjectPacket(grantGodlikePowersPacket, Direction.Incoming);
         }
 
-        private bool handleCheckGodLevel(ToolStripMenuItem item)
+        private bool handleCheckGodLevel(object user_data)
         {
-            return (int)item.Tag == LocalGodLevel;
+            return (int)user_data == LocalGodLevel;
         }
     }
 }

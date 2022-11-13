@@ -71,12 +71,34 @@ namespace CoolProxy.Plugins.Messages
 
         List<MessageLogEntry> Entries = new List<MessageLogEntry>();
 
+
+        private static string LessSpamFilter = "!StartPingCheck !CompletePingCheck !PacketAck !SimulatorViewerTimeMessage !SimStats !AgentUpdate !AgentAnimation !AvatarAnimation !ViewerEffect !CoarseLocationUpdate !LayerData !CameraConstraint !ObjectUpdateCached !RequestMultipleObjects !ObjectUpdate !ObjectUpdateCompressed !ImprovedTerseObjectUpdate !KillObject !ImagePacket !SendXferPacket !ConfirmXferPacket !TransferPacket !ObjectAnimation";
+        private static string LessSpamNoSoundsFilter = "!StartPingCheck !CompletePingCheck !PacketAck !SimulatorViewerTimeMessage !SimStats !AgentUpdate !AgentAnimation !AvatarAnimation !ViewerEffect !CoarseLocationUpdate !LayerData !CameraConstraint !ObjectUpdateCached !RequestMultipleObjects !ObjectUpdate !ObjectUpdateCompressed !ImprovedTerseObjectUpdate !KillObject !ImagePacket !SendXferPacket !ConfirmXferPacket !TransferPacket !SoundTrigger !ObjectAnimation !AttachedSound !PreloadSound";
+        private static string ObjectUpdatesFilter = "ObjectUpdateCached ObjectUpdate ObjectUpdateCompressed ImprovedTerseObjectUpdate KillObject RequestMultipleObjects";
+
         CoolProxyFrame Proxy;
 
         public MessageLogForm(CoolProxyFrame frame)
         {
             Proxy = frame;
             InitializeComponent();
+
+            var nf = contextMenuStrip1.Items.Add("No filter");
+            nf.Click += noFilterToolStripMenuItem_Click;
+
+            var fsm = contextMenuStrip1.Items.Add("Fewer spammy messages");
+            fsm.Tag = LessSpamFilter;
+            fsm.Click += noFilterToolStripMenuItem_Click;
+
+            var fsmns = contextMenuStrip1.Items.Add("Fewer spammy messages (no sounds)");
+            fsmns.Tag = LessSpamNoSoundsFilter;
+            fsmns.Click += noFilterToolStripMenuItem_Click;
+
+            var ou = contextMenuStrip1.Items.Add("Object updates");
+            ou.Tag = ObjectUpdatesFilter;
+            ou.Click += noFilterToolStripMenuItem_Click;
+
+            textBox1.Text = LessSpamFilter;
 
             ApplyFilter(textBox1.Text);
 

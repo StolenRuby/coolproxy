@@ -2535,17 +2535,22 @@ namespace CoolProxy
 
         private void RecursiveMenuOpening(ToolStripItemCollection dropDownItems)
         {
-            foreach (ToolStripMenuItem item in dropDownItems)
+            foreach (ToolStripItem ddi in dropDownItems)
             {
-                if (item.Tag is MenuOption)
+                if(ddi is ToolStripMenuItem)
                 {
-                    var opt = item.Tag as MenuOption;
+                    var item = ddi as ToolStripMenuItem;
 
-                    item.Checked = opt.Checked?.Invoke(opt.Tag) ?? false;
-                    item.Enabled = opt.Enabled?.Invoke(opt.Tag) ?? true;
+                    if (item.Tag is MenuOption)
+                    {
+                        var opt = item.Tag as MenuOption;
+
+                        item.Checked = opt.Checked?.Invoke(opt.Tag) ?? false;
+                        item.Enabled = opt.Enabled?.Invoke(opt.Tag) ?? true;
+                    }
+
+                    RecursiveMenuOpening(item.DropDownItems);
                 }
-
-                RecursiveMenuOpening(item.DropDownItems);
             }
         }
     }

@@ -58,6 +58,18 @@ namespace CoolProxy.Plugins.Useful
             gui.AddToolButton("UUID", "Avatar Picker to Clipboard", avatarPickerToClipboard);
             gui.AddToolButton("UUID", "Group Picker to Clipboard", groupPickerToClipboard);
 
+
+            gui.AddMainMenuOption(new MenuOption("AVATAR_PICKER_TO_CLIPBOARD", "Avatar Picker to Clipboard...", true, "Tools")
+            {
+                Clicked = (x) => avatarPickerToClipboard(null, null)
+            });
+
+            gui.AddMainMenuOption(new MenuOption("GROUP_PICKER_TO_CLIPBOARD", "Group Picker to Clipboard...", true, "Tools")
+            {
+                Clicked = (x) => groupPickerToClipboard(null, null)
+            });
+
+
             var uploader_form = new UploaderForm(frame);
 
             gui.AddToggleFormQuick("Assets", "Upload Asset", uploader_form);

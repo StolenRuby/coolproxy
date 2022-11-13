@@ -22,6 +22,11 @@ namespace CoolProxy.Plugins.GetAvatar
             ROBUST = frame.RequestModuleInterface<IROBUST>();
             IGUI gui = frame.RequestModuleInterface<IGUI>();
 
+            gui.AddMainMenuOption(new MenuOption("RETRIEVE_STORED_AVATAR", "Retrieve Stored Avatar...", true, "Hacks")
+            {
+                Clicked = (x) => retrieveStoredAvatar(null, null)
+            });
+
             gui.AddToolButton("Hacks", "Retrieve Stored Avatar", retrieveStoredAvatar);
         }
 

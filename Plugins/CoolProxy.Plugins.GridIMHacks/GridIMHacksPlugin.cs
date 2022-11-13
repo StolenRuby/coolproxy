@@ -31,9 +31,46 @@ namespace CoolProxy.Plugins.GridIMHacks
 
             IGUI gui = Proxy.RequestModuleInterface<IGUI>();
 
-            gui.AddToggleFormQuick("Hacks", "Hacked God Tools", new GodHacksForm(frame));
-            gui.AddToggleFormQuick("Hacks", "Special Teleport", new SpecialTeleportForm(Proxy));
-            gui.AddToggleFormQuick("Hacks", "Easy IM Spoofer", new EasyIMSpoofer(Proxy));
+
+            var hg_form = new GodHacksForm(frame);
+
+            gui.AddMainMenuOption(new MenuOption("TOGGLE_HACKED_GODTOOLS", "Hacked God Tools", true, "Hacks")
+            {
+                Clicked = (x) =>
+                {
+                    if (hg_form.Visible) hg_form.Hide();
+                    else hg_form.Show();
+                },
+                Checked = (x) => hg_form.Visible
+            });
+
+            var stp_form = new SpecialTeleportForm(frame);
+
+            gui.AddMainMenuOption(new MenuOption("TOGGLE_SPECIAL_TELEPORT", "Special Teleport", true, "Hacks")
+            {
+                Clicked = (x) =>
+                {
+                    if (stp_form.Visible) stp_form.Hide();
+                    else stp_form.Show();
+                },
+                Checked = (x) => stp_form.Visible
+            });
+
+            var ezim_form = new EasyIMSpoofer(frame);
+
+            gui.AddMainMenuOption(new MenuOption("TOGGLE_EASY_IM_SPOOFER", "Easy IM Spoofer", true, "Hacks")
+            {
+                Clicked = (x) =>
+                {
+                    if (ezim_form.Visible) ezim_form.Hide();
+                    else ezim_form.Show();
+                },
+                Checked = (x) => ezim_form.Visible
+            });
+
+            gui.AddToggleFormQuick("Hacks", "Hacked God Tools", hg_form);
+            gui.AddToggleFormQuick("Hacks", "Special Teleport", stp_form);
+            gui.AddToggleFormQuick("Hacks", "Easy IM Spoofer", ezim_form);
 
 
             gui.AddSingleMenuItem("-", null);

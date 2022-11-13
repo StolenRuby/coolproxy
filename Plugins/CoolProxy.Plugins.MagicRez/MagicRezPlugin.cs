@@ -23,7 +23,21 @@ namespace CoolProxy.Plugins.MagicRez
             Proxy.RegisterModuleInterface<IMagicRez>(this);
 
             IGUI gui = frame.RequestModuleInterface<IGUI>();
-            gui.AddToggleFormQuick("Hacks", "Magic Rez", new MagicRezForm(frame, this));
+
+
+            var form = new MagicRezForm(frame, this);
+
+            gui.AddMainMenuOption(new MenuOption("TOGGLE_MAGIC_REZ_FORM", "Magic Rez", true, "Hacks")
+            {
+                Clicked = (x) =>
+                {
+                    if (form.Visible) form.Hide();
+                    else form.Show();
+                },
+                Checked = (x) => form.Visible
+            });
+
+            gui.AddToggleFormQuick("Hacks", "Magic Rez", form);
         }
 
         public static void object_asset_to_payload(string xml_str, UUID owner_id, UUID creator_id, bool random_keys, string description, out string object_data, out string script_data)

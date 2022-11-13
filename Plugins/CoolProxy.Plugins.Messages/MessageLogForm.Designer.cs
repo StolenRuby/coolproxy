@@ -30,26 +30,20 @@ namespace CoolProxy.Plugins.Messages
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MessageLogForm));
             this.button1 = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.noFilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fewerSpammyMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fewerSpammyMessagesnoSoundsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.objectUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button4 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.listViewSessions = new ListViewNoFlicker();
+            this.listViewSessions = new CoolProxy.Plugins.Messages.ListViewNoFlicker();
             this.columnHeaderCounter = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderDirection = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderNet = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderSummary = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -64,45 +58,8 @@ namespace CoolProxy.Plugins.Messages
             // 
             // contextMenuStrip1
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.noFilterToolStripMenuItem,
-            this.fewerSpammyMessagesToolStripMenuItem,
-            this.fewerSpammyMessagesnoSoundsToolStripMenuItem,
-            this.objectUpdatesToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(275, 92);
-            // 
-            // noFilterToolStripMenuItem
-            // 
-            this.noFilterToolStripMenuItem.Name = "noFilterToolStripMenuItem";
-            this.noFilterToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
-            this.noFilterToolStripMenuItem.Text = "No filter";
-            this.noFilterToolStripMenuItem.Click += new System.EventHandler(this.noFilterToolStripMenuItem_Click);
-            // 
-            // fewerSpammyMessagesToolStripMenuItem
-            // 
-            this.fewerSpammyMessagesToolStripMenuItem.Name = "fewerSpammyMessagesToolStripMenuItem";
-            this.fewerSpammyMessagesToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
-            this.fewerSpammyMessagesToolStripMenuItem.Tag = resources.GetString("fewerSpammyMessagesToolStripMenuItem.Tag");
-            this.fewerSpammyMessagesToolStripMenuItem.Text = "Fewer spammy messages";
-            this.fewerSpammyMessagesToolStripMenuItem.Click += new System.EventHandler(this.noFilterToolStripMenuItem_Click);
-            // 
-            // fewerSpammyMessagesnoSoundsToolStripMenuItem
-            // 
-            this.fewerSpammyMessagesnoSoundsToolStripMenuItem.Name = "fewerSpammyMessagesnoSoundsToolStripMenuItem";
-            this.fewerSpammyMessagesnoSoundsToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
-            this.fewerSpammyMessagesnoSoundsToolStripMenuItem.Tag = resources.GetString("fewerSpammyMessagesnoSoundsToolStripMenuItem.Tag");
-            this.fewerSpammyMessagesnoSoundsToolStripMenuItem.Text = "Fewer spammy messages (no sounds)";
-            this.fewerSpammyMessagesnoSoundsToolStripMenuItem.Click += new System.EventHandler(this.noFilterToolStripMenuItem_Click);
-            // 
-            // objectUpdatesToolStripMenuItem
-            // 
-            this.objectUpdatesToolStripMenuItem.Name = "objectUpdatesToolStripMenuItem";
-            this.objectUpdatesToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
-            this.objectUpdatesToolStripMenuItem.Tag = "ObjectUpdateCached ObjectUpdate ObjectUpdateCompressed ImprovedTerseObjectUpdate " +
-    "KillObject RequestMultipleObjects";
-            this.objectUpdatesToolStripMenuItem.Text = "Object updates";
-            this.objectUpdatesToolStripMenuItem.Click += new System.EventHandler(this.noFilterToolStripMenuItem_Click);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // button2
             // 
@@ -134,7 +91,6 @@ namespace CoolProxy.Plugins.Messages
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(304, 20);
             this.textBox1.TabIndex = 6;
-            this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
             // button4
             // 
@@ -222,7 +178,7 @@ namespace CoolProxy.Plugins.Messages
             this.columnHeaderSummary.Text = "Summary";
             this.columnHeaderSummary.Width = 120;
             // 
-            // MessageLoggerForm
+            // MessageLogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -236,10 +192,9 @@ namespace CoolProxy.Plugins.Messages
             this.Controls.Add(this.button1);
             this.Controls.Add(this.listViewSessions);
             this.MinimumSize = new System.Drawing.Size(400, 600);
-            this.Name = "MessageLoggerForm";
+            this.Name = "MessageLogForm";
             this.ShowIcon = false;
             this.Text = "Message Log";
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -261,9 +216,5 @@ namespace CoolProxy.Plugins.Messages
         private System.Windows.Forms.ColumnHeader columnHeaderSummary;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem noFilterToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fewerSpammyMessagesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fewerSpammyMessagesnoSoundsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem objectUpdatesToolStripMenuItem;
     }
 }

@@ -56,7 +56,7 @@ namespace CoolProxy.Plugins.Messages
                     Packet.Header.Sequence.ToString(),
                     //Incoming ? "↑" : "↓",
                     Incoming ? "from" : "to",
-                    string.IsNullOrEmpty(Region.Name) ? Region.RemoteEndPoint.ToString() : Region.Name,
+                    Region == null ? "(first)" : string.IsNullOrEmpty(Region.Name) ? Region.RemoteEndPoint.ToString() : Region.Name,
                     Packet.Type.ToString(),
                     Summary
                 });
@@ -72,15 +72,18 @@ namespace CoolProxy.Plugins.Messages
         List<MessageLogEntry> Entries = new List<MessageLogEntry>();
 
 
-        private static string LessSpamFilter = "!StartPingCheck !CompletePingCheck !PacketAck !SimulatorViewerTimeMessage !SimStats !AgentUpdate !AgentAnimation !AvatarAnimation !ViewerEffect !CoarseLocationUpdate !LayerData !CameraConstraint !ObjectUpdateCached !RequestMultipleObjects !ObjectUpdate !ObjectUpdateCompressed !ImprovedTerseObjectUpdate !KillObject !ImagePacket !SendXferPacket !ConfirmXferPacket !TransferPacket !ObjectAnimation";
-        private static string LessSpamNoSoundsFilter = "!StartPingCheck !CompletePingCheck !PacketAck !SimulatorViewerTimeMessage !SimStats !AgentUpdate !AgentAnimation !AvatarAnimation !ViewerEffect !CoarseLocationUpdate !LayerData !CameraConstraint !ObjectUpdateCached !RequestMultipleObjects !ObjectUpdate !ObjectUpdateCompressed !ImprovedTerseObjectUpdate !KillObject !ImagePacket !SendXferPacket !ConfirmXferPacket !TransferPacket !SoundTrigger !ObjectAnimation !AttachedSound !PreloadSound";
+        private static string LessSpamFilter = "!StartPingCheck !CompletePingCheck !PacketAck !SimulatorViewerTimeMessage !SimStats !AgentUpdate !AgentAnimation !AvatarAnimation !ViewerEffect !CoarseLocationUpdate !LayerData !CameraConstraint !ObjectUpdateCached !RequestMultipleObjects !ObjectUpdate !ObjectUpdateCompressed !ImprovedTerseObjectUpdate !KillObject !RequestObjectPropertiesFamily !ObjectPropertiesFamily !ImagePacket !SendXferPacket !ConfirmXferPacket !TransferPacket !ObjectAnimation";
+        private static string LessSpamNoSoundsFilter = "!StartPingCheck !CompletePingCheck !PacketAck !SimulatorViewerTimeMessage !SimStats !AgentUpdate !AgentAnimation !AvatarAnimation !ViewerEffect !CoarseLocationUpdate !LayerData !CameraConstraint !ObjectUpdateCached !RequestMultipleObjects !ObjectUpdate !ObjectUpdateCompressed !ImprovedTerseObjectUpdate !KillObject !RequestObjectPropertiesFamily !ObjectPropertiesFamily !ImagePacket !SendXferPacket !ConfirmXferPacket !TransferPacket !ObjectAnimation !SoundTrigger !AttachedSound !PreloadSound";
         private static string ObjectUpdatesFilter = "ObjectUpdateCached ObjectUpdate ObjectUpdateCompressed ImprovedTerseObjectUpdate KillObject RequestMultipleObjects";
 
         CoolProxyFrame Proxy;
 
+        private static MessageLogForm Instance;
+
         public MessageLogForm(CoolProxyFrame frame)
         {
             Proxy = frame;
+            Instance = this;
             InitializeComponent();
 
             var nf = contextMenuStrip1.Items.Add("No filter");
@@ -98,7 +101,11 @@ namespace CoolProxy.Plugins.Messages
             ou.Tag = ObjectUpdatesFilter;
             ou.Click += noFilterToolStripMenuItem_Click;
 
-            textBox1.Text = LessSpamFilter;
+            textBox1.Text = LessSpamNoSoundsFilter;
+
+            //PacketType.RequestObjectPropertiesFamily
+            //PacketType.ObjectPropertiesFamily
+            //PacketType.ObjectProperties
 
             ApplyFilter(textBox1.Text);
 
@@ -193,6 +200,11 @@ namespace CoolProxy.Plugins.Messages
             }
 
             label1.Text = string.Format("Showing {0} messages from {1}", listViewSessions.Items.Count, Entries.Count);
+        }
+
+        public static void LogPacket(Packet packet, RegionManager.RegionProxy region, Direction direction)
+        {
+            Instance.LogPacket(packet, region, direction == Direction.Incoming);
         }
 
         private void listViewSessions_SelectedIndexChanged(object sender, EventArgs e)

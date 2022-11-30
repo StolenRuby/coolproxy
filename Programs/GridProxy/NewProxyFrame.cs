@@ -20,6 +20,7 @@ namespace GridProxy
         public AgentManager Agent { get; private set; }
         public AvatarManager Avatars { get; private set; }
         public ObjectManager Objects { get; private set; }
+        public ParcelManager Parcels { get; private set; }
         public InventoryManager Inventory { get; private set; }
         public GridManager Grid { get; private set; }
         public AssetManager Assets { get; private set; }
@@ -62,6 +63,7 @@ namespace GridProxy
             Agent = new AgentManager(this);
             Avatars = new AvatarManager(this);
             Objects = new ObjectManager(this);
+            Parcels = new ParcelManager(this);
             Inventory = new InventoryManager(this);
             Grid = new GridManager(this);
             Assets = new AssetManager(this);

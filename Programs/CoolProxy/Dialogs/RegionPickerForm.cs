@@ -40,6 +40,8 @@ namespace CoolProxy
             this.TopMost = CoolProxy.Frame.Settings.getBool("KeepCoolProxyOnTop");
             CoolProxy.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
 
+            dataGridView1.DoubleBuffered(true);
+
             Proxy.Network.AddDelegate(PacketType.MapBlockReply, Direction.Incoming, OnMapBlockReply);
         }
 
@@ -57,7 +59,25 @@ namespace CoolProxy
                         for(int i = 0; i < count - 1; i++)
                         {
                             var block = reply.Data[i];
-                            dataGridView1.Rows.Add(block.Access, Utils.BytesToString(block.Name), block.X, block.Y);
+
+                            Image icon;
+
+                            switch(block.Access)
+                            {
+                                // Missing enum SimAccess
+                                case 13:
+                                    icon = Properties.Resources.Parcel_PG_Light;
+                                    break;
+                                case 21:
+                                    icon = Properties.Resources.Parcel_M_Light;
+                                    break;
+                                case 42:
+                                default:
+                                    icon = Properties.Resources.Parcel_R_Light;
+                                    break;
+                            }
+
+                            dataGridView1.Rows.Add(icon, Utils.BytesToString(block.Name), block.X, block.Y);
                         }
                     }
                 }

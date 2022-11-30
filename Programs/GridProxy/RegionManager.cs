@@ -85,6 +85,15 @@ namespace GridProxy
 
             OnNewRegion += RegionAdded;
             //OnHandshake += RegionManager_OnHandshake;
+
+            AddDelegate(PacketType.DisableSimulator, Direction.Incoming, HandleDisableSimulator);
+        }
+
+        private Packet HandleDisableSimulator(Packet packet, RegionProxy sim)
+        {
+            sim.Connected = false;
+
+            return packet;
         }
 
         //private void RegionManager_OnHandshake(RegionProxy region)
@@ -108,6 +117,8 @@ namespace GridProxy
             sim.Owner = handshake.RegionInfo.SimOwner;
 
             //Frame.SayToUser(sim.RegionID.ToString());
+
+            sim.Connected = true;
 
             OnHandshake?.Invoke(sim);
 
@@ -1201,6 +1212,8 @@ namespace GridProxy
             // LocalEndPoint: return the endpoint that the client should communicate with
             public IPEndPoint LocalEndPoint { get { return (IPEndPoint)socket.LocalEndPoint; } }
 
+            public bool Connected { get; internal set; } = true;
+
 
             public string GridURI { get; set; } = string.Empty;
 
@@ -1235,6 +1248,107 @@ namespace GridProxy
             public ulong Handle { get; internal set; } = 0;
 
             public string SeedCap { get; set; } = string.Empty;
+
+            /// <summary>A 64x64 grid of parcel coloring values. The values stored 
+            /// in this array are of the <seealso cref="ParcelArrayType"/> type</summary>
+            public byte[] ParcelOverlay = new byte[4096];
+            /// <summary></summary>
+            public int ParcelOverlaysReceived;
+
+            public readonly TerrainPatch[] Terrain;
+
+            /// <summary>
+            /// Provides access to an internal thread-safe dictionary containing parcel
+            /// information found in this simulator
+            /// </summary>
+            public InternalDictionary<int, Parcel> Parcels
+            {
+                get
+                {
+                    //if (Client.Settings.POOL_PARCEL_DATA)
+                    //{
+                    //    return DataPool.Parcels;
+                    //}
+                    if (_Parcels == null) _Parcels = new InternalDictionary<int, Parcel>();
+                    return _Parcels;
+                }
+            }
+            private InternalDictionary<int, Parcel> _Parcels;
+
+            private int[,] _ParcelMap;
+
+            /// <summary>
+            /// Provides access to an internal thread-safe multidimensional array containing a x,y grid mapped
+            /// to each 64x64 parcel's LocalID.
+            /// </summary>
+            public int[,] ParcelMap
+            {
+                get
+                {
+                    lock (this)
+                    {
+                        if (_ParcelMap == null) _ParcelMap = new int[64, 64];
+                        return _ParcelMap;
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Checks simulator parcel map to make sure it has downloaded all data successfully
+            /// </summary>
+            /// <returns>true if map is full (contains no 0's)</returns>
+            public bool IsParcelMapFull()
+            {
+                for (int y = 0; y < 64; y++)
+                {
+                    for (int x = 0; x < 64; x++)
+                    {
+                        if (this.ParcelMap[y, x] == 0)
+                            return false;
+                    }
+                }
+                return true;
+            }
+
+
+            /// <summary>
+            /// Retrieve the terrain height at a given coordinate
+            /// </summary>
+            /// <param name="x">Sim X coordinate, valid range is from 0 to 255</param>
+            /// <param name="y">Sim Y coordinate, valid range is from 0 to 255</param>
+            /// <param name="height">The terrain height at the given point if the
+            /// lookup was successful, otherwise 0.0f</param>
+            /// <returns>True if the lookup was successful, otherwise false</returns>
+            public bool TerrainHeightAtPoint(int x, int y, out float height)
+            {
+                if (Terrain != null && x >= 0 && x < 256 && y >= 0 && y < 256)
+                {
+                    int patchX = x / 16;
+                    int patchY = y / 16;
+                    x = x % 16;
+                    y = y % 16;
+
+                    TerrainPatch patch = Terrain[patchY * 16 + patchX];
+                    if (patch != null)
+                    {
+                        height = patch.Data[y * 16 + x];
+                        return true;
+                    }
+                }
+
+                height = 0.0f;
+                return false;
+            }
+
+
+            internal bool DownloadingParcelMap { get; set; } = false;
+
+
+            public ProxyFrame Client
+            {
+                get { return Frame; }
+            }
+
 
             private ProxyFrame Frame;
 
@@ -1349,6 +1463,19 @@ namespace GridProxy
                 backgroundTasks.Priority = ThreadPriority.Highest;
                 backgroundTasks.Start();
                 socket.BeginReceiveFrom(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ref clientEndPoint, new AsyncCallback(ReceiveFromClient), null);
+            }
+
+            public void Disconnect()
+            {
+                var ds = new DisableSimulatorPacket();
+                Inject(ds, Direction.Incoming);
+
+                var cc = new CloseCircuitPacket();
+                Inject(cc, Direction.Outgoing);
+
+                Connected = false;
+
+                socket.Close();
             }
 
             // ReceiveFromClient: packet received from the client
@@ -1466,6 +1593,7 @@ namespace GridProxy
                         // resume listening
                         try
                         {
+                            // if(Connected)
                             socket.BeginReceiveFrom(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None,
                                 ref clientEndPoint, new AsyncCallback(ReceiveFromClient), null);
                         }

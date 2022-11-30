@@ -63,6 +63,9 @@ namespace CoolProxy
 
             InitializeComponent();
 
+            debugRTB.Text = "Cool Proxy>";
+            debugRTB.SelectionStart = debugRTB.Text.Length;
+
             // log4net
             if (FireEventAppender.Instance != null)
             {
@@ -191,6 +194,23 @@ namespace CoolProxy
                 tabControl5.TabPages.Remove(tabPage20);
                 tabControl4.TabPages.Remove(blacklistTab);
             }
+
+            regionsDataGridView.DoubleBuffered(true);
+
+            var region_tracker_timer = new System.Windows.Forms.Timer();
+            region_tracker_timer.Tick += Region_tracker_timer_Tick;
+            region_tracker_timer.Interval = 1000;
+            region_tracker_timer.Start();
+        }
+
+        private void Region_tracker_timer_Tick(object sender, EventArgs e)
+        {
+            foreach(DataGridViewRow row in regionsDataGridView.Rows)
+            {
+                RegionProxy region = (RegionProxy)row.Tag;
+                row.Cells[0].Style.ForeColor = region.Connected ? region == CoolProxy.Frame.Network.CurrentSim ? Color.Green : Color.Black : Color.Maroon;
+                row.Cells[2].Value = region.Connected ? region.AvatarPositions.Count.ToString() : "?";
+            }
         }
 
         private void LoadBlacklist()
@@ -245,6 +265,8 @@ namespace CoolProxy
             }
         }
 
+        int currentLine = 0;
+
         void Instance_MessageLoggedEvent(object sender, MessageLoggedEventArgs e)
         {
             if (this.IsDisposed || this.Disposing)
@@ -259,31 +281,115 @@ namespace CoolProxy
                 //string s = String.Format(/*"{0}*/ "[{1}] {2} {3}", e.LoggingEvent.TimeStamp, e.LoggingEvent.Level,
                 //    e.LoggingEvent.RenderedMessage, e.LoggingEvent.ExceptionObject);
 
+                var i = debugRTB.GetFirstCharIndexFromLine(currentLine);
+
+
                 string s = e.LoggingEvent.RenderedMessage;
 
                 Regex reg = new Regex(@"\[.*\]");
                 Match match = reg.Match(s);
 
-                debugRTB.AppendText(string.Format("[{0}] ", e.LoggingEvent.Level));
+                debugRTB.SelectionStart = i;
+                debugRTB.SelectionLength = debugRTB.Text.Length - i;
+
+                string so_far = debugRTB.Text.Substring(i);
+
+                debugRTB.Cut();
 
                 if (match.Success)
                 {
-                    int a = debugRTB.TextLength;
-                    debugRTB.AppendText(s.Substring(match.Index, match.Length));
-                    int b = debugRTB.TextLength;
-                    debugRTB.AppendText(s.Substring(match.Index + match.Length));
+                    string log_str = string.Format("[{0}] ", e.LoggingEvent.Level);
 
-                    debugRTB.Select(a, b - a);
+                    int start_index = log_str.Length;
+
+                    log_str += s.Substring(match.Index, match.Length);
+                    log_str += s.Substring(match.Index + match.Length);
+                    log_str += "\n";
+
+                    debugRTB.AppendText(log_str);
+                    debugRTB.AppendText(so_far);
+
+                    debugRTB.Select(start_index + i, match.Length);
                     debugRTB.SelectionColor = Color.Cyan;
-
                     debugRTB.DeselectAll();
 
-                    debugRTB.AppendText("\n");
+                    currentLine = debugRTB.GetLineFromCharIndex(debugRTB.Text.Length);
+                    debugRTB.SelectionStart = debugRTB.Text.Length;
                 }
                 else
                 {
                     debugRTB.AppendText(s + "\n");
+                    debugRTB.AppendText(so_far);
+
+                    debugRTB.SelectionStart = debugRTB.Text.Length;
+
                 }
+            }
+        }
+
+        private void debugRTB_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back)
+            {
+                if (currentLine > 0)
+                {
+                    if (debugRTB.Lines[debugRTB.Lines.Length - 1].Length < 12)
+                        e.SuppressKeyPress = true;
+                }
+                else
+                {
+                    if (debugRTB.Text.Length < 12)
+                        e.SuppressKeyPress = true;
+                }
+            }
+            else if (e.KeyCode == Keys.Return)
+            {
+                var i = debugRTB.GetFirstCharIndexFromLine(currentLine);
+
+                i += 11;
+
+                if (debugRTB.Text.Length > i)
+                {
+                    string cmd = debugRTB.Text.Substring(i);
+
+                    if (cmd == "clear")
+                    {
+                        debugRTB.Text = "Cool Proxy>";
+                        debugRTB.SelectionStart = 11;
+                        currentLine = 0;
+                        e.SuppressKeyPress = true;
+                        return;
+                    }
+                    else
+                    {
+                        string output = "\n" + CoolProxy.Frame.RunCommand(cmd);
+                        debugRTB.AppendText(output);
+                    }
+                }
+
+                debugRTB.AppendText("\nCool Proxy>");
+                debugRTB.SelectionStart = debugRTB.Text.Length;
+
+                currentLine = debugRTB.GetLineFromCharIndex(debugRTB.Text.Length);
+
+                e.SuppressKeyPress = true;
+                return;
+            }
+
+            switch(e.KeyCode)
+            {
+                case Keys.Up:
+                case Keys.Down:
+                case Keys.Left:
+                case Keys.Right:
+                    e.SuppressKeyPress = true;
+                    return;
+            }
+
+            if (debugRTB.SelectionStart != debugRTB.Text.Length)
+            {
+                debugRTB.SelectionStart = debugRTB.Text.Length;
+                debugRTB.ScrollToCaret();
             }
         }
 
@@ -1179,6 +1285,7 @@ namespace CoolProxy
                 {
                     this.Show();
                     this.WindowState = FormWindowState.Normal;
+                    this.Activate();
 
                     CoolProxy.Frame.Settings.setBool("AlertStillRunning", false);
                 }
@@ -1298,28 +1405,6 @@ namespace CoolProxy
             return count;
         }
 
-        private void forgeToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            UUID folder_id = CoolProxy.Frame.Inventory.SuitcaseID != UUID.Zero ?
-                CoolProxy.Frame.Inventory.FindSuitcaseFolderForType(FolderType.Sound) :
-                CoolProxy.Frame.Inventory.FindFolderForType(FolderType.Sound);
-
-            foreach (DataGridViewRow row in soundsDataGridView.SelectedRows)
-            {
-                UUID sound_id = UUID.Parse((string)row.Cells[1].Value);
-                UUID item_id = UUID.Random();
-
-                //CoolProxy.Frame.OpenSim.XInventory.AddItem(folder_id, item_id, sound_id, AssetType.Sound, InventoryType.Sound, 0, sound_id.ToString(), "", DateTime.UtcNow, (item_succes) =>
-                //{
-                //    if (item_succes)
-                //    {
-                //        CoolProxy.Frame.Inventory.RequestFetchInventory(item_id, CoolProxy.Frame.Agent.AgentID, false);
-                //    }
-                //    else CoolProxy.Frame.SayToUser("Failed to forge!");
-                //});
-            }
-        }
-
         public void AddToggleFormQuick(string cat, string name, Form form)
         {
             CheckBox ASTCheck = AddToolCheckbox(cat, name, (x, y) =>
@@ -1344,6 +1429,8 @@ namespace CoolProxy
                 ASTCheck.Checked = false;
             };
 
+            form.Deactivate += HandleFormDeactivated;
+            form.Activated += HandleFormActivated;
 
             form.TopMost = CoolProxy.Frame.Settings.getBool("KeepCoolProxyOnTop");
             CoolProxy.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { form.TopMost = (bool)y.Value; };
@@ -1542,11 +1629,30 @@ namespace CoolProxy
                 }
             };
 
+            testForm.Activated += HandleFormActivated;
+            testForm.Deactivate +=HandleFormDeactivated;
+
+            inventoryBrowserForm.Activated += HandleFormActivated;
+            inventoryBrowserForm.Deactivate += HandleFormDeactivated;
+
             page.Controls.Add(bring_back);
             page.Controls.Add(show);
 
             if (!hide)
                 testForm.Show();
+        }
+
+        private void HandleFormActivated(object sender, EventArgs e)
+        {
+            var form = sender as Form;
+            form.Opacity = 1.0f;
+        }
+
+        private void HandleFormDeactivated(object sender, EventArgs e)
+        {
+            var form = sender as Form;
+            if (!form.Disposing)
+                form.Opacity = 0.5f;
         }
 
         private bool isPoppedTabOpen(object user_data)
@@ -1673,6 +1779,8 @@ namespace CoolProxy
                 e.Cancel = true;
                 return;
             }
+
+            var region = (RegionProxy)regionsDataGridView.SelectedRows[0].Tag;
         }
 
         private void clearCacheButton_Click(object sender, EventArgs e)
@@ -1986,27 +2094,6 @@ namespace CoolProxy
         private void githubLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://github.com/StolenRuby/coolproxy");
-        }
-
-        private void textBox2_KeyDown(object sender, KeyEventArgs e)
-        {
-            if(e.KeyCode == Keys.Return)
-            {
-                string cmd = textBox2.Text;
-
-                if(!string.IsNullOrWhiteSpace(cmd))
-                {
-                    debugRTB.AppendText(">" + cmd + "\n");
-                    debugRTB.ScrollToCaret();
-                }
-
-                textBox2.Text = "";
-
-                string output = CoolProxy.Frame.RunCommand(cmd);
-
-                debugRTB.AppendText(output + "\n");
-                debugRTB.ScrollToCaret();
-            }
         }
 
         private void cmdPrefixCombo_SelectedIndexChanged(object sender, EventArgs e)

@@ -2354,26 +2354,27 @@ namespace GridProxy
         {
             //if (Client.Settings.ALWAYS_REQUEST_OBJECTS)
             //{
-            //    bool cachedPrimitives = Client.Settings.CACHE_PRIMITIVES;
-            //    ObjectUpdateCachedPacket update = (ObjectUpdateCachedPacket)packet;
-            //    List<uint> ids = new List<uint>(update.ObjectData.Length);
+                //bool cachedPrimitives = Client.Settings.CACHE_PRIMITIVES;
+                ObjectUpdateCachedPacket update = (ObjectUpdateCachedPacket)packet;
+                List<uint> ids = new List<uint>(update.ObjectData.Length);
 
-            //    // Object caching is implemented when Client.Settings.PRIMITIVES_FACTORY is True, otherwise request updates for all of these objects
-            //    for (int i = 0; i < update.ObjectData.Length; i++)
-            //    {
-            //        uint localID = update.ObjectData[i].ID;
+                // Object caching is implemented when Client.Settings.PRIMITIVES_FACTORY is True, otherwise request updates for all of these objects
+                for (int i = 0; i < update.ObjectData.Length; i++)
+                {
+                    uint localID = update.ObjectData[i].ID;
 
-            //        if (cachedPrimitives)
-            //        {
-            //            if (!simulator.DataPool.NeedsRequest(localID))
-            //            {
-            //                continue;
-            //            }
-            //        }
-            //        ids.Add(localID);
-            //    }
-            //    RequestObjects(simulator, ids);
+                    //if (cachedPrimitives)
+                    //{
+                    //    if (!simulator.DataPool.NeedsRequest(localID))
+                    //    {
+                    //        continue;
+                    //    }
+                    //}
+                    ids.Add(localID);
+                }
+                RequestObjects(region, ids);
             //}
+
             return packet;
         }
 

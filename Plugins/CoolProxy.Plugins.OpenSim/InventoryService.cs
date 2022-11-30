@@ -15,7 +15,7 @@ namespace CoolProxy.Plugins.OpenSim
     public delegate void HandleGetFolder(InventoryFolder folder);
     public delegate void HandleFolderContents(InventoryFolder[] folders, InventoryItem[] items);
 
-    delegate void HandleResponse(Dictionary<string, object> reply_data);
+    public delegate void HandleResponse(Dictionary<string, object> reply_data);
 
     public class XInventoryServie
     {

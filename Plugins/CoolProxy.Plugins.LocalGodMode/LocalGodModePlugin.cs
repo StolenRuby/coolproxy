@@ -42,6 +42,26 @@ namespace CoolProxy.Plugins.LocalGodMode
                 };
                 gui.AddMainMenuOption(opt);
             }
+
+            gui.AddMainMenuOption(new MenuOption("TOGGLE_HACKED_GODMODE", "Hacked GodMode", false)
+            {
+                Checked = (x) => LocalGodLevel > 0,
+                Clicked = (x) =>
+                {
+                    handleChangeGodLevel(LocalGodLevel > 0 ? 0 : 250);
+
+                    if(LocalGodLevel > 0)
+                    {
+                        Proxy.Network.AddDelegate(PacketType.ObjectUpdate, Direction.Incoming, HandleObjectUpdate);
+                        Proxy.Network.AddDelegate(PacketType.ObjectUpdateCompressed, Direction.Incoming, HandleObjectUpdateCompressed);
+                    }
+                    else
+                    {
+                        Proxy.Network.RemoveDelegate(PacketType.ObjectUpdate, Direction.Incoming, HandleObjectUpdate);
+                        Proxy.Network.RemoveDelegate(PacketType.ObjectUpdateCompressed, Direction.Incoming, HandleObjectUpdateCompressed);
+                    }
+                }
+            });
         }
 
 
@@ -67,6 +87,35 @@ namespace CoolProxy.Plugins.LocalGodMode
         private bool handleCheckGodLevel(object user_data)
         {
             return (int)user_data == LocalGodLevel;
+        }
+
+        private Packet HandleObjectUpdate(Packet packet, RegionManager.RegionProxy sim)
+        {
+            var update = packet as ObjectUpdatePacket;
+
+            foreach (var block in update.ObjectData)
+            {
+                PrimFlags flags = (PrimFlags)block.UpdateFlags;
+                flags |= PrimFlags.ObjectModify | PrimFlags.ObjectMove;
+                //flags |= PrimFlags.ObjectModify | PrimFlags.ObjectCopy | PrimFlags.ObjectTransfer | PrimFlags.ObjectYouOwner | PrimFlags.ObjectMove | PrimFlags.ObjectOwnerModify | PrimFlags.ObjectYouOfficer;
+                block.UpdateFlags = (uint)flags;
+            }
+
+            return update;
+        }
+
+        private Packet HandleObjectUpdateCompressed(Packet packet, RegionManager.RegionProxy sim)
+        {
+            var ouc = packet as ObjectUpdateCompressedPacket;
+            foreach (var block in ouc.ObjectData)
+            {
+                PrimFlags flags = (PrimFlags)block.UpdateFlags;
+                flags |= PrimFlags.ObjectModify | PrimFlags.ObjectMove;
+                //flags |= PrimFlags.ObjectModify | PrimFlags.ObjectCopy | PrimFlags.ObjectTransfer | PrimFlags.ObjectYouOwner | PrimFlags.ObjectMove | PrimFlags.ObjectOwnerModify | PrimFlags.ObjectYouOfficer;
+                block.UpdateFlags = (uint)flags;
+            }
+
+            return ouc;
         }
     }
 }

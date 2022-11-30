@@ -19,6 +19,7 @@ namespace GridProxy
         public UUID AgentID { get; private set; } = UUID.Zero;
         public UUID SessionID { get; private set; } = UUID.Zero;
         public UUID SecureSessionID { get; private set; } = UUID.Zero;
+        public uint CircuitCode { get; private set; } = 0;
         public string FirstName { get; private set; } = string.Empty;
         public string LastName { get; private set; } = string.Empty;
         public UUID InventoryRoot { get; private set; }
@@ -184,6 +185,8 @@ namespace GridProxy
                 SessionID = new UUID((string)values["session_id"]);
             if (values.Contains("secure_session_id"))
                 SecureSessionID = new UUID((string)values["secure_session_id"]);
+            if (values.Contains("circuit_code"))
+                CircuitCode = (uint)(int)values["circuit_code"];
 
             if (values.Contains("first_name"))
                 FirstName = (string)values["first_name"];

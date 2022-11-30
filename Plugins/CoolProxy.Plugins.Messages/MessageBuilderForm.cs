@@ -56,12 +56,28 @@ namespace CoolProxy.Plugins.Messages
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            var scroll = regionsDGV.FirstDisplayedCell?.RowIndex ?? -1;
+
+            RegionManager.RegionProxy selected_region = Proxy.Network.CurrentSim;
+
+            if(regionsDGV.SelectedRows.Count == 1)
+            {
+                selected_region = (RegionManager.RegionProxy)regionsDGV.SelectedRows[0].Tag;
+            }
+
             regionsDGV.Rows.Clear();
 
             foreach(var region in Proxy.Network.Regions.ToArray())
             {
-                regionsDGV.Rows.Add(region.Name + (region == Proxy.Network.CurrentSim ? " (main)" : "") , "Alive");
+                int index = regionsDGV.Rows.Add((string.IsNullOrEmpty(region.Name) ? region.RemoteEndPoint.ToString() : region.Name) + (region == Proxy.Network.CurrentSim ? " (main)" : ""), region.Connected ? "Alive" : "Dead");
+                regionsDGV.Rows[index].Tag = region;
+
+                if (region == selected_region)
+                    regionsDGV.Rows[index].Selected = true;
             }
+
+            if (scroll != -1)
+                regionsDGV.FirstDisplayedCell = regionsDGV.Rows[scroll].Cells[0];
         }
 
         internal static void Open(Packet packet, Direction dir)
@@ -79,7 +95,7 @@ namespace CoolProxy.Plugins.Messages
         }
 
 
-        internal void InjectPacket(string packetData, bool toSimulator)
+        internal void InjectPacket(string packetData, RegionManager.RegionProxy region)
         {
             Direction direction = Direction.Incoming;
             string name = null;
@@ -200,7 +216,12 @@ namespace CoolProxy.Plugins.Messages
 
                 packet.Header.Reliable = true;
 
-                Proxy.Network.InjectPacket(packet, direction);
+                if (region == null)
+                    Proxy.Network.InjectPacket(packet, direction);
+                else
+                    region.Inject(packet, direction);
+
+                MessageLogForm.LogPacket(packet, region, direction);
 
                 OpenMetaverse.Logger.Log("Injected " + name, OpenMetaverse.Helpers.LogLevel.Info);
             }
@@ -361,9 +382,21 @@ namespace CoolProxy.Plugins.Messages
 
         private void button1_Click(object sender, EventArgs e)
         {
+            var selected_region = Proxy.Network.CurrentSim;
+            if (regionsDGV.SelectedRows.Count == 1)
+            {
+                selected_region = (RegionManager.RegionProxy)regionsDGV.SelectedRows[0].Tag;
+            }
+
+            if(!selected_region?.Connected ?? false)
+            {
+                Proxy.SayToUser("Dead circuit");
+                return;
+            }
+
             string data = textBox1.Text;
             data = data.Replace(Environment.NewLine, "\n");
-            InjectPacket(data, true);
+            InjectPacket(data, selected_region);
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)

@@ -283,4 +283,13 @@
   <data name="Inv_VersionFolderOpen" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\icons\Inv_VersionFolderOpen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Parcel_M_Light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icons\Parcel_M_Light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Parcel_PG_Light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icons\Parcel_PG_Light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Parcel_R_Light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icons\Parcel_R_Light.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

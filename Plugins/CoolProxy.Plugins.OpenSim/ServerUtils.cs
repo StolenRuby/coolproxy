@@ -126,7 +126,7 @@ namespace CoolProxy.Plugins.OpenSim
                         sb.Append("&");
                     sb.Append(System.Web.HttpUtility.UrlEncode(kvp.Key));
 
-                    pvalue = kvp.Value.ToString();
+                    pvalue = kvp.Value?.ToString() ?? string.Empty;
                     if (!String.IsNullOrEmpty(pvalue))
                     {
                         sb.Append("=");

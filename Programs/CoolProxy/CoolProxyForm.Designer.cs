@@ -58,8 +58,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.githubLinkLabel = new System.Windows.Forms.LinkLabel();
             this.label3 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new L33T.GUI.NumericUpDown();
-            this.textBox1 = new L33T.GUI.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.gridsComboBox = new System.Windows.Forms.ComboBox();
@@ -80,7 +78,6 @@
             this.viewCapsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyRegionIPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyRegionIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeCircuitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage15 = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPage13 = new System.Windows.Forms.TabPage();
@@ -100,8 +97,6 @@
             this.playLocallyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playInworldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.forgeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.blacklistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.blacklistTab = new System.Windows.Forms.TabPage();
             this.blacklistDataGridView = new System.Windows.Forms.DataGridView();
@@ -134,17 +129,9 @@
             this.tabPage11 = new System.Windows.Forms.TabPage();
             this.panel4 = new System.Windows.Forms.Panel();
             this.debugRTB = new System.Windows.Forms.RichTextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.settingsTabPage = new System.Windows.Forms.TabPage();
             this.settingsTabControl = new System.Windows.Forms.TabControl();
             this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.checkBox1 = new CoolGUI.Controls.CheckBox();
-            this.checkBox9 = new CoolGUI.Controls.CheckBox();
-            this.checkBox2 = new CoolGUI.Controls.CheckBox();
-            this.checkBox6 = new CoolGUI.Controls.CheckBox();
-            this.checkBox3 = new CoolGUI.Controls.CheckBox();
-            this.numericUpDown5 = new L33T.GUI.NumericUpDown();
-            this.numericUpDown4 = new L33T.GUI.NumericUpDown();
             this.clearCacheButton = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -152,7 +139,6 @@
             this.chatCommandsPanel = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.cmdPrefixCombo = new System.Windows.Forms.ComboBox();
-            this.checkBox4 = new CoolGUI.Controls.CheckBox();
             this.label38 = new System.Windows.Forms.Label();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.miscPluginsTabControl = new System.Windows.Forms.TabControl();
@@ -200,8 +186,6 @@
             this.showDebugSettingsButton = new System.Windows.Forms.Button();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.button3 = new System.Windows.Forms.Button();
-            this.checkBox19 = new CoolGUI.Controls.CheckBox();
-            this.checkBox18 = new CoolGUI.Controls.CheckBox();
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.testMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.dummyItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -210,10 +194,21 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.saveXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.numericUpDown2 = new L33T.GUI.NumericUpDown();
+            this.textBox1 = new L33T.GUI.TextBox();
+            this.checkBox1 = new CoolGUI.Controls.CheckBox();
+            this.checkBox9 = new CoolGUI.Controls.CheckBox();
+            this.checkBox2 = new CoolGUI.Controls.CheckBox();
+            this.checkBox6 = new CoolGUI.Controls.CheckBox();
+            this.checkBox3 = new CoolGUI.Controls.CheckBox();
+            this.numericUpDown5 = new L33T.GUI.NumericUpDown();
+            this.numericUpDown4 = new L33T.GUI.NumericUpDown();
+            this.checkBox4 = new CoolGUI.Controls.CheckBox();
+            this.checkBox19 = new CoolGUI.Controls.CheckBox();
+            this.checkBox18 = new CoolGUI.Controls.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.avatarTrackerGridView)).BeginInit();
             this.tabPage3.SuspendLayout();
@@ -242,8 +237,6 @@
             this.settingsTabPage.SuspendLayout();
             this.settingsTabControl.SuspendLayout();
             this.tabPage9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.chatCommandsPanel.SuspendLayout();
             this.tabPage8.SuspendLayout();
@@ -256,6 +249,9 @@
             this.tabPage10.SuspendLayout();
             this.testMenu.SuspendLayout();
             this.blacklistContextMenuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -334,32 +330,6 @@
             this.label3.TabIndex = 40;
             this.label3.Text = ".: COOL PROXY IS COOL :.";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // numericUpDown2
-            // 
-            this.numericUpDown2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown2.EnabledSetting = null;
-            this.numericUpDown2.Location = new System.Drawing.Point(260, 131);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            12000,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Setting = "GridProxyListenPort";
-            this.numericUpDown2.Size = new System.Drawing.Size(83, 20);
-            this.numericUpDown2.TabIndex = 37;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.EnabledSetting = null;
-            this.textBox1.Location = new System.Drawing.Point(131, 131);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Setting = "GridProxyListenAddress";
-            this.textBox1.Size = new System.Drawing.Size(123, 20);
-            this.textBox1.TabIndex = 36;
             // 
             // label2
             // 
@@ -558,11 +528,10 @@
             this.regionsContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewCapsToolStripMenuItem,
             this.copyRegionIPToolStripMenuItem,
-            this.copyRegionIDToolStripMenuItem,
-            this.closeCircuitToolStripMenuItem});
+            this.copyRegionIDToolStripMenuItem});
             this.regionsContextMenu.Name = "regionsContextMenu";
             this.regionsContextMenu.ShowImageMargin = false;
-            this.regionsContextMenu.Size = new System.Drawing.Size(132, 92);
+            this.regionsContextMenu.Size = new System.Drawing.Size(132, 70);
             this.regionsContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.regionsContextMenu_Opening);
             // 
             // viewCapsToolStripMenuItem
@@ -585,13 +554,6 @@
             this.copyRegionIDToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.copyRegionIDToolStripMenuItem.Text = "Copy Region ID";
             this.copyRegionIDToolStripMenuItem.Click += new System.EventHandler(this.copyRegionIDToolStripMenuItem_Click);
-            // 
-            // closeCircuitToolStripMenuItem
-            // 
-            this.closeCircuitToolStripMenuItem.Name = "closeCircuitToolStripMenuItem";
-            this.closeCircuitToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
-            this.closeCircuitToolStripMenuItem.Text = "Close Circuit";
-            this.closeCircuitToolStripMenuItem.Visible = false;
             // 
             // tabPage15
             // 
@@ -777,51 +739,35 @@
             this.playLocallyToolStripMenuItem,
             this.playInworldToolStripMenuItem,
             this.toolStripSeparator9,
-            this.forgeToolStripMenuItem1,
-            this.saveAsToolStripMenuItem1,
             this.blacklistToolStripMenuItem});
             this.soundsListContextMenu.Name = "soundsListContextMenu";
             this.soundsListContextMenu.ShowImageMargin = false;
-            this.soundsListContextMenu.Size = new System.Drawing.Size(145, 120);
+            this.soundsListContextMenu.Size = new System.Drawing.Size(115, 76);
             this.soundsListContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.soundsListContextMenu_Opening);
             // 
             // playLocallyToolStripMenuItem
             // 
             this.playLocallyToolStripMenuItem.Name = "playLocallyToolStripMenuItem";
-            this.playLocallyToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.playLocallyToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.playLocallyToolStripMenuItem.Text = "Play Locally";
             this.playLocallyToolStripMenuItem.Click += new System.EventHandler(this.playLocallyToolStripMenuItem_Click);
             // 
             // playInworldToolStripMenuItem
             // 
             this.playInworldToolStripMenuItem.Name = "playInworldToolStripMenuItem";
-            this.playInworldToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.playInworldToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.playInworldToolStripMenuItem.Text = "Play Inworld";
             this.playInworldToolStripMenuItem.Click += new System.EventHandler(this.playInworldToolStripMenuItem_Click);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(141, 6);
-            // 
-            // forgeToolStripMenuItem1
-            // 
-            this.forgeToolStripMenuItem1.Name = "forgeToolStripMenuItem1";
-            this.forgeToolStripMenuItem1.Size = new System.Drawing.Size(144, 22);
-            this.forgeToolStripMenuItem1.Text = "Copy to Inventory";
-            this.forgeToolStripMenuItem1.Click += new System.EventHandler(this.forgeToolStripMenuItem1_Click);
-            // 
-            // saveAsToolStripMenuItem1
-            // 
-            this.saveAsToolStripMenuItem1.Name = "saveAsToolStripMenuItem1";
-            this.saveAsToolStripMenuItem1.Size = new System.Drawing.Size(144, 22);
-            this.saveAsToolStripMenuItem1.Text = "Save As...";
-            this.saveAsToolStripMenuItem1.Visible = false;
+            this.toolStripSeparator9.Size = new System.Drawing.Size(111, 6);
             // 
             // blacklistToolStripMenuItem
             // 
             this.blacklistToolStripMenuItem.Name = "blacklistToolStripMenuItem";
-            this.blacklistToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.blacklistToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.blacklistToolStripMenuItem.Text = "Blacklist";
             this.blacklistToolStripMenuItem.Click += new System.EventHandler(this.blacklistToolStripMenuItem_Click);
             // 
@@ -1160,7 +1106,6 @@
             // panel4
             // 
             this.panel4.Controls.Add(this.debugRTB);
-            this.panel4.Controls.Add(this.textBox2);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
@@ -1173,23 +1118,13 @@
             this.debugRTB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.debugRTB.Dock = System.Windows.Forms.DockStyle.Fill;
             this.debugRTB.ForeColor = System.Drawing.Color.Lime;
+            this.debugRTB.HideSelection = false;
             this.debugRTB.Location = new System.Drawing.Point(0, 0);
             this.debugRTB.Name = "debugRTB";
-            this.debugRTB.ReadOnly = true;
-            this.debugRTB.Size = new System.Drawing.Size(460, 246);
+            this.debugRTB.Size = new System.Drawing.Size(460, 266);
             this.debugRTB.TabIndex = 0;
             this.debugRTB.Text = "";
-            // 
-            // textBox2
-            // 
-            this.textBox2.BackColor = System.Drawing.Color.Black;
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBox2.ForeColor = System.Drawing.Color.LimeGreen;
-            this.textBox2.Location = new System.Drawing.Point(0, 246);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(460, 20);
-            this.textBox2.TabIndex = 0;
-            this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown);
+            this.debugRTB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.debugRTB_KeyDown);
             // 
             // settingsTabPage
             // 
@@ -1237,87 +1172,6 @@
             this.tabPage9.Size = new System.Drawing.Size(452, 240);
             this.tabPage9.TabIndex = 0;
             this.tabPage9.Text = "General";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.EnabledSetting = null;
-            this.checkBox1.Location = new System.Drawing.Point(14, 120);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Setting = "EnableGridInfo";
-            this.checkBox1.Size = new System.Drawing.Size(174, 17);
-            this.checkBox1.TabIndex = 45;
-            this.checkBox1.Text = "Enable OpenSim Style Grid Info";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox9
-            // 
-            this.checkBox9.AutoSize = true;
-            this.checkBox9.EnabledSetting = "StartProxyAtLaunch";
-            this.checkBox9.Location = new System.Drawing.Point(34, 33);
-            this.checkBox9.Name = "checkBox9";
-            this.checkBox9.Setting = "HideProxyAtLaunch";
-            this.checkBox9.Size = new System.Drawing.Size(126, 17);
-            this.checkBox9.TabIndex = 44;
-            this.checkBox9.Text = "Auto Hide Cool Proxy";
-            this.checkBox9.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.EnabledSetting = null;
-            this.checkBox2.Location = new System.Drawing.Point(14, 12);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Setting = "StartProxyAtLaunch";
-            this.checkBox2.Size = new System.Drawing.Size(157, 17);
-            this.checkBox2.TabIndex = 43;
-            this.checkBox2.Text = "Start Proxy when Launched";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox6
-            // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.EnabledSetting = null;
-            this.checkBox6.Location = new System.Drawing.Point(14, 97);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Setting = "MinimizeCoolProxyToTray";
-            this.checkBox6.Size = new System.Drawing.Size(166, 17);
-            this.checkBox6.TabIndex = 24;
-            this.checkBox6.Text = "Minimize CoolProxy to the tray";
-            this.checkBox6.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.EnabledSetting = null;
-            this.checkBox3.Location = new System.Drawing.Point(14, 74);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Setting = "KeepCoolProxyOnTop";
-            this.checkBox3.Size = new System.Drawing.Size(134, 17);
-            this.checkBox3.TabIndex = 23;
-            this.checkBox3.Text = "Keep CoolProxy on top";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDown5
-            // 
-            this.numericUpDown5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown5.EnabledSetting = null;
-            this.numericUpDown5.Location = new System.Drawing.Point(390, 35);
-            this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.Setting = "MaxSimultaneousDownloads";
-            this.numericUpDown5.Size = new System.Drawing.Size(56, 20);
-            this.numericUpDown5.TabIndex = 22;
-            // 
-            // numericUpDown4
-            // 
-            this.numericUpDown4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown4.Enabled = false;
-            this.numericUpDown4.EnabledSetting = null;
-            this.numericUpDown4.Location = new System.Drawing.Point(390, 10);
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Setting = "MaxSimultaneousUploads";
-            this.numericUpDown4.Size = new System.Drawing.Size(56, 20);
-            this.numericUpDown4.TabIndex = 21;
             // 
             // clearCacheButton
             // 
@@ -1395,18 +1249,6 @@
             this.cmdPrefixCombo.Size = new System.Drawing.Size(86, 21);
             this.cmdPrefixCombo.TabIndex = 65;
             this.cmdPrefixCombo.SelectedIndexChanged += new System.EventHandler(this.cmdPrefixCombo_SelectedIndexChanged);
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.EnabledSetting = null;
-            this.checkBox4.Location = new System.Drawing.Point(11, 9);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Setting = "EnableChatCommands";
-            this.checkBox4.Size = new System.Drawing.Size(139, 17);
-            this.checkBox4.TabIndex = 64;
-            this.checkBox4.Text = "Enable Chat Commands";
-            this.checkBox4.UseVisualStyleBackColor = true;
             // 
             // label38
             // 
@@ -1956,31 +1798,6 @@
             this.button3.Text = "Check for Update Now";
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // checkBox19
-            // 
-            this.checkBox19.AutoSize = true;
-            this.checkBox19.Enabled = false;
-            this.checkBox19.EnabledSetting = null;
-            this.checkBox19.Location = new System.Drawing.Point(14, 35);
-            this.checkBox19.Name = "checkBox19";
-            this.checkBox19.Setting = "ShowConsole";
-            this.checkBox19.Size = new System.Drawing.Size(94, 17);
-            this.checkBox19.TabIndex = 30;
-            this.checkBox19.Text = "Show Console";
-            this.checkBox19.UseVisualStyleBackColor = true;
-            // 
-            // checkBox18
-            // 
-            this.checkBox18.AutoSize = true;
-            this.checkBox18.EnabledSetting = null;
-            this.checkBox18.Location = new System.Drawing.Point(14, 12);
-            this.checkBox18.Name = "checkBox18";
-            this.checkBox18.Setting = "AllowMultipleInstances";
-            this.checkBox18.Size = new System.Drawing.Size(139, 17);
-            this.checkBox18.TabIndex = 28;
-            this.checkBox18.Text = "Allow Multiple Instances";
-            this.checkBox18.UseVisualStyleBackColor = true;
-            // 
             // trayIcon
             // 
             this.trayIcon.ContextMenuStrip = this.testMenu;
@@ -2039,6 +1856,150 @@
             this.loadXMLToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.loadXMLToolStripMenuItem.Text = "Load XML";
             // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown2.EnabledSetting = null;
+            this.numericUpDown2.Location = new System.Drawing.Point(260, 131);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            12000,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Setting = "GridProxyListenPort";
+            this.numericUpDown2.Size = new System.Drawing.Size(83, 20);
+            this.numericUpDown2.TabIndex = 37;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.EnabledSetting = null;
+            this.textBox1.Location = new System.Drawing.Point(131, 131);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Setting = "GridProxyListenAddress";
+            this.textBox1.Size = new System.Drawing.Size(123, 20);
+            this.textBox1.TabIndex = 36;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.EnabledSetting = null;
+            this.checkBox1.Location = new System.Drawing.Point(14, 120);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Setting = "EnableGridInfo";
+            this.checkBox1.Size = new System.Drawing.Size(174, 17);
+            this.checkBox1.TabIndex = 45;
+            this.checkBox1.Text = "Enable OpenSim Style Grid Info";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox9
+            // 
+            this.checkBox9.AutoSize = true;
+            this.checkBox9.EnabledSetting = "StartProxyAtLaunch";
+            this.checkBox9.Location = new System.Drawing.Point(34, 33);
+            this.checkBox9.Name = "checkBox9";
+            this.checkBox9.Setting = "HideProxyAtLaunch";
+            this.checkBox9.Size = new System.Drawing.Size(126, 17);
+            this.checkBox9.TabIndex = 44;
+            this.checkBox9.Text = "Auto Hide Cool Proxy";
+            this.checkBox9.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.EnabledSetting = null;
+            this.checkBox2.Location = new System.Drawing.Point(14, 12);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Setting = "StartProxyAtLaunch";
+            this.checkBox2.Size = new System.Drawing.Size(157, 17);
+            this.checkBox2.TabIndex = 43;
+            this.checkBox2.Text = "Start Proxy when Launched";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox6
+            // 
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.EnabledSetting = null;
+            this.checkBox6.Location = new System.Drawing.Point(14, 97);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Setting = "MinimizeCoolProxyToTray";
+            this.checkBox6.Size = new System.Drawing.Size(166, 17);
+            this.checkBox6.TabIndex = 24;
+            this.checkBox6.Text = "Minimize CoolProxy to the tray";
+            this.checkBox6.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.EnabledSetting = null;
+            this.checkBox3.Location = new System.Drawing.Point(14, 74);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Setting = "KeepCoolProxyOnTop";
+            this.checkBox3.Size = new System.Drawing.Size(134, 17);
+            this.checkBox3.TabIndex = 23;
+            this.checkBox3.Text = "Keep CoolProxy on top";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown5
+            // 
+            this.numericUpDown5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown5.EnabledSetting = null;
+            this.numericUpDown5.Location = new System.Drawing.Point(390, 35);
+            this.numericUpDown5.Name = "numericUpDown5";
+            this.numericUpDown5.Setting = "MaxSimultaneousDownloads";
+            this.numericUpDown5.Size = new System.Drawing.Size(56, 20);
+            this.numericUpDown5.TabIndex = 22;
+            // 
+            // numericUpDown4
+            // 
+            this.numericUpDown4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown4.Enabled = false;
+            this.numericUpDown4.EnabledSetting = null;
+            this.numericUpDown4.Location = new System.Drawing.Point(390, 10);
+            this.numericUpDown4.Name = "numericUpDown4";
+            this.numericUpDown4.Setting = "MaxSimultaneousUploads";
+            this.numericUpDown4.Size = new System.Drawing.Size(56, 20);
+            this.numericUpDown4.TabIndex = 21;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.EnabledSetting = null;
+            this.checkBox4.Location = new System.Drawing.Point(11, 9);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Setting = "EnableChatCommands";
+            this.checkBox4.Size = new System.Drawing.Size(139, 17);
+            this.checkBox4.TabIndex = 64;
+            this.checkBox4.Text = "Enable Chat Commands";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // checkBox19
+            // 
+            this.checkBox19.AutoSize = true;
+            this.checkBox19.Enabled = false;
+            this.checkBox19.EnabledSetting = null;
+            this.checkBox19.Location = new System.Drawing.Point(14, 35);
+            this.checkBox19.Name = "checkBox19";
+            this.checkBox19.Setting = "ShowConsole";
+            this.checkBox19.Size = new System.Drawing.Size(94, 17);
+            this.checkBox19.TabIndex = 30;
+            this.checkBox19.Text = "Show Console";
+            this.checkBox19.UseVisualStyleBackColor = true;
+            // 
+            // checkBox18
+            // 
+            this.checkBox18.AutoSize = true;
+            this.checkBox18.EnabledSetting = null;
+            this.checkBox18.Location = new System.Drawing.Point(14, 12);
+            this.checkBox18.Name = "checkBox18";
+            this.checkBox18.Setting = "AllowMultipleInstances";
+            this.checkBox18.Size = new System.Drawing.Size(139, 17);
+            this.checkBox18.TabIndex = 28;
+            this.checkBox18.Text = "Allow Multiple Instances";
+            this.checkBox18.UseVisualStyleBackColor = true;
+            // 
             // CoolProxyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2052,6 +2013,8 @@
             this.Name = "CoolProxyForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cool Proxy";
+            this.Activated += new System.EventHandler(this.HandleFormActivated);
+            this.Deactivate += new System.EventHandler(this.HandleFormDeactivated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CoolProxyForm_FormClosing);
             this.Load += new System.EventHandler(this.CoolProxyForm_Load);
             this.Shown += new System.EventHandler(this.CoolProxyForm_Shown);
@@ -2060,7 +2023,6 @@
             this.tabPage1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.avatarTrackerGridView)).EndInit();
             this.tabPage3.ResumeLayout(false);
@@ -2088,13 +2050,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.uploadsGridView)).EndInit();
             this.tabPage11.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
             this.settingsTabPage.ResumeLayout(false);
             this.settingsTabControl.ResumeLayout(false);
             this.tabPage9.ResumeLayout(false);
             this.tabPage9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.chatCommandsPanel.ResumeLayout(false);
             this.chatCommandsPanel.PerformLayout();
@@ -2111,6 +2070,9 @@
             this.tabPage10.PerformLayout();
             this.testMenu.ResumeLayout(false);
             this.blacklistContextMenuStrip.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2177,8 +2139,6 @@
         private System.Windows.Forms.ToolStripMenuItem playLocallyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem playInworldToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
-        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem forgeToolStripMenuItem1;
         private CoolGUI.Controls.CheckBox checkBox18;
         private CoolGUI.Controls.CheckBox checkBox19;
         private System.Windows.Forms.Button showDebugSettingsButton;
@@ -2195,7 +2155,6 @@
         private System.Windows.Forms.ToolStripMenuItem viewCapsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyRegionIPToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyRegionIDToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem closeCircuitToolStripMenuItem;
         private System.Windows.Forms.TabPage tabPage15;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.DataGridViewTextBoxColumn gridNameColumn;
@@ -2244,7 +2203,6 @@
         private System.Windows.Forms.TabPage tabPage11;
         private System.Windows.Forms.RichTextBox debugRTB;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cmdPrefixCombo;
         private System.Windows.Forms.TabPage blacklistTab;

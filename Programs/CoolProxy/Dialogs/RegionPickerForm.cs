@@ -35,10 +35,10 @@ namespace CoolProxy
         public RegionPickerForm()
         {
             InitializeComponent();
-            Proxy = CoolProxy.Frame;
+            Proxy = Program.Frame;
 
-            this.TopMost = CoolProxy.Frame.Settings.getBool("KeepCoolProxyOnTop");
-            CoolProxy.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
+            this.TopMost = Program.Frame.Settings.getBool("KeepCoolProxyOnTop");
+            Program.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
 
             dataGridView1.DoubleBuffered(true);
 

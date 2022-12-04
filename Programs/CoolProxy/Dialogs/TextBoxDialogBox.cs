@@ -26,8 +26,8 @@ namespace CoolProxy
             this.Text = title;
             label1.Text = message;
 
-            this.TopMost = CoolProxy.Frame.Settings.getBool("KeepCoolProxyOnTop");
-            CoolProxy.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
+            this.TopMost = Program.Frame.Settings.getBool("KeepCoolProxyOnTop");
+            Program.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
         }
 
         private void button1_Click(object sender, EventArgs e)

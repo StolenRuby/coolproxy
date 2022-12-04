@@ -1,4 +1,7 @@
-﻿using CoolProxy.Plugins.OpenSim;
+﻿using CoolProxy.Plugins.AvatarTracker;
+using CoolProxy.Plugins.InventoryBrowser;
+using CoolProxy.Plugins.OpenSim;
+using CoolProxy.Plugins.ToolBox;
 using OpenMetaverse;
 using OpenMetaverse.Packets;
 using OpenMetaverse.StructuredData;
@@ -27,74 +30,107 @@ namespace CoolProxy.Plugins.Useful
 
             ROBUST = frame.RequestModuleInterface<IROBUST>();
 
-            IGUI gui = frame.RequestModuleInterface<IGUI>();
-            gui.AddSingleMenuItem("Teleport To", (avatar_id) =>
+            
+            IAvatarTracker tracker = frame.RequestModuleInterface<IAvatarTracker>();
+            if (tracker != null)
             {
-                var avatars = Proxy.Network.CurrentSim.ObjectsAvatars;
-                Avatar avatar = avatars.Find(x => x.ID == avatar_id);
-
-                if (avatar != null)
+                tracker.AddSingleMenuItem("Teleport To", (avatar_id) =>
                 {
-                    Proxy.Agent.Teleport(Proxy.Network.CurrentSim.Handle, avatar.Position);
-                }
-            });
+                    var avatars = Proxy.Network.CurrentSim.ObjectsAvatars;
+                    Avatar avatar = avatars.Find(x => x.ID == avatar_id);
 
-            gui.AddSingleMenuItem("Offer Teleport", (avatar_id) =>
-            {
-                Proxy.Agent.SendTeleportLure(avatar_id);
-            });
+                    if (avatar != null)
+                    {
+                        Proxy.Agent.Teleport(Proxy.Network.CurrentSim.Handle, avatar.Position);
+                    }
+                });
 
-            gui.AddMultipleMenuItem("Offer Teleport", (avatars) =>
-            {
-                foreach (UUID avatar in avatars)
+                tracker.AddSingleMenuItem("Offer Teleport", (avatar_id) =>
                 {
-                    Proxy.Agent.SendTeleportLure(avatar);
-                }
-            });
+                    Proxy.Agent.SendTeleportLure(avatar_id);
+                });
 
-            gui.AddSingleMenuItem("Copy Key", copyAvatarKey);
-            gui.AddMultipleMenuItem("Copy Keys", copyAvatarKeys);
+                tracker.AddMultipleMenuItem("Offer Teleport", (avatars) =>
+                {
+                    foreach (UUID avatar in avatars)
+                    {
+                        Proxy.Agent.SendTeleportLure(avatar);
+                    }
+                });
 
-            gui.AddToolButton("UUID", "Avatar Picker to Clipboard", avatarPickerToClipboard);
-            gui.AddToolButton("UUID", "Group Picker to Clipboard", groupPickerToClipboard);
-
-
-            gui.AddMainMenuOption(new MenuOption("AVATAR_PICKER_TO_CLIPBOARD", "Avatar Picker to Clipboard...", true, "Tools")
-            {
-                Clicked = (x) => avatarPickerToClipboard(null, null)
-            });
-
-            gui.AddMainMenuOption(new MenuOption("GROUP_PICKER_TO_CLIPBOARD", "Group Picker to Clipboard...", true, "Tools")
-            {
-                Clicked = (x) => groupPickerToClipboard(null, null)
-            });
+                tracker.AddSingleMenuItem("Copy Key", copyAvatarKey);
+                tracker.AddMultipleMenuItem("Copy Keys", copyAvatarKeys);
+            }
 
 
             var uploader_form = new UploaderForm(frame);
 
-            gui.AddToggleFormQuick("Assets", "Upload Asset", uploader_form);
 
-            gui.AddMainMenuOption(new MenuOption("UPLOAD_ASSET_TOOL", "Upload Asset...", true, "Tools")
+            IToolBox toolbox = frame.RequestModuleInterface<IToolBox>();
+            if(toolbox != null)
             {
-                Clicked = (x) =>
+                toolbox.AddTool(new SimpleButton("Avatar Picker to Clipboard", avatarPickerToClipboard)
                 {
-                    OpenFileDialog openFileDialog = new OpenFileDialog();
-                    openFileDialog.Filter = Util.GetCombinedFilter();
-                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    ID = "AVATAR_PICKER_TO_CLIPBOARD",
+                    Default = false
+                });
+
+                toolbox.AddTool(new SimpleButton("Group Picker to Clipboard", avatarPickerToClipboard)
+                {
+                    ID = "GROUP_PICKER_TO_CLIPBOARD",
+                    Default = false
+                });
+
+                toolbox.AddTool(new SimpleToggleFormButton("Upload Asset", uploader_form)
+                {
+                    ID = "TOGGLE_UPLOAD_FORM"
+                });
+            }
+
+            IGUI gui = frame.RequestModuleInterface<IGUI>();
+            if (gui != null)
+            {
+                //gui.AddToolButton("UUID", "Avatar Picker to Clipboard", avatarPickerToClipboard);
+                //gui.AddToolButton("UUID", "Group Picker to Clipboard", groupPickerToClipboard);
+
+                gui.AddMainMenuOption(new MenuOption("AVATAR_PICKER_TO_CLIPBOARD", "Avatar Picker to Clipboard...", true, "Tools")
+                {
+                    Clicked = (x) => avatarPickerToClipboard(null, null)
+                });
+
+                gui.AddMainMenuOption(new MenuOption("GROUP_PICKER_TO_CLIPBOARD", "Group Picker to Clipboard...", true, "Tools")
+                {
+                    Clicked = (x) => groupPickerToClipboard(null, null)
+                });
+
+                //gui.AddToggleFormQuick("Assets", "Upload Asset", uploader_form);
+
+                gui.AddMainMenuOption(new MenuOption("UPLOAD_ASSET_TOOL", "Upload Asset...", true, "Tools")
+                {
+                    Clicked = (x) =>
                     {
-                        uploader_form.SetFile(openFileDialog.FileName);
-                        uploader_form.Show();
+                        OpenFileDialog openFileDialog = new OpenFileDialog();
+                        openFileDialog.Filter = Util.GetCombinedFilter();
+                        if (openFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            uploader_form.SetFile(openFileDialog.FileName);
+                            uploader_form.Show();
+                        }
                     }
-                }
-            });
+                });
+            }
 
-            gui.AddInventoryItemOption("Copy Item ID", x => Clipboard.SetText(x.UUID.ToString()));
-            gui.AddInventoryItemOption("Copy Asset ID", x => Clipboard.SetText(x.AssetUUID.ToString()), x => x.AssetUUID != UUID.Zero);
+            IInventoryBrowser inv = Proxy.RequestModuleInterface<IInventoryBrowser>();
+            if (inv != null)
+            {
+                inv.AddInventoryItemOption("Copy Item ID", x => Clipboard.SetText(x.UUID.ToString()));
+                inv.AddInventoryItemOption("Copy Asset ID", x => Clipboard.SetText(x.AssetUUID.ToString()), x => x.AssetUUID != UUID.Zero);
 
-            gui.AddInventoryFolderOption("Copy Folder ID", x => Clipboard.SetText(x.UUID.ToString()));
+                inv.AddInventoryFolderOption("Copy Folder ID", x => Clipboard.SetText(x.UUID.ToString()));
 
-            gui.AddInventoryItemOption("Play Locally", handlePlaySoundLocally, AssetType.Sound);
-            gui.AddInventoryItemOption("Play Inworld", handlePlaySoundInworld, AssetType.Sound);
+                inv.AddInventoryItemOption("Play Locally", handlePlaySoundLocally, AssetType.Sound);
+                inv.AddInventoryItemOption("Play Inworld", handlePlaySoundInworld, AssetType.Sound);
+            }
         }
 
         private void groupPickerToClipboard(object sender, EventArgs e)

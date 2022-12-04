@@ -31,9 +31,9 @@ namespace CoolProxy.Plugins.Editors
         {
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.checkBox3 = new CoolGUI.Controls.CheckBox();
-            this.checkBox2 = new CoolGUI.Controls.CheckBox();
-            this.checkBox1 = new CoolGUI.Controls.CheckBox();
+            this.checkBox3 = new CoolProxy.Controls.CheckBox();
+            this.checkBox2 = new CoolProxy.Controls.CheckBox();
+            this.checkBox1 = new CoolProxy.Controls.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -126,9 +126,9 @@ namespace CoolProxy.Plugins.Editors
         #endregion
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Panel panel1;
-        private CoolGUI.Controls.CheckBox checkBox3;
-        private CoolGUI.Controls.CheckBox checkBox2;
-        private CoolGUI.Controls.CheckBox checkBox1;
+        private CoolProxy.Controls.CheckBox checkBox3;
+        private CoolProxy.Controls.CheckBox checkBox2;
+        private CoolProxy.Controls.CheckBox checkBox1;
         private System.Windows.Forms.Button button1;
     }
 }

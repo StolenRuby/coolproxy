@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace L33T.GUI
+namespace CoolProxy.Controls
 {
     public partial class TextBox : System.Windows.Forms.TextBox
     {
@@ -35,17 +35,17 @@ namespace L33T.GUI
             {
                 if (this.Setting != string.Empty && this.Setting != null)
                 {
-                    base.Text = CoolProxy.CoolProxy.Frame?.Settings != null ? CoolProxy.CoolProxy.Frame.Settings.getString(Setting) : "";
+                    base.Text = Program.Frame?.Settings != null ? Program.Frame.Settings.getString(Setting) : "";
                     base.TextChanged += TextBox_TextChanged;
                 }
 
                 if (this.EnabledSetting != string.Empty && this.EnabledSetting != null)
                 {
-                    if (CoolProxy.CoolProxy.Frame?.Settings != null)
+                    if (Program.Frame?.Settings != null)
                     {
-                        CoolProxy.CoolProxy.Frame.Settings.getSetting(EnabledSetting).OnChanged += Setting_OnChanged;
+                        Program.Frame.Settings.getSetting(EnabledSetting).OnChanged += Setting_OnChanged;
                     }
-                    base.Enabled = CoolProxy.CoolProxy.Frame?.Settings != null ? CoolProxy.CoolProxy.Frame.Settings.getBool(EnabledSetting) : false;
+                    base.Enabled = Program.Frame?.Settings != null ? Program.Frame.Settings.getBool(EnabledSetting) : false;
                 }
             }
         }
@@ -63,7 +63,7 @@ namespace L33T.GUI
             {
                 if (this.Setting != string.Empty)
                 {
-                    CoolProxy.CoolProxy.Frame.Settings.setString(Setting, base.Text);
+                    Program.Frame.Settings.setString(Setting, base.Text);
                 }
             }
         }

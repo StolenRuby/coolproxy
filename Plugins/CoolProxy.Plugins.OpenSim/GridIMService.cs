@@ -74,12 +74,12 @@ namespace CoolProxy.Plugins.OpenSim
                     {
                         if ((string)responseData["success"] == "TRUE")
                         {
-                            //CoolProxy.Frame.SayToUser("Message sent successfully!");
+                            //Program.Frame.SayToUser("Message sent successfully!");
                             return;
                         }
                         else
                         {
-                            //CoolProxy.Frame.SayToUser("Failed to send message!");
+                            //Program.Frame.SayToUser("Failed to send message!");
                             Proxy.AlertMessage("Failed to send message!", false);
                             return;
                         }

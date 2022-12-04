@@ -179,7 +179,7 @@ namespace CoolProxy.Plugins.OpenSim
                 }
 
                 //OpenMetaverse.Logger.Log("Failed to get service URLs!", Helpers.LogLevel.Info);
-                //CoolProxy.Frame.AlertMessage("Failed to get service URLs!", false);
+                //Program.Frame.AlertMessage("Failed to get service URLs!", false);
             });
         }
 
@@ -196,7 +196,7 @@ namespace CoolProxy.Plugins.OpenSim
 
         private bool OnSimulatorFeatures(RegionManager.CapsRequest req, RegionManager.CapsStage stage)
         {
-            //CoolProxy.Frame.SayToUser(req.FullUri);
+            //Program.Frame.SayToUser(req.FullUri);
 
             if (stage == RegionManager.CapsStage.Response)
             {
@@ -214,7 +214,7 @@ namespace CoolProxy.Plugins.OpenSim
                         {
                             req.Info.Sim.GridURI = extras_map["GridURL"].AsString();
                             if (!req.Info.Sim.GridURI.EndsWith("/")) req.Info.Sim.GridURI += "/";
-                            //CoolProxy.Frame.SayToUser(string.Format("Current Region's GridURI: {0}", CurrentGridURI));
+                            //Program.Frame.SayToUser(string.Format("Current Region's GridURI: {0}", CurrentGridURI));
                         }
                     }
 

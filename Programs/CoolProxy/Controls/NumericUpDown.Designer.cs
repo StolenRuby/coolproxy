@@ -1,4 +1,4 @@
-﻿namespace L33T.GUI
+﻿namespace CoolProxy.Controls
 {
     partial class NumericUpDown
     {

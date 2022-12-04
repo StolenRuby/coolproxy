@@ -18,15 +18,15 @@ namespace CoolProxy
         {
             InitializeComponent();
 
-            foreach(Setting s in CoolProxy.Frame.Settings.getSettings())
+            foreach(Setting s in Program.Frame.Settings.getSettings())
             {
                 this.settingsComboBox.Items.Add(s.Name);
             }
 
             this.settingsComboBox.SelectedIndex = 0;
 
-            this.TopMost = CoolProxy.Frame.Settings.getBool("KeepCoolProxyOnTop");
-            CoolProxy.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
+            this.TopMost = Program.Frame.Settings.getBool("KeepCoolProxyOnTop");
+            Program.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
         }
 
         Setting SelectedSetting = null;
@@ -39,7 +39,7 @@ namespace CoolProxy
         public void UpdateUI()
         {
             SelectedSetting = null; // null so events dont trigger while changing
-            Setting setting = CoolProxy.Frame.Settings.getSetting(this.settingsComboBox.Text);
+            Setting setting = Program.Frame.Settings.getSetting(this.settingsComboBox.Text);
 
             if(setting != null)
             {

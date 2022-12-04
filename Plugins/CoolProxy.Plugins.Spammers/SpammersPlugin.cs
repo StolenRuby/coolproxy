@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoolProxy.Plugins.ToolBox;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,25 @@ namespace CoolProxy.Plugins.Spammers
         {
             Proxy = frame;
 
-            IGUI gui = frame.RequestModuleInterface<IGUI>();
-            gui.AddToggleFormQuick("Avatar", "Instant Message Spammer", new IMSpamForm(Proxy));
-            gui.AddToggleFormQuick("Objects", "Touch Spammer", new TouchSpammerForm(Proxy));
+
+            IToolBox toolbox = frame.RequestModuleInterface<IToolBox>();
+
+            toolbox.AddTool(new SimpleToggleFormButton("Instant Message Spammer", new IMSpamForm(Proxy))
+            {
+                ID = "TOGGLE_IM_SPAM_FORM"
+            });
+
+            toolbox.AddTool(new SimpleToggleFormButton("Touch Spammer", new TouchSpammerForm(Proxy))
+            {
+                ID = "TOGGLE_TOUCH_SPAM_FORM"
+            });
+
+            toolbox.AddTool(new TouchSpammerTool(frame));
+            toolbox.AddTool(new IMSpamTool(frame));
+
+            //IGUI gui = frame.RequestModuleInterface<IGUI>();
+            //gui.AddToggleFormQuick("Avatar", "Instant Message Spammer", new IMSpamForm(Proxy));
+            //gui.AddToggleFormQuick("Objects", "Touch Spammer", new TouchSpammerForm(Proxy));
         }
     }
 }

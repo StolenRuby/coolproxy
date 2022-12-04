@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project name="CoolProxy.Plugins.ToolBox" path="Plugins/CoolProxy.Plugins.ToolBox" type="Library" frameworkVersion="v4_6">
+	<Configuration name="Debug">
+		<Options>
+			<OutputPath>../../bin/</OutputPath>
+		</Options>
+	</Configuration>
+	<Configuration name="Release">
+		<Options>
+			<OutputPath>../../bin/</OutputPath>
+		</Options>
+	</Configuration>
+
+	<ReferencePath>../../bin/</ReferencePath>
+	<Reference name="System"/>
+	<Reference name="System.Core"/>
+	<Reference name="System.Xml"/>
+	<Reference name="System.Web"/>
+	<Reference name="System.Xml.Linq"/>
+	<Reference name="System.Data"/>
+	<Reference name="System.Drawing"/>
+	<Reference name="System.Windows.Forms"/>
+	<Reference name="OpenMetaverse"/>
+	<Reference name="OpenMetaverseTypes"/>
+	<Reference name="OpenMetaverse.StructuredData"/>
+	<Reference name="GridProxy"/>
+	<Reference name="CoolProxy"/>
+	<Reference name="CoolProxy.Plugins.OpenSim"/>
+	<Reference name="XMLRPC"/>
+	<Reference name="log4net"/>
+	<Files>
+		<Match pattern="*.cs" recurse="true">
+			<Exclude name="obj" pattern="obj"/>
+		</Match>
+	</Files>
+</Project>

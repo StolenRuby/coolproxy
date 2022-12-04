@@ -1,4 +1,5 @@
-﻿using GridProxy;
+﻿using CoolProxy.Plugins.ToolBox;
+using GridProxy;
 using OpenMetaverse;
 using OpenMetaverse.Packets;
 using System;
@@ -37,7 +38,17 @@ namespace CoolProxy.Plugins.MagicRez
                 Checked = (x) => form.Visible
             });
 
-            gui.AddToggleFormQuick("Hacks", "Magic Rez", form);
+
+
+            IToolBox toolbox = frame.RequestModuleInterface<IToolBox>();
+            SimpleToggleFormButton toggleButton = new SimpleToggleFormButton("Magic Rez", form)
+            {
+                ID = "TOGGLE_MAGIC_REZ_FORM",
+                Default = false
+            };
+
+            toolbox.AddTool(toggleButton);
+            //gui.AddToggleFormQuick("Hacks", "Magic Rez", form);
         }
 
         public static void object_asset_to_payload(string xml_str, UUID owner_id, UUID creator_id, bool random_keys, string description, out string object_data, out string script_data)

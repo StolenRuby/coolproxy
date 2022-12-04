@@ -42,7 +42,7 @@ namespace CoolProxy.Plugins.ClientAO
             this.moveUpButton = new System.Windows.Forms.Button();
             this.previousAnimButton = new System.Windows.Forms.Button();
             this.nextAnimButton = new System.Windows.Forms.Button();
-            this.checkBox3 = new CoolGUI.Controls.CheckBox();
+            this.checkBox3 = new CoolProxy.Controls.CheckBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.collapseButton = new System.Windows.Forms.Button();
@@ -52,7 +52,7 @@ namespace CoolProxy.Plugins.ClientAO
             this.saveOrEditButton = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.otherSitsCheckBox = new CoolGUI.Controls.CheckBox();
+            this.otherSitsCheckBox = new CoolProxy.Controls.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -372,7 +372,7 @@ namespace CoolProxy.Plugins.ClientAO
         private System.Windows.Forms.Button previousAnimButton;
         private System.Windows.Forms.Button nextAnimButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private CoolGUI.Controls.CheckBox checkBox3;
+        private CoolProxy.Controls.CheckBox checkBox3;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button collapseButton;
@@ -382,6 +382,6 @@ namespace CoolProxy.Plugins.ClientAO
         private System.Windows.Forms.Button saveOrEditButton;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
-        private CoolGUI.Controls.CheckBox otherSitsCheckBox;
+        private CoolProxy.Controls.CheckBox otherSitsCheckBox;
     }
 }

@@ -267,6 +267,7 @@ namespace CoolProxy
             this.MinimizeBox = false;
             this.Name = "AvatarPickerSearchForm";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Choose Resident";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabControl1.ResumeLayout(false);

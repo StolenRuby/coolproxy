@@ -8,7 +8,7 @@ using System.Windows.Forms.VisualStyles;
 //Get the latest version of SplitButton at: http://wyday.com/splitbutton/
 
 
-namespace CoolGUI.Controls
+namespace CoolProxy.Controls
 {
     public class SplitButton : Button
     {

@@ -18,18 +18,18 @@ namespace CoolProxy.Plugins.Masking
 
         private void InitializeComponent()
         {
-            this.checkBox5 = new CoolGUI.Controls.CheckBox();
+            this.checkBox5 = new CoolProxy.Controls.CheckBox();
             this.macHashTextbox = new System.Windows.Forms.TextBox();
             this.randomMacHashButton = new System.Windows.Forms.Button();
             this.id0HashTextbox = new System.Windows.Forms.TextBox();
             this.randomID0HashButton = new System.Windows.Forms.Button();
             this.channelTextbox = new System.Windows.Forms.TextBox();
-            this.versionPatch = new L33T.GUI.NumericUpDown();
-            this.versionMinor = new L33T.GUI.NumericUpDown();
-            this.versionBuild = new L33T.GUI.NumericUpDown();
-            this.replaceID0Checkbox = new CoolGUI.Controls.CheckBox();
-            this.versionMajor = new L33T.GUI.NumericUpDown();
-            this.replaceMacCheckbox = new CoolGUI.Controls.CheckBox();
+            this.versionPatch = new CoolProxy.Controls.NumericUpDown();
+            this.versionMinor = new CoolProxy.Controls.NumericUpDown();
+            this.versionBuild = new CoolProxy.Controls.NumericUpDown();
+            this.replaceID0Checkbox = new CoolProxy.Controls.CheckBox();
+            this.versionMajor = new CoolProxy.Controls.NumericUpDown();
+            this.replaceMacCheckbox = new CoolProxy.Controls.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.versionPatch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.versionMinor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.versionBuild)).BeginInit();
@@ -222,18 +222,18 @@ namespace CoolProxy.Plugins.Masking
 
         }
 
-        private CoolGUI.Controls.CheckBox checkBox5;
+        private CoolProxy.Controls.CheckBox checkBox5;
         private System.Windows.Forms.TextBox macHashTextbox;
         private System.Windows.Forms.Button randomMacHashButton;
         private System.Windows.Forms.TextBox id0HashTextbox;
         private System.Windows.Forms.Button randomID0HashButton;
         private System.Windows.Forms.TextBox channelTextbox;
-        private L33T.GUI.NumericUpDown versionPatch;
-        private L33T.GUI.NumericUpDown versionMinor;
-        private L33T.GUI.NumericUpDown versionBuild;
-        private CoolGUI.Controls.CheckBox replaceID0Checkbox;
-        private L33T.GUI.NumericUpDown versionMajor;
-        private CoolGUI.Controls.CheckBox replaceMacCheckbox;
+        private CoolProxy.Controls.NumericUpDown versionPatch;
+        private CoolProxy.Controls.NumericUpDown versionMinor;
+        private CoolProxy.Controls.NumericUpDown versionBuild;
+        private CoolProxy.Controls.CheckBox replaceID0Checkbox;
+        private CoolProxy.Controls.NumericUpDown versionMajor;
+        private CoolProxy.Controls.CheckBox replaceMacCheckbox;
 
 
 
@@ -316,7 +316,7 @@ namespace CoolProxy.Plugins.Masking
 
         private void versionMajor_ValueChanged(object sender, EventArgs e)
         {
-            L33T.GUI.NumericUpDown spinner = sender as L33T.GUI.NumericUpDown;
+            CoolProxy.Controls.NumericUpDown spinner = sender as CoolProxy.Controls.NumericUpDown;
 
             if (spinner.Enabled)
                 Proxy.Settings.setInteger((string)spinner.Tag, (int)spinner.Value);

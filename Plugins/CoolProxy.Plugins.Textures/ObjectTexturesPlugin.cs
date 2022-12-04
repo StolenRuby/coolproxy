@@ -1,4 +1,5 @@
 using CoolProxy.Plugins.OpenSim;
+using CoolProxy.Plugins.ToolBox;
 
 namespace CoolProxy.Plugins.Textures
 {
@@ -10,7 +11,18 @@ namespace CoolProxy.Plugins.Textures
         {
             IGUI gui = frame.RequestModuleInterface<IGUI>();
             ROBUST = frame.RequestModuleInterface<IROBUST>();
-            gui.AddToolButton("Objects", "View Textures", (x, y) => new ObjectTexturesForm(frame).Show());
+
+
+            IToolBox toolbox = frame.RequestModuleInterface<IToolBox>();
+
+            SimpleButton simpleButton = new SimpleButton("Object Textures", (x, y) => new ObjectTexturesForm(frame).Show())
+            {
+                ID = "VIEW_OBJECT_TEXTURES",
+                Default = false
+            };
+
+            toolbox.AddTool(simpleButton);
+            //gui.AddToolButton("Objects", "View Textures", (x, y) => new ObjectTexturesForm(frame).Show());
 
             gui.AddMainMenuOption(new MenuOption("VIEW_OBJECT_TEXTURES", "View Textures...", true, "Objects")
             {

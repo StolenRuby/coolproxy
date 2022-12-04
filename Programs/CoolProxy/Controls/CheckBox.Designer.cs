@@ -1,4 +1,4 @@
-﻿namespace CoolGUI.Controls
+﻿namespace CoolProxy.Controls
 {
     partial class CheckBox
     {

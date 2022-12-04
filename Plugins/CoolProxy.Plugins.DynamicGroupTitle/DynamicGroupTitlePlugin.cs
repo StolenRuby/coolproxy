@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoolProxy.Plugins.ToolBox;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,16 @@ namespace CoolProxy.Plugins.DynamicGroupTitle
                 Checked = (x) => form.Visible
             });
 
-            gui.AddToggleFormQuick("Avatar", "Dynamic Group Title", form);
+
+            IToolBox toolbox = frame.RequestModuleInterface<IToolBox>();
+            SimpleToggleFormButton toggleButton = new SimpleToggleFormButton("Dynamic Group Title", form)
+            {
+                ID = "TOGGLE_DYNAMIC_GROUP_TITLE_EDITOR",
+                Default = true
+            };
+
+            toolbox.AddTool(toggleButton);
+            //gui.AddToggleFormQuick("Avatar", "Dynamic Group Title", form);
         }
     }
 }

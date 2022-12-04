@@ -81,7 +81,7 @@ namespace CoolProxy
         public string RunCommand(string cmd)
         {
             string[] words = cmd.Split(' ');
-            if (CoolProxy.Frame.Commands.TryGetValue(words[0], out Command command))
+            if (Program.Frame.Commands.TryGetValue(words[0], out Command command))
             {
                 return command.Execute(words);
             }

@@ -1,4 +1,5 @@
 ﻿using CoolProxy.Plugins.MegaPrimMaker;
+using CoolProxy.Plugins.ToolBox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,16 @@ namespace CoolProxy.Plugin.MegaPrimMaker
                 Checked = (x) => form.Visible
             });
 
-            gui.AddToggleFormQuick("Objects", "New MegaPrim", form);
+
+            IToolBox toolbox = frame.RequestModuleInterface<IToolBox>();
+            SimpleToggleFormButton toggleButton = new SimpleToggleFormButton("New MegaPrim", form)
+            {
+                ID = "TOGGLE_MEGAPRIM_MAKER",
+                Default = false
+            };
+
+            toolbox.AddTool(toggleButton);
+            //gui.AddToggleFormQuick("Objects", "New MegaPrim", form);
         }
     }
 }

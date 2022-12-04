@@ -148,7 +148,7 @@ namespace CoolProxy.Plugins.FancyBeams
 
             trackBar.Value = (int)(10.0f * Proxy.Settings.getDouble("BeamScale"));
 
-            var checkbox = new CoolGUI.Controls.CheckBox();
+            var checkbox = new CoolProxy.Controls.CheckBox();
             checkbox.AutoSize = true;
             checkbox.Location = new Point(20, 105);
             checkbox.Setting = "RainbowSelectionBeam";
@@ -156,7 +156,7 @@ namespace CoolProxy.Plugins.FancyBeams
             this.Controls.Add(checkbox);
             checkbox.BringToFront();
 
-            checkbox = new CoolGUI.Controls.CheckBox();
+            checkbox = new CoolProxy.Controls.CheckBox();
             checkbox.AutoSize = true;
             checkbox.Location = new Point(20, 80);
             checkbox.Setting = "RotateShapedBeam";

@@ -1,5 +1,6 @@
 ﻿using CoolProxy.Plugins.NotecardMagic;
 using CoolProxy.Plugins.OpenSim;
+using CoolProxy.Plugins.ToolBox;
 using GridProxy;
 using OpenMetaverse;
 using OpenMetaverse.Packets;
@@ -39,7 +40,17 @@ namespace CoolProxy.Plugins.KeyTool
 
             IGUI gui = frame.RequestModuleInterface<IGUI>();
 
-            gui.AddToolButton("UUID", "KeyTool from Clipboard", (x, y) => handleKeyToolMenuOption(null));
+            IToolBox toolbox = frame.RequestModuleInterface<IToolBox>();
+
+            SimpleButton simpleButton = new SimpleButton("Keytool from Clipboard", (x, y) => handleKeyToolMenuOption(null))
+            {
+                ID = "KEYTOOL_CLIPBOARD_TOOL",
+                Default = false
+            };
+
+            toolbox.AddTool(simpleButton);
+            //gui.AddToolButton("UUID", "KeyTool from Clipboard", (x, y) => handleKeyToolMenuOption(null));
+
 
             gui.AddMainMenuOption(new MenuOption("KEYTOOL_FROM_CLIPBOARD", "Keytool from Clipboard", true, "Tools")
             {
@@ -82,7 +93,7 @@ namespace CoolProxy.Plugins.KeyTool
             Panel panel = new Panel();
             panel.Dock = DockStyle.Fill;
 
-            var checkbox = new CoolGUI.Controls.CheckBox();
+            var checkbox = new CoolProxy.Controls.CheckBox();
             checkbox.AutoSize = true;
             checkbox.Location = new Point(14, 12);
             checkbox.Setting = "AutomaticallyOpenKeyTool";
@@ -90,7 +101,7 @@ namespace CoolProxy.Plugins.KeyTool
 
             panel.Controls.Add(checkbox);
 
-            checkbox = new CoolGUI.Controls.CheckBox();
+            checkbox = new CoolProxy.Controls.CheckBox();
             checkbox.AutoSize = true;
             checkbox.Location = new Point(36, 35);
             checkbox.EnabledSetting = "AutomaticallyOpenKeyTool";
@@ -128,7 +139,7 @@ namespace CoolProxy.Plugins.KeyTool
 
             panel.Controls.Add(combo);
 
-            checkbox = new CoolGUI.Controls.CheckBox();
+            checkbox = new CoolProxy.Controls.CheckBox();
             checkbox.AutoSize = true;
             checkbox.Location = new Point(14, 70);
             checkbox.Setting = "MakeKeysInChatSLURLs";

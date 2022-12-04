@@ -42,14 +42,14 @@
             this.Column1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.splitButton1 = new CoolGUI.Controls.SplitButton();
-            this.checkBox1 = new CoolGUI.Controls.CheckBox();
+            this.splitButton1 = new CoolProxy.Controls.SplitButton();
+            this.checkBox1 = new CoolProxy.Controls.CheckBox();
             this.closeButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.selectObjectsButton = new System.Windows.Forms.Button();
             this.selectAllButton = new System.Windows.Forms.Button();
             this.selectWearablesButton = new System.Windows.Forms.Button();
-            this.checkBox2 = new CoolGUI.Controls.CheckBox();
+            this.checkBox2 = new CoolProxy.Controls.CheckBox();
             this.uploadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -288,14 +288,14 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column1;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private CoolGUI.Controls.SplitButton splitButton1;
-        private CoolGUI.Controls.CheckBox checkBox1;
+        private CoolProxy.Controls.SplitButton splitButton1;
+        private CoolProxy.Controls.CheckBox checkBox1;
         private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button selectObjectsButton;
         private System.Windows.Forms.Button selectAllButton;
         private System.Windows.Forms.Button selectWearablesButton;
-        private CoolGUI.Controls.CheckBox checkBox2;
+        private CoolProxy.Controls.CheckBox checkBox2;
         private System.Windows.Forms.ToolStripMenuItem uploadToolStripMenuItem;
     }
 }

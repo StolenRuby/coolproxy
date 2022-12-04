@@ -1,4 +1,6 @@
-﻿using CoolProxy.Plugins.OpenSim;
+﻿using CoolProxy.Plugins.AvatarTracker;
+using CoolProxy.Plugins.InventoryBrowser;
+using CoolProxy.Plugins.OpenSim;
 using GridProxy;
 using OpenMetaverse;
 using OpenMetaverse.Assets;
@@ -67,14 +69,26 @@ namespace CoolProxy.Plugins.CopyBot
 
             ROBUST = frame.RequestModuleInterface<IROBUST>();
 
+            IAvatarTracker tracker = frame.RequestModuleInterface<IAvatarTracker>();
+            if(tracker != null)
+            {
+                tracker.AddSingleMenuItem("Save As...", exportAvatar);
+            }
+
             //GUI.AddToolButton("CopyBot", "Export Selected Objects", exportSelectedObjects);
             //GUI.AddToolButton("CopyBot", "Import Object from File", importXML);
+
+            IInventoryBrowser inv = Proxy.RequestModuleInterface<IInventoryBrowser>();
+            if(inv != null)
+            {
+                inv.AddInventoryItemOption("Import With...", importWithInv, AssetType.Object);
+            }
 
             if (ROBUST != null) // hack: use the robust to determine if the user has griefer tools enabled
             {
                 //gui.AddToolButton("Objects", "Import with Selected Object", importXMLWithSeed);
-                gui.AddSingleMenuItem("Save As...", exportAvatar);
-                gui.AddInventoryItemOption("Import With...", importWithInv, AssetType.Object);
+                //gui.AddSingleMenuItem("Save As...", exportAvatar);
+                //gui.AddInventoryItemOption("Import With...", importWithInv, AssetType.Object);
             }
 
             gui.AddMainMenuOption(new MenuOption("COPYBOT_IMPORT_FILE", "Import Object from File...", true, "Copybot")
@@ -168,7 +182,7 @@ namespace CoolProxy.Plugins.CopyBot
             panel.Controls.Add(group_box);
 
             var path_label = new Label();
-            var path_box = new L33T.GUI.TextBox();
+            var path_box = new Controls.TextBox();
             var path_btn = new Button();
             var reset_btn = new Button();
 
@@ -213,7 +227,7 @@ namespace CoolProxy.Plugins.CopyBot
             };
 
 
-            CoolGUI.Controls.CheckBox use_robust_exp_checkbox = new CoolGUI.Controls.CheckBox();
+            CoolProxy.Controls.CheckBox use_robust_exp_checkbox = new CoolProxy.Controls.CheckBox();
             use_robust_exp_checkbox.Location = new Point(145, 65);
             use_robust_exp_checkbox.AutoSize = true;
             use_robust_exp_checkbox.Text = "Expost assets using the ROBUST";
@@ -222,7 +236,7 @@ namespace CoolProxy.Plugins.CopyBot
 
             panel.Controls.Add(use_robust_exp_checkbox);
 
-            CoolGUI.Controls.CheckBox use_robust_imp_checkbox = new CoolGUI.Controls.CheckBox();
+            CoolProxy.Controls.CheckBox use_robust_imp_checkbox = new CoolProxy.Controls.CheckBox();
             use_robust_imp_checkbox.Location = new Point(145, 85);
             use_robust_imp_checkbox.AutoSize = true;
             use_robust_imp_checkbox.Text = "Import assets using the ROBUST";

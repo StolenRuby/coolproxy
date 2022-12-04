@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace CoolGUI.Controls
+namespace CoolProxy.Controls
 {
     public partial class CheckBox : System.Windows.Forms.CheckBox
     {
@@ -29,22 +29,22 @@ namespace CoolGUI.Controls
                 if (this.Setting != string.Empty && this.Setting != null)
                 {
 
-                    if (CoolProxy.CoolProxy.Frame?.Settings != null)
+                    if (Program.Frame?.Settings != null)
                     {
-                        CoolProxy.CoolProxy.Frame.Settings.getSetting(Setting).OnChanged += Setting_OnChanged;
+                        Program.Frame.Settings.getSetting(Setting).OnChanged += Setting_OnChanged;
                     }
 
-                    base.Checked = CoolProxy.CoolProxy.Frame?.Settings != null ? CoolProxy.CoolProxy.Frame.Settings.getBool(Setting) : false;
+                    base.Checked = Program.Frame?.Settings != null ? Program.Frame.Settings.getBool(Setting) : false;
                     base.CheckedChanged += CPCheckbox_CheckedChanged;
                 }
 
                 if (this.EnabledSetting != string.Empty && this.EnabledSetting != null)
                 {
-                    if(CoolProxy.CoolProxy.Frame?.Settings != null)
+                    if(Program.Frame?.Settings != null)
                     {
-                        CoolProxy.CoolProxy.Frame.Settings.getSetting(EnabledSetting).OnChanged += Enabled_OnChanged;
+                        Program.Frame.Settings.getSetting(EnabledSetting).OnChanged += Enabled_OnChanged;
                     }
-                    base.Enabled = CoolProxy.CoolProxy.Frame?.Settings != null ? CoolProxy.CoolProxy.Frame.Settings.getBool(EnabledSetting) : false;
+                    base.Enabled = Program.Frame?.Settings != null ? Program.Frame.Settings.getBool(EnabledSetting) : false;
                 }
             }
         }
@@ -66,7 +66,7 @@ namespace CoolGUI.Controls
             {
                 if (this.Setting != string.Empty)
                 {
-                    CoolProxy.CoolProxy.Frame.Settings.setBool(Setting, base.Checked);
+                    Program.Frame.Settings.setBool(Setting, base.Checked);
                 }
             }
         }

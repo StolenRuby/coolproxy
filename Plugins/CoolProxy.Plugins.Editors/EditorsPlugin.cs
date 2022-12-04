@@ -1,4 +1,5 @@
-﻿using CoolProxy.Plugins.OpenSim;
+﻿using CoolProxy.Plugins.InventoryBrowser;
+using CoolProxy.Plugins.OpenSim;
 using OpenMetaverse;
 using System;
 using System.Collections.Generic;
@@ -20,8 +21,12 @@ namespace CoolProxy.Plugins.Editors
             ROBUST = frame.RequestModuleInterface<IROBUST>();
             IGUI gui = frame.RequestModuleInterface<IGUI>();
 
-            gui.AddInventoryItemOption("Hex Edit", x => new HexEditor(x, frame).Show(), IsEditable);
-            gui.AddInventoryItemOption("Text Edit", x => new TextEditor(x, frame).Show(), IsEditable);
+            IInventoryBrowser inv = Proxy.RequestModuleInterface<IInventoryBrowser>();
+            if (inv != null)
+            {
+                inv.AddInventoryItemOption("Hex Edit", x => new HexEditor(x, frame).Show(), IsEditable);
+                inv.AddInventoryItemOption("Text Edit", x => new TextEditor(x, frame).Show(), IsEditable);
+            }
         }
 
         bool IsEditable(InventoryItem item)

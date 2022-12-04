@@ -1,4 +1,6 @@
-﻿using OpenMetaverse;
+﻿using CoolProxy.Plugins.InventoryBrowser;
+using CoolProxy.Plugins.ToolBox;
+using OpenMetaverse;
 using OpenMetaverse.Assets;
 using System;
 using System.Collections.Generic;
@@ -121,7 +123,14 @@ namespace CoolProxy.Plugins.ClientAO
             IGUI gui = frame.RequestModuleInterface<IGUI>();
 
             EditorForm = new ClientAOEditor(this);
-            gui.AddToggleFormQuick("Avatar", "Animation Override", EditorForm);
+
+            IToolBox toolbox = frame.RequestModuleInterface<IToolBox>();
+
+            toolbox.AddTool(new SimpleToggleFormButton("Animation Override", EditorForm)
+            {
+                ID = "TOGGLE_AO_FORM"
+            });
+            //gui.AddToggleFormQuick("Avatar", "Animation Override", EditorForm);
 
             frame.Avatars.AvatarAnimation += Avatars_AvatarAnimation;
 
@@ -153,11 +162,6 @@ namespace CoolProxy.Plugins.ClientAO
             };
             OverrideSits = frame.Settings.getBool("OverrideSits");
 
-            gui.AddInventoryItemOption("Load as AO", x =>
-            {
-                LoadNotecard(x);
-            }, AssetType.Notecard);
-
             gui.AddMainMenuOption(new MenuOption("TOGGLE_AO_EDITOR", "Animation Override", true)
             {
                 Clicked = (x) =>
@@ -175,6 +179,13 @@ namespace CoolProxy.Plugins.ClientAO
                 Clicked = (x) => frame.Settings.setBool("EnableAO", !Enabled),
                 Checked = (x) => Enabled
             });
+
+            IInventoryBrowser inv = Proxy.RequestModuleInterface<IInventoryBrowser>();
+
+            inv.AddInventoryItemOption("Load as AO", x =>
+            {
+                LoadNotecard(x);
+            }, AssetType.Notecard);
         }
 
         public List<AOState> Current = new List<AOState>();

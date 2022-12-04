@@ -11,11 +11,11 @@ using System.Windows.Forms;
 
 namespace CoolProxy
 {
-    static class CoolProxy
+    static class Program
     {
         static public CoolProxyFrame Frame = null;
 
-        private static CoolProxyForm coolProxyForm;
+        private static PreferencesForm coolProxyForm;
 
         public static bool IsDebugMode
         {
@@ -43,7 +43,7 @@ namespace CoolProxy
 
             Frame = new CoolProxyFrame(new string[] { });
 
-            coolProxyForm = new CoolProxyForm();
+            coolProxyForm = new PreferencesForm();
             Application.Run(coolProxyForm);
         }
 

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace L33T.GUI
+namespace CoolProxy.Controls
 {
     public partial class NumericUpDown : System.Windows.Forms.NumericUpDown
     {
@@ -36,17 +36,17 @@ namespace L33T.GUI
             {
                 if (this.Setting != string.Empty && this.Setting != null)
                 {
-                    base.Value = CoolProxy.CoolProxy.Frame?.Settings != null ? CoolProxy.CoolProxy.Frame.Settings.getInteger(Setting) : 0;
+                    base.Value = Program.Frame?.Settings != null ? Program.Frame.Settings.getInteger(Setting) : 0;
                     base.ValueChanged += NumericUpDown_ValueChanged;
                 }
 
                 if (this.EnabledSetting != string.Empty && this.EnabledSetting != null)
                 {
-                    if (CoolProxy.CoolProxy.Frame?.Settings != null)
+                    if (Program.Frame?.Settings != null)
                     {
-                        CoolProxy.CoolProxy.Frame.Settings.getSetting(EnabledSetting).OnChanged += EnabledSetting_OnChanged;
+                        Program.Frame.Settings.getSetting(EnabledSetting).OnChanged += EnabledSetting_OnChanged;
                     }
-                    base.Enabled = CoolProxy.CoolProxy.Frame?.Settings != null ? CoolProxy.CoolProxy.Frame.Settings.getBool(EnabledSetting) : false;
+                    base.Enabled = Program.Frame?.Settings != null ? Program.Frame.Settings.getBool(EnabledSetting) : false;
                 }
             }
         }
@@ -71,7 +71,7 @@ namespace L33T.GUI
             {
                 if (this.Setting != string.Empty)
                 {
-                    CoolProxy.CoolProxy.Frame.Settings.setInteger(Setting, (int)base.Value);
+                    Program.Frame.Settings.setInteger(Setting, (int)base.Value);
                 }
             }
         }

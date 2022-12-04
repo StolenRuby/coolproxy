@@ -43,8 +43,8 @@
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.forgeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.splitButton1 = new CoolGUI.Controls.SplitButton();
-            this.checkBox1 = new CoolGUI.Controls.CheckBox();
+            this.splitButton1 = new CoolProxy.Controls.SplitButton();
+            this.checkBox1 = new CoolProxy.Controls.CheckBox();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.assetIconColumn = new System.Windows.Forms.DataGridViewImageColumn();
@@ -52,7 +52,7 @@
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.checkBox2 = new CoolGUI.Controls.CheckBox();
+            this.checkBox2 = new CoolProxy.Controls.CheckBox();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
@@ -305,9 +305,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button closeButton;
-        private CoolGUI.Controls.CheckBox checkBox1;
+        private CoolProxy.Controls.CheckBox checkBox1;
         private System.Windows.Forms.Label countLabel;
-        private CoolGUI.Controls.SplitButton splitButton1;
+        private CoolProxy.Controls.SplitButton splitButton1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
@@ -319,6 +319,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private CoolGUI.Controls.CheckBox checkBox2;
+        private CoolProxy.Controls.CheckBox checkBox2;
     }
 }

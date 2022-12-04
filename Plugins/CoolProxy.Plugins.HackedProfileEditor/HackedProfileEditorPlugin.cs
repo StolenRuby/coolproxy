@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoolProxy.Plugins.ToolBox;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,15 @@ namespace CoolProxy.Plugins.HackedProfileEditor
                 Checked = (x) => form.Visible
             });
 
-            gui.AddToggleFormQuick("Hacks", "Hacked Profile Editor", form);
+
+            IToolBox toolbox = frame.RequestModuleInterface<IToolBox>();
+            SimpleToggleFormButton toggleButton = new SimpleToggleFormButton("Hacked Profile Editor", form)
+            {
+                ID = "TOGGLE_HACKED_PROFILE_EDITOR"
+            };
+
+            toolbox.AddTool(toggleButton);
+            //gui.AddToggleFormQuick("Hacks", "Hacked Profile Editor", form);
         }
     }
 }

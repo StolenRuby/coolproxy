@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoolProxy.Plugins.ToolBox;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,15 @@ namespace CoolProxy.Plugins.MimicTool
                 Checked = (x) => form.Visible
             });
 
-            gui.AddToggleFormQuick("Avatar", "Avatar Mimicry Tool", form);
+
+            IToolBox toolbox = frame.RequestModuleInterface<IToolBox>();
+            toolbox.AddTool(new SimpleToggleFormButton("Avatar Mimicry Tool", form)
+            {
+                ID = "TOGGLE_MIMIC_FORM",
+                Default = false
+            });
+
+            //gui.AddToggleFormQuick("Avatar", "Avatar Mimicry Tool", form);
         }
     }
 }

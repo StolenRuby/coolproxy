@@ -37,9 +37,9 @@ namespace CoolProxy.Plugins.ServiceTools
 
         private void AssetServiceTool_Shown(object sender, EventArgs e)
         {
-            //string url = CoolProxy.Frame.OpenSim.AssetServerURI;
+            //string url = Program.Frame.OpenSim.AssetServerURI;
             //if (url == string.Empty)
-            //    url = CoolProxy.Frame.OpenSim.CurrentGridURI;
+            //    url = Program.Frame.OpenSim.CurrentGridURI;
 
             //textBox6.Text = url + "assets";
         }

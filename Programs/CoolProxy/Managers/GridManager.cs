@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,32 +27,80 @@ namespace CoolProxy
 
             if(mGrids.Count == 0)
             {
-                mGrids.Add(new GridInfo("Second Life", "Agni", "https://login.agni.lindenlab.com/cgi-bin/login.cgi", "https://viewer-splash.secondlife.com", true));
-                mGrids.Add(new GridInfo("Second Life Beta", "Aditi", "https://login.aditi.lindenlab.com/cgi-bin/login.cgi", "https://viewer-splash.secondlife.com", true));
+                fetchGridList();
                 saveGrids();
             }
 
-            var openSimGridInfo = CoolProxy.Frame.Settings.getSetting("EnableGridInfo");
+            var openSimGridInfo = Program.Frame.Settings.getSetting("EnableGridInfo");
             openSimGridInfo.OnChanged += (x, y) =>
             {
                 bool enabled = (bool)y.Value;
 
                 if(enabled)
                 {
-                    CoolProxy.Frame.HTTP.AddHttpHandler("/get_grid_info", HandleGetGridInfo);
+                    Program.Frame.HTTP.AddHttpHandler("/get_grid_info", HandleGetGridInfo);
                 }
                 else
                 {
-                    CoolProxy.Frame.HTTP.RemoveHttpHandler("/get_grid_info");
+                    Program.Frame.HTTP.RemoveHttpHandler("/get_grid_info");
                 }
             };
 
             if((bool)openSimGridInfo.Value)
             {
-                CoolProxy.Frame.HTTP.AddHttpHandler("/get_grid_info", HandleGetGridInfo);
+                Program.Frame.HTTP.AddHttpHandler("/get_grid_info", HandleGetGridInfo);
             }
 
-            CoolProxy.Frame.HTTP.AddHttpHandler("/splash", HandleSplashScreen);
+            Program.Frame.HTTP.AddHttpHandler("/splash", HandleSplashScreen);
+        }
+
+        private void fetchGridList()
+        {
+            try
+            {
+                string list_url = "http://phoenixviewer.com/app/fsdata/grids.xml"; // todo: setting?
+
+                WebClient webClient = new WebClient();
+                string xml = webClient.DownloadString(list_url);
+
+                OSDMap map = (OSDMap)OSDParser.DeserializeLLSDXml(xml);
+                
+                foreach(var key in map.Keys)
+                {
+                    try
+                    {
+                        OSDMap info = (OSDMap)map[key];
+
+                        if (info.ContainsKey("DEPRECATED")) continue;
+                        
+                        string name = info["gridname"].AsString();
+                        string nick = info["gridnick"].AsString();
+
+                        OSDArray uris = (OSDArray)info["loginuri"];
+                        string uri = uris.First().AsString();
+
+                        string splash = info["loginpage"].AsString();
+
+                        info.TryGetValue("system_grid", out OSD is_sl_osd);
+
+                        bool is_sl = is_sl_osd?.AsBoolean() ?? false;
+
+                        mGrids.Add(new GridInfo(name, nick, uri, splash, is_sl));
+                    }
+                    catch
+                    {
+                        OpenMetaverse.Logger.Log("[Grid Manager] Failed to parse `" + key + "`", OpenMetaverse.Helpers.LogLevel.Debug);
+                    }
+                }
+            }
+            catch
+            {
+                OpenMetaverse.Logger.Log("[Grid Manager] Failed to download grid list!", OpenMetaverse.Helpers.LogLevel.Debug);
+
+                // Add some default grids...
+                mGrids.Add(new GridInfo("Second Life", "Agni", "https://login.agni.lindenlab.com/cgi-bin/login.cgi", "https://viewer-splash.secondlife.com", true));
+                mGrids.Add(new GridInfo("Second Life Beta", "Aditi", "https://login.aditi.lindenlab.com/cgi-bin/login.cgi", "https://viewer-splash.secondlife.com", true));
+            }
         }
 
         public void loadGrids(string filename)
@@ -144,8 +193,8 @@ namespace CoolProxy
         public void selectGrid(string name)
         {
             var info = getInfoFromName(name);
-            CoolProxy.Frame.Settings.setString("LastGridUsed", name);
-            CoolProxy.Frame.Settings.setBool("LindenGridSelected", info.IsLindenGrid);
+            Program.Frame.Settings.setString("LastGridUsed", name);
+            Program.Frame.Settings.setBool("LindenGridSelected", info.IsLindenGrid);
             SelectedGrid = info;
             OnGridChanged?.Invoke(SelectedGrid);
         }
@@ -210,8 +259,8 @@ namespace CoolProxy
             {
                 StringBuilder sb = new StringBuilder();
 
-                string address = CoolProxy.Frame.Settings.getString("GridProxyListenAddress");
-                int port = CoolProxy.Frame.Settings.getInteger("GridProxyListenPort");
+                string address = Program.Frame.Settings.getString("GridProxyListenAddress");
+                int port = Program.Frame.Settings.getInteger("GridProxyListenPort");
 
                 sb.Append("<gridinfo>\n");
                 sb.AppendFormat("<{0}>{1}</{0}>\n", "gridname", "Cool Proxy" + (port != 8080 ? " (" + port.ToString() + ")" : string.Empty));

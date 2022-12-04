@@ -1,4 +1,5 @@
-﻿using CoolProxy.Plugins.OpenSim;
+﻿using CoolProxy.Plugins.InventoryBrowser;
+using CoolProxy.Plugins.OpenSim;
 using OpenMetaverse;
 using OpenMetaverse.StructuredData;
 using System;
@@ -24,10 +25,12 @@ namespace CoolProxy.Plugins.InventoryBackup
 
             ROBUST = frame.RequestModuleInterface<IROBUST>();
 
-            IGUI gui = Proxy.RequestModuleInterface<IGUI>();
-
-            gui.AddInventoryItemOption("Save As...", handleSaveItemAs, x => x.AssetUUID != UUID.Zero);
-            gui.AddInventoryFolderOption("Save As...", handleSaveFolderAs);
+            IInventoryBrowser inv = Proxy.RequestModuleInterface<IInventoryBrowser>();
+            if (inv != null)
+            {
+                inv.AddInventoryItemOption("Save As...", handleSaveItemAs, x => x.AssetUUID != UUID.Zero);
+                inv.AddInventoryFolderOption("Save As...", handleSaveFolderAs);
+            }
         }
 
         private void handleSaveItemAs(InventoryItem inventoryItem)

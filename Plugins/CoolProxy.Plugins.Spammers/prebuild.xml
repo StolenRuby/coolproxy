@@ -25,11 +25,13 @@
 	<Reference name="OpenMetaverse.StructuredData"/>
 	<Reference name="GridProxy"/>
 	<Reference name="CoolProxy"/>
+	<Reference name="CoolProxy.Plugins.ToolBox"/>
 	<Reference name="XMLRPC"/>
 	<Reference name="log4net"/>
 	<Files>
 		<Match pattern="*.cs" recurse="true">
 			<Exclude name="obj" pattern="obj"/>
 		</Match>
+		<Match pattern="*.resx" recurse="true"/>
 	</Files>
 </Project>

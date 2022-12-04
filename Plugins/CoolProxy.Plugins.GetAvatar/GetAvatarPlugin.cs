@@ -1,4 +1,5 @@
 ﻿using CoolProxy.Plugins.OpenSim;
+using CoolProxy.Plugins.ToolBox;
 using OpenMetaverse;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,15 @@ namespace CoolProxy.Plugins.GetAvatar
                 Clicked = (x) => retrieveStoredAvatar(null, null)
             });
 
-            gui.AddToolButton("Hacks", "Retrieve Stored Avatar", retrieveStoredAvatar);
+            IToolBox toolbox = frame.RequestModuleInterface<IToolBox>();
+
+            SimpleButton tool = new SimpleButton("Retrieve Stored Avatar", retrieveStoredAvatar)
+            {
+                ID = "RETRIEVE_STORED_AVATAR_TOOL",
+                Default = false
+            };
+
+            toolbox.AddTool(tool);
         }
 
         private void retrieveStoredAvatar(object sender, EventArgs e)

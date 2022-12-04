@@ -27,6 +27,8 @@
 	<Reference name="GridProxy"/>
 	<Reference name="CoolProxy"/>
 	<Reference name="CoolProxy.Plugins.OpenSim"/>
+	<Reference name="CoolProxy.Plugins.ToolBox"/>
+	<Reference name="CoolProxy.Plugins.InventoryBrowser"/>
 	<Reference name="XMLRPC"/>
 	<Reference name="log4net"/>
 	<Files>

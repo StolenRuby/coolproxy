@@ -1,4 +1,5 @@
 ﻿using CoolProxy.Plugins.OpenSim;
+using CoolProxy.Plugins.ToolBox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,16 @@ namespace CoolProxy.Plugins.SuperSuitcase
                 Clicked = OpenSuitcase
             });
 
-            gui.AddToolButton("Hacks", "Browse Target Suitcase", (x, y) => OpenSuitcase(null));
+            IToolBox toolbox = frame.RequestModuleInterface<IToolBox>();
+
+            SimpleButton simpleButton = new SimpleButton("Browse Target Suitcase", (x, y) => OpenSuitcase(null))
+            {
+                ID = "BROWSE_TARGET_SUITCASE",
+                Default = false
+            };
+
+            toolbox.AddTool(simpleButton);
+            //gui.AddToolButton("Hacks", "Browse Target Suitcase", (x, y) => OpenSuitcase(null));
         }
 
         private void OpenSuitcase(object user_data)

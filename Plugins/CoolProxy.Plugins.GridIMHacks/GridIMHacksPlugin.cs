@@ -1,4 +1,6 @@
-﻿using CoolProxy.Plugins.OpenSim;
+﻿using CoolProxy.Plugins.AvatarTracker;
+using CoolProxy.Plugins.OpenSim;
+using CoolProxy.Plugins.ToolBox;
 using OpenMetaverse;
 using System;
 using System.Collections.Generic;
@@ -30,7 +32,7 @@ namespace CoolProxy.Plugins.GridIMHacks
             }
 
             IGUI gui = Proxy.RequestModuleInterface<IGUI>();
-
+            IToolBox toolbox = frame.RequestModuleInterface<IToolBox>();
 
             var hg_form = new GodHacksForm(frame);
 
@@ -42,6 +44,11 @@ namespace CoolProxy.Plugins.GridIMHacks
                     else hg_form.Show();
                 },
                 Checked = (x) => hg_form.Visible
+            });
+
+            toolbox.AddTool(new SimpleToggleFormButton("Hacked God Tools", hg_form)
+            {
+                ID = "TOGGLE_HACKED_GODTOOLS"
             });
 
             var stp_form = new SpecialTeleportForm(frame);
@@ -56,6 +63,11 @@ namespace CoolProxy.Plugins.GridIMHacks
                 Checked = (x) => stp_form.Visible
             });
 
+            toolbox.AddTool(new SimpleToggleFormButton("Special Teleport", stp_form)
+            {
+                ID = "TOGGLE_SPECIAL_TELEPORT"
+            });
+
             var ezim_form = new EasyIMSpoofer(frame);
 
             gui.AddMainMenuOption(new MenuOption("TOGGLE_EASY_IM_SPOOFER", "Easy IM Spoofer", true, "Hacks")
@@ -68,16 +80,25 @@ namespace CoolProxy.Plugins.GridIMHacks
                 Checked = (x) => ezim_form.Visible
             });
 
-            gui.AddToggleFormQuick("Hacks", "Hacked God Tools", hg_form);
-            gui.AddToggleFormQuick("Hacks", "Special Teleport", stp_form);
-            gui.AddToggleFormQuick("Hacks", "Easy IM Spoofer", ezim_form);
+            toolbox.AddTool(new SimpleToggleFormButton("Easy IM Spoofer", ezim_form)
+            {
+                ID = "TOGGLE_EASY_IM_SPOOFER"
+            });
+
+            //gui.AddToggleFormQuick("Hacks", "Hacked God Tools", hg_form);
+            //gui.AddToggleFormQuick("Hacks", "Special Teleport", stp_form);
+            //gui.AddToggleFormQuick("Hacks", "Easy IM Spoofer", ezim_form);
 
 
-            gui.AddSingleMenuItem("-", null);
-            gui.AddSingleMenuItem("Force Teleport", handleForceTeleportSingle);
-            gui.AddMultipleMenuItem("Force Teleport", handleForceTeleportMultiple);
-            gui.AddSingleMenuItem("Kick User", handleKickUser);
-            gui.AddMultipleMenuItem("Kick Users", handleKickUsers);
+            IAvatarTracker tracker = frame.RequestModuleInterface<IAvatarTracker>();
+            if (tracker != null)
+            {
+                tracker.AddSingleMenuItem("-", null);
+                tracker.AddSingleMenuItem("Force Teleport", handleForceTeleportSingle);
+                tracker.AddMultipleMenuItem("Force Teleport", handleForceTeleportMultiple);
+                tracker.AddSingleMenuItem("Kick User", handleKickUser);
+                tracker.AddMultipleMenuItem("Kick Users", handleKickUsers);
+            }
         }
 
         private void handleKickUsers(List<UUID> targets)

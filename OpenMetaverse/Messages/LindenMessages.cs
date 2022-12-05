@@ -819,8 +819,9 @@ namespace OpenMetaverse.Messages.Linden
             if (parcelDataMap["ParcelFlags"].Type == OSDType.Binary)
             {
                 byte[] bytes = parcelDataMap["ParcelFlags"].AsBinary();
-                if (BitConverter.IsLittleEndian)
-                    Array.Reverse(bytes);
+                // Is this still needed for BigEndian or something?
+                //if (BitConverter.IsLittleEndian)
+                //    Array.Reverse(bytes);
                 ParcelFlags = (ParcelFlags)BitConverter.ToUInt32(bytes, 0);
             }
             else

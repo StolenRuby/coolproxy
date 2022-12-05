@@ -1357,11 +1357,15 @@ namespace GridProxy
 
                     bool set = false;
                     int y, x, index, bit;
-                    for (y = 0; y < 64; y++)
+
+                    int width = (int)simulator.RegionSizeX / 4;
+                    int height = (int)simulator.RegionSizeY / 4;
+
+                    for (y = 0; y < height; y++)
                     {
-                        for (x = 0; x < 64; x++)
+                        for (x = 0; x < width; x++)
                         {
-                            index = (y * 64) + x;
+                            index = (y * width) + x;
                             bit = index % 8;
                             index >>= 3;
 
@@ -1531,11 +1535,11 @@ namespace GridProxy
         /// <param name="e">The EventArgs object containing the packet data</param>
         protected Packet ParcelOverlayHandler(Packet packet, RegionProxy simulator)
         {
-            const int OVERLAY_COUNT = 4;
+            int overlay_count = (int)(simulator.RegionSizeX / 128) * (int)(simulator.RegionSizeY / 128);
 
             ParcelOverlayPacket overlay = (ParcelOverlayPacket)packet;
 
-            if (overlay.ParcelData.SequenceID >= 0 && overlay.ParcelData.SequenceID < OVERLAY_COUNT)
+            if (overlay.ParcelData.SequenceID >= 0 && overlay.ParcelData.SequenceID < overlay_count)
             {
                 int length = overlay.ParcelData.Data.Length;
 
@@ -1543,7 +1547,7 @@ namespace GridProxy
                     overlay.ParcelData.SequenceID * length, length);
                 simulator.ParcelOverlaysReceived++;
 
-                if (simulator.ParcelOverlaysReceived >= OVERLAY_COUNT)
+                if (simulator.ParcelOverlaysReceived >= overlay_count)
                 {
                     // TODO: ParcelOverlaysReceived should become internal, and reset to zero every 
                     // time it hits four. Also need a callback here

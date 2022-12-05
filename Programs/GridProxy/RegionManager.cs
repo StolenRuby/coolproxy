@@ -164,6 +164,12 @@ namespace GridProxy
                 responseData["sim_port"] = fakeAddress.Port;
                 CurrentSim = fakeSim;
 
+                if(responseData.ContainsKey("region_size_x") && responseData.ContainsKey("region_size_y"))
+                {
+                    CurrentSim.RegionSizeX = (uint)(int)responseData["region_size_x"];
+                    CurrentSim.RegionSizeY = (uint)(int)responseData["region_size_y"];
+                }
+
                 if (responseData.Contains("seed_capability"))
                 {
                     CapInfo info = new CapInfo((string)responseData["seed_capability"], CurrentSim, "SeedCapability");
@@ -450,7 +456,7 @@ namespace GridProxy
         }
 
         // GenericCheck: replace the sim address in a packet with our proxy address
-        private void GenericCheck(ref uint simIP, ref ushort simPort, ref string simCaps, bool active, ulong handle)
+        private void GenericCheck(ref uint simIP, ref ushort simPort, ref string simCaps, bool active, ulong handle, uint region_size_x = 0, uint region_size_y = 0)
         {
             IPAddress sim_ip = new IPAddress((long)simIP);
 
@@ -458,6 +464,12 @@ namespace GridProxy
             RegionProxy fakeSim = ProxySim(realSim);
 
             if (handle != 0) fakeSim.Handle = handle;
+
+            if(region_size_x != 0 && region_size_y != 0)
+            {
+                fakeSim.RegionSizeX = region_size_x;
+                fakeSim.RegionSizeY = region_size_y;
+            }
 
             IPEndPoint fakeAddress = fakeSim.LocalEndPoint;
 
@@ -1063,7 +1075,16 @@ namespace GridProxy
 
                     ulong handle = info["RegionHandle"].AsULong();
 
-                    GenericCheck(ref simIP, ref simPort, ref capsURL, capReq.Info.Sim.RemoteEndPoint == CurrentSim.RemoteEndPoint, handle);
+                    uint region_size_x = 0;
+                    uint region_size_y = 0;
+
+                    if(info.ContainsKey("RegionSizeX") && info.ContainsKey("RegionSizeY"))
+                    {
+                        region_size_x = (uint)info["RegionSizeX"];
+                        region_size_y = (uint)info["RegionSizeY"];
+                    }
+
+                    GenericCheck(ref simIP, ref simPort, ref capsURL, capReq.Info.Sim.RemoteEndPoint == CurrentSim.RemoteEndPoint, handle, region_size_x, region_size_y);
 
                     info["SeedCapability"] = OSD.FromString(capsURL);
                     bytes[0] = (byte)(simIP % 256);
@@ -1083,8 +1104,18 @@ namespace GridProxy
                     string capsURL = null;
                     ulong handle = info["RegionHandle"].AsULong();
 
+
+                    uint region_size_x = 0;
+                    uint region_size_y = 0;
+
+                    if (info.ContainsKey("RegionSizeX") && info.ContainsKey("RegionSizeY"))
+                    {
+                        region_size_x = (uint)info["RegionSizeX"];
+                        region_size_y = (uint)info["RegionSizeY"];
+                    }
+
                     //GenericCheck(ref IP, ref Port, ref capsURL, capReq.Info.Sim.RemoteEndPoint == CurrentRegion.RemoteEndPoint);
-                    GenericCheck(ref IP, ref Port, ref capsURL, false, handle);
+                    GenericCheck(ref IP, ref Port, ref capsURL, false, handle, region_size_x, region_size_y);
 
                     bytes[0] = (byte)(IP % 256);
                     bytes[1] = (byte)((IP >> 8) % 256);
@@ -1228,6 +1259,9 @@ namespace GridProxy
 
             public string HostUri { get; set; } = string.Empty;
 
+            public uint RegionSizeX { get; internal set; } = 256;
+            public uint RegionSizeY { get; internal set; } = 256;
+
 
             private Socket socket;
             public uint incomingSequence;
@@ -1249,9 +1283,19 @@ namespace GridProxy
 
             public string SeedCap { get; set; } = string.Empty;
 
+            private byte[] _ParcelOverlay;
+
             /// <summary>A 64x64 grid of parcel coloring values. The values stored 
             /// in this array are of the <seealso cref="ParcelArrayType"/> type</summary>
-            public byte[] ParcelOverlay = new byte[4096];
+            public byte[] ParcelOverlay
+            {
+                get
+                {
+                    if(_ParcelOverlay == null) _ParcelOverlay = new byte[(RegionSizeX / 4) * (RegionSizeY / 4)];
+                    return _ParcelOverlay;
+                }
+            }
+
             /// <summary></summary>
             public int ParcelOverlaysReceived;
 
@@ -1287,7 +1331,7 @@ namespace GridProxy
                 {
                     lock (this)
                     {
-                        if (_ParcelMap == null) _ParcelMap = new int[64, 64];
+                        if (_ParcelMap == null) _ParcelMap = new int[RegionSizeX / 4, RegionSizeY / 4];
                         return _ParcelMap;
                     }
                 }

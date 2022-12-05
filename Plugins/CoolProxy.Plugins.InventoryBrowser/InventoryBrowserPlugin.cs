@@ -18,6 +18,9 @@ namespace CoolProxy.Plugins.InventoryBrowser
             InventoryBrowser = new InventoryBrowserForm(frame);
 
             IGUI gui = frame.RequestModuleInterface<IGUI>();
+
+            gui.RegisterForm("inventory", InventoryBrowser);
+
             gui.AddMainMenuOption(new MenuOption("TOGGLE_INVENTORY_BROWSER", "Inventory", true)
             {
                 Clicked = (x) =>

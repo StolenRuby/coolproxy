@@ -15,6 +15,8 @@ namespace CoolProxy.Plugins.DynamicGroupTitle
 
             var form = new DynamicGroupTitleEditor(frame);
 
+            gui.RegisterForm("dynamic_title_editor", form);
+
             gui.AddMainMenuOption(new MenuOption("TOGGLE_DYNAMIC_GROUP_TITLE_EDITOR", "Dynamic Group Title", true, "Tools")
             {
                 Clicked = (x) =>

@@ -16,6 +16,8 @@ namespace CoolProxy.Plugin.MegaPrimMaker
 
             var form = new NewMegaprimForm(frame);
 
+            gui.RegisterForm("megaprim_maker", form);
+
             gui.AddMainMenuOption(new MenuOption("TOGGLE_MEGAPRIM_MAKER", "New MegaPrim", true, "Tools")
             {
                 Clicked = (x) =>

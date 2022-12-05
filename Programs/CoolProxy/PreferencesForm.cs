@@ -3,6 +3,7 @@ using OpenMetaverse;
 using OpenMetaverse.StructuredData;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -71,6 +72,8 @@ namespace CoolProxy
             {
                 loadPluginTestButton.Visible = false;
             }
+
+            RegisterForm("preferences", this);
         }
 
         public void AddMainMenuOption(MenuOption option)
@@ -481,7 +484,9 @@ namespace CoolProxy
             if(!coolProxyIsQuitting)
             {
                 e.Cancel = true;
-                this.Hide();
+
+                Form form = sender as Form;
+                form.Hide();
             }
         }
 
@@ -684,6 +689,22 @@ namespace CoolProxy
         private void cancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+
+        Dictionary<string, Form> Forms = new Dictionary<string, Form>();
+
+        public void RegisterForm(string id, Form form)
+        {
+            Forms.Add(id, form);
+
+            form.Activated += HandleFormActivated;
+            form.Deactivate += HandleFormDeactivated;
+
+            form.FormClosing += CoolProxyForm_FormClosing;
+
+            form.TopMost = Program.Frame.Settings.getBool("KeepCoolProxyOnTop");
+            Program.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { form.TopMost = (bool)y.Value; };
         }
     }
 }

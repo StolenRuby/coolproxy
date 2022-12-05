@@ -25,14 +25,21 @@ namespace CoolProxy.Plugins.ServiceTools
             ROBUST = frame.RequestModuleInterface<IROBUST>();
 
 
+            var ast = new AssetServiceTool(frame);
+            var gimt = new GridIMTool(frame);
+
+            gui.RegisterForm("asset_service_uploader", ast);
+            gui.RegisterForm("grid_im_tool", gimt);
+
+
             IToolBox toolbox = frame.RequestModuleInterface<IToolBox>();
 
-            toolbox.AddTool(new SimpleToggleFormButton("Asset Service Upload", new AssetServiceTool(frame))
+            toolbox.AddTool(new SimpleToggleFormButton("Asset Service Upload", ast)
             {
                 ID = "TOGGLE_ROBUST_UPLOAD"
             });
 
-            toolbox.AddTool(new SimpleToggleFormButton("Grid Instant Message Tool", new GridIMTool(frame))
+            toolbox.AddTool(new SimpleToggleFormButton("Grid Instant Message Tool", gimt)
             {
                 ID = "TOGGLE_ROBUST_IM"
             });

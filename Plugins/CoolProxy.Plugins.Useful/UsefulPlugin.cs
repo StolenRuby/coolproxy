@@ -106,6 +106,8 @@ namespace CoolProxy.Plugins.Useful
 
                 //gui.AddToggleFormQuick("Assets", "Upload Asset", uploader_form);
 
+                gui.RegisterForm("asset_uploader", uploader_form);
+
                 gui.AddMainMenuOption(new MenuOption("UPLOAD_ASSET_TOOL", "Upload Asset...", true, "Tools")
                 {
                     Clicked = (x) =>

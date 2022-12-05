@@ -97,12 +97,6 @@ namespace CoolProxy.Plugins.ServiceTools
             textBox1.Text = UUID.Random().ToString();
         }
 
-        private void AssetServiceTool_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = true;
-            this.Hide();
-        }
-
         private void button3_Click(object sender, EventArgs e)
         {
             AvatarPickerSearchForm avatarPickerSearch = new AvatarPickerSearchForm();

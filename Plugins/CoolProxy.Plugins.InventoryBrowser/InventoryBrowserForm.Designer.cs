@@ -211,27 +211,27 @@
             // expandAllFoldersToolStripMenuItem
             // 
             this.expandAllFoldersToolStripMenuItem.Name = "expandAllFoldersToolStripMenuItem";
-            this.expandAllFoldersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.expandAllFoldersToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.expandAllFoldersToolStripMenuItem.Text = "Expand All Folders";
             this.expandAllFoldersToolStripMenuItem.Click += new System.EventHandler(this.expandAllFoldersToolStripMenuItem_Click);
             // 
             // collapseAllFoldersToolStripMenuItem
             // 
             this.collapseAllFoldersToolStripMenuItem.Name = "collapseAllFoldersToolStripMenuItem";
-            this.collapseAllFoldersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.collapseAllFoldersToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.collapseAllFoldersToolStripMenuItem.Text = "Collapse All Folders";
             this.collapseAllFoldersToolStripMenuItem.Click += new System.EventHandler(this.collapseAllFoldersToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(174, 6);
             // 
             // emptyTrashToolStripMenuItem
             // 
             this.emptyTrashToolStripMenuItem.Enabled = false;
             this.emptyTrashToolStripMenuItem.Name = "emptyTrashToolStripMenuItem";
-            this.emptyTrashToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.emptyTrashToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.emptyTrashToolStripMenuItem.Text = "Empty Trash";
             this.emptyTrashToolStripMenuItem.Click += new System.EventHandler(this.emptyTrashToolStripMenuItem_Click);
             // 
@@ -249,28 +249,28 @@
             // newFolderToolStripMenuItem
             // 
             this.newFolderToolStripMenuItem.Name = "newFolderToolStripMenuItem";
-            this.newFolderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newFolderToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.newFolderToolStripMenuItem.Text = "New Folder";
             this.newFolderToolStripMenuItem.Click += new System.EventHandler(this.newFolderToolStripMenuItem_Click);
             // 
             // newScriptToolStripMenuItem
             // 
             this.newScriptToolStripMenuItem.Name = "newScriptToolStripMenuItem";
-            this.newScriptToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newScriptToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.newScriptToolStripMenuItem.Text = "New Script";
             this.newScriptToolStripMenuItem.Click += new System.EventHandler(this.newScriptToolStripMenuItem_Click);
             // 
             // newNotecardToolStripMenuItem
             // 
             this.newNotecardToolStripMenuItem.Name = "newNotecardToolStripMenuItem";
-            this.newNotecardToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newNotecardToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.newNotecardToolStripMenuItem.Text = "New Note";
             this.newNotecardToolStripMenuItem.Click += new System.EventHandler(this.newNotecardToolStripMenuItem_Click);
             // 
             // newGestureToolStripMenuItem
             // 
             this.newGestureToolStripMenuItem.Name = "newGestureToolStripMenuItem";
-            this.newGestureToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newGestureToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.newGestureToolStripMenuItem.Text = "New Gesture";
             this.newGestureToolStripMenuItem.Click += new System.EventHandler(this.newGestureToolStripMenuItem_Click);
             // 
@@ -376,7 +376,6 @@
             this.MinimumSize = new System.Drawing.Size(275, 400);
             this.Name = "InventoryBrowserForm";
             this.Text = "Inventory";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.InventoryBrowserForm_FormClosing);
             this.folderContextMenuStrip.ResumeLayout(false);
             this.assetContextMenuStrip.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);

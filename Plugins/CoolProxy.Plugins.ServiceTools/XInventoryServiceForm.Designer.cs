@@ -331,7 +331,6 @@ namespace CoolProxy.Plugins.ServiceTools
             this.ShowIcon = false;
             this.Text = "Edit Item...";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.XInventoryServiceForm_HelpButtonClicked);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.XInventoryServiceForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

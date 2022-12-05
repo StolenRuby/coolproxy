@@ -59,7 +59,7 @@ namespace CoolProxy.Plugins.ToolBox
             // editToolBoxToolStripMenuItem
             // 
             this.editToolBoxToolStripMenuItem.Name = "editToolBoxToolStripMenuItem";
-            this.editToolBoxToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.editToolBoxToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.editToolBoxToolStripMenuItem.Text = "Edit ToolBox";
             this.editToolBoxToolStripMenuItem.Click += new System.EventHandler(this.editToolBoxToolStripMenuItem_Click);
             // 
@@ -75,8 +75,6 @@ namespace CoolProxy.Plugins.ToolBox
             this.Name = "ToolBoxForm";
             this.ShowIcon = false;
             this.Text = "ToolBox";
-            this.Activated += new System.EventHandler(this.ToolBoxForm_Activated);
-            this.Deactivate += new System.EventHandler(this.ToolBoxForm_Deactivate);
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 

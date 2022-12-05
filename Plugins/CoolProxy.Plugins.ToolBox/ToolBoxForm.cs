@@ -20,8 +20,6 @@ namespace CoolProxy.Plugins.ToolBox
             Plugin = plugin;
             InitializeComponent();
 
-            this.TopMost = true;
-
             this.Shown += (x, y) =>
             {
                 this.flowLayoutPanel1.Controls.Clear();
@@ -65,19 +63,6 @@ namespace CoolProxy.Plugins.ToolBox
             else
             {
                 this.Size = new Size(270, max_size);
-            }
-        }
-
-        private void ToolBoxForm_Activated(object sender, EventArgs e)
-        {
-            this.Opacity = 1.0f;
-        }
-
-        private void ToolBoxForm_Deactivate(object sender, EventArgs e)
-        {
-            if(!this.Disposing)
-            {
-                this.Opacity = 0.5f;
             }
         }
     }

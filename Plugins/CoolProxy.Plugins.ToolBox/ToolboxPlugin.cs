@@ -32,6 +32,8 @@ namespace CoolProxy.Plugins.ToolBox
 
             ToolBox = new ToolBoxForm(this);
 
+            gui.RegisterForm("toolbox", ToolBox);
+
             MenuOption menuOption = new MenuOption("TOGGLE_TOOLBOX", "ToolBox", true)
             {
                 Checked = (x) => ToolBox.Visible,

@@ -1049,9 +1049,6 @@
             this.Name = "PreferencesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Preferences";
-            this.Activated += new System.EventHandler(this.HandleFormActivated);
-            this.Deactivate += new System.EventHandler(this.HandleFormDeactivated);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CoolProxyForm_FormClosing);
             this.Load += new System.EventHandler(this.CoolProxyForm_Load);
             this.Shown += new System.EventHandler(this.CoolProxyForm_Shown);
             this.regionsContextMenu.ResumeLayout(false);

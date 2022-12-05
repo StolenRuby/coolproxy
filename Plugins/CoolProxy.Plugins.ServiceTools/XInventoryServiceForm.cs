@@ -122,11 +122,11 @@ namespace CoolProxy.Plugins.ServiceTools
             itemIDTextbox.Text = UUID.Random().ToString();
         }
 
-        private void XInventoryServiceForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = true;
-            this.Hide();
-        }
+        //private void XInventoryServiceForm_FormClosing(object sender, FormClosingEventArgs e)
+        //{
+        //    e.Cancel = true;
+        //    this.Hide();
+        //}
 
         private void button3_Click(object sender, EventArgs e)
         {

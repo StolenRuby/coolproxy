@@ -15,7 +15,7 @@ namespace CoolProxy.Plugins.RegionTracker
 
             var form = new RegionTrackerForm(frame);
 
-            form.FormClosing += (x, y) => { y.Cancel = true; form.Hide(); };
+            gui.RegisterForm("region_tracker", form);
 
             gui.AddMainMenuOption(new MenuOption("TOGGLE_REGION_TRACKER_FORM", "Region Tracker", true, "World")
             {

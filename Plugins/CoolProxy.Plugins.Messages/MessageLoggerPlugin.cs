@@ -16,6 +16,9 @@ namespace CoolProxy.Plugins.Messages
             var log = new MessageLogForm(frame);
             var builder = new MessageBuilderForm(frame);
 
+            gui.RegisterForm("message_log", log);
+            gui.RegisterForm("message_builder", builder);
+
 
             IToolBox toolbox = frame.RequestModuleInterface<IToolBox>();
 

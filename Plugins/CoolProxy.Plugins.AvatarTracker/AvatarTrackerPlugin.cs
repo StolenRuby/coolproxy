@@ -27,6 +27,8 @@ namespace CoolProxy.Plugins.AvatarTracker
 
             IGUI gui = Proxy.RequestModuleInterface<IGUI>();
 
+            gui.RegisterForm("avatar_tracker", Form);
+
             gui.AddMainMenuOption(new MenuOption("TOGGLE_NEW_AVATAR_TRACKER", "Avatar Tracker", true)
             {
                 Checked = (x) => Form.Visible,

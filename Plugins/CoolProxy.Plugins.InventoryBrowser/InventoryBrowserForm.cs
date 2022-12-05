@@ -22,9 +22,6 @@ namespace CoolProxy.Plugins.InventoryBrowser
             InitializeComponent();
             inventoryBrowser.Proxy = Proxy;
 
-            this.TopMost = Proxy.Settings.getBool("KeepCoolProxyOnTop");
-            Proxy.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
-
             comboBox1.Items.Add("All Types");
             var types = Enum.GetValues(typeof(InventoryType)).Cast<InventoryType>().Select(x => x.ToString()).Distinct().ToList();
             types.Remove("Unknown");
@@ -52,12 +49,6 @@ namespace CoolProxy.Plugins.InventoryBrowser
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             inventoryBrowser.SetNameFilter(textBox1.Text);
-        }
-
-        private void InventoryBrowserForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = true;
-            this.Hide();
         }
 
         internal void AddInventoryItemOption(string label, HandleInventory handle, InventoryType invType, EnableInventory enable = null)

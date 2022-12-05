@@ -11,18 +11,14 @@ namespace CoolProxy.Plugins.AssetLog
     {
         public AssetLogPlugin(CoolProxyFrame frame)
         {
-            AssetLogForm form = new AssetLogForm(frame);
-
-            form.FormClosing += (x, y) =>
+            IGUI gui = frame.RequestModuleInterface<IGUI>();
+            if(gui != null)
             {
-                y.Cancel = true;
-                form.Hide();
-            };
+                AssetLogForm form = new AssetLogForm(frame);
 
-            IGUI tray = frame.RequestModuleInterface<IGUI>();
-            if(tray != null)
-            {
-                tray.AddMainMenuOption(new MenuOption("TOGGLE_ASSET_LOG_FORM", "Asset Log", true, "World")
+                gui.RegisterForm("asset_log", form);
+
+                gui.AddMainMenuOption(new MenuOption("TOGGLE_ASSET_LOG_FORM", "Asset Log", true, "World")
                 {
                     Checked = (x) => form.Visible,
                     Clicked = (x) =>

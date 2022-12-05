@@ -19,6 +19,8 @@ namespace CoolProxy.Plugins.HackedProfileEditor
 
             var form = new HackedProfileEditor(frame);
 
+            gui.RegisterForm("hacked_profile_editor", form);
+
             gui.AddMainMenuOption(new MenuOption("TOGGLE_HACKED_PROFILE_EDITOR", "Hacked Profile Editor", true, "Hacks")
             {
                 Clicked = (x) =>

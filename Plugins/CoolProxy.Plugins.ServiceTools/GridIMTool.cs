@@ -81,12 +81,6 @@ namespace CoolProxy.Plugins.ServiceTools
             }
         }
 
-        private void GridIMTool_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = true;
-            this.Hide();
-        }
-
         private void GridIMTool_Shown(object sender, EventArgs e)
         {
             if(Proxy.Network.CurrentSim != null)

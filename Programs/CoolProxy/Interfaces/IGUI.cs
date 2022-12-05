@@ -70,5 +70,7 @@ namespace CoolProxy
         void AddSettingsTab(string label, Panel panel);
 
         void AddMainMenuOption(MenuOption option);
+
+        void RegisterForm(string id, Form form);
     }
 }

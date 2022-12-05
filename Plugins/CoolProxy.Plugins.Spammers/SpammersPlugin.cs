@@ -15,15 +15,24 @@ namespace CoolProxy.Plugins.Spammers
         {
             Proxy = frame;
 
+            var im_spammer = new IMSpamForm(Proxy);
+            var touch_spammer = new TouchSpammerForm(Proxy);
+
+
+            IGUI gui = frame.RequestModuleInterface<IGUI>();
+
+            gui.RegisterForm("im_spammer", im_spammer);
+            gui.RegisterForm("touch_spammer", touch_spammer);
+
 
             IToolBox toolbox = frame.RequestModuleInterface<IToolBox>();
 
-            toolbox.AddTool(new SimpleToggleFormButton("Instant Message Spammer", new IMSpamForm(Proxy))
+            toolbox.AddTool(new SimpleToggleFormButton("Instant Message Spammer", im_spammer)
             {
                 ID = "TOGGLE_IM_SPAM_FORM"
             });
 
-            toolbox.AddTool(new SimpleToggleFormButton("Touch Spammer", new TouchSpammerForm(Proxy))
+            toolbox.AddTool(new SimpleToggleFormButton("Touch Spammer", touch_spammer)
             {
                 ID = "TOGGLE_TOUCH_SPAM_FORM"
             });

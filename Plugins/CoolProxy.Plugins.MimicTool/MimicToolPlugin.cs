@@ -15,6 +15,8 @@ namespace CoolProxy.Plugins.MimicTool
 
             var form = new MimicToolForm(frame);
 
+            gui.RegisterForm("mimic_tool", form);
+
             gui.AddMainMenuOption(new MenuOption("TOGGLE_MIMIC_FORM", "Avatar Mimicry Tool", true, "Tools")
             {
                 Clicked = (x) =>

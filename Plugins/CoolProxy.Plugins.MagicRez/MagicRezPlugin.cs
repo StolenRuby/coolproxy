@@ -28,6 +28,8 @@ namespace CoolProxy.Plugins.MagicRez
 
             var form = new MagicRezForm(frame, this);
 
+            gui.RegisterForm("magic_rez", form);
+
             gui.AddMainMenuOption(new MenuOption("TOGGLE_MAGIC_REZ_FORM", "Magic Rez", true, "Hacks")
             {
                 Clicked = (x) =>

@@ -22,12 +22,6 @@ namespace CoolProxy.Plugins.AvatarTracker
             InitializeComponent();
 
             Tracker = new AvTrackerTest(avatarTrackerGridView, Proxy);
-
-            this.FormClosing += (x, y) =>
-            {
-                y.Cancel = true;
-                this.Hide();
-            };
         }
 
         internal void AddSingleMenuItem(string label, HandleAvatarPicker handle)

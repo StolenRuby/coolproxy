@@ -124,6 +124,8 @@ namespace CoolProxy.Plugins.ClientAO
 
             EditorForm = new ClientAOEditor(this);
 
+            gui.RegisterForm("ao_editor", EditorForm);
+
             IToolBox toolbox = frame.RequestModuleInterface<IToolBox>();
 
             toolbox.AddTool(new SimpleToggleFormButton("Animation Override", EditorForm)

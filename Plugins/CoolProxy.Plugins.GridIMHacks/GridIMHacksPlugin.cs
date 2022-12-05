@@ -89,6 +89,10 @@ namespace CoolProxy.Plugins.GridIMHacks
             //gui.AddToggleFormQuick("Hacks", "Special Teleport", stp_form);
             //gui.AddToggleFormQuick("Hacks", "Easy IM Spoofer", ezim_form);
 
+            gui.RegisterForm("hacked_god_tools", hg_form);
+            gui.RegisterForm("special_teleport", stp_form);
+            gui.RegisterForm("easy_im_spoofer", ezim_form);
+
 
             IAvatarTracker tracker = frame.RequestModuleInterface<IAvatarTracker>();
             if (tracker != null)

@@ -18,7 +18,7 @@ namespace CoolProxy.Plugins.MagicRez
         private CoolProxyFrame Proxy;
         private IMagicRez MagicRez;
 
-        private UUID targatAgentID = UUID.Zero;
+        private UUID targetAgentID = UUID.Zero;
 
         public MagicRezForm(CoolProxyFrame frame, IMagicRez magicRez)
         {
@@ -35,7 +35,7 @@ namespace CoolProxy.Plugins.MagicRez
 
             if (avatarPickerSearch.ShowDialog() == DialogResult.OK)
             {
-                targatAgentID = avatarPickerSearch.SelectedID;
+                targetAgentID = avatarPickerSearch.SelectedID;
                 targetAgentKey.Text = avatarPickerSearch.SelectedID.ToString();
                 targetAgentName.Text = avatarPickerSearch.SelectedName;
 
@@ -72,7 +72,7 @@ namespace CoolProxy.Plugins.MagicRez
             InventoryItem item = Proxy.Inventory.FetchItem(rezObjectPacket.InventoryData.ItemID, rezObjectPacket.InventoryData.OwnerID, 5000);
             if(item != null)
             {
-                MagicRez.Rez(item.AssetUUID, rezObjectPacket.RezData.RayEnd, targatAgentID, UUID.Zero, string.Empty, changePermsGranter.Checked);
+                MagicRez.Rez(item.AssetUUID, rezObjectPacket.RezData.RayEnd, targetAgentID, UUID.Zero, string.Empty, changePermsGranter.Checked);
             }
             else
             {
@@ -96,10 +96,24 @@ namespace CoolProxy.Plugins.MagicRez
 
         private void setEstateOwner_Click(object sender, EventArgs e)
         {
-            targatAgentID = Proxy.Network.CurrentSim.Owner;
-            targetAgentKey.Text = targatAgentID.ToString();
+            targetAgentID = Proxy.Network.CurrentSim.Owner;
+            targetAgentKey.Text = targetAgentID.ToString();
             targetAgentName.Text = "(estate owner)";
             enableMagicRez.Enabled = true;
+        }
+
+        private void setParcelOwner_Click(object sender, EventArgs e)
+        {
+            int id = Proxy.Parcels.GetParcelLocalID(Proxy.Network.CurrentSim, Proxy.Agent.SimPosition);
+
+            if (Proxy.Network.CurrentSim.Parcels.TryGetValue(id, out GridProxy.Parcel parcel))
+            {
+                targetAgentID = parcel.OwnerID;
+                targetAgentKey.Text = parcel.OwnerID.ToString();
+                targetAgentName.Text = "(parcel owner)";
+                enableMagicRez.Enabled = true;
+            }
+            else MessageBox.Show("Parcel info not loaded!");
         }
     }
 }

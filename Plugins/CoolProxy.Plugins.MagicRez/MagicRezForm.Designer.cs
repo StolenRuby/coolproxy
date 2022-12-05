@@ -91,13 +91,13 @@ namespace CoolProxy.Plugins.MagicRez
             // 
             // setParcelOwner
             // 
-            this.setParcelOwner.Enabled = false;
             this.setParcelOwner.Location = new System.Drawing.Point(12, 77);
             this.setParcelOwner.Name = "setParcelOwner";
             this.setParcelOwner.Size = new System.Drawing.Size(105, 23);
             this.setParcelOwner.TabIndex = 21;
             this.setParcelOwner.Text = "Parcel Owner";
             this.setParcelOwner.UseVisualStyleBackColor = true;
+            this.setParcelOwner.Click += new System.EventHandler(this.setParcelOwner_Click);
             // 
             // setEstateOwner
             // 

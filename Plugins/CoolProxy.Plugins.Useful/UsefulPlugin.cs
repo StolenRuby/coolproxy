@@ -2,6 +2,7 @@
 using CoolProxy.Plugins.InventoryBrowser;
 using CoolProxy.Plugins.OpenSim;
 using CoolProxy.Plugins.ToolBox;
+using GridProxy;
 using OpenMetaverse;
 using OpenMetaverse.Packets;
 using OpenMetaverse.StructuredData;
@@ -131,6 +132,38 @@ namespace CoolProxy.Plugins.Useful
                 inv.AddInventoryItemOption("Play Locally", handlePlaySoundLocally, AssetType.Sound);
                 inv.AddInventoryItemOption("Play Inworld", handlePlaySoundInworld, AssetType.Sound);
             }
+
+            frame.Network.AddDelegate(PacketType.ImprovedInstantMessage, GridProxy.Direction.Incoming, IncomingImprovedInstantMessage);
+        }
+
+        List<UUID> AlertedKeys = new List<UUID>();
+
+        private Packet IncomingImprovedInstantMessage(Packet packet, RegionManager.RegionProxy sim)
+        {
+            var im = packet as ImprovedInstantMessagePacket;
+
+            if(im.MessageBlock.Dialog == (byte)InstantMessageDialog.StartTyping)
+            {
+                if(!AlertedKeys.Contains(im.AgentData.AgentID))
+                {
+                    int i = 0;
+                    var alert = new ImprovedInstantMessagePacket(im.ToBytes(), ref i);
+
+                    alert.MessageBlock.Dialog = (byte)InstantMessageDialog.MessageFromAgent;
+                    alert.MessageBlock.Message = Utils.StringToBytes("/me is typing to you...");
+
+                    Proxy.Network.InjectPacket(alert, Direction.Incoming);
+
+                    AlertedKeys.Add(im.AgentData.AgentID);
+                }
+            }
+
+            if(im.MessageBlock.Dialog == (byte)InstantMessageDialog.MessageFromAgent)
+            {
+                im.MessageBlock.ID = im.MessageBlock.ToAgentID ^ im.AgentData.AgentID;
+            }
+
+            return packet;
         }
 
         private void groupPickerToClipboard(object sender, EventArgs e)

@@ -79,42 +79,22 @@ namespace CoolProxy.Plugins.Editors
 
         private void HexEditor_Load(object sender, EventArgs e)
         {
-            var del = new Action<InventoryItem>((InventoryItem i) =>
+            EditorsPlugin.ROBUST.Assets.DownloadAsset(mItem.AssetUUID, (success, data) =>
             {
-                EditorsPlugin.ROBUST.Assets.DownloadAsset(i.AssetUUID, (success, data) =>
+                if (success)
                 {
-                    if (success)
+                    this.Invoke(new Action(() =>
                     {
-                        this.Invoke(new Action(() =>
-                        {
-                            hexBoxRequest.ByteProvider = new DynamicByteProvider(data);
-                            hexBoxRequest.Enabled = true;
-                        }));
-                    }
-                    else
-                    {
-                        MessageBox.Show("Failed to download asset!");
-                        this.Close();
-                    }
-                });
+                        hexBoxRequest.ByteProvider = new DynamicByteProvider(data);
+                        hexBoxRequest.Enabled = true;
+                    }));
+                }
+                else
+                {
+                    MessageBox.Show("Failed to download asset!");
+                    this.Close();
+                }
             });
-
-            if (mItem.AssetUUID == UUID.Zero)
-            {
-                EditorsPlugin.ROBUST.Inventory.GetItem(mItem.UUID, mItem.OwnerID, (fetched_item) =>
-                {
-                    if (fetched_item != null)
-                    {
-                        del(fetched_item);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Failed to fetch item!");
-                        this.Close();
-                    }
-                });
-            }
-            else del(mItem);
         }
     }
 }

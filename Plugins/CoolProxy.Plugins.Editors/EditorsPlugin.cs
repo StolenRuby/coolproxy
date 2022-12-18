@@ -31,15 +31,17 @@ namespace CoolProxy.Plugins.Editors
 
         bool IsEditable(InventoryItem item)
         {
-            if(item.AssetUUID == UUID.Zero)
-            {
-                if(Proxy.Inventory.SuitcaseID != UUID.Zero)
-                {
-                    return Proxy.Inventory.IsItemWithinSuitcase(item);
-                }
-            }
+            //if(item.AssetUUID == UUID.Zero)
+            //{
+            //    if(Proxy.Inventory.SuitcaseID != UUID.Zero)
+            //    {
+            //        return Proxy.Inventory.IsItemWithinSuitcase(item);
+            //    }
+            //}
 
-            return true;
+            //return true;
+
+            return item.AssetUUID != UUID.Zero;
         }
     }
 }

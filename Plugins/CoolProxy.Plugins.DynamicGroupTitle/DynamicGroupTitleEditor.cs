@@ -32,7 +32,8 @@ namespace CoolProxy
             Proxy = frame;
             InitializeComponent();
 
-            Proxy.Groups.GroupRoleDataReply += Groups_GroupRoleDataReply;
+            Proxy.SettingsPerAccount.addSetting("DynamicTitleGroupID", "string", UUID.Zero.ToString(), "What group to use for the dynamic title");
+            Proxy.SettingsPerAccount.addSetting("DynamicTitleRoleID", "string", UUID.Zero.ToString(), "What role to use for the dynamic title");
 
             var osd = Proxy.Settings.getOSD("DynamicTitle");
 
@@ -49,6 +50,45 @@ namespace CoolProxy
 
             TitleTimer = new Timer();
             TitleTimer.Tick += UpdateTitle;
+
+            frame.Groups.CurrentGroups += Groups_CurrentGroups;
+            frame.Connected += Frame_Connected;
+        }
+
+        bool IsLoading = false;
+        UUID LoadingRoleID = UUID.Zero;
+
+        private void Frame_Connected()
+        {
+            string val = Proxy.SettingsPerAccount.getString("DynamicTitleGroupID");
+            if(UUID.TryParse(val, out GroupID))
+            {
+                if (GroupID == UUID.Zero)
+                    return;
+
+                val = Proxy.SettingsPerAccount.getString("DynamicTitleRoleID");
+                if(UUID.TryParse(val, out LoadingRoleID))
+                {
+                    IsLoading = true;
+                    Proxy.Groups.RequestCurrentGroups();
+                }
+            }
+        }
+
+        private void Groups_CurrentGroups(object sender, CurrentGroupsEventArgs e)
+        {
+            if(IsLoading)
+            {
+                if(e.Groups.ContainsKey(GroupID))
+                {
+                    var group = e.Groups[GroupID];
+                    textBox1.Text = group.Name;
+                    textBox2.Text = group.ID.ToString();
+
+                    Proxy.Groups.GroupRoleDataReply += Groups_GroupRoleDataReply;
+                    Proxy.Groups.RequestGroupRoles(GroupID);
+                }
+            }
         }
 
         void SaveTitle()
@@ -91,6 +131,8 @@ namespace CoolProxy
                 textBox1.Text = groupPickerForm.GroupName;
                 textBox2.Text = groupPickerForm.GroupID.ToString();
                 GroupID = groupPickerForm.GroupID;
+
+                Proxy.Groups.GroupRoleDataReply += Groups_GroupRoleDataReply;
                 Proxy.Groups.RequestGroupRoles(GroupID);
             }
         }
@@ -104,14 +146,28 @@ namespace CoolProxy
                 Roles = e.Roles.Values.ToList();
 
                 comboBox4.Items.Clear();
-                comboBox4.Items.AddRange(Roles.Select(x => x.Name).ToArray());
+                foreach (var r in Roles)
+                    comboBox4.Items.Add(r);
+
+                //comboBox4.Items.AddRange(Roles.Select(x => x.Name).ToArray());
 
                 if (comboBox4.Items.Count > 0)
                 {
                     comboBox4.Enabled = true;
-                    comboBox4.SelectedIndex = 0;
-                    Role = Roles.First();
+                    //comboBox4.SelectedIndex = 0;
+
+                    if(IsLoading)
+                    {
+                        Role = Roles.First(x => x.ID == LoadingRoleID);
+                        IsLoading = false;
+                    }
+                    else
+                        Role = Roles.First();
+
+                    comboBox4.SelectedItem = Role;
                 }
+
+                Proxy.Groups.GroupRoleDataReply -= Groups_GroupRoleDataReply;
             }
         }
 
@@ -163,6 +219,9 @@ namespace CoolProxy
                     checkBox1.Checked = false;
                     return;
                 }
+
+                Proxy.SettingsPerAccount.setString("DynamicTitleGroupID", GroupID.ToString());
+                Proxy.SettingsPerAccount.setString("DynamicTitleRoleID", Role.ID.ToString());
 
                 TitleIndex = 0;
                 TitleTimer.Interval = (int)numericUpDown4.Value;

@@ -279,7 +279,20 @@ namespace GridProxy
         /// <param name="castsShadow">true to turn the objects cast shadows property on</param>
         public void SetFlags(RegionProxy simulator, uint localID, bool physical, bool temporary, bool phantom, bool castsShadow)
         {
-            SetFlags(simulator, localID, physical, temporary, phantom, castsShadow, PhysicsShapeType.Prim, 1000f, 0.6f, 0.5f, 1f);
+            ObjectFlagUpdatePacket flags = new ObjectFlagUpdatePacket();
+            flags.AgentData.AgentID = Frame.Agent.AgentID;
+            flags.AgentData.SessionID = Frame.Agent.SessionID;
+            flags.AgentData.ObjectLocalID = localID;
+            flags.AgentData.UsePhysics = physical;
+            flags.AgentData.IsTemporary = temporary;
+            flags.AgentData.IsPhantom = phantom;
+            flags.AgentData.CastsShadows = castsShadow;
+
+            flags.ExtraPhysics = new ObjectFlagUpdatePacket.ExtraPhysicsBlock[0];
+
+            simulator.Inject(flags, Direction.Outgoing);
+
+            // SetFlags(simulator, localID, physical, temporary, phantom, castsShadow, PhysicsShapeType.Prim, 1000f, 0.6f, 0.5f, 1f);
         }
 
         /// <summary>

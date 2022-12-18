@@ -92,10 +92,16 @@
             this.extrasTab = new System.Windows.Forms.TabPage();
             this.miscPluginsTabControl = new System.Windows.Forms.TabControl();
             this.advancedTab = new System.Windows.Forms.TabPage();
-            this.clearCacheButton = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.backgroundOpacityTrackbar = new System.Windows.Forms.TrackBar();
             this.label15 = new System.Windows.Forms.Label();
-            this.button5 = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
+            this.numericUpDown4 = new CoolProxy.Controls.NumericUpDown();
+            this.numericUpDown5 = new CoolProxy.Controls.NumericUpDown();
+            this.foregroundOpacityTrackBar = new System.Windows.Forms.TrackBar();
+            this.clearCacheButton = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             this.assetCacheDirTextbox = new System.Windows.Forms.TextBox();
             this.button6 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -104,8 +110,6 @@
             this.showDebugSettingsButton = new System.Windows.Forms.Button();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.button3 = new System.Windows.Forms.Button();
-            this.numericUpDown4 = new CoolProxy.Controls.NumericUpDown();
-            this.numericUpDown5 = new CoolProxy.Controls.NumericUpDown();
             this.checkBox19 = new CoolProxy.Controls.CheckBox();
             this.checkBox18 = new CoolProxy.Controls.CheckBox();
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
@@ -126,8 +130,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pluginsDataGridView)).BeginInit();
             this.extrasTab.SuspendLayout();
             this.advancedTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.backgroundOpacityTrackbar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.foregroundOpacityTrackBar)).BeginInit();
             this.testMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -783,10 +789,16 @@
             // 
             // advancedTab
             // 
-            this.advancedTab.Controls.Add(this.clearCacheButton);
+            this.advancedTab.Controls.Add(this.label3);
+            this.advancedTab.Controls.Add(this.label2);
+            this.advancedTab.Controls.Add(this.backgroundOpacityTrackbar);
             this.advancedTab.Controls.Add(this.label15);
-            this.advancedTab.Controls.Add(this.button5);
             this.advancedTab.Controls.Add(this.label16);
+            this.advancedTab.Controls.Add(this.numericUpDown4);
+            this.advancedTab.Controls.Add(this.numericUpDown5);
+            this.advancedTab.Controls.Add(this.foregroundOpacityTrackBar);
+            this.advancedTab.Controls.Add(this.clearCacheButton);
+            this.advancedTab.Controls.Add(this.button5);
             this.advancedTab.Controls.Add(this.assetCacheDirTextbox);
             this.advancedTab.Controls.Add(this.button6);
             this.advancedTab.Controls.Add(this.label4);
@@ -795,8 +807,6 @@
             this.advancedTab.Controls.Add(this.showDebugSettingsButton);
             this.advancedTab.Controls.Add(this.checkBox7);
             this.advancedTab.Controls.Add(this.button3);
-            this.advancedTab.Controls.Add(this.numericUpDown4);
-            this.advancedTab.Controls.Add(this.numericUpDown5);
             this.advancedTab.Controls.Add(this.checkBox19);
             this.advancedTab.Controls.Add(this.checkBox18);
             this.advancedTab.Location = new System.Drawing.Point(104, 4);
@@ -807,16 +817,34 @@
             this.advancedTab.Text = "Advanced";
             this.advancedTab.UseVisualStyleBackColor = true;
             // 
-            // clearCacheButton
+            // label3
             // 
-            this.clearCacheButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.clearCacheButton.Location = new System.Drawing.Point(14, 55);
-            this.clearCacheButton.Name = "clearCacheButton";
-            this.clearCacheButton.Size = new System.Drawing.Size(135, 23);
-            this.clearCacheButton.TabIndex = 16;
-            this.clearCacheButton.Text = "Clear Cache";
-            this.clearCacheButton.UseVisualStyleBackColor = true;
-            this.clearCacheButton.Click += new System.EventHandler(this.clearCacheButton_Click);
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(18, 205);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(133, 13);
+            this.label3.TabIndex = 42;
+            this.label3.Text = "Background Form Opacity:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(22, 171);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(129, 13);
+            this.label2.TabIndex = 41;
+            this.label2.Text = "Foreground Form Opacity:";
+            // 
+            // backgroundOpacityTrackbar
+            // 
+            this.backgroundOpacityTrackbar.Location = new System.Drawing.Point(168, 198);
+            this.backgroundOpacityTrackbar.Maximum = 100;
+            this.backgroundOpacityTrackbar.Name = "backgroundOpacityTrackbar";
+            this.backgroundOpacityTrackbar.Size = new System.Drawing.Size(260, 45);
+            this.backgroundOpacityTrackbar.TabIndex = 40;
+            this.backgroundOpacityTrackbar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.backgroundOpacityTrackbar.Value = 50;
+            this.backgroundOpacityTrackbar.ValueChanged += new System.EventHandler(this.backgroundOpacityTrackbar_ValueChanged);
             // 
             // label15
             // 
@@ -829,16 +857,6 @@
             this.label15.Text = "Max Simultaneous Uploads:";
             this.label15.Visible = false;
             // 
-            // button5
-            // 
-            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.Location = new System.Drawing.Point(346, 17);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(36, 20);
-            this.button5.TabIndex = 38;
-            this.button5.Text = "...";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
             // label16
             // 
             this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -849,6 +867,61 @@
             this.label16.TabIndex = 14;
             this.label16.Text = "Max Simultaneous Downoads:";
             this.label16.Visible = false;
+            // 
+            // numericUpDown4
+            // 
+            this.numericUpDown4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown4.Enabled = false;
+            this.numericUpDown4.EnabledSetting = null;
+            this.numericUpDown4.Location = new System.Drawing.Point(390, 216);
+            this.numericUpDown4.Name = "numericUpDown4";
+            this.numericUpDown4.Setting = "MaxSimultaneousUploads";
+            this.numericUpDown4.Size = new System.Drawing.Size(56, 20);
+            this.numericUpDown4.TabIndex = 21;
+            this.numericUpDown4.Visible = false;
+            // 
+            // numericUpDown5
+            // 
+            this.numericUpDown5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown5.EnabledSetting = null;
+            this.numericUpDown5.Location = new System.Drawing.Point(390, 241);
+            this.numericUpDown5.Name = "numericUpDown5";
+            this.numericUpDown5.Setting = "MaxSimultaneousDownloads";
+            this.numericUpDown5.Size = new System.Drawing.Size(56, 20);
+            this.numericUpDown5.TabIndex = 22;
+            this.numericUpDown5.Visible = false;
+            // 
+            // foregroundOpacityTrackBar
+            // 
+            this.foregroundOpacityTrackBar.Location = new System.Drawing.Point(168, 165);
+            this.foregroundOpacityTrackBar.Maximum = 100;
+            this.foregroundOpacityTrackBar.Name = "foregroundOpacityTrackBar";
+            this.foregroundOpacityTrackBar.Size = new System.Drawing.Size(260, 45);
+            this.foregroundOpacityTrackBar.TabIndex = 39;
+            this.foregroundOpacityTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.foregroundOpacityTrackBar.Value = 100;
+            this.foregroundOpacityTrackBar.ValueChanged += new System.EventHandler(this.foregroundOpacityTrackBar_ValueChanged);
+            // 
+            // clearCacheButton
+            // 
+            this.clearCacheButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.clearCacheButton.Location = new System.Drawing.Point(14, 55);
+            this.clearCacheButton.Name = "clearCacheButton";
+            this.clearCacheButton.Size = new System.Drawing.Size(135, 23);
+            this.clearCacheButton.TabIndex = 16;
+            this.clearCacheButton.Text = "Clear Cache";
+            this.clearCacheButton.UseVisualStyleBackColor = true;
+            this.clearCacheButton.Click += new System.EventHandler(this.clearCacheButton_Click);
+            // 
+            // button5
+            // 
+            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button5.Location = new System.Drawing.Point(346, 17);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(36, 20);
+            this.button5.TabIndex = 38;
+            this.button5.Text = "...";
+            this.button5.UseVisualStyleBackColor = true;
             // 
             // assetCacheDirTextbox
             // 
@@ -939,29 +1012,6 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Visible = false;
             // 
-            // numericUpDown4
-            // 
-            this.numericUpDown4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown4.Enabled = false;
-            this.numericUpDown4.EnabledSetting = null;
-            this.numericUpDown4.Location = new System.Drawing.Point(390, 216);
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Setting = "MaxSimultaneousUploads";
-            this.numericUpDown4.Size = new System.Drawing.Size(56, 20);
-            this.numericUpDown4.TabIndex = 21;
-            this.numericUpDown4.Visible = false;
-            // 
-            // numericUpDown5
-            // 
-            this.numericUpDown5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown5.EnabledSetting = null;
-            this.numericUpDown5.Location = new System.Drawing.Point(390, 241);
-            this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.Setting = "MaxSimultaneousDownloads";
-            this.numericUpDown5.Size = new System.Drawing.Size(56, 20);
-            this.numericUpDown5.TabIndex = 22;
-            this.numericUpDown5.Visible = false;
-            // 
             // checkBox19
             // 
             this.checkBox19.AutoSize = true;
@@ -1051,6 +1101,7 @@
             this.Text = "Preferences";
             this.Load += new System.EventHandler(this.CoolProxyForm_Load);
             this.Shown += new System.EventHandler(this.CoolProxyForm_Shown);
+            this.VisibleChanged += new System.EventHandler(this.PreferencesForm_VisibleChanged);
             this.regionsContextMenu.ResumeLayout(false);
             this.settingsTabControl.ResumeLayout(false);
             this.generalTab.ResumeLayout(false);
@@ -1068,8 +1119,10 @@
             this.extrasTab.ResumeLayout(false);
             this.advancedTab.ResumeLayout(false);
             this.advancedTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.backgroundOpacityTrackbar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.foregroundOpacityTrackBar)).EndInit();
             this.testMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1155,6 +1208,10 @@
         private System.Windows.Forms.Button saveMenuChangesBtn;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button applyButton;
+        private System.Windows.Forms.TrackBar foregroundOpacityTrackBar;
+        private System.Windows.Forms.TrackBar backgroundOpacityTrackbar;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
     }
 }
 

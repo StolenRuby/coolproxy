@@ -640,10 +640,27 @@ namespace CoolProxy.Plugins.InventoryBrowser
                 this.DoubleClick += InventoryBrowserControl_DoubleClick;
                 this.MouseMove += InventoryBrowserControl_MouseMove;
 
+                this.MouseDown += InnerInventoryBrowserControl_MouseDown;
+                this.MouseUp += InnerInventoryBrowserControl_MouseUp;
+
                 this.DoubleBuffered = true;
 
                 NodeHeight = this.Font.Height + 2;
                 this.FontChanged += (x, y) => NodeHeight = this.Font.Height + 2;
+            }
+
+            bool Dragging = false;
+            bool DragStarted = false;
+
+            private void InnerInventoryBrowserControl_MouseUp(object sender, MouseEventArgs e)
+            {
+                Dragging = false;
+            }
+
+            private void InnerInventoryBrowserControl_MouseDown(object sender, MouseEventArgs e)
+            {
+                Dragging = true;
+                DragStarted = false;
             }
 
             private void InventoryBrowserControl_MouseMove(object sender, MouseEventArgs e)
@@ -655,6 +672,13 @@ namespace CoolProxy.Plugins.InventoryBrowser
                 {
                     OverIndex = n;
                     Refresh();
+                }
+
+                if(Dragging && !DragStarted)
+                {
+                    DragStarted = true;
+                    var node = GetClicked(OverIndex);
+                    this.DoDragDrop(node.Item, DragDropEffects.Move);
                 }
             }
 

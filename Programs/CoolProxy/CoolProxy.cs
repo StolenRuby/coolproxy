@@ -43,7 +43,7 @@ namespace CoolProxy
 
             Frame = new CoolProxyFrame(new string[] { });
 
-            coolProxyForm = new PreferencesForm();
+            coolProxyForm = new PreferencesForm(Frame);
             Application.Run(coolProxyForm);
         }
 

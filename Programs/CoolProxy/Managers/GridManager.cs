@@ -32,21 +32,29 @@ namespace CoolProxy
             }
 
             var openSimGridInfo = Program.Frame.Settings.getSetting("EnableGridInfo");
+
+            bool enable_grid_info = (bool)openSimGridInfo.Value;
+
             openSimGridInfo.OnChanged += (x, y) =>
             {
                 bool enabled = (bool)y.Value;
 
-                if(enabled)
+                if(enabled != enable_grid_info)
                 {
-                    Program.Frame.HTTP.AddHttpHandler("/get_grid_info", HandleGetGridInfo);
-                }
-                else
-                {
-                    Program.Frame.HTTP.RemoveHttpHandler("/get_grid_info");
+                    enable_grid_info = enabled;
+
+                    if (enabled)
+                    {
+                        Program.Frame.HTTP.AddHttpHandler("/get_grid_info", HandleGetGridInfo);
+                    }
+                    else
+                    {
+                        Program.Frame.HTTP.RemoveHttpHandler("/get_grid_info");
+                    }
                 }
             };
 
-            if((bool)openSimGridInfo.Value)
+            if(enable_grid_info)
             {
                 Program.Frame.HTTP.AddHttpHandler("/get_grid_info", HandleGetGridInfo);
             }

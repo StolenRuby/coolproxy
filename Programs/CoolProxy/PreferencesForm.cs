@@ -24,11 +24,15 @@ namespace CoolProxy
 
         private GridListManager gridManager;
 
-        public PreferencesForm()
+        private CoolProxyFrame Proxy;
+
+        public PreferencesForm(CoolProxyFrame frame)
         {
+            Proxy = frame;
+
             AppMutex = new Mutex(true, "CoolProxyApp", out bool createdNew);
 
-            if (!createdNew && !Program.Frame.Settings.getBool("AllowMultipleInstances"))
+            if (!createdNew && !Proxy.Settings.getBool("AllowMultipleInstances"))
             {
                 MessageBox.Show("Cool Proxy is already running!");
                 this.Load += (x, y) => Close();
@@ -39,9 +43,12 @@ namespace CoolProxy
 
             OpenMetaverse.Logger.Log("[GUI] CoolProxy GUI launched!", Helpers.LogLevel.Info);
 
+            AddSettings();
+            LoadSettings();
+
             gridManager = new GridListManager();
 
-            Program.Frame.RegisterModuleInterface<IGUI>(this);
+            Proxy.RegisterModuleInterface<IGUI>(this);
 
             chatCmdTab.HorizontalScroll.Enabled = false;
             chatCmdTab.HorizontalScroll.Visible = false;
@@ -52,14 +59,10 @@ namespace CoolProxy
             LoadGrids();
 
             gridManager.OnGridAdded += OnGridAdded;
-            gridsComboBox.SelectedItem = Program.Frame.Settings.getString("LastGridUsed");
+            gridsComboBox.SelectedItem = Proxy.Settings.getString("LastGridUsed");
 
-            this.TopMost = Program.Frame.Settings.getBool("KeepCoolProxyOnTop");
-            Program.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { this.TopMost = (bool)y.Value; };
 
-            Program.Frame.Login.AddLoginResponseDelegate(handleLoginResponse);
-
-            string cmd_prefix = Program.Frame.Settings.getString("ChatCommandPrefix");
+            string cmd_prefix = Proxy.Settings.getString("ChatCommandPrefix");
             cmdPrefixCombo.SelectedItem = cmd_prefix;
 
 
@@ -74,7 +77,88 @@ namespace CoolProxy
             }
 
             RegisterForm("preferences", this);
+
+            Application.ApplicationExit += Application_ApplicationExit;
+
+            backgroundOpacityTrackbar.Value = (int)(100.0 * Proxy.Settings.getDouble("FormBackgroundOpacity"));
+            foregroundOpacityTrackBar.Value = (int)(100.0 * Proxy.Settings.getDouble("FormForegroundOpacity"));
+
+            Proxy.Connected += CoolProxyFrame_Connected;
+            Proxy.Disconnected += CoolProxyFrame_Disconnected;
         }
+
+        private void Application_ApplicationExit(object sender, EventArgs e)
+        {
+            SaveSettings();
+        }
+
+        private void SaveSettings()
+        {
+            string app_data = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CoolProxy\\");
+
+            if (Directory.Exists(app_data) == false)
+                Directory.CreateDirectory(app_data);
+
+            Proxy.Settings.SaveFile(Path.Combine(app_data, "app_settings.xml"));
+        }
+
+        private void AddSettings()
+        {
+            Proxy.Settings.addSetting("FormForegroundOpacity", "double", 1.0, "How visible selected forms should be");
+            Proxy.Settings.addSetting("FormBackgroundOpacity", "double", 0.9, "How visible background forms should be");
+        }
+
+        private void LoadSettings()
+        {
+            string app_settings_dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CoolProxy\\");
+
+            if (Directory.Exists(app_settings_dir) == false)
+                Directory.CreateDirectory(app_settings_dir);
+
+            string settings_path = Path.Combine(app_settings_dir, "app_settings.xml");
+
+            // todo: remove this
+            Proxy.Settings.LoadFile("./app_data/app_settings.xml");
+
+            if (File.Exists(settings_path))
+                Proxy.Settings.LoadFile(settings_path);
+        }
+
+
+        private void CoolProxyFrame_Connected()
+        {
+            string grid = Proxy.Settings.getString("LastGridUsed"); // todo: user might have changed this whilst logged in
+            string folder = (Proxy.Agent.Name + "." + grid).Replace(' ', '_').ToLower();
+
+            string filename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CoolProxy\\" + folder + "\\settings_per_account.xml");
+
+            if (File.Exists(filename))
+            {
+                Proxy.SettingsPerAccount.LoadFile(filename);
+            }
+
+
+            Proxy.IsLindenGrid = Proxy.Settings.getBool("LindenGridSelected");
+
+            this.Invoke(new Action(() =>
+            {
+                trayIcon.Text = "Cool Proxy - " + Proxy.Agent.Name;
+            }));
+        }
+
+        private void CoolProxyFrame_Disconnected(string reason)
+        {
+            string grid = Proxy.Settings.getString("LastGridUsed"); // todo: user might have changed this whilst logged in
+            string folder = (Proxy.Agent.Name + "." + grid).Replace(' ', '_').ToLower();
+
+            string per_account_dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CoolProxy\\" + folder + "\\");
+
+            if (Directory.Exists(per_account_dir) == false)
+                Directory.CreateDirectory(per_account_dir);
+
+            Proxy.SettingsPerAccount.SaveFile(Path.Combine(per_account_dir, "settings_per_account.xml"));
+        }
+
 
         public void AddMainMenuOption(MenuOption option)
         {
@@ -107,8 +191,8 @@ namespace CoolProxy
 
             var info = gridManager.getInfoFromName(gridname);
 
-            Program.Frame.Config.remoteLoginUri = new Uri(info.LoginURI);
-            Program.Frame.Config.is_linden_grid = info.IsLindenGrid;
+            Proxy.Config.remoteLoginUri = new Uri(info.LoginURI);
+            Proxy.Config.is_linden_grid = info.IsLindenGrid;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -169,7 +253,7 @@ namespace CoolProxy
         private void cmdPrefixCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
             string prefix = cmdPrefixCombo.SelectedItem.ToString();
-            Program.Frame.Settings.setString("ChatCommandPrefix", prefix);
+            Proxy.Settings.setString("ChatCommandPrefix", prefix);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -290,7 +374,7 @@ namespace CoolProxy
         {
             if (MessageBox.Show("Clear asset cache now?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                string dir = Program.Frame.Settings.getString("AssetCacheDir");
+                string dir = Proxy.Settings.getString("AssetCacheDir");
                 foreach (var file in Directory.GetFiles(dir))
                 {
                     File.Delete(file);
@@ -321,8 +405,8 @@ namespace CoolProxy
 
             if (!grids_map.ContainsKey("cool.proxy"))
             {
-                string address = Program.Frame.Settings.getString("GridProxyListenAddress");
-                int port = Program.Frame.Settings.getInteger("GridProxyListenPort");
+                string address = Proxy.Settings.getString("GridProxyListenAddress");
+                int port = Proxy.Settings.getInteger("GridProxyListenPort");
 
                 OSDMap grid = new OSDMap();
                 grid["label"] = "Cool Proxy" + (port != 8080 ? " (" + port.ToString() + ")" : string.Empty);
@@ -355,51 +439,6 @@ namespace CoolProxy
 
         #endregion
 
-        #region Login
-
-        private void handleLoginResponse(XmlRpcResponse response)
-        {
-            Hashtable responseData;
-            try
-            {
-                responseData = (Hashtable)response.Value;
-            }
-            catch (Exception e)
-            {
-                OpenMetaverse.Logger.Log(e.Message, Helpers.LogLevel.Error);
-                return;
-            }
-
-            if (responseData.ContainsKey("login"))
-            {
-                if ((string)responseData["login"] != "true")
-                {
-                    return;
-                }
-            }
-
-            Program.Frame.IsLindenGrid = Program.Frame.Settings.getBool("LindenGridSelected");
-
-            string first_name = (string)responseData["first_name"];
-            string last_name = (string)responseData["last_name"];
-
-            first_name = first_name.Replace("\"", "");
-
-            string full_name = first_name;
-            if (last_name.ToLower() != "resident")
-                full_name += " " + last_name;
-
-            this.Invoke(new Action(() =>
-            {
-                //this.Text = "Cool Proxy - " + full_name;
-                trayIcon.Text = "Cool Proxy - " + full_name;
-            }));
-
-            Program.Frame.Settings.setString("LastAccountUsed", full_name);
-        }
-
-        #endregion
-
         #region Plugins
 
         public int LoadPlugin(string name)
@@ -418,7 +457,7 @@ namespace CoolProxy
                     else if (t.IsSubclassOf(typeof(Command)))
                     {
                         Command command = (Command)Activator.CreateInstance(t, Program.Frame);
-                        Program.Frame.AddChatCommand(command);
+                        Proxy.AddChatCommand(command);
                         count++;
                     }
                 }
@@ -434,7 +473,7 @@ namespace CoolProxy
 
         private void LoadPlugins()
         {
-            OSD osd = Program.Frame.Settings.getOSD("PluginList");
+            OSD osd = Proxy.Settings.getOSD("PluginList");
             OSDArray arr = (OSDArray)osd;
             foreach (string str in arr)
             {
@@ -529,7 +568,7 @@ namespace CoolProxy
 
         private void CoolProxyForm_Load(object sender, EventArgs e)
         {
-            if (Program.Frame.Settings.getBool("FirstRun"))
+            if (Proxy.Settings.getBool("FirstRun"))
             {
                 OSDArray plugins = new OSDArray();
 
@@ -565,12 +604,12 @@ namespace CoolProxy
                 plugins.Add("CoolProxy.Plugins.GetAvatar.dll");
                 plugins.Add("CoolProxy.Plugins.AssetLog.dll");
 
-                Program.Frame.Settings.setOSD("PluginList", plugins);
+                Proxy.Settings.setOSD("PluginList", plugins);
             }
 
             LoadPlugins();
 
-            foreach (var cmd in Program.Frame.Commands.Values)
+            foreach (var cmd in Proxy.Commands.Values)
             {
                 ChatCommandAdded(cmd.CMD, cmd.Name, cmd.Description);
             }
@@ -579,20 +618,23 @@ namespace CoolProxy
             SaveMainMenu();
             ApplyMainMenu();
 
-            Program.Frame.Settings.setBool("FirstRun", false);
+            Proxy.Settings.setBool("FirstRun", false);
         }
+
+        double ForegroundOpacity = 1.0f;
+        double BackgroundOpacity = 0.5f;
 
         private void HandleFormActivated(object sender, EventArgs e)
         {
             var form = sender as Form;
-            form.Opacity = 1.0f;
+            form.Opacity = ForegroundOpacity;
         }
 
         private void HandleFormDeactivated(object sender, EventArgs e)
         {
             var form = sender as Form;
             if (!form.Disposing)
-                form.Opacity = 0.5f;
+                form.Opacity = BackgroundOpacity;
         }
 
         private void CoolProxyForm_Shown(object sender, EventArgs e)
@@ -601,11 +643,11 @@ namespace CoolProxy
 
             bool started = false;
 
-            if (Program.Frame.Settings.getBool("StartProxyAtLaunch"))
+            if (Proxy.Settings.getBool("StartProxyAtLaunch"))
             {
                 try
                 {
-                    Program.Frame.Start();
+                    Proxy.Start();
                     started = true;
                 }
                 catch (Exception ex)
@@ -627,7 +669,7 @@ namespace CoolProxy
 
             trayIcon.BalloonTipIcon = ToolTipIcon.None;
             trayIcon.BalloonTipTitle = string.Empty;
-            trayIcon.BalloonTipText = string.Format("Proxy is running on http://{0}:{1}/", Program.Frame.Config.clientFacingAddress.ToString(), Program.Frame.Config.loginPort);
+            trayIcon.BalloonTipText = string.Format("Proxy is running on http://{0}:{1}/", Proxy.Config.clientFacingAddress.ToString(), Proxy.Config.loginPort);
             trayIcon.ShowBalloonTip(2000);
         }
 
@@ -645,7 +687,7 @@ namespace CoolProxy
                     this.WindowState = FormWindowState.Normal;
                     this.Activate();
 
-                    Program.Frame.Settings.setBool("AlertStillRunning", false);
+                    Proxy.Settings.setBool("AlertStillRunning", false);
                 }
                 else
                 {
@@ -658,11 +700,11 @@ namespace CoolProxy
 
         private void quitCoolProxyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Program.Frame.Started)
+            if (Proxy.Started)
             {
                 if (MessageBox.Show(this, "Are you sure you want to quit?", "Cool Proxy is still active", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    Program.Frame.Stop();
+                    Proxy.Stop();
                     coolProxyIsQuitting = true;
                     this.Close();
                 }
@@ -683,11 +725,14 @@ namespace CoolProxy
 
         private void applyButton_Click(object sender, EventArgs e)
         {
+            SaveSettings();
             this.Close();
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
+            LoadSettings();
+            TellToRestart = false;
             this.Close();
         }
 
@@ -703,8 +748,49 @@ namespace CoolProxy
 
             form.FormClosing += CoolProxyForm_FormClosing;
 
-            form.TopMost = Program.Frame.Settings.getBool("KeepCoolProxyOnTop");
-            Program.Frame.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { form.TopMost = (bool)y.Value; };
+            form.TopMost = Proxy.Settings.getBool("KeepCoolProxyOnTop");
+            Proxy.Settings.getSetting("KeepCoolProxyOnTop").OnChanged += (x, y) => { form.TopMost = (bool)y.Value; };
+        }
+
+        private void PreferencesForm_VisibleChanged(object sender, EventArgs e)
+        {
+            if(TellToRestart && !Visible)
+            {
+                MessageBox.Show("You need to restart Cool Proxy for changes to plugins to apply!");
+                TellToRestart = false;
+            }
+        }
+
+        private void foregroundOpacityTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            TrackBar trackBar = sender as TrackBar;
+
+            ForegroundOpacity = (double)trackBar.Value / 100.0f;
+            Proxy.Settings.setDouble("FormForegroundOpacity", ForegroundOpacity);
+
+            foreach (var form in Forms.Values)
+            {
+                if (form.Visible && form.ContainsFocus)
+                {
+                    form.Opacity = ForegroundOpacity;
+                }
+            }
+        }
+
+        private void backgroundOpacityTrackbar_ValueChanged(object sender, EventArgs e)
+        {
+            TrackBar trackBar = sender as TrackBar;
+
+            BackgroundOpacity = (double)trackBar.Value / 100.0f;
+            Proxy.Settings.setDouble("FormBackgroundOpacity", BackgroundOpacity);
+
+            foreach (var form in Forms.Values)
+            {
+                if (form.Visible && !form.ContainsFocus)
+                {
+                    form.Opacity = BackgroundOpacity;
+                }
+            }
         }
     }
 }

@@ -1,10 +1,13 @@
 ﻿using GridProxy;
+using OpenMetaverse;
 using OpenMetaverse.Packets;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static GridProxy.RegionManager;
 
 namespace CoolProxy
@@ -24,8 +27,13 @@ namespace CoolProxy
             Init(args, proxyConfig);
         }
 
+        public SettingsManager SettingsPerAccount { get; private set; } = null;
+
         private void Init(string[] args, ProxyConfig proxyConfig)
         {
+            Settings.addSetting("ChatCommandPrefix", "string", ".", "What character starts chat commands.");
+
+
             string prefix = Settings.getString("ChatCommandPrefix");
             if (prefix.Length > 0)
             {
@@ -37,6 +45,8 @@ namespace CoolProxy
                 string new_prefix = (string)y.Value;
                 ChatCmdPrefix = new_prefix.Length > 0 ? new_prefix[0] : (char)0;
             };
+
+            SettingsPerAccount = new SettingsManager();
         }
 
         public new void Start()

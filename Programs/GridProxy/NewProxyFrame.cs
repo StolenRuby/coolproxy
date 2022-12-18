@@ -33,6 +33,7 @@ namespace GridProxy
         public bool LoggedIn { get; private set; } = false;
 
 
+        public event ConnectedEvent Connected;
         public event DisconnectedEvent Disconnected;
 
 
@@ -116,6 +117,7 @@ namespace GridProxy
                 {
                     LoggedIn = true;
                     //responseData["message"] = "New and improved GridProxy!";
+                    Connected?.Invoke();
                 }
             }
         }
@@ -161,5 +163,6 @@ namespace GridProxy
         }
     }
 
+    public delegate void ConnectedEvent();
     public delegate void DisconnectedEvent(string reason);
 }

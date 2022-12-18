@@ -20,8 +20,15 @@ namespace CoolProxy
 
             foreach(Setting s in Program.Frame.Settings.getSettings())
             {
-                this.settingsComboBox.Items.Add(s.Name);
+                this.settingsComboBox.Items.Add(s);
             }
+
+            foreach(Setting s in Program.Frame.SettingsPerAccount.getSettings())
+            {
+                this.settingsComboBox.Items.Add(s);
+            }
+
+            settingsComboBox.ValueMember = "Name";
 
             this.settingsComboBox.SelectedIndex = 0;
 
@@ -39,7 +46,9 @@ namespace CoolProxy
         public void UpdateUI()
         {
             SelectedSetting = null; // null so events dont trigger while changing
-            Setting setting = Program.Frame.Settings.getSetting(this.settingsComboBox.Text);
+            //Setting setting = Program.Frame.Settings.getSetting(this.settingsComboBox.Text);
+
+            Setting setting = settingsComboBox.SelectedItem as Setting;
 
             if(setting != null)
             {

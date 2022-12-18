@@ -106,6 +106,8 @@ namespace CoolProxy.Plugins.ClientAO
                 {
                     UpdateAO();
                 }
+
+                Proxy.SettingsPerAccount.setBool("AOEnabled", mEnabled);
             }
         }
 
@@ -188,6 +190,39 @@ namespace CoolProxy.Plugins.ClientAO
             {
                 LoadNotecard(x);
             }, AssetType.Notecard);
+
+            Proxy.SettingsPerAccount.addSetting("AONotecardItemID", "string", UUID.Zero.ToString(), "The item ID of the notecard");
+            Proxy.SettingsPerAccount.addSetting("AOEnabled", "bool", false, "Enable the Animation Override");
+
+            Proxy.Connected += Proxy_Connected;
+        }
+
+        UUID ItemBeingFetched = UUID.Zero;
+
+        private void Proxy_Connected()
+        {
+            string id = Proxy.SettingsPerAccount.getString("AONotecardItemID");
+
+            UUID.TryParse(id, out UUID item_id);
+
+            if (item_id != UUID.Zero)
+            {
+                ItemBeingFetched = item_id;
+                Proxy.Inventory.ItemReceived += Inventory_ItemReceived;
+                Proxy.Inventory.RequestFetchInventory(item_id, Proxy.Agent.AgentID);
+            }
+        }
+
+        private void Inventory_ItemReceived(object sender, GridProxy.ItemReceivedEventArgs e)
+        {
+            if (e.Item.UUID != ItemBeingFetched)
+                return;
+
+            LoadNotecard(e.Item);
+
+            Enabled = Proxy.SettingsPerAccount.getBool("AOEnabled");
+
+            Proxy.Inventory.ItemReceived -= Inventory_ItemReceived;
         }
 
         public List<AOState> Current = new List<AOState>();
@@ -262,6 +297,8 @@ namespace CoolProxy.Plugins.ClientAO
                 if (transfer.Success)
                 {
                     AOName = notecard.Name;
+
+                    Proxy.SettingsPerAccount.setString("AONotecardItemID", notecard.UUID.ToString());
 
                     AssetNotecard asset = new AssetNotecard(notecard.AssetUUID, download.AssetData);
                     asset.Decode();

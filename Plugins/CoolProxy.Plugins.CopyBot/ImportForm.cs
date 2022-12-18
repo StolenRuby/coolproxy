@@ -62,6 +62,11 @@ namespace CoolProxy.Plugins.CopyBot
                 dataGridView.Rows.Add(true, Properties.Resources.Object, linkset.RootPrim.Properties?.Name ?? "Object", 1, linkset.RootPrim.LocalID, linkset.RootPrim.ID);
                 importMap[linkset.RootPrim.ID] = linkset;
             }
+
+            if(Options.InvItem == null)
+            {
+                forgeToolStripMenuItem.Enabled = false;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)

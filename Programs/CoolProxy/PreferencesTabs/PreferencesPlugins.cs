@@ -14,7 +14,7 @@ namespace CoolProxy
     {
         List<string> pluginList = new List<string>();
 
-        bool HasBeenToldToRestart = false;
+        bool TellToRestart = false;
 
         private void dataGridView1_DragEnter(object sender, DragEventArgs e)
         {
@@ -80,11 +80,7 @@ namespace CoolProxy
 
             Program.Frame.Settings.setOSD("PluginList", osd_array);
 
-            if (!HasBeenToldToRestart && !is_startup)
-            {
-                HasBeenToldToRestart = true;
-                MessageBox.Show("You need to restart CoolProxy for plugins to reload!");
-            }
+            if (!is_startup) TellToRestart = true;
         }
 
         private void removePluginButton_Click(object sender, EventArgs e)

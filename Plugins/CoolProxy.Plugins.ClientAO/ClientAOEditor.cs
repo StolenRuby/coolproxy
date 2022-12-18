@@ -234,5 +234,23 @@ namespace CoolProxy.Plugins.ClientAO
 
             row.Selected = true;
         }
+
+        private void ClientAOEditor_DragOver(object sender, DragEventArgs e)
+        {
+            var o = e.Data.GetData(e.Data.GetFormats()[0]);
+            if (o is InventoryItem)
+            {
+                var item = o as InventoryItem;
+
+                if (item.InventoryType == InventoryType.Notecard)
+                    e.Effect = DragDropEffects.Move;
+            }
+        }
+
+        private void ClientAOEditor_DragDrop(object sender, DragEventArgs e)
+        {
+            var item = e.Data.GetData(e.Data.GetFormats()[0]) as InventoryItem;
+            Plugin.LoadNotecard(item);
+        }
     }
 }

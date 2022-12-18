@@ -69,26 +69,12 @@ namespace GridProxy
 
         public SettingsManager()
         {
-            Settings.Clear();
-
-            string app_settings_dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CoolProxy\\");
-
-            if (!Directory.Exists(app_settings_dir))
-            {
-                Directory.CreateDirectory(app_settings_dir);
-            }
-
-            string settings_path = Path.Combine(app_settings_dir, "app_settings.xml");
-
-            LoadFile("./app_data/app_settings.xml");
-
-            if (File.Exists(settings_path))
-                LoadFile(settings_path);
         }
 
-        ~SettingsManager()
+        public void addSetting(string name, string type, object val, string about = "")
         {
-            SaveFile();
+            Setting setting = new Setting(name, type, val, about);
+            Settings.Add(name, setting);
         }
 
         public void LoadFile(string settings_path)
@@ -158,15 +144,8 @@ namespace GridProxy
             }
         }
 
-        public void SaveFile()
+        public void SaveFile(string fileName)
         {
-            string app_data = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CoolProxy\\");
-
-            if (Directory.Exists(app_data) == false)
-                Directory.CreateDirectory(app_data);
-
-            var fileName = Path.Combine(app_data, "app_settings.xml");
-
             OSDMap settings = new OSDMap();
 
             foreach(KeyValuePair<string, Setting> pair in Settings)

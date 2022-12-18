@@ -75,14 +75,16 @@ namespace CoolProxy.Plugins.CopyBot
                 tracker.AddSingleMenuItem("Save As...", exportAvatar);
             }
 
+            frame.SettingsPerAccount.addSetting("CopybotForgeItemID", "string", UUID.Zero.ToString(), "What inventory item to use for creator forge");
+
             //GUI.AddToolButton("CopyBot", "Export Selected Objects", exportSelectedObjects);
             //GUI.AddToolButton("CopyBot", "Import Object from File", importXML);
 
-            IInventoryBrowser inv = Proxy.RequestModuleInterface<IInventoryBrowser>();
-            if(inv != null)
-            {
-                inv.AddInventoryItemOption("Import With...", importWithInv, AssetType.Object);
-            }
+            //IInventoryBrowser inv = Proxy.RequestModuleInterface<IInventoryBrowser>();
+            //if(inv != null)
+            //{
+            //    inv.AddInventoryItemOption("Import With...", importWithInv, AssetType.Object);
+            //}
 
             if (ROBUST != null) // hack: use the robust to determine if the user has griefer tools enabled
             {
@@ -191,17 +193,17 @@ namespace CoolProxy.Plugins.CopyBot
             panel.Controls.Add(path_btn);
             panel.Controls.Add(reset_btn);
 
-            path_label.Location = new Point(140, 15);
+            path_label.Location = new Point(40, 135);
             path_label.Size = new Size(100, 13);
             path_label.Text = "Export Directory:";
 
-            path_box.Location = new Point(140, 35);
-            path_box.Size = new Size(200, 20);
+            path_box.Location = new Point(40, 155);
+            path_box.Size = new Size(260, 20);
             path_box.Setting = "SOGExportDir";
             path_box.Margin = new Padding(10);
             path_box.ReadOnly = true;
 
-            path_btn.Location = new Point(345, 35);
+            path_btn.Location = new Point(305, 155);
             path_btn.Size = new Size(30, 20);
             path_btn.Text = "...";
             path_btn.Click += (s, e) =>
@@ -217,7 +219,7 @@ namespace CoolProxy.Plugins.CopyBot
             };
 
 
-            reset_btn.Location = new Point(380, 35);
+            reset_btn.Location = new Point(340, 155);
             reset_btn.Size = new Size(55, 20);
             reset_btn.Text = "Default";
             reset_btn.Click += (s, e) =>
@@ -226,26 +228,114 @@ namespace CoolProxy.Plugins.CopyBot
                 ExportDir = "./copybot";
             };
 
+            panel.Controls.AddRange(new Control[]
+            {
+                path_label, path_box, path_btn, reset_btn
+            });
 
-            CoolProxy.Controls.CheckBox use_robust_exp_checkbox = new CoolProxy.Controls.CheckBox();
-            use_robust_exp_checkbox.Location = new Point(145, 65);
-            use_robust_exp_checkbox.AutoSize = true;
-            use_robust_exp_checkbox.Text = "Expost assets using the ROBUST";
-            use_robust_exp_checkbox.Enabled = false;
-            use_robust_exp_checkbox.Visible = ROBUST != null;
+            TextBox textBox = new TextBox();
+            textBox.Size = new Size(280, 22);
+            textBox.Location = new Point(10, 20);
+            textBox.AllowDrop = true;
+            textBox.DragOver += TextBox_DragOver;
+            textBox.DragDrop += TextBox_DragDrop;
+            textBox.ReadOnly = true;
+            textBox.TextAlign = HorizontalAlignment.Center;
+            textBox.Text = "Drop a single modifiable prim here.";
 
-            panel.Controls.Add(use_robust_exp_checkbox);
+            DisplayTextBox = new TextBox();
+            DisplayTextBox.Size = new Size(280, 22);
+            DisplayTextBox.Location = new Point(10, 45);
+            DisplayTextBox.ReadOnly = true;
+            DisplayTextBox.TextAlign = HorizontalAlignment.Center;
 
-            CoolProxy.Controls.CheckBox use_robust_imp_checkbox = new CoolProxy.Controls.CheckBox();
-            use_robust_imp_checkbox.Location = new Point(145, 85);
-            use_robust_imp_checkbox.AutoSize = true;
-            use_robust_imp_checkbox.Text = "Import assets using the ROBUST";
-            use_robust_imp_checkbox.Enabled = false;
-            use_robust_imp_checkbox.Visible = ROBUST != null;
 
-            panel.Controls.Add(use_robust_imp_checkbox);
+            Button testObjectButton = new Button();
+            testObjectButton.Size = new Size(150, 22);
+            testObjectButton.Text = "Test Rez Object";
+            testObjectButton.Location = new Point(10, 70);
+            testObjectButton.Click += TestObjectButton_Click;
+
+
+
+            GroupBox forgeBox = new GroupBox();
+            forgeBox.Location = new Point(135, 6);
+            forgeBox.Size = new Size(300, 100);
+            forgeBox.Text = "Creator Forge";
+            forgeBox.Controls.AddRange(new Control[]
+            {
+                testObjectButton,
+                textBox,
+                DisplayTextBox
+            });
+
+            panel.Controls.Add(forgeBox);
+
+            panel.VisibleChanged += Panel_VisibleChanged;
 
             gui.AddSettingsTab("CopyBot", panel);
+        }
+
+        private void Panel_VisibleChanged(object sender, EventArgs e)
+        {
+            if(Proxy.LoggedIn)
+            {
+                var item = GetForgeItem();
+                if (item != null)
+                {
+                    DisplayTextBox.Text = "Currently set to: " + item.Name;
+                }
+                else DisplayTextBox.Text = "Currently not set";
+            }
+            else DisplayTextBox.Text = "Not logged in";
+        }
+
+        private void TestObjectButton_Click(object sender, EventArgs e)
+        {
+            var item = GetForgeItem();
+            if (item != null)
+            {
+                Proxy.Objects.RezInventoryItem(Proxy.Network.CurrentSim, item, Proxy.Agent.SimPosition + ImportOffset);
+            }
+        }
+
+        //InventoryItem InvItem;
+        TextBox DisplayTextBox;
+
+        InventoryItem GetForgeItem()
+        {
+            string id = Proxy.SettingsPerAccount.getString("CopybotForgeItemID");
+
+            UUID item_id;
+            UUID.TryParse(id, out item_id);
+
+            if (item_id != UUID.Zero)
+            {
+                if(Proxy.Inventory.Store.Contains(item_id))
+                    return Proxy.Inventory.Store[item_id] as InventoryItem;
+            }
+
+            return null;
+        }
+
+        private void TextBox_DragDrop(object sender, DragEventArgs e)
+        {
+            var item = e.Data.GetData(e.Data.GetFormats()[0]) as InventoryItem;
+            DisplayTextBox.Text = "Currently set to: " + item.Name;
+            //InvItem = item;
+            Proxy.SettingsPerAccount.setString("CopybotForgeItemID", item.UUID.ToString());
+        }
+
+        private void TextBox_DragOver(object sender, DragEventArgs e)
+        {
+            var o = e.Data.GetData(e.Data.GetFormats()[0]);
+            if (o is InventoryItem)
+            {
+                var item = o as InventoryItem;
+                
+                if ((item.Flags & (uint)InventoryItemFlags.ObjectHasMultipleItems) == 0 && item.InventoryType == InventoryType.Object)
+                    e.Effect = DragDropEffects.Move;
+            }
         }
 
         private void importWithInv(InventoryItem inventoryItem)
@@ -302,7 +392,9 @@ namespace CoolProxy.Plugins.CopyBot
                     dialog.InitialDirectory = ExportDir;
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
-                        new ImportForm(Proxy, new ImportOptions(dialog.FileName), this).ShowDialog();
+                        var options = new ImportOptions(dialog.FileName);
+                        options.InvItem = GetForgeItem();
+                        new ImportForm(Proxy, options, this).ShowDialog();
                     }
                 }
             }

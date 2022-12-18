@@ -40,7 +40,7 @@ namespace CoolProxy.Plugins.Masking
             // 
             this.checkBox5.AutoSize = true;
             this.checkBox5.EnabledSetting = null;
-            this.checkBox5.Location = new System.Drawing.Point(39, 21);
+            this.checkBox5.Location = new System.Drawing.Point(59, 41);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Setting = "";
             this.checkBox5.Size = new System.Drawing.Size(64, 17);
@@ -52,7 +52,7 @@ namespace CoolProxy.Plugins.Masking
             // macHashTextbox
             // 
             this.macHashTextbox.Enabled = false;
-            this.macHashTextbox.Location = new System.Drawing.Point(109, 82);
+            this.macHashTextbox.Location = new System.Drawing.Point(129, 102);
             this.macHashTextbox.Name = "macHashTextbox";
             this.macHashTextbox.Size = new System.Drawing.Size(212, 20);
             this.macHashTextbox.TabIndex = 72;
@@ -62,7 +62,7 @@ namespace CoolProxy.Plugins.Masking
             // randomMacHashButton
             // 
             this.randomMacHashButton.Enabled = false;
-            this.randomMacHashButton.Location = new System.Drawing.Point(327, 82);
+            this.randomMacHashButton.Location = new System.Drawing.Point(347, 102);
             this.randomMacHashButton.Name = "randomMacHashButton";
             this.randomMacHashButton.Size = new System.Drawing.Size(21, 20);
             this.randomMacHashButton.TabIndex = 62;
@@ -73,7 +73,7 @@ namespace CoolProxy.Plugins.Masking
             // id0HashTextbox
             // 
             this.id0HashTextbox.Enabled = false;
-            this.id0HashTextbox.Location = new System.Drawing.Point(109, 109);
+            this.id0HashTextbox.Location = new System.Drawing.Point(129, 129);
             this.id0HashTextbox.Name = "id0HashTextbox";
             this.id0HashTextbox.Size = new System.Drawing.Size(212, 20);
             this.id0HashTextbox.TabIndex = 71;
@@ -83,7 +83,7 @@ namespace CoolProxy.Plugins.Masking
             // randomID0HashButton
             // 
             this.randomID0HashButton.Enabled = false;
-            this.randomID0HashButton.Location = new System.Drawing.Point(327, 108);
+            this.randomID0HashButton.Location = new System.Drawing.Point(347, 128);
             this.randomID0HashButton.Name = "randomID0HashButton";
             this.randomID0HashButton.Size = new System.Drawing.Size(21, 20);
             this.randomID0HashButton.TabIndex = 63;
@@ -94,7 +94,7 @@ namespace CoolProxy.Plugins.Masking
             // channelTextbox
             // 
             this.channelTextbox.Enabled = false;
-            this.channelTextbox.Location = new System.Drawing.Point(109, 19);
+            this.channelTextbox.Location = new System.Drawing.Point(129, 39);
             this.channelTextbox.MaxLength = 32;
             this.channelTextbox.Name = "channelTextbox";
             this.channelTextbox.Size = new System.Drawing.Size(212, 20);
@@ -106,7 +106,7 @@ namespace CoolProxy.Plugins.Masking
             // 
             this.versionPatch.Enabled = false;
             this.versionPatch.EnabledSetting = "";
-            this.versionPatch.Location = new System.Drawing.Point(203, 45);
+            this.versionPatch.Location = new System.Drawing.Point(223, 65);
             this.versionPatch.Maximum = new decimal(new int[] {
             99,
             0,
@@ -114,7 +114,7 @@ namespace CoolProxy.Plugins.Masking
             0});
             this.versionPatch.Name = "versionPatch";
             this.versionPatch.Setting = null;
-            this.versionPatch.Size = new System.Drawing.Size(41, 20);
+            this.versionPatch.Size = new System.Drawing.Size(41, 40);
             this.versionPatch.TabIndex = 67;
             this.versionPatch.Tag = "SpecifiedVersionPatch";
             this.versionPatch.ValueChanged += new System.EventHandler(this.versionMajor_ValueChanged);
@@ -123,7 +123,7 @@ namespace CoolProxy.Plugins.Masking
             // 
             this.versionMinor.Enabled = false;
             this.versionMinor.EnabledSetting = "";
-            this.versionMinor.Location = new System.Drawing.Point(156, 45);
+            this.versionMinor.Location = new System.Drawing.Point(176, 65);
             this.versionMinor.Maximum = new decimal(new int[] {
             99,
             0,
@@ -131,7 +131,7 @@ namespace CoolProxy.Plugins.Masking
             0});
             this.versionMinor.Name = "versionMinor";
             this.versionMinor.Setting = null;
-            this.versionMinor.Size = new System.Drawing.Size(41, 20);
+            this.versionMinor.Size = new System.Drawing.Size(41, 40);
             this.versionMinor.TabIndex = 66;
             this.versionMinor.Tag = "SpecifiedVersionMinor";
             this.versionMinor.ValueChanged += new System.EventHandler(this.versionMajor_ValueChanged);
@@ -140,7 +140,7 @@ namespace CoolProxy.Plugins.Masking
             // 
             this.versionBuild.Enabled = false;
             this.versionBuild.EnabledSetting = "";
-            this.versionBuild.Location = new System.Drawing.Point(250, 45);
+            this.versionBuild.Location = new System.Drawing.Point(270, 65);
             this.versionBuild.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -148,7 +148,7 @@ namespace CoolProxy.Plugins.Masking
             0});
             this.versionBuild.Name = "versionBuild";
             this.versionBuild.Setting = null;
-            this.versionBuild.Size = new System.Drawing.Size(71, 20);
+            this.versionBuild.Size = new System.Drawing.Size(71, 40);
             this.versionBuild.TabIndex = 68;
             this.versionBuild.Tag = "SpecifiedVersionBuild";
             this.versionBuild.ValueChanged += new System.EventHandler(this.versionMajor_ValueChanged);
@@ -157,7 +157,7 @@ namespace CoolProxy.Plugins.Masking
             // 
             this.replaceID0Checkbox.AutoSize = true;
             this.replaceID0Checkbox.EnabledSetting = null;
-            this.replaceID0Checkbox.Location = new System.Drawing.Point(39, 109);
+            this.replaceID0Checkbox.Location = new System.Drawing.Point(59, 129);
             this.replaceID0Checkbox.Name = "replaceID0Checkbox";
             this.replaceID0Checkbox.Setting = "SpoofId0";
             this.replaceID0Checkbox.Size = new System.Drawing.Size(46, 17);
@@ -170,7 +170,7 @@ namespace CoolProxy.Plugins.Masking
             // 
             this.versionMajor.Enabled = false;
             this.versionMajor.EnabledSetting = "";
-            this.versionMajor.Location = new System.Drawing.Point(109, 45);
+            this.versionMajor.Location = new System.Drawing.Point(129, 65);
             this.versionMajor.Maximum = new decimal(new int[] {
             99,
             0,
@@ -178,7 +178,7 @@ namespace CoolProxy.Plugins.Masking
             0});
             this.versionMajor.Name = "versionMajor";
             this.versionMajor.Setting = "";
-            this.versionMajor.Size = new System.Drawing.Size(41, 20);
+            this.versionMajor.Size = new System.Drawing.Size(41, 40);
             this.versionMajor.TabIndex = 65;
             this.versionMajor.Tag = "SpecifiedVersionMajor";
             this.versionMajor.ValueChanged += new System.EventHandler(this.versionMajor_ValueChanged);
@@ -187,7 +187,7 @@ namespace CoolProxy.Plugins.Masking
             // 
             this.replaceMacCheckbox.AutoSize = true;
             this.replaceMacCheckbox.EnabledSetting = null;
-            this.replaceMacCheckbox.Location = new System.Drawing.Point(39, 84);
+            this.replaceMacCheckbox.Location = new System.Drawing.Point(59, 104);
             this.replaceMacCheckbox.Name = "replaceMacCheckbox";
             this.replaceMacCheckbox.Setting = "SpoofMac";
             this.replaceMacCheckbox.Size = new System.Drawing.Size(52, 17);

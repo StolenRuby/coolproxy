@@ -1075,8 +1075,8 @@ namespace GridProxy
 
             if (Frame.Config.HTTP_INVENTORY &&
                 Frame.Network.CurrentSim != null
-                && use_caps)// &&
-                //Client.Network.CurrentSim.Caps.CapabilityURI("FetchInventory2") != null)
+                && use_caps
+                && Frame.Network.CurrentSim.Caps.ContainsKey("FetchInventory2"))
             {
                 RequestFetchInventoryCap(itemIDs, ownerIDs);
                 return;

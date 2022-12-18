@@ -146,6 +146,7 @@
             // 
             // comboBox4
             // 
+            this.comboBox4.DisplayMember = "Name";
             this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox4.Enabled = false;
             this.comboBox4.FormattingEnabled = true;
@@ -153,6 +154,7 @@
             this.comboBox4.Name = "comboBox4";
             this.comboBox4.Size = new System.Drawing.Size(232, 21);
             this.comboBox4.TabIndex = 16;
+            this.comboBox4.ValueMember = "Name";
             this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
             // 
             // textBox1

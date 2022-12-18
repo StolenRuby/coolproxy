@@ -59,9 +59,12 @@ namespace CoolProxy.Plugins.ServiceTools
                     {
                         if (item != null)
                         {
-                            Clipboard.SetText(item.AssetUUID.ToString());
+                            x.AssetUUID = item.AssetUUID;
+                            Proxy.SayToUser("Done");
+                            //Clipboard.SetText(item.AssetUUID.ToString());
                         }
-                        else Clipboard.SetText(UUID.Zero.ToString());
+                        else Proxy.SayToUser("Failed :(");
+                        //else Clipboard.SetText(UUID.Zero.ToString());
                     });
                 }, e =>
                 {
